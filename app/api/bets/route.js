@@ -109,13 +109,42 @@ export async function GET(request){
       const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
+      const radarIndex=buildRadarIndex(game,best?.index||null);
+      const preferredPick=best?{
+        gameId:game.id,
+        matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
+        type:best.type,
+        pick:best.pick,
+        americanOdds:best.americanOdds??null,
+        betRadarIndex:best.index,
+        radarIndex:radarIndex.score,
+        label:best.label,
+        why:best.why,
+        line:marketSummary(game,market),
+        gameDate:game.date,
+        status:"OPEN"
+      }:{
+        gameId:game.id,
+        matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
+        type:"PASS",
+        pick:"PASS",
+        americanOdds:null,
+        betRadarIndex:0,
+        radarIndex:radarIndex.score,
+        label:"NO OFFICIAL EDGE",
+        why:"No betting signal is strong enough to lock yet.",
+        line:marketSummary(game,market),
+        gameDate:game.date,
+        status:"PASS"
+      };
       return {
         ...game,
         marketConsensus:{...market,line:marketSummary(game,market),available:Boolean(market.homeMargin!=null||market.total!=null)},
         opportunities,
         bestOpportunity:best,
+        preferredPick,
         opportunityIndex:best?.index||0,
-        radarIndex:buildRadarIndex(game,best?.index||null)
+        radarIndex
       };
     }).sort((a,b)=>(b.radarIndex?.score||0)-(a.radarIndex?.score||0)||b.opportunityIndex-a.opportunityIndex);
 

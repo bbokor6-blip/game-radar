@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
@@ -314,6 +315,27 @@ function TeaserCard({size,legs,number}){
   </article>;
 }
 
+function AgentGameCard({game,league,weekStart,weekLabel,weekOffset,isSaved,onSave}){
+  const best=game.bestOpportunity;
+  const spread=spreadForGame(game);
+  const conference=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
+  return <article className="agentGameCard">
+    <div className="agentGameTeams">
+      <div className="matchupVisual"><TeamMini team={game.away}/><em>@</em><TeamMini team={game.home}/></div>
+      <small>{gameDateLabel(game)}</small>
+    </div>
+    <div className="agentGameSignals">
+      <span>{conference.length?conference.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
+      <strong>{spread!=null?"SPREAD "+spread:"LINE PENDING"}</strong>
+    </div>
+    <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
+    <div className="agentScore bet"><span>BETRADAR</span><strong>{best?.index||"—"}</strong></div>
+    {best?<button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onSave(game)}>
+      {isSaved?"★ SAVED":"☆ SAVE "+best.pick}
+    </button>:<span className="agentNoBet">NO BET SIGNAL</span>}
+  </article>;
+}
+
 function BoardRow({game,league,generatedAt,weekStart,weekLabel,weekOffset,savedIds,onToggleSave}){
   const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
@@ -373,6 +395,9 @@ export default function BetsPage(){
   const[boardSort,setBoardSort]=useState("index");
   const[signalFilter,setSignalFilter]=useState("all");
   const[topType,setTopType]=useState("all");
+  const[agentQuery,setAgentQuery]=useState("");
+  const[agentSpec,setAgentSpec]=useState(null);
+  const[agentMessage,setAgentMessage]=useState("");
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
@@ -445,12 +470,55 @@ export default function BetsPage(){
   function clearWeekSheet(){
     setBetSheet(current=>current.filter(x=>!(x.league===league&&x.weekStart===range.start)));
   }
+  function savedFromGame(game){
+    const best=game.bestOpportunity;
+    if(!best)return null;
+    const key=pickKeyForOpportunity(best);
+    return {
+      id:savedPickId(league,range.start,game.id,key),
+      league,weekStart:range.start,weekLabel,gameId:game.id,key,
+      matchup:matchup(game),gameDate:game.date,pick:best.pick,odds:best.americanOdds,index:best.index,
+      source:"Ask GameRadar"
+    };
+  }
+  function saveAgentGame(game){
+    const pick=savedFromGame(game);
+    if(pick)toggleSavedPick(pick);
+  }
+  function runAgentText(text){
+    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset});
+    setAgentQuery(text);
+    if(spec.isSaveAction){
+      const prior=agentSpec?searchGames((data.games||[]).filter(g=>g.sport===league),agentSpec):[];
+      const picks=prior.map(savedFromGame).filter(Boolean).slice(0,spec.saveCount||3);
+      if(!picks.length){setAgentMessage("RUN A SEARCH FIRST, THEN ASK ME TO SAVE THE BEST PICKS.");return;}
+      setBetSheet(current=>{
+        const map=new Map(current.map(x=>[x.id,x]));
+        for(const pick of picks)map.set(pick.id,{...pick,savedAt:new Date().toISOString()});
+        return [...map.values()];
+      });
+      setAgentMessage("SAVED "+picks.length+" PICKS TO YOUR BETTING SHEET.");
+      return;
+    }
+    setAgentSpec(spec);
+    setAgentMessage("");
+    if(spec.league!==league)setLeague(spec.league);
+    if(spec.weekOffset!==weekOffset)setWeekOffset(spec.weekOffset);
+  }
+  function submitAgent(e){
+    e?.preventDefault();
+    if(agentQuery.trim())runAgentText(agentQuery.trim());
+  }
 
   const games=(data.games||[]).filter(g=>g.sport===league);
   const savedIds=useMemo(()=>new Set(betSheet.map(x=>x.id)),[betSheet]);
   const weekSheet=useMemo(()=>betSheet
     .filter(x=>x.league===league&&x.weekStart===range.start)
     .sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)),[betSheet,league,range.start]);
+  const agentResults=useMemo(()=>{
+    if(!agentSpec||agentSpec.league!==league||agentSpec.weekOffset!==weekOffset)return [];
+    return searchGames(games,agentSpec);
+  },[games,agentSpec,league,weekOffset]);
   const filteredGames=useMemo(()=>{
     if(signalFilter==="70plus")return games.filter(g=>(g.bestOpportunity?.index||0)>=70);
     if(signalFilter==="conviction")return games.filter(g=>Boolean(g.bestOpportunity?.highConviction));
@@ -530,6 +598,39 @@ export default function BetsPage(){
       <div><span>FEATURED PICKS</span><strong>{top.length}</strong></div>
       <div><span>HIGH CONVICTION</span><strong>{top.filter(x=>x.highConviction).length}</strong></div>
       <div><span>SAVED THIS WEEK</span><strong>{weekSheet.length}</strong></div>
+    </section>
+
+    <section className="askRadar">
+      <div className="askRadarHead">
+        <div><span>✦ ASK GAMERADAR</span><h2>FIND EXACTLY WHAT YOU CARE ABOUT</h2></div>
+        <small>Natural-language search across games, lines, rankings and BetRadar signals.</small>
+      </div>
+      <form className="askRadarForm" onSubmit={submitAgent}>
+        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="e.g. Give me all the tight games for Big Ten and SEC schools this week"/>
+        <button type="submit">SEARCH →</button>
+      </form>
+      <div className="askPrompts">
+        {[
+          "Tight Big Ten + SEC games this week",
+          "Top 25 games with spreads under 10",
+          "Sleeper picks with BetRadar over 75",
+          "Best bets next week",
+          "Save the best 3"
+        ].map(prompt=><button key={prompt} onClick={()=>runAgentText(prompt)}>{prompt}</button>)}
+      </div>
+      {agentSpec&&!agentSpec.isSaveAction?<div className="agentInterpretation">
+        <div className="agentChips">{agentSpec.chips.map(chip=><span key={chip}>{chip}</span>)}</div>
+        <p>{queryExplanation(agentSpec)}</p>
+      </div>:null}
+      {agentMessage?<div className="agentMessage">{agentMessage}</div>:null}
+      {agentSpec&&!agentSpec.isSaveAction?<div className="agentResults">
+        <div className="agentResultsHead"><strong>{loading?"SEARCHING…":agentResults.length+" GAME"+(agentResults.length===1?"":"S")+" FOUND"}</strong><span>RESULTS USE LIVE GAMERADAR DATA — NOT GENERATED MATCHUPS</span></div>
+        {!loading&&agentResults.length?agentResults.map(game=>{
+          const best=game.bestOpportunity;
+          const id=best?savedPickId(league,range.start,game.id,pickKeyForOpportunity(best)):null;
+          return <AgentGameCard key={game.id} game={game} league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={id?savedIds.has(id):false} onSave={saveAgentGame}/>;
+        }):!loading?<div className="notice">NO GAMES MATCH THAT SEARCH. TRY WIDENING THE SPREAD OR REMOVING A FILTER.</div>:null}
+      </div>:null}
     </section>
 
     <div className="leagueSwitchBlock">

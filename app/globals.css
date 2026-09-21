@@ -728,3 +728,18 @@ footer{
   .productSwitcher strong{font-size:12px}
   .productSwitcher small{font-size:8px;line-height:1.25}
 }
+
+
+/* THIS-WEEK GAMERADAR BOARD */
+.weekScoreSection{margin-top:24px}
+.weekScoreSection:first-of-type{margin-top:0}
+.livePriority{
+  padding:12px 12px 2px;border:1px solid #5f7e47;background:#0b120c;
+  box-shadow:inset 4px 0 0 var(--green)
+}
+.livePriority .sectionIntro>span{color:var(--green)}
+.modeRail button span{line-height:1.15;text-align:center}
+@media(max-width:620px){
+  .modeRail button span{font-size:9px;letter-spacing:.04em}
+  .livePriority{padding:9px 8px 1px}
+}

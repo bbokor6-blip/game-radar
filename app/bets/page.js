@@ -229,6 +229,7 @@ export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
   const[data,setData]=useState({games:[],methodology:null});
   const[showAllGames,setShowAllGames]=useState(false);
+  const[collegeSort,setCollegeSort]=useState("radar");
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const range=useMemo(()=>footballRange(1),[]);
@@ -237,6 +238,7 @@ export default function BetsPage(){
     let ignore=false;
     async function load(){
       setShowAllGames(false);
+      setCollegeSort("radar");
       setLoading(true);
       try{
         const r=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
@@ -254,7 +256,24 @@ export default function BetsPage(){
   },[league]);
 
   const games=data.games||[];
-  const visibleGames=showAllGames?games:games.slice(0,15);
+  const orderedGames=useMemo(()=>{
+    if(league!=="cfb"||collegeSort!=="top25")return games;
+    return games.slice().sort((a,b)=>{
+      const aRanks=[a.home?.rank,a.away?.rank].filter(Boolean);
+      const bRanks=[b.home?.rank,b.away?.rank].filter(Boolean);
+      const aRanked=aRanks.length>0?1:0;
+      const bRanked=bRanks.length>0?1:0;
+      if(aRanked!==bRanked)return bRanked-aRanked;
+      const aBest=aRanks.length?Math.min(...aRanks):99;
+      const bBest=bRanks.length?Math.min(...bRanks):99;
+      if(aBest!==bBest)return aBest-bBest;
+      const aTwo=aRanks.length===2?1:0;
+      const bTwo=bRanks.length===2?1:0;
+      if(aTwo!==bTwo)return bTwo-aTwo;
+      return (b.opportunityIndex||0)-(a.opportunityIndex||0);
+    });
+  },[games,league,collegeSort]);
+  const visibleGames=showAllGames?orderedGames:orderedGames.slice(0,15);
   const opportunities=allOpportunities(games);
   const top=opportunities.slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
@@ -313,15 +332,22 @@ export default function BetsPage(){
       </section>
 
       <section className="betSection">
-        <div className="betSectionHead">
+        <div className="betSectionHead everyGameHead">
           <span>03</span>
-          <div><h2>EVERY GAME</h2><p>Starts with the 15 most interesting games. Tease lines stay visible on every shown game; expand the slate only when you want the rest.</p></div>
+          <div>
+            <h2>EVERY GAME</h2>
+            <p>{league==="cfb"&&collegeSort==="top25"?"Top 25 games are pushed to the top, then the rest of the FBS slate follows.":"Starts with the 15 most interesting games. Tease lines stay visible on every shown game; expand the slate only when you want the rest."}</p>
+          </div>
+          {league==="cfb"?<div className="collegeSort">
+            <button className={collegeSort==="radar"?"active":""} onClick={()=>{setCollegeSort("radar");setShowAllGames(false)}}>BETRADAR</button>
+            <button className={collegeSort==="top25"?"active":""} onClick={()=>{setCollegeSort("top25");setShowAllGames(false)}}>TOP 25 FIRST</button>
+          </div>:null}
         </div>
         <div className="simpleBoard">
           {visibleGames.map(game=><BoardRow key={game.id} game={game}/>)}
         </div>
-        {games.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
-          {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+games.length+" GAMES"}
+        {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
+          {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}
         </button>:null}
       </section>
 

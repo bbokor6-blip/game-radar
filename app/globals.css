@@ -3756,3 +3756,142 @@ body{
     padding:0 16px;
   }
 }
+
+
+/* =========================================================
+   MOBILE NAV HOTFIX
+   Keep week + filters visible without crowding the scoreboard.
+   ========================================================= */
+@media(max-width:700px){
+  .grHeader,.brHeader{
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+
+  .grPrimaryNav,.brPrimaryNav{
+    position:sticky;
+    top:106px;
+    z-index:40;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:0!important;
+    padding:0 0 7px!important;
+    background:#08131cf6!important;
+    border-bottom:1px solid #263744!important;
+    backdrop-filter:blur(14px);
+  }
+
+  .grPrimaryLinks,.brPrimaryLinks{
+    width:100%;
+    display:flex!important;
+    align-items:center;
+    gap:2px!important;
+    overflow-x:auto!important;
+    scrollbar-width:none;
+    border-bottom:1px solid #22323e;
+  }
+  .grPrimaryLinks::-webkit-scrollbar,.brPrimaryLinks::-webkit-scrollbar{display:none}
+
+  .grPrimaryLinks button,.brPrimaryLinks a{
+    flex:1 0 auto!important;
+    min-height:40px!important;
+    padding:0 11px!important;
+    justify-content:center!important;
+    text-align:center!important;
+    font-size:13px!important;
+  }
+
+  .grPrimaryTools,.brPrimaryTools{
+    width:100%;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:7px!important;
+    align-items:center!important;
+    padding-top:7px;
+  }
+
+  .weekSelector{
+    width:100%!important;
+    min-width:0!important;
+    grid-template-columns:36px minmax(0,1fr) 36px!important;
+    min-height:44px!important;
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .weekSelector>button{
+    width:36px!important;
+    height:44px!important;
+    min-height:44px!important;
+    font-size:21px!important;
+  }
+  .weekSelector>div{
+    min-width:0!important;
+    padding:5px 6px!important;
+  }
+  .weekSelector span{
+    font-size:11px!important;
+    line-height:1.05!important;
+  }
+  .weekSelector strong{
+    margin-top:3px!important;
+    font-size:12px!important;
+    line-height:1.05!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .grPrimaryNav .grFilterButton,
+  .brPrimaryNav .brFilterButton{
+    position:static!important;
+    right:auto!important;
+    bottom:auto!important;
+    z-index:auto!important;
+    min-width:82px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0 12px!important;
+    border:1px solid #394b57!important;
+    background:#0f1b24!important;
+    color:#e7edf1!important;
+    box-shadow:none!important;
+    border-radius:8px!important;
+    font-size:13px!important;
+  }
+
+  .grActiveFilters{
+    margin-top:7px!important;
+    overflow-x:auto;
+    flex-wrap:nowrap!important;
+    padding-bottom:2px;
+    scrollbar-width:none;
+  }
+  .grActiveFilters::-webkit-scrollbar{display:none}
+  .grActiveFilters button{
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+
+  .grSection,.brSection,.grSearchResults,.brSearchResults{
+    scroll-margin-top:205px;
+  }
+}
+
+@media(max-width:390px){
+  .grPrimaryLinks button,.brPrimaryLinks a{
+    padding:0 9px!important;
+    font-size:12.5px!important;
+  }
+  .grPrimaryNav .grFilterButton,
+  .brPrimaryNav .brFilterButton{
+    min-width:74px!important;
+    padding:0 9px!important;
+  }
+  .weekSelector{
+    grid-template-columns:32px minmax(0,1fr) 32px!important;
+  }
+  .weekSelector>button{
+    width:32px!important;
+  }
+  .weekSelector strong{font-size:11px!important}
+}

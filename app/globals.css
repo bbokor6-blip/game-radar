@@ -743,3 +743,119 @@ footer{
   .modeRail button span{font-size:9px;letter-spacing:.04em}
   .livePriority{padding:9px 8px 1px}
 }
+
+
+/* GAME RADAR COVER PAGE */
+.landingShell{
+  width:min(1180px,100%);margin:0 auto;padding:28px 18px 60px
+}
+.landingHero{
+  position:relative;overflow:hidden;padding:38px 34px 34px;border:2px solid #465047;
+  background:
+    linear-gradient(120deg,rgba(154,242,92,.05),transparent 36%),
+    linear-gradient(180deg,#182119,#0d120e);
+  box-shadow:0 18px 48px #0009,inset 0 0 0 1px #070a07
+}
+.landingHero:after{
+  content:"";position:absolute;right:-80px;top:-110px;width:340px;height:340px;border-radius:50%;
+  border:1px solid #3b493d;box-shadow:0 0 90px #9af25c0c;pointer-events:none
+}
+.landingBrand{
+  font:1000 13px "Courier New",monospace;letter-spacing:.18em;font-style:italic;color:#e9ede4
+}
+.landingBrand span{color:var(--red)}
+.landingKicker{
+  margin-top:10px;color:var(--amber);font:1000 9px "Courier New",monospace;letter-spacing:.16em
+}
+.landingHero h1{
+  max-width:820px;margin:13px 0 15px;font-size:clamp(48px,9vw,104px);line-height:.84;
+  letter-spacing:-.07em;font-style:italic
+}
+.landingHero p{
+  max-width:800px;margin:0;color:#b6beb3;font-size:15px;line-height:1.6;font-weight:650
+}
+
+.landingChoiceGrid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px
+}
+.landingChoice{
+  min-height:410px;padding:24px;border:1px solid #3b463c;background:#0e130f;color:inherit;
+  text-decoration:none;display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease
+}
+.landingChoice:hover{transform:translateY(-2px)}
+.betChoice{
+  border-color:#675a34;background:linear-gradient(180deg,#19180f,#0e130f 55%);
+  box-shadow:inset 0 4px 0 var(--amber)
+}
+.betChoice:hover{border-color:#8b7540;box-shadow:inset 0 4px 0 var(--amber),0 16px 40px #ffbb3310}
+.gameChoice{
+  border-color:#4f6844;background:linear-gradient(180deg,#111b11,#0e130f 55%);
+  box-shadow:inset 0 4px 0 var(--green)
+}
+.gameChoice:hover{border-color:#6b8a58;box-shadow:inset 0 4px 0 var(--green),0 16px 40px #9af25c0c}
+.choiceTop{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.choiceTop span{
+  display:grid;place-items:center;width:32px;height:32px;border:1px solid #465047;
+  color:#858f84;font:1000 10px "Courier New",monospace
+}
+.choiceTop b{
+  color:#747e74;font:1000 8px "Courier New",monospace;letter-spacing:.13em;text-align:right
+}
+.landingChoice h2{
+  margin:28px 0 5px;font-size:clamp(36px,5vw,58px);line-height:.9;letter-spacing:-.055em;font-style:italic
+}
+.betChoice h2{color:#fff4d8}
+.gameChoice h2{color:#e9f7e2}
+.landingChoice h3{
+  margin:8px 0 9px;font-size:19px;letter-spacing:-.025em
+}
+.landingChoice p{
+  margin:0;color:#a9b1a6;font-size:12px;line-height:1.55;max-width:510px
+}
+.choiceFeatures{
+  display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 22px
+}
+.choiceFeatures span{
+  padding:6px 8px;border:1px solid #343f35;background:#0b100c;color:#8f988d;
+  font:900 7px "Courier New",monospace;letter-spacing:.08em
+}
+.betChoice .choiceFeatures span{border-color:#49442d;color:#c9b978}
+.gameChoice .choiceFeatures span{border-color:#3f5239;color:#a9c79a}
+.choiceCta{
+  margin-top:auto;display:flex;align-items:center;justify-content:space-between;min-height:48px;
+  padding:0 13px;border:1px solid #454f46;background:#101510;
+  font:1000 10px "Courier New",monospace;letter-spacing:.08em
+}
+.betChoice .choiceCta{border-color:#6c5b30;color:var(--amber)}
+.gameChoice .choiceCta{border-color:#506b43;color:var(--green)}
+
+.landingValue{
+  margin-top:14px;padding:26px 28px;border:1px solid #354036;background:#0d120e
+}
+.landingValueLabel{color:#757f75;font:1000 8px "Courier New",monospace;letter-spacing:.16em}
+.landingValue h2{margin:7px 0 8px;font-size:clamp(26px,4vw,40px);letter-spacing:-.04em}
+.landingValue p{margin:0;max-width:850px;color:#a7afa4;font-size:13px;line-height:1.55}
+.landingTrust{
+  margin-top:17px;padding-top:13px;border-top:1px solid #303a31;color:#6f796f;
+  font:900 8px "Courier New",monospace;letter-spacing:.08em;line-height:1.6
+}
+.landingFooter{
+  margin-top:20px;text-align:center;color:#5f685f;font:800 8px "Courier New",monospace;letter-spacing:.12em
+}
+.suiteHome{
+  display:inline-block;margin:0 0 8px 2px;color:#727c72;text-decoration:none;
+  font:900 7px "Courier New",monospace;letter-spacing:.11em
+}
+.suiteHome:hover{color:#c4cbc0}
+
+@media(max-width:760px){
+  .landingShell{padding:10px 9px 44px}
+  .landingHero{padding:25px 18px 23px}
+  .landingHero h1{font-size:52px}
+  .landingHero p{font-size:12px}
+  .landingChoiceGrid{grid-template-columns:1fr}
+  .landingChoice{min-height:350px;padding:18px}
+  .landingChoice h2{font-size:43px;margin-top:22px}
+  .landingChoice h3{font-size:17px}
+  .landingValue{padding:20px 18px}
+}

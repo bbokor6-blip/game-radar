@@ -480,3 +480,33 @@ footer{
 .interestingWhy p{
   margin:0!important;color:#d4d8cf!important;font-size:11px!important;line-height:1.45!important
 }
+
+
+.betOdds{
+  display:inline-block;margin-left:8px;vertical-align:middle;
+  color:var(--amber);font:1000 12px "Courier New",monospace;letter-spacing:.04em
+}
+.payoutStrip{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:7px 0 2px;
+  padding:8px 10px;border:1px solid #36503a;background:#0d160f
+}
+.payoutStrip span{
+  color:#7f8a80;font:900 8px "Courier New",monospace;letter-spacing:.1em
+}
+.payoutStrip strong{
+  color:var(--green);font:1000 12px "Courier New",monospace
+}
+.payoutStrip small{
+  color:#c9cec6;font:800 9px "Courier New",monospace
+}
+.payoutStrip.unavailable{
+  border-color:#3a413a;background:#101310
+}
+.payoutStrip.unavailable span,.payoutStrip.unavailable small{color:#737b73}
+
+@media(max-width:620px){
+  .betOdds{font-size:10px;margin-left:5px}
+  .payoutStrip{gap:7px;padding:7px 8px}
+  .payoutStrip strong{font-size:11px}
+  .payoutStrip small{font-size:8px}
+}

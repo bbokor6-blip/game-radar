@@ -1,17 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 
-const LEAGUES=[
-  ["nfl","NFL","Every NFL game"],
-  ["cfb","COLLEGE FBS","Every FBS game · Top 25 featured"]
-];
-const MODES=[
-  ["recap","RECAP","What happened?"],
-  ["live","LIVE","What matters now?"],
-  ["ahead","WEEK AHEAD","What should I circle?"]
-];
+const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
-function footballRange(offset){
+function footballRange(offset=1){
   const now=new Date();
   const day=now.getDay();
   const daysSinceTuesday=(day+5)%7;
@@ -24,9 +16,9 @@ function footballRange(offset){
   return {start:fmt(start),end:fmt(end),startDate:start,endDate:end};
 }
 
-function rangeLabel(range){
-  const a=range.startDate.toLocaleDateString([],{month:"short",day:"numeric"});
-  const b=range.endDate.toLocaleDateString([],{month:"short",day:"numeric"});
+function rangeLabel(r){
+  const a=r.startDate.toLocaleDateString([],{month:"short",day:"numeric"});
+  const b=r.endDate.toLocaleDateString([],{month:"short",day:"numeric"});
   return a+"–"+b;
 }
 
@@ -34,233 +26,347 @@ function gameTime(game){
   return new Date(game.date).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"});
 }
 
-function matchupLabel(game){
-  return game.away.short+" @ "+game.home.short;
+function teamDisplay(team){
+  return (team.rank?"#"+team.rank+" ":"")+team.short;
 }
 
-function marketLine(game){
-  if(!game.market) return "LINE PENDING";
-  return game.market.details || (game.market.spread!=null ? "SPREAD "+game.market.spread : "LINE PENDING");
+function matchup(game){
+  return teamDisplay(game.away)+" @ "+teamDisplay(game.home);
 }
 
-function closeCallout(game){
-  if(game.state==="pre"){
-    const spread=Math.abs(Number(game.market?.spread));
-    if(Number.isFinite(spread)&&spread<10){
-      return "PROJECTED CLOSE · "+spread+" PT SPREAD";
-    }
-    return null;
+function indexClass(n){
+  if(n>=80)return "best";
+  if(n>=70)return "strong";
+  if(n>=60)return "lean";
+  return "pass";
+}
+
+function formatAmerican(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return "—";
+  return (n>0?"+":"")+Math.round(n);
+}
+
+function tenDollarReturn(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return null;
+  const profit=n>0?10*(n/100):10*(100/Math.abs(n));
+  return Math.round((10+profit)*100)/100;
+}
+
+function formatSpread(n){
+  const v=Number(n);
+  if(!Number.isFinite(v))return "—";
+  if(Math.abs(v)<.05)return "PK";
+  return (v>0?"+":"")+v.toFixed(1);
+}
+
+function oddsText(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return "ODDS N/A";
+  return (n>0?"+":"")+Math.round(n);
+}
+
+function moneyText(n){
+  const v=Number(n);
+  if(!Number.isFinite(v))return "—";
+  return "$"+v.toFixed(2);
+}
+
+function allOpportunities(games){
+  const out=[];
+  for(const game of games){
+    if(game.opportunities?.spread)out.push({...game.opportunities.spread,game});
+    if(game.opportunities?.total)out.push({...game.opportunities.total,game});
   }
-  const diff=Math.abs(Number(game.home.score)-Number(game.away.score));
-  if(diff<10){
-    if(diff===0) return game.state==="in"?"TIED GAME":"TIED AT END OF REGULATION";
-    return (game.state==="in"?"CLOSE GAME":"CLOSE FINISH")+" · "+diff+" PT MARGIN";
-  }
-  return null;
+  return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
-function betIdea(game){
-  const spread=Math.abs(Number(game.market?.spread));
-  const total=Number(game.market?.overUnder);
-  if(!Number.isFinite(spread)) return "WAIT FOR LINE";
-  if(spread<=3 && Number.isFinite(total) && total>=50) return "HIGH-TOTAL TOSS-UP";
-  if(spread<=3) return "CLOSE-SPREAD GAME";
-  if(spread<10 && Number.isFinite(total) && total>=48) return "CLOSE GAME + ACTIVE TOTAL";
-  if(spread<10) return "UNDER-10 SPREAD";
-  if(Number.isFinite(total) && total>=55) return "TOTAL WORTH WATCHING";
-  return "MARKET WATCH";
-}
-
-function TeamLine({team,possession,showScore=true}){
-  return <div className="teamLine">
-    <div className="teamLeft">
-      {team.logo?<img src={team.logo} alt="" className="teamLogo"/>:<div className="teamLogo fallback"/>}
-      <div className="teamMeta">
-        <div className="teamLabel">
-          {team.rank?<span className="rankTag">#{team.rank}</span>:null}
-          <span>{team.short}</span>
-          {possession?<span className="ball">●</span>:null}
-        </div>
-        <div className="record">{team.record||""}</div>
+function OpportunityCard({item,rank}){
+  const g=item.game;
+  const cls=indexClass(item.index);
+  return <article className={"simplePick "+cls}>
+    <div className="simplePickRank">#{rank}</div>
+    <div className="simplePickMain">
+      <div className="simpleMatch">
+        <strong>{matchup(g)}</strong>
+        <small>{gameTime(g)} · {item.type}</small>
+      </div>
+      <div className="pickHeadline">
+        <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
+        {item.index>=80?<span className="convictionBadge">HIGH CONVICTION</span>:item.index>=70?<span className="convictionBadge medium">STRONG INTEREST</span>:null}
+      </div>
+      {item.payout?<div className="payoutStrip">
+        <span>$10 BET</span>
+        <strong>WIN {moneyText(item.payout.profit)}</strong>
+        <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
+      </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
+      {item.index>=80?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
+      <div className="evidenceChips">
+        {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
+      </div>
+      <div className="simpleWhy">
+        <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
+        {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
       </div>
     </div>
-    <div className="plainScore">{showScore?team.score:"—"}</div>
-  </div>;
-}
-
-function GameRow({game,mode}){
-  const live=game.state==="in";
-  const showScore=game.state!=="pre";
-  const close=closeCallout(game);
-  const hot=live&&game.interest.score>=82;
-  const watch=live&&game.interest.score>=58;
-  const cls=[hot?"hot":"",watch&&!hot?"watch":"",close?"closeMatch":""].filter(Boolean).join(" ");
-
-  return <article className={"gameRow "+cls}>
-    <div className="gameRowTop">
-      <span>{game.sport==="cfb"?"COLLEGE FBS":"NFL"}</span>
-      <span className={live?"liveText":""}>{live?"● LIVE":game.state==="post"?"FINAL":gameTime(game)}</span>
+    <div className="confidenceIndex">
+      <span>BETRADAR INDEX</span>
+      <strong>{item.index}</strong>
+      <small>{item.index>=80?"STRONG LOOK":item.index>=70?"INTERESTING":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
     </div>
-
-    {close?<div className="closeCallout">{close}</div>:null}
-
-    <div className="gameRowBody">
-      <div className="scoreSide">
-        <TeamLine team={game.away} possession={game.possessionId===game.away.id} showScore={showScore}/>
-        <TeamLine team={game.home} possession={game.possessionId===game.home.id} showScore={showScore}/>
-      </div>
-      <div className="interestSide">
-        <span className="interestLabel">{mode==="recap"?"RECAP":live?"LIVE INTEREST":"FUTURE INTEREST"}</span>
-        <strong>{game.interest.score}</strong>
-        <small>{game.interest.tier}</small>
-      </div>
-    </div>
-
-    {mode==="ahead"?<div className="lineBar">
-      <span>{marketLine(game)}</span>
-      {game.market?.overUnder!=null?<span>O/U {game.market.overUnder}</span>:null}
-    </div>:null}
-
-    <div className="reasonLine">{game.interest.reason}{live&&game.downDistance?" · "+game.downDistance:""}</div>
   </article>;
 }
 
-function BetBoard({games,league}){
-  const rows=games
-    .filter(g=>g.state==="pre"&&g.marketInterest&&g.marketInterest.score>0)
-    .sort((a,b)=>b.marketInterest.score-a.marketInterest.score)
-    .slice(0,10);
+function teaserCandidate(game){
+  const market=game.marketConsensus;
+  if(!Number.isFinite(Number(market?.homeMargin)))return null;
 
-  return <aside className="betPanel">
-    <div className="betHeader">
-      <span>{league==="nfl"?"NFL":"COLLEGE"} BETTING RADAR</span>
-      <h3>TOP 10 MARKET GAMES</h3>
-      <p>The most interesting betting setups based on spread tightness, totals and matchup context.</p>
-    </div>
-    {rows.length?rows.map((g,i)=><div className="betRow" key={g.id}>
-      <div className="betRank">{i+1}</div>
-      <div className="betMain">
-        <strong>{matchupLabel(g)}</strong>
-        <span>{marketLine(g)}{g.market?.overUnder!=null?" · O/U "+g.market.overUnder:""}</span>
-        <small>{betIdea(g)}</small>
-      </div>
-      <div className="betScore">{g.marketInterest.score}</div>
-    </div>):<div className="betEmpty">BETTING LINES HAVE NOT POPULATED YET.</div>}
-    <div className="betFoot">This ranks betting-market intrigue. It is not a prediction of which side will cover.</div>
-  </aside>;
+  const abs=Math.abs(Number(market.homeMargin));
+  const homeFav=Number(market.homeMargin)>0;
+  const favorite=homeFav?game.home:game.away;
+  const dog=homeFav?game.away:game.home;
+  const spreadOpp=game.opportunities?.spread;
+
+  let side=spreadOpp?.side||null;
+  let quality=0;
+  if(abs>=4&&abs<=8.5){
+    side=side||(homeFav?"home":"away");
+    quality+=16;
+  }else if(abs>=1.5&&abs<=3.5){
+    side=side||(homeFav?"away":"home");
+    quality+=14;
+  }else{
+    side=side||(homeFav?"away":"home");
+    quality-=Math.min(12,Math.max(0,abs-10));
+  }
+
+  const team=side==="home"?game.home:game.away;
+  const original=side==="home"?-Number(market.homeMargin):Number(market.homeMargin);
+  const teased=original+6;
+  const crossed=[];
+  if(original<3&&teased>=3)crossed.push("3");
+  if(original<7&&teased>=7)crossed.push("7");
+  if(original<=-7&&teased>-7)crossed.push("-7");
+  if(original<=-3&&teased>-3)crossed.push("-3");
+
+  const supported=Boolean(spreadOpp&&spreadOpp.side===side);
+  const score=Math.round(52+quality+(supported?Math.max(6,(spreadOpp.index||0)-55):0)+(crossed.length*4)+(game.sport==="nfl"?3:0));
+  return {
+    game,
+    label:team.short+" "+formatSpread(teased),
+    score,
+    why:"Moves "+team.short+" from "+formatSpread(original)+" to "+formatSpread(teased)+(crossed.length?" through key numbers "+crossed.join(" and "):"")+(supported?". BetRadar already leans to this side.":".")
+  };
 }
 
-export default function Home(){
+function bestTeasers(pool,size,count){
+  const source=pool.slice(0,12);
+  const combos=[];
+  function walk(start,chosen){
+    if(chosen.length===size){
+      const score=chosen.reduce((sum,x)=>sum+x.score,0)/size;
+      combos.push({legs:chosen.slice(),score});
+      return;
+    }
+    for(let i=start;i<source.length;i++)walk(i+1,[...chosen,source[i]]);
+  }
+  walk(0,[]);
+  return combos.sort((a,b)=>b.score-a.score).slice(0,count);
+}
+function TeaserCard({size,legs,number}){
+  return <article className="teaserCard compactTeaser">
+    <div className="teaserBadge">{size}-LEG TEASER #{number}</div>
+    <div className="teaserLegs">
+      {legs.map((leg,i)=><div key={leg.game.id+"-"+i}>
+        <span>{i+1}</span>
+        <div><strong>{leg.label}</strong><small>{matchup(leg.game)}</small></div>
+      </div>)}
+    </div>
+  </article>;
+}
+
+function BoardRow({game}){
+  const best=game.bestOpportunity;
+  const market=game.marketConsensus||{};
+  const available=Boolean(market.available);
+  const homeSpread=Number.isFinite(Number(market.homeMargin))?-Number(market.homeMargin):null;
+  const awaySpread=Number.isFinite(Number(market.homeMargin))?Number(market.homeMargin):null;
+  const total=Number.isFinite(Number(market.total))?Number(market.total):null;
+  const spreadSide=game.opportunities?.spread?.side;
+  const totalSide=game.opportunities?.total?.side;
+
+  const options=available?[
+    {key:"away-spread",label:teamDisplay(game.away),base:teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
+    {key:"home-spread",label:teamDisplay(game.home),base:teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
+    {key:"over",label:"OVER",base:total==null?"—":"OVER "+total.toFixed(1),odds:market.overOdds,tease:total==null?"—":"OVER "+(total-6).toFixed(1),suggested:totalSide==="over"},
+    {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
+  ]:[];
+
+  return <article className="gameTableRow openRow">
+    <div className="gameTableSummary">
+      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
+      <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.index>=80?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
+      <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
+    </div>
+
+    {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand alwaysVisible">
+      {options.map(option=>{
+        const totalReturn=tenDollarReturn(option.odds);
+        return <div className={"tableBetOption "+(option.suggested?"suggested":"")} key={option.key}>
+          <div className="tableBetTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:null}</div>
+          <div className="tableTease"><span>SUGGESTED TEASE</span><strong>{option.tease}</strong></div>
+          <div className="tableStraight"><span>GAME LINE</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
+          {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)}</small>:null}
+        </div>;
+      })}
+    </div>}
+  </article>;
+}
+
+export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
-  const[weekOffset,setWeekOffset]=useState(0);
-  const[mode,setMode]=useState("live");
-  const[data,setData]=useState({games:[],generatedAt:null});
+  const[data,setData]=useState({games:[],methodology:null});
+  const[showAllGames,setShowAllGames]=useState(false);
+  const[collegeSort,setCollegeSort]=useState("radar");
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
-  const[refreshing,setRefreshing]=useState(false);
-
-  const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
-
-  function chooseMode(next){
-    setMode(next);
-    if(next==="recap")setWeekOffset(-1);
-    if(next==="live")setWeekOffset(0);
-    if(next==="ahead")setWeekOffset(1);
-  }
-
-  async function load(manual=false,offset=weekOffset,currentLeague=league){
-    if(manual)setRefreshing(true);
-    try{
-      const w=footballRange(offset);
-      const r=await fetch("/api/games?league="+currentLeague+"&start="+w.start+"&end="+w.end,{cache:"no-store"});
-      if(!r.ok)throw new Error();
-      setData(await r.json());
-      setError("");
-    }catch{
-      setError("SCORE FEED TEMPORARILY OFFLINE");
-    }finally{
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }
+  const range=useMemo(()=>footballRange(1),[]);
 
   useEffect(()=>{
-    setLoading(true);
-    load(false,weekOffset,league);
-    if(mode!=="live"||weekOffset!==0)return;
-    const timer=setInterval(()=>load(false,0,league),30000);
-    return()=>clearInterval(timer);
-  },[league,weekOffset,mode]);
+    let ignore=false;
+    async function load(){
+      setShowAllGames(false);
+      setCollegeSort("radar");
+      setLoading(true);
+      try{
+        const r=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
+        if(!r.ok)throw new Error();
+        const json=await r.json();
+        if(!ignore){setData(json);setError("");}
+      }catch{
+        if(!ignore)setError("BET RADAR TEMPORARILY OFFLINE");
+      }finally{
+        if(!ignore)setLoading(false);
+      }
+    }
+    load();
+    return()=>{ignore=true};
+  },[league]);
 
   const games=data.games||[];
-  const live=games.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
-  const finals=games.filter(g=>g.state==="post").sort((a,b)=>b.interest.score-a.interest.score);
-  const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>b.interest.score-a.interest.score);
-  const liveBoard=live.length?live:games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,10);
-  const weekNumber=games.find(g=>g.week)?.week||null;
-  const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
+  const orderedGames=useMemo(()=>{
+    if(league!=="cfb"||collegeSort!=="top25")return games;
+    return games.slice().sort((a,b)=>{
+      const aRanks=[a.home?.rank,a.away?.rank].filter(Boolean);
+      const bRanks=[b.home?.rank,b.away?.rank].filter(Boolean);
+      const aRanked=aRanks.length>0?1:0;
+      const bRanked=bRanks.length>0?1:0;
+      if(aRanked!==bRanked)return bRanked-aRanked;
+      const aBest=aRanks.length?Math.min(...aRanks):99;
+      const bBest=bRanks.length?Math.min(...bRanks):99;
+      if(aBest!==bBest)return aBest-bBest;
+      const aTwo=aRanks.length===2?1:0;
+      const bTwo=bRanks.length===2?1:0;
+      if(aTwo!==bTwo)return bTwo-aTwo;
+      return (b.opportunityIndex||0)-(a.opportunityIndex||0);
+    });
+  },[games,league,collegeSort]);
+  const visibleGames=showAllGames?orderedGames:orderedGames.slice(0,15);
+  const opportunities=allOpportunities(games);
+  const top=opportunities.slice(0,10);
+  const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
+  const teaserGroups=[
+    {size:2,count:2,items:bestTeasers(teaserPool,2,2)},
+    {size:3,count:3,items:bestTeasers(teaserPool,3,3)},
+    {size:4,count:2,items:bestTeasers(teaserPool,4,2)},
+    {size:5,count:1,items:bestTeasers(teaserPool,5,1)}
+  ];
 
-  return <main className="shell">
-    <header className="stadiumHeader">
+  return <main className="betsShell">
+    <header className="betsHero simpleHero">
       <div>
-        <div className="brand">GAME<span>RADAR</span></div>
-        <div className="headerKicker">FOOTBALL INTELLIGENCE BOARD</div>
-        <h1>GAME COMMAND CENTER</h1>
-        <p>Pick your football. Pick your timeframe. See what matters.</p>
+        <a className="backLink" href="/scores">LIVE SCORE CENTER →</a>
+        <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
+        <h1>BETRADAR</h1>
+        <p>BetRadar surfaces the most interesting games and the strongest betting signals from actual season results, historical market lines and the current line. Every suggested bet shows the odds, $10-unit payout and BetRadar Index.</p>
       </div>
-      <div className="headerActions"><a className="betLabLink" href="/bets">BET LAB →</a><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
     </header>
 
-    <nav className="leagueHero" aria-label="League">
-      {LEAGUES.map(([v,title,sub])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>
-        <strong>{title}</strong><small>{sub}</small>
-      </button>)}
+    <nav className="betsLeagueToggle">
+      {LEAGUES.map(([v,label])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>{label}</button>)}
     </nav>
 
-    <nav className="modeRail" aria-label="Timeframe">
-      {MODES.map(([v,title,q])=><button key={v} className={mode===v?"active":""} onClick={()=>chooseMode(v)}>
-        <span>{title}</span><small>{q}</small>
-      </button>)}
-    </nav>
 
-    <section className="weekBoard">
-      <button aria-label="Previous football week" onClick={()=>setWeekOffset(x=>Math.max(-8,x-1))}>‹</button>
-      <div>
-        <span>SELECTED FOOTBALL WEEK</span>
-        <strong>{weekTitle}</strong>
-      </div>
-      <button aria-label="Next football week" onClick={()=>setWeekOffset(x=>Math.min(2,x+1))}>›</button>
+    <section className="confidenceLegend">
+      <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
+      <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
+      <div className="lean"><strong>60–69</strong><span>WATCH</span></div>
+      <div className="pass"><strong>&lt;60</strong><span>LOW CONFIDENCE</span></div>
     </section>
-
     {error?<div className="notice error">{error}</div>:null}
-
-    {loading?<div className="notice">SCANNING THE BOARD...</div>:<>
-      {mode==="recap"?<>
-        <div className="sectionIntro"><span>RECAP</span><h2>THE GAMES THAT WERE WORTH IT</h2><p>Finished games ranked by closeness, drama and matchup importance.</p></div>
-        <section className="scoreList">
-          {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="recap"/>):<div className="notice">NO FINALS FOUND FOR THIS FOOTBALL WEEK</div>}
-        </section>
-      </>:mode==="ahead"?<>
-        <div className="sectionIntro"><span>WEEK AHEAD</span><h2>EVERY UPCOMING GAME GETS A FUTURE INTEREST SCORE</h2><p>Close projected matchups matter most. Spread, records and matchup context shape every 0–100 score.</p></div>
-        <div className="aheadGrid">
-          <section className="scoreList">
-            <div className="listHeader"><span>UPCOMING GAMES</span><span>INTEREST</span></div>
-            {upcoming.length?upcoming.map(g=><GameRow key={g.id} game={g} mode="ahead"/>):<div className="notice">NO UPCOMING GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
-          </section>
-          <BetBoard games={upcoming} league={league}/>
+    {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
+      <section className="betSection simpleBetSection">
+        <div className="betSectionHead">
+          <span>01</span>
+          <div>
+            <h2>TOP 10 BETS OF THE WEEK</h2>
+            <p>The strongest real BetRadar signals for the week, ranked by confidence and then by game interest. When the evidence is especially strong, BetRadar calls it out as HIGH CONVICTION.</p>
+          </div>
         </div>
-      </>:<>
-        <div className="sectionIntro"><span>LIVE</span><h2>{live.length?"WHAT DESERVES YOUR SCREEN":"LATEST SCORES"}</h2><p>{live.length?"Close games receive the biggest Interest boost. Anything inside 10 points is called out immediately.":"No game is live right now. Showing the latest completed scores for this football week."}</p></div>
-        <section className="scoreList">
-          {liveBoard.length?liveBoard.map(g=><GameRow key={g.id} game={g} mode={g.state==="in"?"live":"recap"}/>):<div className="notice">NO GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
-        </section>
-      </>}
+        <div className="simplePickList">
+          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
+        </div>
+      </section>
+
+      <section className="betSection">
+        <div className="betSectionHead">
+          <span>02</span>
+          <div><h2>BEST TEASERS</h2><p>2 two-leg teasers · 3 three-leg teasers · 2 four-leg teasers · 1 five-leg teaser. Built from the strongest teaser-friendly lines.</p></div>
+        </div>
+        <div className="teaserGrid">
+          {teaserGroups.flatMap(group=>group.items.map((combo,i)=><TeaserCard key={group.size+"-"+i} size={group.size} number={i+1} legs={combo.legs}/>))}
+          {!teaserPool.length?<div className="notice">NO TEASER-FRIENDLY LINES AVAILABLE YET.</div>:null}
+        </div>
+      </section>
+
+      <section className="betSection">
+        <div className="betSectionHead everyGameHead">
+          <span>03</span>
+          <div>
+            <h2>EVERY GAME</h2>
+            <p>{league==="cfb"&&collegeSort==="top25"?"Top 25 games are pushed to the top, then the rest of the FBS slate follows.":"Starts with the 15 most interesting games. Tease lines stay visible on every shown game; expand the slate only when you want the rest."}</p>
+          </div>
+          {league==="cfb"?<div className="collegeSort">
+            <button className={collegeSort==="radar"?"active":""} onClick={()=>{setCollegeSort("radar");setShowAllGames(false)}}>BETRADAR</button>
+            <button className={collegeSort==="top25"?"active":""} onClick={()=>{setCollegeSort("top25");setShowAllGames(false)}}>TOP 25 FIRST</button>
+          </div>:null}
+        </div>
+        <div className="simpleBoard">
+          {visibleGames.map(game=><BoardRow key={game.id} game={game}/>)}
+        </div>
+        {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
+          {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}
+        </button>:null}
+      </section>
+
+      <details className="modelDetails">
+        <summary>What goes into the BetRadar Index?</summary>
+        <div>
+          <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, agreement across available market lines, and how similar spreads/totals have actually performed earlier this season.</p>
+          <p>The BetRadar Index is a relative signal score, not a win probability. Higher means more supporting evidence from team ATS/total history, similar past market lines and the current market. Low scores simply mean the evidence is thin.</p>
+          <div className="detailMetrics">
+            <span>Completed games reviewed: <strong>{data.methodology?.historyGames??0}</strong></span>
+            <span>Historical games with odds reloaded: <strong>{data.methodology?.historicalOddsGamesHydrated??0}</strong></span>
+            <span>Historical spread lines used: <strong>{data.methodology?.historicalSpreadGames??0}</strong></span>
+            <span>Historical totals used: <strong>{data.methodology?.historicalTotalGames??0}</strong></span>
+            <span>Method: <strong>Trend + market history + current line</strong></span>
+          </div>
+        </div>
+      </details>
     </>}
 
-    <footer>
-      {mode==="live"?"LIVE BOARD · AUTO-SCAN 30 SEC":"GAME COMMAND CENTER"}
-      {data.generatedAt?" · "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}
-      <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · ALL FBS GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
-    </footer>
+    <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · RECHECK LINES BEFORE WAGERING</footer>
   </main>;
 }

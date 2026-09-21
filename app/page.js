@@ -294,18 +294,31 @@ export default function BetsPage(){
   ];
 
   return <main className="betsShell">
+    <nav className="productSwitcher" aria-label="Game Radar products">
+      <a className="active betradar" href="/">
+        <strong>BETRADAR</strong>
+        <small>Bets · confidence · teasers</small>
+      </a>
+      <a className="gameradar" href="/scores">
+        <strong>GAMERADAR</strong>
+        <small>Live scores · what to watch</small>
+      </a>
+    </nav>
+
     <header className="betsHero simpleHero">
       <div>
-        <a className="backLink" href="/scores">LIVE SCORE CENTER →</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BETRADAR</h1>
         <p>BetRadar surfaces the most interesting games and the strongest betting signals from actual season results, historical market lines and the current line. Every suggested bet shows the odds, $10-unit payout and BetRadar Index.</p>
       </div>
     </header>
 
-    <nav className="betsLeagueToggle">
-      {LEAGUES.map(([v,label])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>{label}</button>)}
-    </nav>
+    <div className="leagueSwitchBlock">
+      <span className="switchLabel">CHOOSE LEAGUE</span>
+      <nav className="betsLeagueToggle" aria-label="League">
+        {LEAGUES.map(([v,label])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>{label}</button>)}
+      </nav>
+    </div>
 
 
     <section className="confidenceLegend">

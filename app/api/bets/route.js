@@ -23,7 +23,7 @@ function selectRelevantHistory(history,upcoming,league){
   const wanted=new Set(upcoming.flatMap(g=>[String(g.home?.id||""),String(g.away?.id||"")]).filter(Boolean));
   const counts=new Map();
   const selected=[];
-  const maxGames=league==="cfb"?150:48;
+  const maxGames=league==="cfb"?48:24;
   const sorted=history.slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
   for(const game of sorted){
     const ids=[String(game.home?.id||""),String(game.away?.id||"")];
@@ -62,19 +62,35 @@ export async function GET(request){
 
   const year=Number(start.slice(0,4))||new Date().getFullYear();
   try{
-    const [weekGames,seasonGames]=await Promise.all([
-      fetchScoreboard(league,start,end),
-      fetchSeasonScoreboard(league,year)
-    ]);
-
+    const weekGames=await fetchScoreboard(league,start,end);
     const upcoming=rankGames(weekGames.filter(g=>g.state==="pre"));
+
+    let seasonGames=[];
+    let historyLoadError=null;
+    try{
+      seasonGames=await fetchSeasonScoreboard(league,year);
+    }catch(error){
+      historyLoadError=String(error?.message||error);
+      console.error("historical scoreboard error",error);
+    }
+
     const history=seasonGames.filter(g=>g.state==="post"&&new Date(g.date)<new Date(start+"T12:00:00Z"));
     const selectedHistory=selectRelevantHistory(history,upcoming,league);
 
-    const [oddsResults,historicalOdds]=await Promise.all([
-      mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId)),
-      mapLimit(selectedHistory,12,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId))
+    // Current lines: hydrate only the highest-interest games. Every other game still
+    // uses the fresh line included in the weekly scoreboard payload.
+    const currentLimit=league==="cfb"?24:upcoming.length;
+    const currentTargets=upcoming.slice(0,currentLimit);
+    const [currentOdds,historicalOdds]=await Promise.all([
+      mapLimit(currentTargets,8,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId,900)),
+      mapLimit(selectedHistory,8,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId,86400))
     ]);
+
+    const currentMarkets=new Map();
+    currentTargets.forEach((game,index)=>{
+      const quotes=currentOdds[index]||[];
+      if(quotes.length)currentMarkets.set(game.id,quotes);
+    });
 
     const historicalMarkets=new Map();
     selectedHistory.forEach((game,index)=>{
@@ -86,8 +102,8 @@ export async function GET(request){
     const profiles=buildTrendProfiles(hydratedHistory);
     const vegasHistory=buildVegasHistory(hydratedHistory,league);
 
-    const games=upcoming.map((game,index)=>{
-      const allOdds=oddsResults[index]||[];
+    const games=upcoming.map((game)=>{
+      const allOdds=currentMarkets.get(game.id)||[];
       const market=consensusMarket(game,allOdds);
       const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
@@ -108,13 +124,16 @@ export async function GET(request){
         name:"Bet Radar",
         description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current sportsbook lines. Outlier quotes are rejected against the broader market before display.",
         historyGames:history.length,
+        historyLoadError,
+        currentGames:upcoming.length,
+        currentOddsGamesHydrated:currentMarkets.size,
         historicalOddsGamesHydrated:historicalMarkets.size,
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,
         vegasHistory
       },
       games
-    },{headers:{"Cache-Control":"public, s-maxage=300, stale-while-revalidate=300"}});
+    },{headers:{"Cache-Control":"public, s-maxage=900, stale-while-revalidate=300"}});
   }catch(error){
     console.error("bet radar error",error);
     return NextResponse.json({error:"Bet radar unavailable",detail:String(error?.message||error)},{status:500});

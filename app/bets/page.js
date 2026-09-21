@@ -638,10 +638,10 @@ export default function BetsPage(){
     </section>
 
     <nav className="betsSectionNav" aria-label="BetRadar sections">
+      <a href="#bet-sheet"><span>★</span><strong>MY BETS</strong><small>{weekSheet.length} saved</small></a>
       <a href="#top-bets"><span>01</span><strong>TOP BETS</strong><small>Best signals</small></a>
       <a href="#parlays"><span>02</span><strong>PARLAYS + TEASERS</strong><small>Build a card</small></a>
-      <a href="#bet-sheet"><span>03</span><strong>MY BETTING SHEET</strong><small>{weekSheet.length} saved</small></a>
-      <a href="#every-game"><span>04</span><strong>EVERY GAME</strong><small>Full board</small></a>
+      <a href="#every-game"><span>03</span><strong>EVERY GAME</strong><small>Full board</small></a>
     </nav>
 
     <div className="leagueSwitchBlock">

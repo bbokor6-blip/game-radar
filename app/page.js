@@ -17,9 +17,10 @@ function GameCard({game,featured=false}){
  </article>
 }
 export default function Home(){
- const[tab,setTab]=useState("best"),[data,setData]=useState({games:[],generatedAt:null}),[loading,setLoading]=useState(true),[error,setError]=useState(""),[refreshing,setRefreshing]=useState(false);
- async function load(manual=false){if(manual)setRefreshing(true);try{const r=await fetch("/api/games",{cache:"no-store"});if(!r.ok)throw new Error();setData(await r.json());setError("")}catch{setError("LIVE FEED TEMPORARILY OFFLINE")}finally{setLoading(false);setRefreshing(false)}}
- useEffect(()=>{load();const timer=setInterval(()=>load(),30000);return()=>clearInterval(timer)},[]);
+ const[tab,setTab]=useState("best"),[weekOffset,setWeekOffset]=useState(0),[data,setData]=useState({games:[],generatedAt:null}),[loading,setLoading]=useState(true),[error,setError]=useState(""),[refreshing,setRefreshing]=useState(false);
+ function range(offset){const now=new Date(),day=now.getDay(),start=new Date(now);start.setDate(now.getDate()-day+(offset*7));const end=new Date(start);end.setDate(start.getDate()+6);const fmt=d=>d.toISOString().slice(0,10);return{start:fmt(start),end:fmt(end)}}
+ async function load(manual=false,offset=weekOffset){if(manual)setRefreshing(true);try{const w=range(offset);const r=await fetch(`/api/games?start=${w.start}&end=${w.end}`,{cache:"no-store"});if(!r.ok)throw new Error();setData(await r.json());setError("")}catch{setError("LIVE FEED TEMPORARILY OFFLINE")}finally{setLoading(false);setRefreshing(false)}}
+ useEffect(()=>{setLoading(true);load(false,weekOffset);if(weekOffset!==0)return;const timer=setInterval(()=>load(false,0),30000);return()=>clearInterval(timer)},[weekOffset]);
  const filtered=useMemo(()=>tab==="best"?data.games:data.games.filter(g=>g.sport===tab),[data.games,tab]);
  const live=filtered.filter(g=>g.state==="in");
  const recent=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,12);
@@ -27,6 +28,7 @@ export default function Home(){
  return <main className="shell">
   <header className="stadiumHeader"><div className="bolt b1"/><div className="bolt b2"/><div><div className="brand">GAME<span>RADAR</span></div><div className="headerKicker">LIVE FOOTBALL COMMAND CENTER</div><h1>GAME COMMAND<br/>CENTER</h1><p>Every game on the board. Ranked by urgency.</p></div><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></header>
   <nav className="tabs">{TABS.map(([v,l])=><button key={v} className={tab===v?"active":""} onClick={()=>setTab(v)}>{l}</button>)}</nav>
+  <div className="weekBar"><label htmlFor="weekSelect">BOARD WEEK</label><select id="weekSelect" value={weekOffset} onChange={e=>setWeekOffset(Number(e.target.value))}><option value="0">CURRENT WEEK</option><option value="-1">LAST WEEK</option><option value="-2">2 WEEKS AGO</option><option value="-3">3 WEEKS AGO</option><option value="-4">4 WEEKS AGO</option></select></div>
   {error?<div className="notice error">{error}</div>:null}
   {loading?<div className="notice">SCANNING THE BOARD...</div>:<>
    {live.length?<><div className="sectionLabel">LIVE · TOP SIGNAL</div>{live.map((g,i)=><GameCard key={g.id} game={g} featured={i===0}/>)}</>:<div className="notice">NO LIVE GAMES · SHOWING THE REST OF THE BOARD</div>}

@@ -1053,3 +1053,150 @@ footer{
   .betSheetRow>div:nth-child(3){display:none}
   .betSheetRow>button{grid-column:2;grid-row:2}
 }
+
+
+/* VISUAL POLISH: CONSUMER BETRADAR */
+.heroStats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 12px
+}
+.heroStats>div{
+  padding:10px 12px;border:1px solid #354036;background:#0d120e;display:flex;align-items:center;justify-content:space-between;gap:8px
+}
+.heroStats span{color:#747e74;font:1000 7px "Courier New",monospace;letter-spacing:.1em}
+.heroStats strong{color:#eef1e9;font:1000 20px/1 "Courier New",monospace}
+
+.simplePick{
+  border-color:#303a31;background:#0d120e;box-shadow:none
+}
+.simplePick.featuredPick{
+  border-color:#62573a;background:linear-gradient(135deg,#19180f,#0d120e 70%);
+  box-shadow:inset 4px 0 0 var(--amber),0 8px 26px #0004
+}
+.simplePick.featuredPick .simplePickRank{
+  color:var(--amber);font-size:13px
+}
+.simplePick.featuredPick .confidenceIndex{
+  background:#12170f;border-left-color:#394637
+}
+.pickTagRow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.matchupTag,.topPickTag{
+  display:inline-flex;padding:4px 6px;border:1px solid #3d483e;background:#0a0f0b;
+  color:#93a08f;font:1000 6.5px "Courier New",monospace;letter-spacing:.08em
+}
+.topPickTag{border-color:#6e5b2f;color:var(--amber)}
+.matchupVisual{display:flex;align-items:center;gap:8px;min-width:0}
+.matchupVisual>em{font-style:normal;color:#5d675e;font:900 9px "Courier New",monospace}
+.teamMini{display:flex;align-items:center;gap:6px;min-width:0}
+.teamMini img,.teamMini i{
+  width:28px;height:28px;object-fit:contain;display:block;flex:0 0 28px
+}
+.teamMini i{border-radius:50%;border:1px solid #3b463c;background:#151b15}
+.teamMini b{
+  color:#edf1e9;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.gameDate{
+  color:#aeb6aa!important;font:1000 7px "Courier New",monospace!important;letter-spacing:.075em!important
+}
+.simplePick.featuredPick .teamMini img,.simplePick.featuredPick .teamMini i{
+  width:34px;height:34px;flex-basis:34px
+}
+.simplePick.featuredPick .teamMini b{font-size:13px}
+
+.simpleWhy{opacity:.9}
+.evidenceChips span{border-color:#303930;background:#0a0f0b}
+.payoutStrip{border-color:#314536;background:#0c140e}
+.interestingWhy{border-color:#414a37;background:#0d130d}
+
+.parlayGrid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px
+}
+.parlayCard{
+  border:1px solid #4a4430;background:linear-gradient(180deg,#16150e,#0d120e);padding:12px
+}
+.parlayTop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.parlayTop span{
+  color:#e2ddd0;font:1000 8px "Courier New",monospace;letter-spacing:.08em
+}
+.parlayTop b{
+  color:var(--amber);font:1000 6px "Courier New",monospace;letter-spacing:.07em
+}
+.parlayLegList{display:grid;gap:6px}
+.parlayLegList>div{
+  display:grid;grid-template-columns:18px minmax(0,1fr) 28px;gap:7px;align-items:center;
+  padding:7px;border:1px solid #30382f;background:#0a0f0b
+}
+.parlayLegList>div>span{
+  color:#6d766d;font:1000 7px "Courier New",monospace
+}
+.parlayLegList strong{display:block;font-size:10px;color:#edf0e7}
+.parlayLegList small{display:block;margin-top:2px;color:#747d74;font-size:7px;line-height:1.25}
+.parlayLegList em{
+  font-style:normal;color:var(--green);font:1000 12px "Courier New",monospace;text-align:right
+}
+.parlayPayout{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px;padding-top:9px;border-top:1px solid #383726
+}
+.parlayPayout span{color:#747e74;font:1000 6.5px "Courier New",monospace;letter-spacing:.08em}
+.parlayPayout strong{color:var(--amber);font:1000 10px "Courier New",monospace}
+.parlayPayout small{color:#aeb5aa;font:800 7px "Courier New",monospace}
+.subSectionLabel{
+  margin:14px 0 8px;color:#7c867b;font:1000 7px "Courier New",monospace;letter-spacing:.12em
+}
+
+/* Betting sheet reads more like a ticket */
+.betSheet{
+  position:relative;border-color:#48533f;background:
+    linear-gradient(180deg,#121811,#0d120e)
+}
+.betSheet:before{
+  content:"";position:absolute;top:-1px;bottom:-1px;left:8px;border-left:1px dashed #52604a;opacity:.55
+}
+.betSheetHead,.betSheetRows,.betSheetEmpty{position:relative;z-index:1}
+.betSheetHead{padding-left:24px}
+.betSheetRow{padding-left:24px}
+.betSheetEmpty{padding-left:24px}
+.betSheetRow>div:first-child strong{font-size:13px}
+.betSheetHead h2{font-size:20px}
+
+.mobileBetSheet{display:none}
+
+/* Reduce visual noise on the full board */
+.gameTableRow{border-color:#2f3830;background:#0c110d}
+.gameTableSummary{border-bottom-color:#293229}
+.gameTableExpand{background:#090e0a}
+.tableBetOption{border-color:#2c352d;background:#0b100c}
+.tableTease{background:#0f170e}
+.boardControls{border-color:#303a31}
+
+/* GameRadar broadcast feel */
+.momentTeam{display:flex;align-items:center;gap:8px;min-width:0}
+.momentTeam img{width:34px;height:34px;object-fit:contain;flex:0 0 34px}
+.momentScore>div:last-child .momentTeam{flex-direction:row-reverse}
+.gameMoment{border-color:#58714a;background:linear-gradient(135deg,#142014,#0a0f0b 72%)}
+
+@media(max-width:860px){
+  .parlayGrid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .heroStats{gap:5px}
+  .heroStats>div{padding:8px}
+  .heroStats span{font-size:5.8px}
+  .heroStats strong{font-size:16px}
+  .simplePick{grid-template-columns:24px minmax(0,1fr) 68px}
+  .simplePick.featuredPick{box-shadow:inset 3px 0 0 var(--amber)}
+  .teamMini img,.teamMini i{width:24px;height:24px;flex-basis:24px}
+  .simplePick.featuredPick .teamMini img,.simplePick.featuredPick .teamMini i{width:28px;height:28px;flex-basis:28px}
+  .teamMini b,.simplePick.featuredPick .teamMini b{font-size:10px}
+  .matchupVisual{gap:5px}
+  .gameDate{font-size:6.5px!important}
+  .parlayCard{padding:10px}
+  .betSheetHead{padding-left:18px}
+  .betSheetRow{padding-left:18px}
+  .betSheetEmpty{padding-left:18px}
+  .mobileBetSheet{
+    display:block;position:fixed;right:12px;bottom:12px;z-index:20;text-decoration:none;
+    padding:10px 12px;border:1px solid #6f7f4f;background:#131b11;color:var(--green);
+    box-shadow:0 8px 30px #000a;font:1000 8px "Courier New",monospace;letter-spacing:.08em
+  }
+  .momentTeam img{width:26px;height:26px;flex-basis:26px}
+}

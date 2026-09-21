@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
 
 const LEAGUES=[
   ["nfl","NFL","Every NFL game"],
@@ -145,6 +146,27 @@ function GameRow({game,mode,league,weekOffset=0}){
   </article>;
 }
 
+function AgentScoreCard({game,league,weekOffset}){
+  const spread=spreadForGame(game);
+  const conferences=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
+  return <article className="agentGameCard scoreAgentCard">
+    <div className="agentGameTeams">
+      <div className="agentTeamPair">
+        <span>{game.away.logo?<img src={game.away.logo} alt=""/>:null}<b>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</b></span>
+        <em>@</em>
+        <span>{game.home.logo?<img src={game.home.logo} alt=""/>:null}<b>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</b></span>
+      </div>
+      <small>{gameTime(game)}</small>
+    </div>
+    <div className="agentGameSignals">
+      <span>{conferences.length?conferences.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
+      <strong>{spread!=null?"SPREAD "+spread:marketLine(game)}</strong>
+    </div>
+    <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
+    <a className="agentOpen" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset+1)+"&game="+game.id}>OPEN IN BETRADAR →</a>
+  </article>;
+}
+
 function GameOfMoment({game,league,weekOffset}){
   if(!game)return null;
   const status=[game.status,game.downDistance].filter(Boolean).join(" · ");
@@ -200,6 +222,8 @@ export default function Home(){
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const[refreshing,setRefreshing]=useState(false);
+  const[agentQuery,setAgentQuery]=useState("");
+  const[agentSpec,setAgentSpec]=useState(null);
 
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
   const hasLiveNow=(data.games||[]).some(g=>g.sport===league&&g.state==="in");
@@ -227,6 +251,25 @@ export default function Home(){
     url.searchParams.set("week",String(weekOffset));
     window.history.replaceState({},"",url.pathname+url.search+url.hash);
   },[league,mode,weekOffset,prefsReady]);
+
+  function runAgentText(text){
+    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset});
+    setAgentQuery(text);
+    if(spec.isSaveAction){
+      setAgentSpec({...spec,actionMessage:"SAVE ACTIONS LIVE IN BETRADAR — OPEN A RESULT THERE TO ADD IT TO YOUR SHEET."});
+      return;
+    }
+    setAgentSpec(spec);
+    if(spec.league!==league)setLeague(spec.league);
+    if(spec.weekOffset!==weekOffset){
+      setWeekOffset(Math.max(-8,Math.min(2,spec.weekOffset)));
+      setMode(spec.weekOffset===0?"live":"ahead");
+    }
+  }
+  function submitAgent(e){
+    e?.preventDefault();
+    if(agentQuery.trim())runAgentText(agentQuery.trim());
+  }
 
   function chooseMode(next){
     setMode(next);
@@ -271,6 +314,10 @@ export default function Home(){
   const live=games.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
   const finals=games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
   const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const agentResults=useMemo(()=>{
+    if(!agentSpec||agentSpec.isSaveAction||agentSpec.league!==league||agentSpec.weekOffset!==weekOffset)return [];
+    return searchGames(games,agentSpec);
+  },[games,agentSpec,league,weekOffset]);
   const gameOfMoment=live[0]||null;
   const otherLive=live.slice(1);
   const weekNumber=games.find(g=>g.week)?.week||null;
@@ -305,6 +352,33 @@ export default function Home(){
       </div>
       <div className="headerActions"><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
     </header>
+
+    <section className="askRadar">
+      <div className="askRadarHead">
+        <div><span>✦ ASK GAMERADAR</span><h2>SEARCH THE FOOTBALL BOARD</h2></div>
+        <small>Ask naturally. GameRadar translates the request into visible filters, then searches the real weekly slate.</small>
+      </div>
+      <form className="askRadarForm" onSubmit={submitAgent}>
+        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="e.g. Give me all the tight games for Big Ten and SEC schools this week"/>
+        <button type="submit">SEARCH →</button>
+      </form>
+      <div className="askPrompts">
+        {[
+          "Tight Big Ten + SEC games this week",
+          "Top 25 games with spreads under 10",
+          "Close games Saturday after 7 PM",
+          "Best games next week"
+        ].map(prompt=><button key={prompt} onClick={()=>runAgentText(prompt)}>{prompt}</button>)}
+      </div>
+      {agentSpec?<div className="agentInterpretation">
+        <div className="agentChips">{agentSpec.chips.map(chip=><span key={chip}>{chip}</span>)}</div>
+        <p>{agentSpec.actionMessage||queryExplanation(agentSpec)}</p>
+      </div>:null}
+      {agentSpec&&!agentSpec.isSaveAction?<div className="agentResults">
+        <div className="agentResultsHead"><strong>{loading?"SEARCHING…":agentResults.length+" GAME"+(agentResults.length===1?"":"S")+" FOUND"}</strong><span>STRUCTURED SEARCH · REAL GAME DATA</span></div>
+        {!loading&&agentResults.length?agentResults.map(game=><AgentScoreCard key={game.id} game={game} league={league} weekOffset={weekOffset}/>):!loading?<div className="notice">NO GAMES MATCH THAT SEARCH.</div>:null}
+      </div>:null}
+    </section>
 
     <div className="leagueSwitchBlock scoreLeagueSwitch">
       <span className="switchLabel">CHOOSE LEAGUE</span>

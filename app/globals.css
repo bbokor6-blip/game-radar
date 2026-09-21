@@ -4006,3 +4006,120 @@ body{
     border-radius:7px;
   }
 }
+
+
+/* Weekly Radar + shared suite menu */
+.suiteMenu,.wrMenu{position:relative}
+.suiteMenu summary,.wrMenu summary{
+  list-style:none;
+  width:40px;height:40px;display:grid;place-items:center;
+  border:1px solid #30414e;background:#0d1922;color:#dce4e9;
+  cursor:pointer;font-size:19px;font-weight:900;
+}
+.suiteMenu summary::-webkit-details-marker,.wrMenu summary::-webkit-details-marker{display:none}
+.suiteMenu>div,.wrMenu>div{
+  position:absolute;right:0;top:46px;z-index:90;
+  min-width:170px;padding:6px;border:1px solid #344754;
+  background:#09151e;box-shadow:0 14px 30px #0008;
+}
+.suiteMenu a,.wrMenu a{
+  display:block;padding:10px 11px;color:#e8edf1;text-decoration:none;
+  font-size:13px;font-weight:800;
+}
+.suiteMenu a:hover,.wrMenu a:hover{background:#13222c}
+
+.wrPage{width:min(1080px,100%);margin:0 auto;padding:10px 18px 70px;color:#f5f7f9}
+.wrHeader{
+  position:sticky;top:0;z-index:50;display:grid;
+  grid-template-columns:auto auto minmax(190px,1fr) auto;
+  gap:10px;align-items:center;padding:8px 10px;
+  border:1px solid #263744;background:#08131cf2;backdrop-filter:blur(14px)
+}
+.wrBrand{color:#fff;text-decoration:none;font-size:19px;font-weight:1000;letter-spacing:-.04em}
+.wrBrand span{color:#4cdf73}
+.wrHeader nav{display:flex;border:1px solid #30414e;background:#0d1922}
+.wrHeader nav button{
+  min-height:38px;padding:0 12px;border:0;background:transparent;
+  color:#aab6bf;font-size:13px;font-weight:900;cursor:pointer
+}
+.wrHeader nav button.active{background:#1b2a22;color:#fff}
+.wrWeek{display:grid;grid-template-columns:36px 1fr 36px;align-items:center;border:1px solid #354855;background:#0c1821}
+.wrWeek>button{height:40px;border:0;background:#101d27;color:#fff;font-size:20px}
+.wrWeek>button:disabled{color:#4e5d67}
+.wrWeek>div{text-align:center}
+.wrWeek span,.wrWeek strong{display:block}
+.wrWeek span{font-size:11px;color:#f0d169;font-weight:900}
+.wrWeek strong{font-size:12px;color:#d6dde2;font-variant-numeric:tabular-nums}
+
+.wrHero{
+  display:grid;grid-template-columns:minmax(0,1.4fr) auto;gap:24px;
+  align-items:end;padding:34px 4px 22px;border-bottom:1px solid #263744
+}
+.wrEyebrow,.wrSectionHead span,.wrTakeaway>span{color:#7ee895;font-size:12px;font-weight:950;letter-spacing:.08em}
+.wrHero h1{margin:5px 0 8px;font-size:42px;line-height:1;letter-spacing:-.045em}
+.wrHero p{max-width:680px;margin:0;color:#b6c0c8;font-size:15px;line-height:1.5}
+.wrPulse{display:flex;gap:8px}
+.wrPulse div{min-width:86px;padding:10px;border:1px solid #314550;background:#0b1720}
+.wrPulse strong{display:block;font-size:25px;line-height:1;font-variant-numeric:tabular-nums}
+.wrPulse span{display:block;margin-top:4px;color:#93a1ab;font-size:12px}
+
+.wrSection{margin-top:28px}
+.wrSectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:10px}
+.wrSectionHead h2{margin:3px 0 0;font-size:26px;letter-spacing:-.03em}
+.wrSectionHead a{color:#d5dfE5;text-decoration:none;font-size:13px;font-weight:850}
+.wrGames{display:grid;gap:9px}
+.wrGame{padding:14px;border:1px solid #2c3f4a;background:#0b1620}
+.wrGameHead{display:grid;grid-template-columns:34px minmax(0,1fr) 46px;gap:10px;align-items:center}
+.wrRank{color:#667782;font-size:13px;font-weight:900}
+.wrTeams{display:flex;align-items:center;gap:8px;min-width:0}
+.wrTeams>span{display:flex;align-items:center;gap:6px;min-width:0}
+.wrTeams img{width:27px;height:27px;object-fit:contain}
+.wrTeams b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrTeams em{color:#65747f;font-style:normal}
+.wrGameHead small{display:block;margin-top:4px;color:#96a4ae;font-size:13px}
+.wrRadarIndex{
+  width:46px;height:46px;display:grid;place-items:center;border-radius:8px;
+  border:1px solid #3f5a49;background:#0f1d18;color:#7ff397;
+  font-size:22px;font-weight:1000;font-variant-numeric:tabular-nums
+}
+.wrGame>p{margin:10px 0 0;color:#d8dfe4;font-size:14px;line-height:1.45}
+.wrGameFoot{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-top:10px;padding-top:9px;border-top:1px solid #263744}
+.wrGameFoot>div:first-child{display:flex;gap:6px;flex-wrap:wrap}
+.wrGameFoot>div:first-child span{padding:4px 6px;border:1px solid #30424d;color:#aebbc4;font-size:12px}
+.wrPick{display:flex;flex-direction:column;text-align:right}
+.wrPick span{color:#d8bc57;font-size:11px;font-weight:900}
+.wrPick strong{font-size:14px}
+.wrPick small{color:#94a1aa;font-size:11px}
+.wrPickGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wrPickCard{padding:13px;border:1px solid #4a442d;background:#14170f}
+.wrPickCard>strong{display:block;margin-top:12px;font-size:20px}
+.wrPickCard>span{display:block;margin-top:3px;color:#e0c861;font-size:12px}
+.wrPickCard p{margin:8px 0 0;color:#b7c1c8;font-size:13px;line-height:1.45}
+.wrTakeaway{padding:18px;border-left:3px solid #4cdf73;background:#0b171d}
+.wrTakeaway h2{margin:5px 0;font-size:24px}
+.wrTakeaway p{margin:0;color:#c6d0d7;font-size:14px}
+
+@media(max-width:900px){
+  .grHeader,.brHeader{grid-template-columns:auto auto 1fr auto auto}
+}
+@media(max-width:700px){
+  .suiteMenu{display:none}
+  .wrPage{padding:6px 8px 50px}
+  .wrHeader{grid-template-columns:auto 1fr auto;gap:7px}
+  .wrBrand{font-size:17px}
+  .wrHeader nav{grid-column:2}
+  .wrWeek{grid-column:1/-1;grid-row:2;width:100%}
+  .wrMenu{grid-column:3;grid-row:1}
+  .wrHero{grid-template-columns:1fr;padding:24px 2px 16px;gap:14px}
+  .wrHero h1{font-size:34px}
+  .wrPulse{overflow-x:auto}
+  .wrSectionHead h2{font-size:23px}
+  .wrGameHead{grid-template-columns:27px minmax(0,1fr) 40px}
+  .wrRadarIndex{width:40px;height:40px;font-size:19px}
+  .wrTeams{gap:5px}
+  .wrTeams img{width:22px;height:22px}
+  .wrTeams b{font-size:13px}
+  .wrGameFoot{align-items:flex-start;flex-direction:column}
+  .wrPick{text-align:left}
+  .wrPickGrid{grid-template-columns:1fr}
+}

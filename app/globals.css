@@ -4177,3 +4177,85 @@ body{
     scroll-snap-align:start;
   }
 }
+
+
+/* Radar Picks — official model ledger */
+.rpPage{width:min(1120px,100%);margin:0 auto;padding:10px 18px 70px;color:#f5f7f9}
+.rpHeader{
+  position:sticky;top:0;z-index:55;display:grid;
+  grid-template-columns:auto auto minmax(200px,1fr) auto;
+  gap:10px;align-items:center;padding:8px 10px;
+  border:1px solid #263744;background:#08131cf4;backdrop-filter:blur(14px)
+}
+.rpBrand{color:#fff;text-decoration:none;font-size:19px;font-weight:1000;letter-spacing:-.04em}
+.rpBrand span{color:#7ff397}
+.rpLeague{display:flex;border:1px solid #30414e;background:#0d1922}
+.rpLeague button{min-height:38px;padding:0 12px;border:0;background:transparent;color:#aab6bf;font-size:13px;font-weight:900;cursor:pointer}
+.rpLeague button.active{background:#1b2a22;color:#fff}
+.rpWeek{display:grid;grid-template-columns:36px minmax(120px,1fr) 36px;align-items:center;border:1px solid #354855;background:#0c1821}
+.rpWeek>button{height:40px;border:0;background:#101d27;color:#fff;font-size:20px}
+.rpWeek>button:disabled{color:#4e5d67}
+.rpWeek>div{text-align:center}
+.rpWeek span,.rpWeek strong{display:block}
+.rpWeek span{color:#f0d169;font-size:11px;font-weight:900}
+.rpWeek strong{color:#d6dde2;font-size:12px;font-variant-numeric:tabular-nums}
+
+.rpHero{display:grid;grid-template-columns:minmax(0,1.4fr) auto;gap:24px;align-items:end;padding:32px 4px 22px;border-bottom:1px solid #263744}
+.rpHero>div>span,.rpHistoryHead span{color:#7ee895;font-size:12px;font-weight:950;letter-spacing:.08em}
+.rpHero h1{margin:5px 0 8px;font-size:40px;line-height:1;letter-spacing:-.045em}
+.rpHero p{max-width:700px;margin:0;color:#b6c0c8;font-size:15px;line-height:1.5}
+.rpStats{display:flex;gap:8px}
+.rpStats div{min-width:92px;padding:10px;border:1px solid #314550;background:#0b1720}
+.rpStats strong{display:block;font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+.rpStats span{display:block;margin-top:4px;color:#93a1ab;font-size:12px}
+
+.rpBoard{display:grid;gap:8px;margin-top:20px}
+.rpGame{
+  display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:start;
+  padding:13px;border:1px solid #2c3f4a;background:#0b1620
+}
+.rpScore{
+  width:46px;height:46px;display:grid;place-items:center;border:1px solid #3f5a49;
+  background:#0f1d18;color:#7ff397;border-radius:8px;font-size:22px;font-weight:1000;
+  font-variant-numeric:tabular-nums
+}
+.rpMain{display:grid;grid-template-columns:minmax(220px,1.1fr) minmax(210px,.8fr);gap:12px;align-items:center}
+.rpMatchup,.rpPreferred{display:flex;flex-direction:column;gap:3px}
+.rpMatchup strong{font-size:16px}
+.rpMatchup span,.rpPreferred small{color:#95a3ad;font-size:12px}
+.rpPreferred>span{color:#e0c861;font-size:10px;font-weight:950;letter-spacing:.06em}
+.rpPreferred strong{font-size:18px}
+.rpMain p{grid-column:1/-1;margin:2px 0 0;color:#b9c4cb;font-size:13px;line-height:1.42}
+.rpResult{min-width:66px;padding:6px 8px;border:1px solid #3a4b56;background:#101b23;color:#aeb8bf;text-align:center;font-size:11px;font-weight:950}
+.rpResult.w{border-color:#3f6c4a;color:#8cf29e}
+.rpResult.l{border-color:#6e4141;color:#f4a1a1}
+.rpResult.push{border-color:#625d42;color:#dfd28a}
+
+.rpHistory{margin-top:34px}
+.rpHistoryHead{display:flex;align-items:end;justify-content:space-between;margin-bottom:10px}
+.rpHistoryHead h2{margin:3px 0 0;font-size:27px}
+.rpHistoryHead>strong{font-size:22px;font-variant-numeric:tabular-nums}
+.rpHistory details{border-top:1px solid #2c3f4a;background:#0b1620}
+.rpHistory details:last-child{border-bottom:1px solid #2c3f4a}
+.rpHistory summary{padding:12px;cursor:pointer;font-size:14px;font-weight:850}
+.rpArchiveRow{display:grid;grid-template-columns:minmax(0,1fr) 180px auto;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid #22323d}
+.rpArchiveRow span{color:#c8d0d6;font-size:13px}
+.rpArchiveRow strong{font-size:13px}
+
+@media(max-width:700px){
+  .rpPage{padding:6px 8px 50px}
+  .rpHeader{grid-template-columns:auto 1fr auto;gap:7px}
+  .rpBrand{font-size:17px}
+  .rpLeague{grid-column:2}
+  .rpWeek{grid-column:1/-1;grid-row:2;width:100%}
+  .rpHero{grid-template-columns:1fr;padding:24px 2px 16px;gap:14px}
+  .rpHero h1{font-size:33px}
+  .rpStats{overflow-x:auto}
+  .rpGame{grid-template-columns:42px minmax(0,1fr)}
+  .rpScore{width:40px;height:40px;font-size:19px}
+  .rpMain{grid-template-columns:1fr}
+  .rpMain p{grid-column:1}
+  .rpResult{grid-column:2;justify-self:start}
+  .rpArchiveRow{grid-template-columns:1fr auto}
+  .rpArchiveRow strong{grid-column:1}
+}

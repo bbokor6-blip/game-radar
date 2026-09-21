@@ -1,19 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
-import { metadataChips } from "../../lib/gameMetadata";
+import { parseAgentQuery, searchGames, queryExplanation } from "../../lib/agentSearch";
+import { gameMetadata } from "../../lib/gameMetadata";
 
-const LEAGUES=[
-  ["nfl","NFL","Every NFL game"],
-  ["cfb","COLLEGE FBS","Every FBS game · Top 25 featured"]
-];
-const MODES=[
-  ["recap","RECAP","What happened last week?"],
-  ["live","THIS WEEK / LIVE GAMES","Live first · full weekly board"],
-  ["ahead","WEEK AHEAD","What should I circle?"]
-];
-
-function footballRange(offset){
+function footballRange(offset=0){
   const now=new Date();
   const day=now.getDay();
   const daysSinceTuesday=(day+5)%7;
@@ -32,437 +22,333 @@ function rangeLabel(range){
   return a+"–"+b;
 }
 
-function gameTime(game){
+function kickoff(game){
   return new Date(game.date).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
 }
 
-function matchupLabel(game){
-  return game.away.short+" @ "+game.home.short;
+function todayKey(date=new Date()){
+  return new Date(date).toLocaleDateString("en-CA");
+}
+
+function gameDayKey(game){
+  return new Date(game.date).toLocaleDateString("en-CA");
 }
 
 function marketLine(game){
-  if(!game.market) return "LINE PENDING";
-  return game.market.details || (game.market.spread!=null ? "SPREAD "+game.market.spread : "LINE PENDING");
+  if(!game.market)return "Line pending";
+  return game.market.details || (game.market.spread!=null?"Spread "+game.market.spread:"Line pending");
 }
 
-function closeCallout(game){
-  if(game.state==="pre"){
-    const spread=Math.abs(Number(game.market?.spread));
-    if(Number.isFinite(spread)&&spread<10){
-      return "PROJECTED CLOSE · "+spread+" PT SPREAD";
-    }
-    return null;
-  }
-  const diff=Math.abs(Number(game.home.score)-Number(game.away.score));
-  if(diff<10){
-    if(diff===0) return game.state==="in"?"TIED GAME":"TIED AT END OF REGULATION";
-    return (game.state==="in"?"CLOSE GAME":"CLOSE FINISH")+" · "+diff+" PT MARGIN";
-  }
-  return null;
+function network(game){
+  return game.broadcasts?.[0]||null;
 }
 
-function betIdea(game){
-  const spread=Math.abs(Number(game.market?.spread));
-  const total=Number(game.market?.overUnder);
-  if(!Number.isFinite(spread)) return "WAIT FOR LINE";
-  if(spread<=3 && Number.isFinite(total) && total>=50) return "HIGH-TOTAL TOSS-UP";
-  if(spread<=3) return "CLOSE-SPREAD GAME";
-  if(spread<10 && Number.isFinite(total) && total>=48) return "CLOSE GAME + ACTIVE TOTAL";
-  if(spread<10) return "UNDER-10 SPREAD";
-  if(Number.isFinite(total) && total>=55) return "TOTAL WORTH WATCHING";
-  return "MARKET WATCH";
+function isUpsetAlert(game){
+  if(game.sport!=="cfb"||game.state!=="in")return false;
+  if(game.away.rank&&!game.home.rank&&Number(game.home.score)>Number(game.away.score))return true;
+  if(game.home.rank&&!game.away.rank&&Number(game.away.score)>Number(game.home.score))return true;
+  return false;
 }
 
-function ShareButton({params,title="Game Radar"}){
-  const[copied,setCopied]=useState(false);
-  async function share(){
-    if(typeof window==="undefined")return;
-    const url=new URL("/scores",window.location.origin);
-    Object.entries(params||{}).forEach(([key,value])=>{if(value!=null&&value!=="")url.searchParams.set(key,String(value));});
-    try{
-      if(navigator.share)await navigator.share({title,url:url.toString()});
-      else if(navigator.clipboard)await navigator.clipboard.writeText(url.toString());
-      else return;
-      setCopied(true);
-      setTimeout(()=>setCopied(false),1400);
-    }catch{}
-  }
-  return <button className="shareMini" onClick={share} type="button">{copied?"COPIED":"SHARE"}</button>;
+function importanceLabel(game){
+  const meta=gameMetadata(game);
+  if(isUpsetAlert(game))return "Upset Alert";
+  if(game.state==="in"&&Math.abs(Number(game.home.score)-Number(game.away.score))<=8)return "Close Game";
+  if(meta.rivalry)return "Rivalry";
+  if(meta.rankedMatchup)return "Ranked Matchup";
+  if((game.interest?.score||0)>=76)return "Must Watch";
+  if(meta.conferenceGame)return "Conference Game";
+  if(meta.undefeatedInvolved)return "Undefeated Team";
+  if(meta.spread!=null&&meta.spread<=7.5)return "Close Game";
+  return "Worth Watching";
 }
 
-function TeamLine({team,possession,showScore=true}){
-  return <div className="teamLine">
-    <div className="teamLeft">
-      {team.logo?<img src={team.logo} alt="" className="teamLogo"/>:<div className="teamLogo fallback"/>}
-      <div className="teamMeta">
-        <div className="teamLabel">
-          {team.rank?<span className="rankTag">#{team.rank}</span>:null}
-          <span>{team.short}</span>
-          {possession?<span className="ball">●</span>:null}
-        </div>
-        <div className="record">{team.record||""}</div>
-      </div>
+function contextLine(game){
+  const meta=gameMetadata(game);
+  const bits=[];
+  if(meta.bothWinning)bits.push("Both teams have winning records");
+  else if(meta.undefeatedInvolved)bits.push("Undefeated team involved");
+  if(meta.rivalry)bits.push("Rivalry game");
+  else if(meta.conferenceGame)bits.push("Conference matchup");
+  if(meta.postseason)bits.push("Postseason");
+  if(meta.broadcasts[0])bits.push(meta.broadcasts[0]);
+  return bits.slice(0,2).join(" · ");
+}
+
+function Team({team,showScore,poss,favorite,onToggleFavorite}){
+  return <div className="grTeam">
+    <button className={"grFavStar "+(favorite?"active":"")} onClick={()=>onToggleFavorite(team.id)} aria-label={favorite?"Remove favorite":"Add favorite"}>{favorite?"★":"☆"}</button>
+    {team.logo?<img className="grTeamLogo" src={team.logo} alt=""/>:<span className="grTeamLogo grLogoFallback"/>}
+    <div className="grTeamText">
+      <div className="grTeamName">{team.rank?<span className="grRank">#{team.rank}</span>:null}<strong>{team.location||team.short}</strong>{poss?<span className="grPoss">●</span>:null}</div>
+      <span>{team.record||""}{team.conference?" · "+team.conference:""}</span>
     </div>
-    <div className="plainScore">{showScore?team.score:"—"}</div>
+    {showScore?<div className="grScore">{team.score}</div>:null}
   </div>;
 }
 
-function GameRow({game,mode,league,weekOffset=0}){
+function GameMeta({game}){
+  const meta=gameMetadata(game);
+  const items=[];
+  if(network(game))items.push(network(game));
+  if(game.state==="pre")items.push(marketLine(game));
+  if(game.market?.overUnder!=null)items.push("O/U "+game.market.overUnder);
+  if(meta.venue)items.push(meta.venue);
+  return <div className="grMeta">{items.slice(0,3).map(x=><span key={x}>{x}</span>)}</div>;
+}
+
+function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOffset}){
   const live=game.state==="in";
-  const showScore=game.state!=="pre";
-  const close=closeCallout(game);
-  const hot=live&&game.interest.score>=82;
-  const watch=live&&game.interest.score>=58;
-  const cls=[hot?"hot":"",watch&&!hot?"watch":"",close?"closeMatch":""].filter(Boolean).join(" ");
+  const final=game.state==="post";
+  const showScore=live||final;
+  const label=importanceLabel(game);
+  const status=live?(game.status||[game.period?"Q"+game.period:null,game.clock].filter(Boolean).join(" ")):final?"Final":kickoff(game);
+  const context=contextLine(game);
 
-  return <article id={"game-"+game.id} className={"gameRow "+cls}>
-    <div className="gameRowTop">
-      <span>{game.sport==="cfb"?"COLLEGE FBS":"NFL"}</span>
-      <div className="gameRowStatus">
-        <span className={live?"liveText":""}>{live?"● LIVE":game.state==="post"?"FINAL":gameTime(game)}</span>
-        <ShareButton params={{league,week:weekOffset,mode:mode==="current"?"live":mode,game:game.id}} title={matchupLabel(game)}/>
-      </div>
+  return <article className={"grGameCard "+(featured?"featured ":"")+(live?"live ":"")}>
+    <div className="grGameTop">
+      <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
+      <span className="grImportance">{label}</span>
     </div>
-
-    {close?<div className="closeCallout">{close}</div>:null}
-
-    <div className="gameRowBody">
-      <div className="scoreSide">
-        <TeamLine team={game.away} possession={game.possessionId===game.away.id} showScore={showScore}/>
-        <TeamLine team={game.home} possession={game.possessionId===game.home.id} showScore={showScore}/>
-      </div>
-      <div className="interestSide">
-        <span className="interestLabel">{live?"LIVE INTEREST":game.state==="post"?(mode==="recap"?"RECAP":"FINAL"):game.state==="pre"?"FUTURE INTEREST":"GAME INTEREST"}</span>
-        <strong>{game.interest.score}</strong>
-        <small>{game.interest.tier}</small>
-      </div>
+    <div className="grTeams">
+      <Team team={game.away} showScore={showScore} poss={game.possessionId===game.away.id} favorite={favorites.has(String(game.away.id))} onToggleFavorite={onToggleFavorite}/>
+      <Team team={game.home} showScore={showScore} poss={game.possessionId===game.home.id} favorite={favorites.has(String(game.home.id))} onToggleFavorite={onToggleFavorite}/>
     </div>
-
-    {mode==="ahead"?<div className="lineBar">
-      <span>{marketLine(game)}</span>
-      {game.market?.overUnder!=null?<span>O/U {game.market.overUnder}</span>:null}
-    </div>:null}
-
-    <div className="reasonLine">{game.interest.reason}{live&&game.downDistance?" · "+game.downDistance:""}</div>
+    <GameMeta game={game}/>
+    {context?<div className="grContext">{context}</div>:null}
+    {live&&game.downDistance?<div className="grContext grLiveContext">{game.downDistance}</div>:null}
+    <details className="grDetails">
+      <summary>Game details</summary>
+      <div>
+        <span>GameRadar interest: <strong>{game.interest?.score??"—"}</strong></span>
+        {game.interest?.reason?<span>{game.interest.reason}</span>:null}
+        {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
+        <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
+      </div>
+    </details>
   </article>;
 }
 
-function GameMetaStrip({game,limit=3}){
-  const chips=metadataChips(game,limit);
-  return chips.length?<div className="gameMetaStrip">{chips.map(chip=><span key={chip}>{chip}</span>)}</div>:null;
-}
-
-function AgentScoreCard({game,league,weekOffset}){
-  const spread=spreadForGame(game);
-  const conferences=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
-  return <article className="agentGameCard scoreAgentCard">
-    <div className="agentGameTeams">
-      <div className="agentTeamPair">
-        <span>{game.away.logo?<img src={game.away.logo} alt=""/>:null}<b>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</b></span>
-        <em>@</em>
-        <span>{game.home.logo?<img src={game.home.logo} alt=""/>:null}<b>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</b></span>
+function FilterDrawer({open,onClose,games,filters,setFilters,weekOffset,setWeekOffset,range,favoritesOnly,setFavoritesOnly}){
+  const conferences=[...new Set(games.flatMap(g=>[g.home?.conference,g.away?.conference]).filter(Boolean))].sort();
+  const teams=[...new Map(games.flatMap(g=>[g.away,g.home]).filter(Boolean).map(t=>[String(t.id),t])).values()].sort((a,b)=>String(a.location||a.name).localeCompare(String(b.location||b.name)));
+  const networks=[...new Set(games.flatMap(g=>g.broadcasts||[]).filter(Boolean))].sort();
+  if(!open)return null;
+  return <div className="grFilterScrim" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}>
+    <aside className="grFilterDrawer">
+      <div className="grFilterHead"><strong>Filters</strong><button onClick={onClose}>Done</button></div>
+      <div className="grWeekControl">
+        <button onClick={()=>setWeekOffset(x=>Math.max(-8,x-1))}>‹</button>
+        <div><span>Football week</span><strong>{rangeLabel(range)}</strong></div>
+        <button onClick={()=>setWeekOffset(x=>Math.min(4,x+1))}>›</button>
       </div>
-      <small>{gameTime(game)}</small>
-    </div>
-    <div className="agentGameSignals">
-      <span>{conferences.length?conferences.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
-      <strong>{spread!=null?"SPREAD "+spread:marketLine(game)}</strong>
-      <GameMetaStrip game={game} limit={3}/>
-    </div>
-    <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
-    <a className="agentOpen" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>OPEN IN BETRADAR →</a>
-  </article>;
-}
-
-function GameOfMoment({game,league,weekOffset}){
-  if(!game)return null;
-  const status=[game.status,game.downDistance].filter(Boolean).join(" · ");
-  return <section id={"game-"+game.id} className="gameMoment">
-    <div className="momentTop">
-      <div><span>● LIVE</span><strong>GAME OF THE MOMENT</strong></div>
-      <ShareButton params={{league,week:weekOffset,mode:"live",game:game.id}} title={matchupLabel(game)}/>
-    </div>
-    <div className="momentScore">
-      <div><div className="momentTeam">{game.away.logo?<img src={game.away.logo} alt=""/>:null}<small>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</small></div><strong>{game.away.score}</strong></div>
-      <span>—</span>
-      <div><div className="momentTeam">{game.home.logo?<img src={game.home.logo} alt=""/>:null}<small>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</small></div><strong>{game.home.score}</strong></div>
-    </div>
-    <div className="momentMeta">
-      <span>{status||"LIVE NOW"}</span>
-      <b>INTEREST {game.interest.score}</b>
-    </div>
-    <p>{game.interest.reason}{game.downDistance?" · "+game.downDistance:""}</p>
-  </section>;
-}
-
-function BetBoard({games,league}){
-  const rows=games
-    .filter(g=>g.state==="pre"&&g.marketInterest&&g.marketInterest.score>0)
-    .sort((a,b)=>b.marketInterest.score-a.marketInterest.score)
-    .slice(0,10);
-
-  return <aside className="betPanel">
-    <div className="betHeader">
-      <span>{league==="nfl"?"NFL":"COLLEGE"} BETTING RADAR</span>
-      <h3>TOP 10 MARKET GAMES</h3>
-      <p>The most interesting betting setups based on spread tightness, totals and matchup context.</p>
-    </div>
-    {rows.length?rows.map((g,i)=><div className="betRow" key={g.id}>
-      <div className="betRank">{i+1}</div>
-      <div className="betMain">
-        <strong>{matchupLabel(g)}</strong>
-        <span>{marketLine(g)}{g.market?.overUnder!=null?" · O/U "+g.market.overUnder:""}</span>
-        <small>{betIdea(g)}</small>
+      <label>Conference<select value={filters.conference} onChange={e=>setFilters(x=>({...x,conference:e.target.value}))}><option value="">All conferences</option>{conferences.map(x=><option key={x}>{x}</option>)}</select></label>
+      <label>Team<select value={filters.team} onChange={e=>setFilters(x=>({...x,team:e.target.value}))}><option value="">All teams</option>{teams.map(t=><option value={String(t.id)} key={t.id}>{t.location||t.name}</option>)}</select></label>
+      <label>Kickoff<select value={filters.window} onChange={e=>setFilters(x=>({...x,window:e.target.value}))}><option value="">Any time</option><option>EARLY</option><option>AFTERNOON</option><option>PRIMETIME</option><option>LATE</option></select></label>
+      <label>TV network<select value={filters.network} onChange={e=>setFilters(x=>({...x,network:e.target.value}))}><option value="">Any network</option>{networks.map(x=><option key={x}>{x}</option>)}</select></label>
+      <label>Max spread<select value={filters.spread} onChange={e=>setFilters(x=>({...x,spread:e.target.value}))}><option value="">Any spread</option><option value="3.5">3.5</option><option value="7.5">7.5</option><option value="10">10</option><option value="14">14</option></select></label>
+      <div className="grFilterChecks">
+        <label><input type="checkbox" checked={filters.ranked} onChange={e=>setFilters(x=>({...x,ranked:e.target.checked}))}/> Ranked games</label>
+        <label><input type="checkbox" checked={filters.close} onChange={e=>setFilters(x=>({...x,close:e.target.checked}))}/> Close games</label>
+        <label><input type="checkbox" checked={favoritesOnly} onChange={e=>setFavoritesOnly(e.target.checked)}/> Favorites only</label>
       </div>
-      <div className="betScore">{g.marketInterest.score}</div>
-    </div>):<div className="betEmpty">BETTING LINES HAVE NOT POPULATED YET.</div>}
-    <div className="betFoot">This ranks betting-market intrigue. It is not a prediction of which side will cover.</div>
-  </aside>;
+      <button className="grClearFilters" onClick={()=>{setFilters({conference:"",team:"",window:"",network:"",spread:"",ranked:false,close:false});setFavoritesOnly(false)}}>Clear filters</button>
+    </aside>
+  </div>;
 }
 
-export default function Home(){
+export default function Scores(){
   const[league,setLeague]=useState("nfl");
   const[weekOffset,setWeekOffset]=useState(0);
-  const[mode,setMode]=useState("live");
-  const[prefsReady,setPrefsReady]=useState(false);
+  const[view,setView]=useState("live");
   const[data,setData]=useState({games:[],generatedAt:null});
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
-  const[refreshing,setRefreshing]=useState(false);
-  const[agentQuery,setAgentQuery]=useState("");
+  const[query,setQuery]=useState("");
   const[agentSpec,setAgentSpec]=useState(null);
+  const[filtersOpen,setFiltersOpen]=useState(false);
+  const[filters,setFilters]=useState({conference:"",team:"",window:"",network:"",spread:"",ranked:false,close:false});
+  const[favorites,setFavorites]=useState(new Set());
+  const[favoritesOnly,setFavoritesOnly]=useState(false);
+  const[ready,setReady]=useState(false);
 
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
-  const hasLiveNow=(data.games||[]).some(g=>g.sport===league&&g.state==="in");
 
   useEffect(()=>{
     if(typeof window==="undefined")return;
     const params=new URLSearchParams(window.location.search);
     const qLeague=params.get("league");
     const saved=window.localStorage.getItem("gameRadarLeague");
-    const qMode=params.get("mode");
-    const qWeek=Number(params.get("week"));
-    const nextMode=["recap","live","ahead"].includes(qMode)?qMode:"live";
     setLeague(qLeague==="cfb"||qLeague==="nfl"?qLeague:saved==="cfb"?"cfb":"nfl");
-    setMode(nextMode);
-    setWeekOffset(Number.isFinite(qWeek)&&params.has("week")?Math.max(-8,Math.min(2,qWeek)):nextMode==="recap"?-1:nextMode==="ahead"?1:0);
-    setPrefsReady(true);
+    const week=Number(params.get("week"));
+    if(Number.isFinite(week)&&params.has("week"))setWeekOffset(Math.max(-8,Math.min(4,week)));
+    try{setFavorites(new Set(JSON.parse(window.localStorage.getItem("gameRadarFavorites")||"[]").map(String)))}catch{}
+    setReady(true);
   },[]);
 
   useEffect(()=>{
-    if(!prefsReady||typeof window==="undefined")return;
+    if(!ready||typeof window==="undefined")return;
     window.localStorage.setItem("gameRadarLeague",league);
+    window.localStorage.setItem("gameRadarFavorites",JSON.stringify([...favorites]));
     const url=new URL(window.location.href);
     url.searchParams.set("league",league);
-    url.searchParams.set("mode",mode);
     url.searchParams.set("week",String(weekOffset));
-    window.history.replaceState({},"",url.pathname+url.search+url.hash);
-  },[league,mode,weekOffset,prefsReady]);
+    window.history.replaceState({},"",url.pathname+url.search);
+  },[league,weekOffset,favorites,ready]);
 
-  function runAgentText(text){
-    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset,games:(data.games||[])});
-    setAgentQuery(text);
-    if(spec.isSaveAction){
-      setAgentSpec({...spec,actionMessage:"SAVE ACTIONS LIVE IN BETRADAR — OPEN A RESULT THERE TO ADD IT TO YOUR SHEET."});
-      return;
-    }
-    setAgentSpec(spec);
-    if(spec.league!==league)setLeague(spec.league);
-    if(spec.weekOffset!==weekOffset){
-      setWeekOffset(Math.max(-8,Math.min(2,spec.weekOffset)));
-      setMode(spec.weekOffset===0?"live":"ahead");
-    }
-  }
-  function submitAgent(e){
-    e?.preventDefault();
-    if(agentQuery.trim())runAgentText(agentQuery.trim());
-  }
-
-  function chooseMode(next){
-    setMode(next);
-    if(next==="recap")setWeekOffset(-1);
-    if(next==="live")setWeekOffset(0);
-    if(next==="ahead")setWeekOffset(1);
-  }
-
-  async function load(manual=false,offset=weekOffset,currentLeague=league){
-    if(manual)setRefreshing(true);
+  async function load(){
     try{
-      const w=footballRange(offset);
-      const r=await fetch("/api/games?league="+currentLeague+"&start="+w.start+"&end="+w.end,{cache:"no-store"});
+      const r=await fetch("/api/games?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
       if(!r.ok)throw new Error();
       setData(await r.json());
       setError("");
-    }catch{
-      setError("SCORE FEED TEMPORARILY OFFLINE");
-    }finally{
-      setLoading(false);
-      setRefreshing(false);
-    }
+    }catch{setError("Score feed temporarily unavailable.");}
+    finally{setLoading(false);}
   }
 
-  useEffect(()=>{
-    if(!prefsReady)return;
-    setLoading(true);
-    load(false,weekOffset,league);
-  },[league,weekOffset,mode,prefsReady]);
+  useEffect(()=>{if(!ready)return;setLoading(true);load()},[league,weekOffset,ready]);
 
+  const hasLive=(data.games||[]).some(g=>g.state==="in");
   useEffect(()=>{
-    if(!prefsReady||mode!=="live"||weekOffset!==0)return;
-    const delay=hasLiveNow?30000:5*60*1000;
-    const poll=()=>{if(typeof document==="undefined"||document.visibilityState==="visible")load(false,0,league);};
-    const timer=setInterval(poll,delay);
-    const onVisibility=()=>{if(document.visibilityState==="visible")load(false,0,league);};
-    document.addEventListener("visibilitychange",onVisibility);
-    return()=>{clearInterval(timer);document.removeEventListener("visibilitychange",onVisibility)};
-  },[league,weekOffset,mode,prefsReady,hasLiveNow]);
+    if(!ready||weekOffset!==0)return;
+    const timer=setInterval(()=>{if(document.visibilityState==="visible")load()},hasLive?30000:300000);
+    return()=>clearInterval(timer);
+  },[ready,league,weekOffset,hasLive]);
+
+  function toggleFavorite(id){
+    setFavorites(current=>{
+      const next=new Set(current);
+      const key=String(id);
+      if(next.has(key))next.delete(key); else next.add(key);
+      return next;
+    });
+  }
 
   const games=(data.games||[]).filter(g=>g.sport===league);
-  const live=games.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
-  const finals=games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
-  const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const agentResults=useMemo(()=>{
+  const filtered=useMemo(()=>games.filter(game=>{
+    const meta=gameMetadata(game);
+    if(filters.conference&&!meta.conferences.includes(filters.conference))return false;
+    if(filters.team&&String(game.home.id)!==filters.team&&String(game.away.id)!==filters.team)return false;
+    if(filters.window&&meta.kickoffWindow!==filters.window)return false;
+    if(filters.network&&!meta.broadcasts.includes(filters.network))return false;
+    if(filters.spread&&(meta.spread==null||meta.spread>Number(filters.spread)))return false;
+    if(filters.ranked&&!meta.rankedInvolved)return false;
+    if(filters.close){
+      const liveClose=game.state==="in"&&Math.abs(Number(game.home.score)-Number(game.away.score))<=8;
+      const preClose=game.state==="pre"&&meta.spread!=null&&meta.spread<=7.5;
+      if(!liveClose&&!preClose)return false;
+    }
+    if(favoritesOnly&&!favorites.has(String(game.home.id))&&!favorites.has(String(game.away.id)))return false;
+    if(view==="today"&&gameDayKey(game)!==todayKey())return false;
+    if(view==="live"&&game.state!=="in"&&hasLive)return false;
+    return true;
+  }),[games,filters,favoritesOnly,favorites,view,hasLive]);
+
+  const live=filtered.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
+  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>b.interest.score-a.interest.score||new Date(a.date)-new Date(b.date));
+  const finals=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const featured=live[0]||upcoming[0]||null;
+  const otherLive=featured&&featured.state==="in"?live.slice(1):live;
+  const worth=upcoming.filter(g=>g.id!==featured?.id).slice(0,4);
+  const allUpcoming=upcoming.filter(g=>g.id!==featured?.id&&!worth.some(w=>w.id===g.id)).sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+  const activeFilterChips=[];
+  if(filters.conference)activeFilterChips.push(["conference",filters.conference]);
+  if(filters.team){
+    const t=games.flatMap(g=>[g.home,g.away]).find(t=>String(t.id)===filters.team);
+    if(t)activeFilterChips.push(["team",t.location||t.name]);
+  }
+  if(filters.window)activeFilterChips.push(["window",filters.window]);
+  if(filters.network)activeFilterChips.push(["network",filters.network]);
+  if(filters.spread)activeFilterChips.push(["spread","Spread ≤ "+filters.spread]);
+  if(filters.ranked)activeFilterChips.push(["ranked","Ranked"]);
+  if(filters.close)activeFilterChips.push(["close","Close games"]);
+  if(favoritesOnly)activeFilterChips.push(["favorites","Favorites"]);
+
+  function removeFilter(key){
+    if(key==="favorites"){setFavoritesOnly(false);return;}
+    setFilters(x=>({...x,[key]:typeof x[key]==="boolean"?false:""}));
+  }
+
+  function submitSearch(e){
+    e.preventDefault();
+    if(!query.trim()){setAgentSpec(null);return;}
+    const spec=parseAgentQuery(query.trim(),{currentLeague:league,currentWeekOffset:weekOffset,games});
+    setAgentSpec(spec);
+    if(spec.league!==league)setLeague(spec.league);
+    if(spec.weekOffset!==weekOffset)setWeekOffset(spec.weekOffset);
+  }
+
+  const searchResults=useMemo(()=>{
     if(!agentSpec||agentSpec.isSaveAction||agentSpec.league!==league||agentSpec.weekOffset!==weekOffset)return [];
-    return searchGames(games,agentSpec);
+    return searchGames(games,agentSpec).slice(0,8);
   },[games,agentSpec,league,weekOffset]);
-  const gameOfMoment=live[0]||null;
-  const otherLive=live.slice(1);
-  const weekNumber=games.find(g=>g.week)?.week||null;
-  const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
 
-  useEffect(()=>{
-    if(loading||!games.length||typeof window==="undefined")return;
-    const game=new URLSearchParams(window.location.search).get("game");
-    if(!game)return;
-    setTimeout(()=>document.getElementById("game-"+game)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
-  },[loading,games.length,league,weekOffset]);
-
-  return <main className="shell">
-    <a className="suiteHome" href="/">← GAME RADAR HOME</a>
-    <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="betradar" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>
-        <strong>BETRADAR</strong>
-        <small>Bets · confidence · teasers</small>
-      </a>
-      <a className="active gameradar" href={"/scores?league="+league+"&mode="+mode+"&week="+weekOffset}>
-        <strong>GAMERADAR</strong>
-        <small>Live scores · what to watch</small>
-      </a>
-    </nav>
-
-    <header className="stadiumHeader">
-      <div>
-        <div className="brand">GAME<span>RADAR</span></div>
-        <div className="headerKicker">FOOTBALL INTELLIGENCE BOARD</div>
-        <h1>GAMERADAR</h1>
-        <p>Live scores, close games and the football worth watching right now.</p>
+  return <main className="grPage">
+    <header className="grHeader">
+      <a className="grLogo" href="/scores">GAME<span>RADAR</span></a>
+      <div className="grLeagueToggle">
+        <button className={league==="nfl"?"active":""} onClick={()=>setLeague("nfl")}>NFL</button>
+        <button className={league==="cfb"?"active":""} onClick={()=>setLeague("cfb")}>College</button>
       </div>
-      <div className="headerActions"><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
+      <form className="grSearch" onSubmit={submitSearch}>
+        <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search teams, conferences, ranked games, or ask what to watch…"/>
+        <button type="submit">Search</button>
+      </form>
+      <button className={"grHeaderButton "+(favoritesOnly?"active":"")} onClick={()=>setFavoritesOnly(x=>!x)}>★ Favorites</button>
+      <a className="grBetLink" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>BetRadar</a>
     </header>
 
-    <section className="askRadar askRadarFeatured">
-      <div className="askRadarHead">
-        <div>
-          <span className="askEyebrow">✦ ASK GAMERADAR</span>
-          <h2>FIND THE GAMES THAT MATTER TO YOU</h2>
-          <p>Ask for close games, conference matchups, ranked teams, kickoff windows, or what deserves your screen right now.</p>
-        </div>
-        <div className="askRadarBadge">AI SEARCH</div>
+    <nav className="grPrimaryNav">
+      <div>
+        <button className={view==="live"?"active":""} onClick={()=>setView("live")}>Live</button>
+        <button className={view==="today"?"active":""} onClick={()=>setView("today")}>Today</button>
+        <button className={view==="week"?"active":""} onClick={()=>setView("week")}>This Week</button>
       </div>
-      <form className="askRadarForm" onSubmit={submitAgent}>
-        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="Try: Give me the tight Big Ten + SEC games this week"/>
-        <button type="submit">ASK GAMERADAR →</button>
-      </form>
-      <div className="askPrompts">
-        {[
-          "Tight Big Ten + SEC games",
-          "Ranked vs ranked",
-          "Primetime conference games",
-          "Power 4 games under 7.5"
-        ].map(prompt=><button key={prompt} onClick={()=>runAgentText(prompt)}>{prompt}</button>)}
-      </div>
-      {agentSpec?<div className="agentInterpretation">
-        <div className="agentChips">{agentSpec.chips.map(chip=><span key={chip}>{chip}</span>)}</div>
-        <p>{agentSpec.actionMessage||queryExplanation(agentSpec)}</p>
-      </div>:null}
-      {agentSpec&&!agentSpec.isSaveAction?<div className="agentResults">
-        <div className="agentResultsHead"><strong>{loading?"SEARCHING…":agentResults.length+" GAME"+(agentResults.length===1?"":"S")+" FOUND"}</strong><span>STRUCTURED SEARCH · REAL GAME DATA</span></div>
-        {!loading&&agentResults.length?agentResults.map(game=><AgentScoreCard key={game.id} game={game} league={league} weekOffset={weekOffset}/>):!loading?<div className="notice">NO GAMES MATCH THAT SEARCH.</div>:null}
-      </div>:null}
-    </section>
-
-    <div className="leagueSwitchBlock scoreLeagueSwitch">
-      <span className="switchLabel">CHOOSE LEAGUE</span>
-      <nav className="leagueHero" aria-label="League">
-      {LEAGUES.map(([v,title,sub])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>
-        <strong>{title}</strong><small>{sub}</small>
-      </button>)}
-      </nav>
-    </div>
-
-    <nav className="modeRail" aria-label="Timeframe">
-      {MODES.map(([v,title,q])=><button key={v} className={mode===v?"active":""} onClick={()=>chooseMode(v)}>
-        <span>{title}</span><small>{q}</small>
-      </button>)}
+      <button className="grFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilterChips.length?" · "+activeFilterChips.length:""}</button>
     </nav>
 
-    <section className="weekBoard">
-      <button aria-label="Previous football week" onClick={()=>setWeekOffset(x=>Math.max(-8,x-1))}>‹</button>
-      <div>
-        <span>SELECTED FOOTBALL WEEK</span>
-        <strong>{weekTitle}</strong>
+    {activeFilterChips.length?<div className="grActiveFilters">{activeFilterChips.map(([key,label])=><button key={key} onClick={()=>removeFilter(key)}>{label} ×</button>)}</div>:null}
+
+    {agentSpec?<section className="grSearchResults">
+      <div className="grSectionHead">
+        <div><h2>Search results</h2><p>{queryExplanation(agentSpec)}</p></div>
+        <button onClick={()=>{setAgentSpec(null);setQuery("")}}>Clear</button>
       </div>
-      <button aria-label="Next football week" onClick={()=>setWeekOffset(x=>Math.min(2,x+1))}>›</button>
-    </section>
+      <div className="grSearchChips">{agentSpec.chips.map(chip=><span key={chip}>{chip}</span>)}</div>
+      <div className="grCompactList">{searchResults.length?searchResults.map(g=><GameCard key={g.id} game={g} favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>):<div className="grEmpty">No games match that search.</div>}</div>
+    </section>:null}
 
-    {error?<div className="notice error">{error}</div>:null}
+    {error?<div className="grEmpty">{error}</div>:null}
+    {loading?<div className="grEmpty">Loading games…</div>:<>
+      {featured?<section className="grSection grLeadSection">
+        <div className="grSectionHead"><div><h2>{featured.state==="in"?"Live Now":"Worth Watching Next"}</h2><p>{featured.state==="in"?"The game that deserves your attention right now.":"The top upcoming game on the board."}</p></div></div>
+        <GameCard game={featured} featured favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>
+      </section>:null}
 
-    {loading?<div className="notice">SCANNING THE BOARD...</div>:<>
-      {mode==="recap"?<>
-        <div className="sectionIntro"><span>RECAP</span><h2>THE GAMES THAT WERE WORTH IT</h2><p>Finished games ranked by closeness, drama and matchup importance.</p></div>
-        <section className="scoreList">
-          {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="recap" league={league} weekOffset={weekOffset}/>):<div className="notice">NO FINALS FOUND FOR THIS FOOTBALL WEEK</div>}
-        </section>
-      </>:mode==="ahead"?<>
-        <div className="sectionIntro"><span>WEEK AHEAD</span><h2>EVERY UPCOMING GAME GETS A FUTURE INTEREST SCORE</h2><p>Close projected matchups matter most. Spread, records and matchup context shape every 0–100 score.</p></div>
-        <div className="aheadGrid">
-          <section className="scoreList">
-            <div className="listHeader"><span>UPCOMING GAMES</span><span>INTEREST</span></div>
-            {upcoming.length?upcoming.map(g=><GameRow key={g.id} game={g} mode="ahead" league={league} weekOffset={weekOffset}/>):<div className="notice">NO UPCOMING GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
-          </section>
-          <BetBoard games={upcoming} league={league}/>
-        </div>
-      </>:<>
-        {live.length?<section className="weekScoreSection livePriority">
-          <div className="sectionIntro"><span>● LIVE NOW</span><h2>WHAT DESERVES YOUR SCREEN</h2><p>GameRadar pins the best live action to the top, then ranks every other live game underneath it.</p></div>
-          <GameOfMoment game={gameOfMoment} league={league} weekOffset={weekOffset}/>
-          {otherLive.length?<div className="scoreList otherLiveList">
-            {otherLive.map(g=><GameRow key={g.id} game={g} mode="live" league={league} weekOffset={weekOffset}/>)}
-          </div>:null}
-        </section>:null}
+      {otherLive.length?<section className="grSection">
+        <div className="grSectionHead"><div><h2>Live Now</h2><p>{otherLive.length} more live game{otherLive.length===1?"":"s"}.</p></div></div>
+        <div className="grCompactList">{otherLive.map(g=><GameCard key={g.id} game={g} favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>)}</div>
+      </section>:null}
 
-        {upcoming.length?<section className="weekScoreSection">
-          <div className="sectionIntro"><span>UP NEXT THIS WEEK</span><h2>UPCOMING</h2><p>Everything still to come in the selected football week.</p></div>
-          <div className="scoreList">
-            {upcoming.map(g=><GameRow key={g.id} game={g} mode="current" league={league} weekOffset={weekOffset}/>)}
-          </div>
-        </section>:null}
+      {worth.length?<section className="grSection">
+        <div className="grSectionHead"><div><h2>Worth Watching Next</h2><p>Competitive games and contextual matchups rising to the top.</p></div></div>
+        <div className="grWorthGrid">{worth.map(g=><GameCard key={g.id} game={g} favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>)}</div>
+      </section>:null}
 
-        <section className="weekScoreSection">
-          <div className="sectionIntro"><span>FINAL THIS WEEK</span><h2>COMPLETED GAMES</h2><p>Every completed game from the selected football week, newest first.</p></div>
-          <div className="scoreList">
-            {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="current" league={league} weekOffset={weekOffset}/>):<div className="notice">NO COMPLETED GAMES YET THIS WEEK</div>}
-          </div>
-        </section>
+      {allUpcoming.length?<section className="grSection">
+        <div className="grSectionHead"><div><h2>All Games</h2><p>{rangeLabel(range)}</p></div></div>
+        <div className="grCompactList">{allUpcoming.map(g=><GameCard key={g.id} game={g} favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>)}</div>
+      </section>:null}
 
-        {!live.length&&!upcoming.length&&!finals.length?<div className="notice">NO GAMES FOUND FOR THIS FOOTBALL WEEK</div>:null}
-      </>}
+      {finals.length?<section className="grSection">
+        <div className="grSectionHead"><div><h2>Final Scores</h2><p>Completed games from this view.</p></div></div>
+        <div className="grCompactList finals">{finals.map(g=><GameCard key={g.id} game={g} favorites={favorites} onToggleFavorite={toggleFavorite} league={league} weekOffset={weekOffset}/>)}</div>
+      </section>:null}
+
+      {!featured&&!otherLive.length&&!worth.length&&!allUpcoming.length&&!finals.length?<div className="grEmpty">No games match this view.</div>:null}
     </>}
 
-    <footer>
-      {mode==="live"?(hasLiveNow?"THIS WEEK / LIVE GAMES · LIVE AUTO-SCAN 30 SEC":"THIS WEEK / LIVE GAMES · CHECKING EVERY 5 MIN UNTIL LIVE"):"GAME COMMAND CENTER"}
-      {data.generatedAt?" · "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}
-      <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · ALL FBS GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
-    </footer>
+    <FilterDrawer open={filtersOpen} onClose={()=>setFiltersOpen(false)} games={games} filters={filters} setFilters={setFilters} weekOffset={weekOffset} setWeekOffset={setWeekOffset} range={range} favoritesOnly={favoritesOnly} setFavoritesOnly={setFavoritesOnly}/>
   </main>;
 }

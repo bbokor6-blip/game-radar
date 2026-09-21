@@ -353,14 +353,18 @@ export default function Home(){
       <div className="headerActions"><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
     </header>
 
-    <section className="askRadar">
+    <section className="askRadar askRadarFeatured">
       <div className="askRadarHead">
-        <div><span>✦ ASK GAMERADAR</span><h2>SEARCH THE FOOTBALL BOARD</h2></div>
-        <small>Ask naturally. GameRadar translates the request into visible filters, then searches the real weekly slate.</small>
+        <div>
+          <span className="askEyebrow">✦ ASK GAMERADAR</span>
+          <h2>FIND THE GAMES THAT MATTER TO YOU</h2>
+          <p>Ask for close games, conference matchups, ranked teams, kickoff windows, or what deserves your screen right now.</p>
+        </div>
+        <div className="askRadarBadge">AI SEARCH</div>
       </div>
       <form className="askRadarForm" onSubmit={submitAgent}>
-        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="e.g. Give me all the tight games for Big Ten and SEC schools this week"/>
-        <button type="submit">SEARCH →</button>
+        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="Try: Give me the tight Big Ten + SEC games this week"/>
+        <button type="submit">ASK GAMERADAR →</button>
       </form>
       <div className="askPrompts">
         {[

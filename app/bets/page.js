@@ -26,8 +26,12 @@ function gameTime(game){
   return new Date(game.date).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"});
 }
 
+function teamDisplay(team){
+  return (team.rank?"#"+team.rank+" ":"")+team.short;
+}
+
 function matchup(game){
-  return game.away.short+" @ "+game.home.short;
+  return teamDisplay(game.away)+" @ "+teamDisplay(game.home);
 }
 
 function top25(game){

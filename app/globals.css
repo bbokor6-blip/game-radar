@@ -1,147 +1,189 @@
 :root{
-  --bg:#070a08;
-  --panel:#111711;
-  --panel2:#171e17;
-  --line:#303a31;
-  --cream:#f1ecd9;
-  --muted:#9da496;
-  --red:#ff4b32;
-  --amber:#ffb629;
-  --green:#9cf55a;
+  --bg:#060907;
+  --panel:#101510;
+  --panel2:#151c16;
+  --line:#303b31;
+  --cream:#f3efdf;
+  --muted:#98a093;
+  --red:#ff5138;
+  --amber:#ffbb33;
+  --green:#9af25c;
+  --white:#fffdf5;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--cream);font-family:Inter,Arial,Helvetica,sans-serif}
-body{min-height:100vh;background:radial-gradient(circle at 50% -10%,#1b281e 0,#0a0f0b 40%,#050706 100%)}
+body{min-height:100vh;background:radial-gradient(circle at 50% -10%,#19241b 0,#090d0a 42%,#050706 100%)}
 button,select{font:inherit}
 button{cursor:pointer}
-.shell{width:min(1180px,100%);margin:auto;padding:24px 18px 64px}
+.shell{width:min(1180px,100%);margin:auto;padding:22px 18px 64px}
 
 .stadiumHeader{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
-  padding:26px 28px;border:2px solid #465147;background:linear-gradient(180deg,#1a231b,#111711);
-  box-shadow:inset 0 0 0 1px #080b08,0 14px 36px #0008
+  display:flex;justify-content:space-between;align-items:flex-start;gap:22px;
+  padding:25px 28px;border:2px solid #445046;background:linear-gradient(180deg,#19221a,#111611);
+  box-shadow:0 14px 38px #0008,inset 0 0 0 1px #070a07
 }
 .brand{font-size:13px;font-weight:1000;letter-spacing:.18em;font-style:italic}
 .brand span{color:var(--red)}
-.headerKicker{margin-top:8px;color:#80897d;font:800 10px "Courier New",monospace;letter-spacing:.16em}
-h1{margin:12px 0 8px;font-size:clamp(36px,6vw,68px);line-height:.92;letter-spacing:-.055em;font-style:italic}
-.stadiumHeader p{margin:0;color:#b1b7aa;font-size:15px;font-weight:650}
+.headerKicker{margin-top:7px;color:#7f897d;font:800 10px "Courier New",monospace;letter-spacing:.15em}
+h1{margin:11px 0 8px;font-size:clamp(34px,6vw,66px);line-height:.93;letter-spacing:-.055em;font-style:italic}
+.stadiumHeader p{margin:0;color:#b2b8ad;font-size:15px;font-weight:650}
 .refresh{
-  flex:0 0 auto;border:1px solid #535d53;background:#0b0f0c;color:var(--amber);
+  flex:0 0 auto;border:1px solid #535f54;background:#090d0a;color:var(--amber);
   padding:11px 13px;font:900 11px "Courier New",monospace;letter-spacing:.08em
 }
 
+.leagueHero{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 10px
+}
+.leagueHero button{
+  text-align:left;min-height:92px;padding:17px 18px;border:2px solid #394439;
+  background:linear-gradient(180deg,#121812,#0d120e);color:#8f978c
+}
+.leagueHero button strong{
+  display:block;font-size:22px;letter-spacing:-.02em;color:#d6dacd
+}
+.leagueHero button small{
+  display:block;margin-top:5px;font-size:12px;line-height:1.35
+}
+.leagueHero button.active{
+  border-color:var(--amber);background:linear-gradient(180deg,#252416,#16170f);
+  box-shadow:inset 0 -4px 0 var(--amber),0 0 24px #ffbb3315
+}
+.leagueHero button.active strong{color:var(--white)}
+.leagueHero button.active small{color:#c7c1a7}
+
 .modeRail{
-  margin:14px 0;display:grid;grid-template-columns:repeat(3,1fr);
-  border:2px solid var(--line);background:#0b0f0c
+  display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);
+  background:#0b100c;margin-bottom:10px
 }
 .modeRail button{
-  min-height:68px;border:0;border-right:1px solid var(--line);background:#111711;color:#8e968a;
-  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:12px 16px
+  min-height:62px;border:0;border-right:1px solid var(--line);background:#101510;color:#828b80;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 8px
 }
 .modeRail button:last-child{border-right:0}
-.modeRail button span{font:1000 13px "Courier New",monospace;letter-spacing:.1em}
-.modeRail button small{margin-top:5px;font-size:12px}
-.modeRail button.active{background:#ede7d4;color:#0b100c;box-shadow:inset 0 -4px 0 var(--red)}
+.modeRail button span{font:1000 12px "Courier New",monospace;letter-spacing:.08em}
+.modeRail button small{margin-top:4px;font-size:11px}
+.modeRail button.active{background:#ece7d4;color:#101410;box-shadow:inset 0 -4px 0 var(--red)}
 
-.controlDeck{
-  display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 24px;
-  padding:14px 16px;border:1px solid var(--line);background:#0d120e
+.weekBoard{
+  display:grid;grid-template-columns:48px 1fr 48px;align-items:stretch;
+  border:1px solid #3b473c;background:#0e140f;margin-bottom:26px
 }
-.leagueBlock{min-width:0;flex:1}
-.controlLabel,.weekPicker{font:900 9px "Courier New",monospace;letter-spacing:.15em;color:#7f887d}
-.leagueToggle{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
-.leagueToggle button{
-  min-height:39px;border:1px solid #3c473d;background:#141b15;color:#aeb5a9;
-  padding:0 13px;font:900 10px "Courier New",monospace;letter-spacing:.06em
+.weekBoard button{
+  min-height:54px;border:0;background:#151c16;color:var(--cream);font-size:27px
 }
-.leagueToggle button.active{background:var(--amber);color:#161006;border-color:var(--amber)}
-.weekPicker{display:flex;flex-direction:column;gap:7px}
-.weekPicker select{
-  min-height:39px;background:#151c16;color:var(--cream);border:1px solid #465147;
-  padding:0 34px 0 11px;font:800 11px "Courier New",monospace
+.weekBoard button:first-child{border-right:1px solid #303a31}
+.weekBoard button:last-child{border-left:1px solid #303a31}
+.weekBoard div{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 10px;text-align:center
+}
+.weekBoard span{
+  color:#717c71;font:900 8px "Courier New",monospace;letter-spacing:.15em
+}
+.weekBoard strong{
+  margin-top:3px;font:1000 13px "Courier New",monospace;letter-spacing:.05em;color:var(--amber)
 }
 
-.sectionIntro{margin:26px 0 12px}
-.sectionIntro>span{font:900 10px "Courier New",monospace;letter-spacing:.18em;color:var(--amber)}
-.sectionIntro h2{margin:5px 0 5px;font-size:clamp(24px,4vw,36px);letter-spacing:-.035em}
-.sectionIntro p{margin:0;color:#9da598;font-size:14px;max-width:720px;line-height:1.45}
+.sectionIntro{margin:0 0 13px}
+.sectionIntro>span{font:900 9px "Courier New",monospace;letter-spacing:.16em;color:var(--amber)}
+.sectionIntro h2{margin:5px 0 5px;font-size:clamp(24px,4vw,36px);letter-spacing:-.035em;line-height:1.05}
+.sectionIntro p{margin:0;color:#9ca49a;font-size:14px;line-height:1.45;max-width:760px}
 
 .scoreList{min-width:0}
 .listHeader{
-  display:grid;grid-template-columns:1fr auto;gap:10px;padding:0 4px 8px;color:#747e73;
-  font:900 9px "Courier New",monospace;letter-spacing:.13em
+  display:grid;grid-template-columns:1fr auto;gap:10px;padding:0 4px 8px;
+  color:#6f796f;font:900 8px "Courier New",monospace;letter-spacing:.13em
 }
 .gameRow{
-  margin-bottom:10px;border:1px solid #384238;background:linear-gradient(180deg,#141b15,#0e130f);
-  padding:14px 16px;box-shadow:inset 0 0 0 1px #090c09
+  position:relative;margin-bottom:10px;border:1px solid #384339;
+  background:linear-gradient(180deg,#151c16,#0f140f);padding:13px 15px;
+  box-shadow:inset 0 0 0 1px #090c09
 }
-.gameRow.hot{border-color:#9a392d;box-shadow:inset 4px 0 0 var(--red)}
-.gameRow.watch{border-color:#7e662f;box-shadow:inset 4px 0 0 var(--amber)}
+.gameRow.hot{border-color:#a43e31;box-shadow:inset 4px 0 0 var(--red)}
+.gameRow.watch{border-color:#806c37;box-shadow:inset 4px 0 0 var(--amber)}
+.gameRow.closeMatch{border-color:#617e4d}
 .gameRowTop{
-  display:flex;justify-content:space-between;gap:12px;margin-bottom:9px;color:#8d9589;
-  font:850 9px "Courier New",monospace;letter-spacing:.1em
+  display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;
+  color:#899187;font:850 9px "Courier New",monospace;letter-spacing:.1em
 }
-.leaguePill{color:#b8beb4}
-.liveText{color:var(--red);font-weight:1000;text-shadow:0 0 7px #ff4b3266}
-.gameRowBody{display:grid;grid-template-columns:minmax(0,1fr) 108px;gap:18px;align-items:center}
+.liveText{color:var(--red);font-weight:1000}
+.closeCallout{
+  display:inline-flex;align-items:center;margin:0 0 8px;padding:5px 8px;
+  border:1px solid #648849;background:#10190e;color:var(--green);
+  font:1000 9px "Courier New",monospace;letter-spacing:.08em
+}
+.gameRowBody{
+  display:grid;grid-template-columns:minmax(0,1fr) 104px;gap:16px;align-items:stretch
+}
 .scoreSide{min-width:0}
-.teamLine{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px}
-.teamLeft{display:flex;align-items:center;gap:11px;min-width:0}
-.teamLogo{width:32px;height:32px;object-fit:contain;flex:0 0 auto}
-.teamLogo.fallback{background:#243025;border:1px solid #445046;border-radius:50%}
+.teamLine{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:49px
+}
+.teamLeft{display:flex;align-items:center;gap:10px;min-width:0}
+.teamLogo{width:31px;height:31px;object-fit:contain;flex:0 0 auto}
+.teamLogo.fallback{background:#253026;border:1px solid #445046;border-radius:50%}
 .teamMeta{min-width:0}
-.teamLabel{display:flex;align-items:center;gap:7px;font-size:18px;font-weight:900;letter-spacing:-.01em}
-.record{margin-top:2px;color:#727b71;font:800 9px "Courier New",monospace}
+.teamLabel{
+  display:flex;align-items:center;gap:7px;font-size:18px;font-weight:950;letter-spacing:-.01em
+}
+.record{margin-top:2px;color:#747d73;font-size:10px;font-weight:700}
 .rankTag{color:var(--amber);font:900 10px "Courier New",monospace}
 .ball{color:var(--green);font-size:8px}
 .plainScore{
-  min-width:54px;text-align:right;font:900 34px/1 "Courier New",monospace;color:#f5edd2;
-  letter-spacing:-.07em
+  min-width:54px;text-align:right;color:var(--white);
+  font:900 35px/1 Arial,Helvetica,sans-serif;letter-spacing:-.04em
 }
 .interestSide{
-  align-self:stretch;border-left:1px solid #334035;padding-left:16px;
-  display:flex;flex-direction:column;align-items:flex-end;justify-content:center
+  border-left:1px solid #344035;padding-left:14px;display:flex;flex-direction:column;
+  align-items:flex-end;justify-content:center
 }
-.interestLabel{font:900 8px "Courier New",monospace;letter-spacing:.12em;color:#7f887d;text-align:right}
-.interestSide strong{font:1000 34px/1 "Courier New",monospace;color:var(--green);margin:5px 0 4px}
-.interestSide small{color:#b0b6aa;font-size:10px;text-align:right}
+.interestLabel{
+  color:#7e887d;font:900 8px "Courier New",monospace;letter-spacing:.1em;text-align:right
+}
+.interestSide strong{
+  margin:4px 0 2px;color:var(--green);font:1000 34px/1 "Courier New",monospace
+}
+.interestSide small{
+  max-width:96px;color:#afb6aa;font-size:10px;line-height:1.15;text-align:right
+}
 .lineBar{
-  margin-top:10px;padding-top:9px;border-top:1px solid #2f3930;
-  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
-  color:var(--amber);font:900 10px "Courier New",monospace
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:9px;
+  padding-top:8px;border-top:1px solid #303b31;color:var(--amber);
+  font:900 10px "Courier New",monospace
 }
-.reasonLine{margin-top:9px;color:#aeb5a8;font-size:12px;line-height:1.4}
+.reasonLine{margin-top:8px;color:#aeb5aa;font-size:12px;line-height:1.4}
 
-.aheadGrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.8fr);gap:18px;align-items:start}
+.aheadGrid{
+  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(330px,.82fr);gap:18px;align-items:start
+}
 .betPanel{
-  position:sticky;top:12px;border:2px solid #4a4430;background:#12140f;
+  position:sticky;top:12px;border:1px solid #51492f;background:#12140f;
   box-shadow:inset 0 0 0 1px #090a07
 }
-.betHeader{padding:16px 16px 12px;border-bottom:1px solid #3a3a2c;background:#18180f}
-.betHeader>span{color:var(--amber);font:900 9px "Courier New",monospace;letter-spacing:.14em}
+.betHeader{padding:16px 15px 12px;border-bottom:1px solid #3a3a2c;background:#18180f}
+.betHeader>span{color:var(--amber);font:900 9px "Courier New",monospace;letter-spacing:.13em}
 .betHeader h3{margin:5px 0 6px;font-size:20px;letter-spacing:-.02em}
 .betHeader p{margin:0;color:#9d9f92;font-size:12px;line-height:1.4}
 .betRow{
-  display:grid;grid-template-columns:30px minmax(0,1fr) 42px;gap:10px;align-items:center;
-  padding:12px 13px;border-bottom:1px solid #303126
+  display:grid;grid-template-columns:28px minmax(0,1fr) 40px;gap:9px;align-items:center;
+  padding:11px 12px;border-bottom:1px solid #303126
 }
-.betRank{font:900 12px "Courier New",monospace;color:#73786d}
-.betMain{min-width:0;display:flex;flex-direction:column;gap:3px}
+.betRank{color:#74796f;font:900 11px "Courier New",monospace}
+.betMain{display:flex;flex-direction:column;gap:3px;min-width:0}
 .betMain strong{font-size:13px}
-.betMain span{color:#d8d0b8;font:800 10px "Courier New",monospace;white-space:normal}
-.betMain small{color:var(--amber);font:900 8px "Courier New",monospace;letter-spacing:.08em}
+.betMain span{color:#d8d0b8;font:800 10px "Courier New",monospace}
+.betMain small{color:var(--amber);font:900 8px "Courier New",monospace;letter-spacing:.07em}
 .betScore{text-align:right;color:var(--green);font:1000 20px "Courier New",monospace}
-.betEmpty{padding:22px 16px;color:#8d9488;font:800 10px "Courier New",monospace}
-.betFoot{padding:12px 14px;color:#70776d;font-size:10px;line-height:1.45}
+.betEmpty{padding:20px 14px;color:#8e9589;font:800 10px "Courier New",monospace}
+.betFoot{padding:11px 13px;color:#70776d;font-size:10px;line-height:1.45}
 
 .notice{
-  border:1px solid #3c473d;background:#111711;padding:28px 18px;text-align:center;
+  border:1px solid #3c473d;background:#111711;padding:27px 18px;text-align:center;
   color:#98a092;font:900 11px "Courier New",monospace;letter-spacing:.08em
 }
 .error{color:#ff8177}
 footer{
-  margin-top:28px;text-align:center;color:#646c63;font:800 8px "Courier New",monospace;
+  margin-top:27px;text-align:center;color:#646c63;font:800 8px "Courier New",monospace;
   letter-spacing:.1em;line-height:1.8
 }
 
@@ -150,23 +192,49 @@ footer{
   .betPanel{position:static}
 }
 @media(max-width:620px){
-  .shell{padding:12px 10px 48px}
-  .stadiumHeader{padding:20px 16px}
-  .stadiumHeader p{font-size:13px}
-  .refresh{padding:9px;font-size:9px}
-  .modeRail button{padding:10px 9px;min-height:62px}
-  .modeRail button span{font-size:11px}
-  .modeRail button small{font-size:10px}
-  .controlDeck{align-items:stretch;flex-direction:column}
-  .leagueToggle{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-  .leagueToggle button{padding:0 6px;font-size:8px}
-  .weekPicker select{width:100%}
-  .gameRow{padding:12px}
-  .gameRowBody{grid-template-columns:minmax(0,1fr) 82px;gap:10px}
-  .teamLabel{font-size:16px}
-  .teamLogo{width:28px;height:28px}
-  .plainScore{font-size:29px;min-width:44px}
-  .interestSide{padding-left:10px}
+  .shell{padding:10px 9px 46px}
+  .stadiumHeader{padding:18px 15px}
+  .stadiumHeader h1{font-size:36px;max-width:270px}
+  .stadiumHeader p{font-size:12px;max-width:265px}
+  .headerKicker{font-size:8px}
+  .refresh{padding:8px;font-size:9px}
+
+  .leagueHero{gap:7px}
+  .leagueHero button{min-height:76px;padding:12px 11px}
+  .leagueHero button strong{font-size:18px}
+  .leagueHero button small{font-size:10px}
+
+  .modeRail button{min-height:57px;padding:8px 5px}
+  .modeRail button span{font-size:10px}
+  .modeRail button small{font-size:9px}
+
+  .weekBoard{grid-template-columns:42px 1fr 42px;margin-bottom:20px}
+  .weekBoard strong{font-size:11px}
+  .weekBoard button{min-height:50px}
+
+  .sectionIntro h2{font-size:25px}
+  .sectionIntro p{font-size:12px}
+
+  .gameRow{padding:11px 11px 12px}
+  .gameRowTop{font-size:8px}
+  .closeCallout{font-size:8px}
+  .gameRowBody{grid-template-columns:minmax(0,1fr) 77px;gap:8px}
+  .teamLine{min-height:45px;gap:8px}
+  .teamLeft{gap:8px}
+  .teamLogo{width:26px;height:26px}
+  .teamLabel{font-size:16px;gap:5px}
+  .rankTag{font-size:8px}
+  .record{font-size:9px}
+  .plainScore{font-size:30px;min-width:40px}
+  .interestSide{padding-left:8px}
+  .interestLabel{font-size:6.5px}
   .interestSide strong{font-size:29px}
-  .interestLabel{font-size:7px}
+  .interestSide small{font-size:8px;max-width:70px}
+  .reasonLine{font-size:11px}
+  .lineBar{font-size:9px}
+
+  .betHeader h3{font-size:18px}
+  .betRow{grid-template-columns:25px minmax(0,1fr) 34px;padding:10px}
+  .betMain strong{font-size:12px}
+  .betScore{font-size:18px}
 }

@@ -933,3 +933,37 @@ footer{
   .momentScore strong{font-size:34px}
   .momentMeta{align-items:flex-start;flex-direction:column;gap:5px}
 }
+
+
+/* BETRADAR SORT + FILTER CONTROLS */
+.filterableHead{align-items:center}
+.miniFilter{
+  margin-left:auto;display:flex;gap:6px;align-items:center;flex-wrap:wrap
+}
+.miniFilter button,
+.boardControlGroup button{
+  border:1px solid #3b463c;background:#0d120e;color:#7d867c;
+  padding:7px 8px;font:1000 7px "Courier New",monospace;letter-spacing:.07em;cursor:pointer
+}
+.miniFilter button.active,
+.boardControlGroup button.active{
+  border-color:var(--amber);background:#18160f;color:var(--amber);
+  box-shadow:inset 0 -2px 0 var(--amber)
+}
+.boardControls{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:10px;align-items:center;
+  margin:0 0 10px;padding:10px;border:1px solid #354036;background:#0d120e
+}
+.boardControlGroup{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.boardControlGroup>span{
+  margin-right:2px;color:#697369;font:1000 7px "Courier New",monospace;letter-spacing:.11em
+}
+.boardCount{
+  justify-self:end;color:#8d968c;font:1000 8px "Courier New",monospace;letter-spacing:.08em;white-space:nowrap
+}
+@media(max-width:760px){
+  .filterableHead{align-items:flex-start}
+  .miniFilter{grid-column:2;margin-left:0;margin-top:7px}
+  .boardControls{grid-template-columns:1fr}
+  .boardCount{justify-self:start}
+}

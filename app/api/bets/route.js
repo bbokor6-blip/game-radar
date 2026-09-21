@@ -38,7 +38,7 @@ export async function GET(request){
     const profiles=buildTrendProfiles(history);
     const vegasHistory=buildVegasHistory(history,league);
 
-    const oddsResults=await mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId));
+    const oddsResults=await mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId));
 
     const games=upcoming.map((game,index)=>{
       const allOdds=oddsResults[index]||[];

@@ -8,7 +8,7 @@ V1 follows:
 - College Football
 - NFL
 
-It pulls live scoreboard data through a server-side ESPN adapter, normalizes the games, calculates a transparent 0–100 Interest Score, and sorts the board by urgency.
+It pulls live scoreboard data through a server-side ESPN adapter, rebuilds a week-by-week season snapshot for records and prior results, normalizes the games, calculates a transparent 0–100 Interest Score, and sorts the board by urgency.
 
 ## Run locally
 
@@ -31,7 +31,7 @@ No environment variables are required for the prototype.
 
 ## Important data note
 
-The ESPN endpoints used by `lib/espn.js` are undocumented public-facing endpoints, not a contracted API. They are useful for prototyping but can change or be rate-limited. The adapter is deliberately isolated so it can later be replaced with a licensed feed without changing the UI or scoring engine.
+The ESPN endpoints used by `lib/espn.js` are undocumented public-facing endpoints, not a contracted API. They are useful for prototyping but can change or be rate-limited. The adapter pulls each football week independently because year-wide college responses can be silently truncated. Team records, recent results, model history, WeeklyRadar context and BetRadar inputs all derive from that same deduplicated season snapshot.
 
 ## Interest scoring
 

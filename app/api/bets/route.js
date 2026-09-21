@@ -5,6 +5,7 @@ import { buildTrendProfiles, buildVegasHistory, consensusMarket, evaluateOpportu
 import { buildRadarIndex } from "../../../lib/radarIndex";
 import { buildFeedbackProfile, feedbackForPick } from "../../../lib/radarFeedback";
 import { buildTeamForm } from "../../../lib/teamForm";
+import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
 import radarLedger from "../../../data/radar-picks.json";
 
 export const dynamic = "force-dynamic";
@@ -100,18 +101,20 @@ export async function GET(request){
 
   const year=Number(start.slice(0,4))||new Date().getFullYear();
   try{
-    const weekGames=(await fetchScoreboard(league,start,end)).filter(g=>g.sport===league);
-    const upcoming=rankGames(weekGames.filter(g=>g.state==="pre"));
+    const rawWeekGames=(await fetchScoreboard(league,start,end)).filter(g=>g.sport===league);
+    const throughWeek=Math.max(1,...rawWeekGames.map(g=>Number(g.week)||0));
 
     let seasonGames=[];
     let historyLoadError=null;
     try{
-      seasonGames=(await fetchSeasonScoreboard(league,year)).filter(g=>g.sport===league);
+      seasonGames=(await fetchSeasonScoreboard(league,year,throughWeek)).filter(g=>g.sport===league);
     }catch(error){
       historyLoadError=String(error?.message||error);
       console.error("historical scoreboard error",error);
     }
 
+    const contextualWeekGames=enrichGamesWithSeasonContext(rawWeekGames,seasonGames);
+    const upcoming=rankGames(contextualWeekGames.filter(g=>g.state==="pre"));
     const history=seasonGames.filter(g=>g.state==="post"&&new Date(g.date)<new Date(start+"T12:00:00Z"));
     const selectedHistory=selectRelevantHistory(history,upcoming,league);
 
@@ -206,6 +209,8 @@ export async function GET(request){
         name:"Bet Radar",
         description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current sportsbook lines. Outlier quotes are rejected against the broader market before display.",
         historyGames:history.length,
+        seasonCoverage:seasonCoverage(seasonGames),
+        seasonSource:"ESPN week-by-week schedule archive",
         historyLoadError,
         currentGames:upcoming.length,
         currentOddsGamesHydrated:currentMarkets.size,

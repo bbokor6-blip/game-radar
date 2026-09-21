@@ -102,12 +102,14 @@ function whyInteresting(game){
 }
 
 function Team({team,showScore,poss,favorite,onToggleFavorite}){
+  const last=team.lastGame;
   return <div className="grTeam">
     <button className={"grFavStar "+(favorite?"active":"")} onClick={()=>onToggleFavorite(team.id)} aria-label={favorite?"Remove favorite":"Add favorite"}>{favorite?"★":"☆"}</button>
     {team.logo?<img className="grTeamLogo" src={team.logo} alt=""/>:<span className="grTeamLogo grLogoFallback"/>}
     <div className="grTeamText">
       <div className="grTeamName">{team.rank?<span className="grRank">#{team.rank}</span>:null}<strong>{team.location||team.short}</strong>{poss?<span className="grPoss">●</span>:null}</div>
-      <span>{team.record||""}{team.conference?" · "+team.conference:""}</span>
+      <span>{team.record||"Record unavailable"}{team.conference?" · "+team.conference:""}</span>
+      {last?<small className="grLastResult">Last: {last.result} {last.pointsFor}-{last.pointsAgainst} {last.homeAway==="away"?"at":"vs"} {last.opponent}</small>:null}
     </div>
     {showScore?<div className="grScore">{team.score}</div>:null}
   </div>;

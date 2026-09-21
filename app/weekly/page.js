@@ -38,13 +38,14 @@ function why(game){
   return parts.length?parts.join(" · ")+".":"One of the strongest games on the board.";
 }
 function teamFact(team,form){
-  if(!form)return null;
+  if(!form&&!team?.lastGame)return null;
   const bits=[];
-  const sample=(form.last3Wins||0)+(form.last3Losses||0);
+  const sample=(form?.last3Wins||0)+(form?.last3Losses||0);
   if(sample)bits.push((team.short||team.location)+": "+form.last3Wins+"-"+form.last3Losses+" last "+sample);
-  if(Number.isFinite(form.last3Margin))bits.push((form.last3Margin>=0?"+":"")+form.last3Margin+" avg margin");
-  if(form.atsGames>=2)bits.push(form.atsWins+"-"+(form.atsGames-form.atsWins)+" ATS");
-  if(form.rankedWins)bits.push(form.rankedWins+" ranked win"+(form.rankedWins===1?"":"s"));
+  if(team?.lastGame)bits.push("Last: "+team.lastGame.result+" "+team.lastGame.pointsFor+"-"+team.lastGame.pointsAgainst+" "+(team.lastGame.homeAway==="away"?"at ":"vs ")+team.lastGame.opponent);
+  if(Number.isFinite(form?.last3Margin))bits.push((form.last3Margin>=0?"+":"")+form.last3Margin+" avg margin");
+  if(form?.atsGames>=2)bits.push(form.atsWins+"-"+(form.atsGames-form.atsWins)+" ATS");
+  if(form?.rankedWins)bits.push(form.rankedWins+" ranked win"+(form.rankedWins===1?"":"s"));
   return bits.slice(0,2).join(" · ");
 }
 function GameSpotlight({game,rank,edition}){

@@ -1871,6 +1871,7 @@ h1,.betsHero h1{
 .teamLogo{width:30px;height:30px}
 .teamLabel{font-size:19px}
 .record{font-size:11px;color:#8e9ca7}
+.grLastResult{display:block;margin-top:3px;color:#9aa8b2;font-size:11px;line-height:1.25;font-weight:650}
 .rankTag{font-size:10px}
 .plainScore{font-size:38px}
 .interestLabel{font-size:8px}

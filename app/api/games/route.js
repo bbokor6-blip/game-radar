@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { fetchScoreboard } from "../../../lib/espn";
+import { fetchScoreboard, fetchSeasonScoreboard } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
 import { buildRadarIndex } from "../../../lib/radarIndex";
+import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,18 @@ export async function GET(request){
   const league=searchParams.get("league")==="cfb"?"cfb":"nfl";
 
   const result=await safe(league,start,end);
-  const leagueGames=result.games.filter(g=>g.sport===league);
+  const rawLeagueGames=result.games.filter(g=>g.sport===league);
+  const year=Number(String(start||rawLeagueGames[0]?.date||new Date().getFullYear()).slice(0,4))||new Date().getFullYear();
+  const throughWeek=Math.max(1,...rawLeagueGames.map(g=>Number(g.week)||0));
+  let seasonGames=[];
+  let seasonError=null;
+  try{
+    seasonGames=await fetchSeasonScoreboard(league,year,throughWeek);
+  }catch(error){
+    seasonError=String(error?.message||error);
+    console.error(`${league} season context error`,error);
+  }
+  const leagueGames=enrichGamesWithSeasonContext(rawLeagueGames,seasonGames);
 
   const ranked=rankGames(leagueGames).map(game=>({
     ...game,
@@ -36,10 +48,13 @@ export async function GET(request){
     health:{
       ok:result.ok,
       count:leagueGames.length,
-      error:result.error||null
+      error:result.error||null,
+      seasonContextOk:!seasonError,
+      seasonContextError:seasonError,
+      seasonCoverage:seasonCoverage(seasonGames)
     },
     source:league==="cfb"
-      ?"ESPN prototype scoreboard · All FBS games"
-      :"ESPN prototype scoreboard"
+      ?"ESPN live scoreboard · week-by-week FBS season archive"
+      :"ESPN live scoreboard · week-by-week NFL season archive"
   },{headers:{"Cache-Control":"no-store"}});
 }

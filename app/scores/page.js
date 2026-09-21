@@ -21,6 +21,24 @@ function rangeLabel(range){
   const b=range.endDate.toLocaleDateString([],{month:"short",day:"numeric"});
   return a+"–"+b;
 }
+function weekName(offset){
+  if(offset===-1)return "LAST WEEK";
+  if(offset===0)return "THIS WEEK";
+  if(offset===1)return "NEXT WEEK";
+  if(offset>1)return "LOOK AHEAD · +"+offset;
+  return "PAST WEEK";
+}
+function WeekSelector({weekOffset,setWeekOffset,range,min=-8,max=4,onChange}){
+  function shift(next){setWeekOffset(next);onChange?.(next)}
+  return <div className="weekSelector" aria-label="Select football week">
+    <button disabled={weekOffset<=min} onClick={()=>shift(Math.max(min,weekOffset-1))} aria-label="Previous week">‹</button>
+    <div>
+      <span>{weekName(weekOffset)}</span>
+      <strong>{rangeLabel(range)}</strong>
+    </div>
+    <button disabled={weekOffset>=max} onClick={()=>shift(Math.min(max,weekOffset+1))} aria-label="Next week">›</button>
+  </div>;
+}
 
 function kickoff(game){
   return new Date(game.date).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
@@ -129,7 +147,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
   </article>;
 }
 
-function FilterDrawer({open,onClose,games,filters,setFilters,weekOffset,setWeekOffset,range,favoritesOnly,setFavoritesOnly}){
+function FilterDrawer({open,onClose,games,filters,setFilters,favoritesOnly,setFavoritesOnly}){
   const conferences=[...new Set(games.flatMap(g=>[g.home?.conference,g.away?.conference]).filter(Boolean))].sort();
   const teams=[...new Map(games.flatMap(g=>[g.away,g.home]).filter(Boolean).map(t=>[String(t.id),t])).values()].sort((a,b)=>String(a.location||a.name).localeCompare(String(b.location||b.name)));
   const networks=[...new Set(games.flatMap(g=>g.broadcasts||[]).filter(Boolean))].sort();
@@ -137,11 +155,6 @@ function FilterDrawer({open,onClose,games,filters,setFilters,weekOffset,setWeekO
   return <div className="grFilterScrim" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}>
     <aside className="grFilterDrawer">
       <div className="grFilterHead"><strong>Filters</strong><button onClick={onClose}>Done</button></div>
-      <div className="grWeekControl">
-        <button onClick={()=>setWeekOffset(x=>Math.max(-8,x-1))}>‹</button>
-        <div><span>Football week</span><strong>{rangeLabel(range)}</strong></div>
-        <button onClick={()=>setWeekOffset(x=>Math.min(4,x+1))}>›</button>
-      </div>
       <label>Conference<select value={filters.conference} onChange={e=>setFilters(x=>({...x,conference:e.target.value}))}><option value="">All conferences</option>{conferences.map(x=><option key={x}>{x}</option>)}</select></label>
       <label>Team<select value={filters.team} onChange={e=>setFilters(x=>({...x,team:e.target.value}))}><option value="">All teams</option>{teams.map(t=><option value={String(t.id)} key={t.id}>{t.location||t.name}</option>)}</select></label>
       <label>Kickoff<select value={filters.window} onChange={e=>setFilters(x=>({...x,window:e.target.value}))}><option value="">Any time</option><option>EARLY</option><option>AFTERNOON</option><option>PRIMETIME</option><option>LATE</option></select></label>
@@ -300,12 +313,15 @@ export default function Scores(){
     </header>
 
     <nav className="grPrimaryNav">
-      <div>
-        <button className={view==="live"?"active":""} onClick={()=>setView("live")}>Live</button>
-        <button className={view==="today"?"active":""} onClick={()=>setView("today")}>Today</button>
-        <button className={view==="week"?"active":""} onClick={()=>setView("week")}>This Week</button>
+      <div className="grPrimaryLinks">
+        <button className={view==="live"&&weekOffset===0?"active":""} disabled={weekOffset!==0} onClick={()=>setView("live")}>Live</button>
+        <button className={view==="today"&&weekOffset===0?"active":""} disabled={weekOffset!==0} onClick={()=>setView("today")}>Today</button>
+        <button className={view==="week"?"active":""} onClick={()=>setView("week")}>{weekOffset===0?"This Week":weekOffset===-1?"Last Week":weekOffset===1?"Next Week":"Week Board"}</button>
       </div>
-      <button className="grFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilterChips.length?" · "+activeFilterChips.length:""}</button>
+      <div className="grPrimaryTools">
+        <WeekSelector weekOffset={weekOffset} setWeekOffset={setWeekOffset} range={range} onChange={()=>setView("week")}/>
+        <button className="grFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilterChips.length?" · "+activeFilterChips.length:""}</button>
+      </div>
     </nav>
 
     {activeFilterChips.length?<div className="grActiveFilters">{activeFilterChips.map(([key,label])=><button key={key} onClick={()=>removeFilter(key)}>{label} ×</button>)}</div>:null}
@@ -349,6 +365,6 @@ export default function Scores(){
       {!featured&&!otherLive.length&&!worth.length&&!allUpcoming.length&&!finals.length?<div className="grEmpty">No games match this view.</div>:null}
     </>}
 
-    <FilterDrawer open={filtersOpen} onClose={()=>setFiltersOpen(false)} games={games} filters={filters} setFilters={setFilters} weekOffset={weekOffset} setWeekOffset={setWeekOffset} range={range} favoritesOnly={favoritesOnly} setFavoritesOnly={setFavoritesOnly}/>
+    <FilterDrawer open={filtersOpen} onClose={()=>setFiltersOpen(false)} games={games} filters={filters} setFilters={setFilters} favoritesOnly={favoritesOnly} setFavoritesOnly={setFavoritesOnly}/>
   </main>;
 }

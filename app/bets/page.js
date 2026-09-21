@@ -33,6 +33,30 @@ function teamDisplay(team){
 function matchup(game){
   return teamDisplay(game.away)+" @ "+teamDisplay(game.home);
 }
+function gameDateLabel(game){
+  return new Date(game.date).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).toUpperCase();
+}
+function rankedCount(game){
+  return [game.home?.rank,game.away?.rank].filter(Boolean).length;
+}
+function opportunityTag(item){
+  if(item.game.sport!=="cfb")return item.index>=78?"PREMIER SPOT":"NFL";
+  const ranked=rankedCount(item.game);
+  if(ranked===2)return "TOP 25 MATCHUP";
+  if(ranked===1)return "RANKED MATCHUP";
+  return item.index>=76?"SLEEPER PICK":"UNDER THE RADAR";
+}
+function featuredOpportunities(games){
+  return allOpportunities(games).filter(item=>{
+    if(item.game.sport!=="cfb")return true;
+    const ranked=rankedCount(item.game);
+    if(ranked>0)return item.index>=60;
+    return item.index>=76&&(item.game.interest?.score||0)>=50;
+  }).sort((a,b)=>b.index-a.index||rankedCount(b.game)-rankedCount(a.game)||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
+}
+function TeamMini({team}){
+  return <span className="teamMini">{team?.logo?<img src={team.logo} alt=""/>:<i/>}<b>{teamDisplay(team)}</b></span>;
+}
 
 function indexClass(n){
   if(n>=80)return "best";
@@ -117,15 +141,56 @@ function allOpportunities(games){
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
+function decimalOdds(american){
+  const n=Number(american);
+  if(!Number.isFinite(n)||Math.abs(n)<100)return null;
+  return n>0?1+n/100:1+100/Math.abs(n);
+}
+function parlayPayout(legs,stake=10){
+  const decimals=legs.map(x=>decimalOdds(x.americanOdds));
+  if(decimals.some(x=>x==null))return null;
+  const decimal=decimals.reduce((a,b)=>a*b,1);
+  const total=Math.round(stake*decimal*100)/100;
+  const american=decimal>=2?Math.round((decimal-1)*100):Math.round(-100/(decimal-1));
+  return {american,total,profit:Math.round((total-stake)*100)/100};
+}
+function featuredParlays(pool,league){
+  const source=pool.filter(x=>x.americanOdds!=null).slice(0,14);
+  const configs=[{size:2,label:"SPOTLIGHT 2-LEG"},{size:3,label:"FEATURED 3-LEG"},{size:4,label:"SATURDAY 4-LEG"}];
+  return configs.map(config=>{
+    const combos=[];
+    function walk(start,chosen){
+      if(chosen.length===config.size){
+        if(new Set(chosen.map(x=>x.game.id)).size!==chosen.length)return;
+        const ranked=chosen.filter(x=>rankedCount(x.game)>0).length;
+        const sleepers=chosen.filter(x=>rankedCount(x.game)===0).length;
+        if(league==="cfb"){
+          if(ranked===0)return;
+          if(config.size>=3&&ranked<2)return;
+          if(chosen.some(x=>rankedCount(x.game)===0&&x.index<76))return;
+          if(sleepers>1)return;
+        }
+        const score=chosen.reduce((s,x)=>s+x.index,0)/chosen.length+(ranked*1.5)+(sleepers===1?1.5:0);
+        combos.push({legs:chosen.slice(),score,ranked,sleepers});
+        return;
+      }
+      for(let i=start;i<source.length;i++)walk(i+1,[...chosen,source[i]]);
+    }
+    walk(0,[]);
+    const best=combos.sort((a,b)=>b.score-a.score)[0];
+    return best?{...best,...config,payout:parlayPayout(best.legs,10)}:null;
+  }).filter(Boolean);
+}
 function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekOffset,isSaved,onToggleSave}){
   const g=item.game;
   const cls=indexClass(item.index);
-  return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls}>
+  return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls+(rank<=3?" featuredPick":"")}>
     <div className="simplePickRank">#{rank}</div>
     <div className="simplePickMain">
       <div className="simpleMatch">
-        <strong>{matchup(g)}</strong>
-        <small>{gameTime(g)} · {item.type}</small>
+        <div className="pickTagRow"><span className="matchupTag">{opportunityTag(item)}</span>{rank<=3?<span className="topPickTag">TOP {rank}</span>:null}</div>
+        <div className="matchupVisual"><TeamMini team={g.away}/><em>@</em><TeamMini team={g.home}/></div>
+        <small className="gameDate">{gameDateLabel(g)} · {item.type}</small>
         <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase(),weekOffset}} title={matchup(g)+" · "+item.pick}/>
         <button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onToggleSave({
           id:savedPickId(league,weekStart,g.id,pickKeyForOpportunity(item)),
@@ -158,6 +223,23 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
       <strong>{item.index}</strong>
       <small>{item.index>=80?"STRONG LOOK":item.index>=70?"INTERESTING":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
     </div>
+  </article>;
+}
+
+function ParlayCard({parlay}){
+  return <article className="parlayCard">
+    <div className="parlayTop">
+      <span>{parlay.label}</span>
+      {parlay.sleepers?<b>SLEEPER INCLUDED</b>:parlay.ranked>=2?<b>TOP 25 FOCUS</b>:null}
+    </div>
+    <div className="parlayLegList">
+      {parlay.legs.map((leg,i)=><div key={leg.game.id+"-"+leg.type}>
+        <span>{i+1}</span>
+        <div><strong>{leg.pick}</strong><small>{matchup(leg.game)} · {gameDateLabel(leg.game)}</small></div>
+        <em>{leg.index}</em>
+      </div>)}
+    </div>
+    {parlay.payout?<div className="parlayPayout"><span>$10 PARLAY</span><strong>{formatAmerican(parlay.payout.american)}</strong><small>TOTAL RETURN {moneyText(parlay.payout.total)}</small></div>:null}
   </article>;
 }
 
@@ -194,7 +276,10 @@ function teaserCandidate(game){
   if(original<=-3&&teased>-3)crossed.push("-3");
 
   const supported=Boolean(spreadOpp&&spreadOpp.side===side);
-  const score=Math.round(52+quality+(supported?Math.max(6,(spreadOpp.index||0)-55):0)+(crossed.length*4)+(game.sport==="nfl"?3:0));
+  const ranked=rankedCount(game);
+  if(game.sport==="cfb"&&ranked===0&&(!spreadOpp||spreadOpp.index<76))return null;
+  const matchupBonus=game.sport==="cfb"?(ranked===2?8:ranked===1?4:2):3;
+  const score=Math.round(52+quality+(supported?Math.max(6,(spreadOpp.index||0)-55):0)+(crossed.length*4)+matchupBonus);
   return {
     game,
     label:team.short+" "+formatSpread(teased),
@@ -396,7 +481,7 @@ export default function BetsPage(){
   },[filteredGames,boardSort,league]);
 
   const visibleGames=showAllGames?orderedGames:orderedGames.slice(0,15);
-  const opportunities=allOpportunities(games);
+  const opportunities=featuredOpportunities(games);
 
   useEffect(()=>{
     if(loading||!games.length||typeof window==="undefined")return;
@@ -411,6 +496,7 @@ export default function BetsPage(){
     },80);
   },[loading,games.length,league]);
   const top=opportunities.filter(item=>topType==="all"||item.type.toLowerCase()===topType).slice(0,10);
+  const parlays=featuredParlays(opportunities,league);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
   const teaserGroups=[
     {size:2,count:2,items:bestTeasers(teaserPool,2,2)},
@@ -440,6 +526,12 @@ export default function BetsPage(){
       </div>
     </header>
 
+    <section className="heroStats">
+      <div><span>FEATURED PICKS</span><strong>{top.length}</strong></div>
+      <div><span>HIGH CONVICTION</span><strong>{top.filter(x=>x.highConviction).length}</strong></div>
+      <div><span>SAVED THIS WEEK</span><strong>{weekSheet.length}</strong></div>
+    </section>
+
     <div className="leagueSwitchBlock">
       <span className="switchLabel">CHOOSE LEAGUE</span>
       <nav className="betsLeagueToggle" aria-label="League">
@@ -465,7 +557,7 @@ export default function BetsPage(){
       <small>LINES CACHED ≤15 MIN · {data.methodology?.currentOddsGamesHydrated??0}/{data.methodology?.currentGames??0} GAMES MULTI-BOOK CHECKED</small>
     </section>
 
-    <section className="betSheet">
+    <section className="betSheet" id="bet-sheet">
       <div className="betSheetHead">
         <div>
           <span>MY BETTING SHEET</span>
@@ -498,7 +590,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>Always ranked by BetRadar Index first. Filter by bet type when you only want spreads or totals.</p>
+            <p>Ranked by BetRadar Index first, with college picks focused on Top 25 matchups plus only the strongest sleeper spots.</p>
           </div>
           <div className="miniFilter" aria-label="Top bet type">
             {[
@@ -516,8 +608,10 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>02</span>
-          <div><h2>BEST TEASERS</h2><p>2 two-leg teasers · 3 three-leg teasers · 2 four-leg teasers · 1 five-leg teaser. Built from the strongest teaser-friendly lines.</p></div>
+          <div><h2>PARLAYS + TEASERS</h2><p>College combinations start with ranked matchups, then allow a genuinely strong sleeper. No filler games just to complete a card.</p></div>
         </div>
+        {parlays.length?<div className="parlayGrid">{parlays.map((parlay,i)=><ParlayCard parlay={parlay} key={parlay.label+"-"+i}/>)}</div>:null}
+        <div className="subSectionLabel">BEST 6-POINT TEASERS</div>
         <div className="teaserGrid">
           {teaserGroups.flatMap(group=>group.items.map((combo,i)=><TeaserCard key={group.size+"-"+i} size={group.size} number={i+1} legs={combo.legs}/>))}
           {!teaserPool.length?<div className="notice">NO TEASER-FRIENDLY LINES AVAILABLE YET.</div>:null}
@@ -572,6 +666,8 @@ export default function BetsPage(){
         </div>
       </details>
     </>}
+
+    <a className="mobileBetSheet" href="#bet-sheet">MY BETS · {weekSheet.length}</a>
 
     <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · MARKET AUTO-REFRESH 30 MIN{data.generatedAt?" · UPDATED "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</footer>
   </main>;

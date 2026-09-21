@@ -204,21 +204,35 @@ export default function Home(){
   const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
 
   return <main className="shell">
+    <nav className="productSwitcher" aria-label="Game Radar products">
+      <a className="betradar" href="/">
+        <strong>BETRADAR</strong>
+        <small>Bets · confidence · teasers</small>
+      </a>
+      <a className="active gameradar" href="/scores">
+        <strong>GAMERADAR</strong>
+        <small>Live scores · what to watch</small>
+      </a>
+    </nav>
+
     <header className="stadiumHeader">
       <div>
         <div className="brand">GAME<span>RADAR</span></div>
         <div className="headerKicker">FOOTBALL INTELLIGENCE BOARD</div>
-        <h1>LIVE SCORE CENTER</h1>
+        <h1>GAMERADAR</h1>
         <p>Live scores, close games and the football worth watching right now.</p>
       </div>
-      <div className="headerActions"><a className="betLabLink" href="/">BETRADAR →</a><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
+      <div className="headerActions"><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
     </header>
 
-    <nav className="leagueHero" aria-label="League">
+    <div className="leagueSwitchBlock scoreLeagueSwitch">
+      <span className="switchLabel">CHOOSE LEAGUE</span>
+      <nav className="leagueHero" aria-label="League">
       {LEAGUES.map(([v,title,sub])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>
         <strong>{title}</strong><small>{sub}</small>
       </button>)}
-    </nav>
+      </nav>
+    </div>
 
     <nav className="modeRail" aria-label="Timeframe">
       {MODES.map(([v,title,q])=><button key={v} className={mode===v?"active":""} onClick={()=>chooseMode(v)}>

@@ -228,37 +228,38 @@ function BoardRow({game}){
   const totalSide=game.opportunities?.total?.side;
 
   const options=available?[
-    {key:"away-spread",label:teamDisplay(game.away)+" SPREAD",base:teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
-    {key:"home-spread",label:teamDisplay(game.home)+" SPREAD",base:teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
+    {key:"away-spread",label:teamDisplay(game.away),base:teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
+    {key:"home-spread",label:teamDisplay(game.home),base:teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
     {key:"over",label:"OVER",base:total==null?"—":"OVER "+total.toFixed(1),odds:market.overOdds,tease:total==null?"—":"OVER "+(total-6).toFixed(1),suggested:totalSide==="over"},
     {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
   ]:[];
 
-  return <details className="gameTableRow">
-    <summary>
+  return <article className="gameTableRow openRow">
+    <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
-      <div className="tableMarket"><span>LINE</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
+      <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
       <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"PASS"}</strong></div>
       <div className={"tableIndex "+indexClass(best?.index||0)}><span>BETRADAR</span><strong>{best?.index||0}</strong></div>
-    </summary>
+    </div>
 
-    {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand">
+    {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand alwaysVisible">
       {options.map(option=>{
         const totalReturn=tenDollarReturn(option.odds);
         return <div className={"tableBetOption "+(option.suggested?"suggested":"")} key={option.key}>
           <div className="tableBetTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:null}</div>
           <div className="tableTease"><span>SUGGESTED TEASE</span><strong>{option.tease}</strong></div>
           <div className="tableStraight"><span>GAME LINE</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
-          {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)+" total return"}</small>:null}
+          {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)}</small>:null}
         </div>;
       })}
     </div>}
-  </details>;
+  </article>;
 }
 
 export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
   const[data,setData]=useState({games:[],methodology:null});
+  const[showAllGames,setShowAllGames]=useState(false);
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const range=useMemo(()=>footballRange(1),[]);
@@ -283,6 +284,7 @@ export default function BetsPage(){
   },[league]);
 
   const games=data.games||[];
+  const visibleGames=showAllGames?games:games.slice(0,15);
   const opportunities=allOpportunities(games);
   const top=opportunities.slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
@@ -343,11 +345,14 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME</h2><p>One compact row per game. Expand any matchup to see suggested tease lines on top of the straight spread/total lines in all four directions.</p></div>
+          <div><h2>EVERY GAME</h2><p>Tease lines stay visible for every shown game. The board starts with the top 15 games; expand the slate only when you want the rest.</p></div>
         </div>
         <div className="simpleBoard">
-          {games.map(game=><BoardRow key={game.id} game={game}/>)}
+          {visibleGames.map(game=><BoardRow key={game.id} game={game}/>)}
         </div>
+        {games.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
+          {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+games.length+" GAMES"}
+        </button>:null}
       </section>
 
       <details className="modelDetails">

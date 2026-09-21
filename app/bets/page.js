@@ -73,10 +73,44 @@ function moneyText(n){
   return "$"+v.toFixed(2);
 }
 
+function recordPct(record){
+  const m=String(record||"").match(/(\d+)-(\d+)/);
+  if(!m)return .5;
+  const wins=Number(m[1]),losses=Number(m[2]);
+  return wins+losses?wins/(wins+losses):.5;
+}
+
+function fallbackSpread(game){
+  const market=game.marketConsensus||{};
+  if(!market.available||!Number.isFinite(Number(market.homeMargin)))return null;
+  const homePct=recordPct(game.home.record),awayPct=recordPct(game.away.record);
+  let side;
+  if(homePct>awayPct+.05)side="home";
+  else if(awayPct>homePct+.05)side="away";
+  else side=Number(market.homeMargin)>0?"away":"home";
+  const homeSpread=-Number(market.homeMargin);
+  const spread=side==="home"?homeSpread:-homeSpread;
+  const team=side==="home"?game.home:game.away;
+  const odds=side==="home"?market.homeSpreadOdds:market.awaySpreadOdds;
+  const totalReturn=tenDollarReturn(odds);
+  return {
+    type:"SPREAD",
+    pick:team.short+" "+formatSpread(spread),
+    americanOdds:odds,
+    payout:totalReturn==null?null:{stake:10,profit:Math.round((totalReturn-10)*100)/100,totalReturn},
+    index:35,
+    label:"LOW CONFIDENCE",
+    why:"BetRadar does not have a strong historical signal here. This is simply the best available lean from the current matchup and line.",
+    evidence:["Low-confidence fallback pick"],
+    side
+  };
+}
+
 function allOpportunities(games){
   const out=[];
   for(const game of games){
-    if(game.opportunities?.spread)out.push({...game.opportunities.spread,game});
+    const spread=game.opportunities?.spread||fallbackSpread(game);
+    if(spread)out.push({...spread,game});
     if(game.opportunities?.total)out.push({...game.opportunities.total,game});
   }
   return out.sort((a,b)=>b.index-a.index);
@@ -125,34 +159,35 @@ function teaserCandidate(game){
   const dog=homeFav?game.away:game.home;
   const spreadOpp=game.opportunities?.spread;
 
-  let team=null,original=null,teased=null,why="";
+  let side=spreadOpp?.side||null;
+  let quality=0;
   if(abs>=4&&abs<=8.5){
-    team=favorite;
-    original=-abs;
-    teased=original+6;
-    const crossed=[];
-    if(original<=-7&&teased>-7)crossed.push("7");
-    if(original<=-3&&teased>-3)crossed.push("3");
-    why="A 6-point teaser takes "+favorite.short+" from "+original.toFixed(1)+" to "+(teased>0?"+":"")+teased.toFixed(1)+(crossed.length?" and moves through "+crossed.join(" and "):"")+".";
+    side=side||(homeFav?"home":"away");
+    quality+=16;
   }else if(abs>=1.5&&abs<=3.5){
-    team=dog;
-    original=abs;
-    teased=original+6;
-    const crossed=[];
-    if(original<3&&teased>=3)crossed.push("3");
-    if(original<7&&teased>=7)crossed.push("7");
-    why="A 6-point teaser takes "+dog.short+" from +"+original.toFixed(1)+" to +"+teased.toFixed(1)+(crossed.length?" and moves through "+crossed.join(" and "):"")+".";
+    side=side||(homeFav?"away":"home");
+    quality+=14;
   }else{
-    return null;
+    side=side||(homeFav?"away":"home");
+    quality-=Math.min(12,Math.max(0,abs-10));
   }
 
-  const supported=spreadOpp&&spreadOpp.side===(team.id===game.home.id?"home":"away");
-  const score=Math.round(64+(supported?Math.max(0,(spreadOpp.index||0)-58)*.6:0)+(game.sport==="nfl"?4:0));
+  const team=side==="home"?game.home:game.away;
+  const original=side==="home"?-Number(market.homeMargin):Number(market.homeMargin);
+  const teased=original+6;
+  const crossed=[];
+  if(original<3&&teased>=3)crossed.push("3");
+  if(original<7&&teased>=7)crossed.push("7");
+  if(original<=-7&&teased>-7)crossed.push("-7");
+  if(original<=-3&&teased>-3)crossed.push("-3");
+
+  const supported=Boolean(spreadOpp&&spreadOpp.side===side);
+  const score=Math.round(52+quality+(supported?Math.max(6,(spreadOpp.index||0)-55):0)+(crossed.length*4)+(game.sport==="nfl"?3:0));
   return {
     game,
-    label:team.short+" "+(teased>0?"+":"")+teased.toFixed(1),
+    label:team.short+" "+formatSpread(teased),
     score,
-    why:supported?why+" Bet Radar already likes that side.":why+" The line itself makes this an interesting teaser shape."
+    why:"Moves "+team.short+" from "+formatSpread(original)+" to "+formatSpread(teased)+(crossed.length?" through key numbers "+crossed.join(" and "):"")+(supported?". BetRadar already leans to this side.":".")
   };
 }
 

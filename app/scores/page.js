@@ -325,7 +325,7 @@ export default function Scores(){
       </form>
       <button className={"grHeaderButton "+(favoritesOnly?"active":"")} onClick={()=>setFavoritesOnly(x=>!x)}>★ Favorites</button>
       <a className="grBetLink" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>BetRadar</a>
-      <details className="suiteMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/radar-picks">Radar Picks</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
+      <details className="suiteMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/pickradar">PickRadar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
     </header>
 
     <nav className="grPrimaryNav">

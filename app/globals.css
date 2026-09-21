@@ -3638,3 +3638,121 @@ body{
   .brBest small{font-size:12px}
   .brParlayGrid{grid-template-columns:1fr}
 }
+
+
+/* Persistent week selector shared by GameRadar + BetRadar */
+.weekSelector{
+  display:grid;
+  grid-template-columns:34px minmax(118px,auto) 34px;
+  align-items:center;
+  min-height:38px;
+  border:1px solid #354855;
+  background:#0c1821;
+}
+.weekSelector>button{
+  height:38px;
+  border:0!important;
+  border-bottom:0!important;
+  background:#101d27!important;
+  color:#e5ebef!important;
+  font-size:20px!important;
+  padding:0!important;
+  cursor:pointer;
+}
+.weekSelector>button:disabled{
+  color:#4e5d67!important;
+  cursor:default;
+}
+.weekSelector>div{
+  min-width:0;
+  padding:4px 10px;
+  text-align:center;
+  border-left:1px solid #354855;
+  border-right:1px solid #354855;
+}
+.weekSelector span,.weekSelector strong{
+  display:block;
+  white-space:nowrap;
+}
+.weekSelector span{
+  color:#f1cf62;
+  font-size:11px;
+  line-height:1.1;
+  font-weight:900;
+}
+.weekSelector strong{
+  margin-top:2px;
+  color:#d4dce2;
+  font-size:12px;
+  line-height:1.1;
+  font-weight:750;
+  font-variant-numeric:tabular-nums;
+}
+
+.grPrimaryTools,.brPrimaryTools{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.grPrimaryLinks,.brPrimaryLinks{
+  display:flex;
+  gap:4px;
+}
+.grPrimaryNav .grPrimaryLinks button:disabled{
+  color:#52606a;
+  cursor:default;
+}
+.grPrimaryNav .grPrimaryLinks button:disabled:hover{
+  color:#52606a;
+}
+.brPrimaryNav .brFilterButton{
+  min-height:38px;
+  margin-bottom:0;
+  border:1px solid #30414e;
+  background:#0c1821;
+  color:#e2e7eb;
+}
+.grPrimaryNav,.brPrimaryNav{
+  position:sticky;
+  top:64px;
+  z-index:35;
+  background:#08131cf2;
+  backdrop-filter:blur(12px);
+}
+
+@media(max-width:900px){
+  .grPrimaryNav,.brPrimaryNav{
+    align-items:flex-start;
+  }
+  .grPrimaryTools,.brPrimaryTools{
+    flex:0 0 auto;
+  }
+}
+@media(max-width:700px){
+  .grPrimaryNav,.brPrimaryNav{
+    top:106px;
+  }
+  .grPrimaryTools,.brPrimaryTools{
+    gap:6px;
+  }
+  .weekSelector{
+    grid-template-columns:30px minmax(102px,auto) 30px;
+    min-height:36px;
+  }
+  .weekSelector>button{
+    height:36px!important;
+    font-size:18px!important;
+  }
+  .weekSelector>div{padding:3px 7px}
+  .weekSelector span{font-size:10px}
+  .weekSelector strong{font-size:11px}
+  .grPrimaryNav .grFilterButton,
+  .brPrimaryNav .brFilterButton{
+    position:fixed;
+    right:12px;
+    bottom:12px;
+    z-index:70;
+    min-height:46px;
+    padding:0 16px;
+  }
+}

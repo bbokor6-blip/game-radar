@@ -3,6 +3,9 @@ import { fetchScoreboard, fetchSeasonScoreboard, fetchConsensusOdds } from "../.
 import { rankGames } from "../../../lib/interest";
 import { buildTrendProfiles, buildVegasHistory, consensusMarket, evaluateOpportunity, marketSummary } from "../../../lib/opportunity";
 import { buildRadarIndex } from "../../../lib/radarIndex";
+import { buildFeedbackProfile, feedbackForPick } from "../../../lib/radarFeedback";
+import { buildTeamForm } from "../../../lib/teamForm";
+import radarLedger from "../../../data/radar-picks.json";
 
 export const dynamic = "force-dynamic";
 
@@ -102,6 +105,8 @@ export async function GET(request){
 
     const profiles=buildTrendProfiles(hydratedHistory);
     const vegasHistory=buildVegasHistory(hydratedHistory,league);
+    const teamForm=buildTeamForm(hydratedHistory,profiles);
+    const feedbackProfile=buildFeedbackProfile(radarLedger);
 
     const games=upcoming.map((game)=>{
       const allOdds=currentMarkets.get(game.id)||[];
@@ -109,7 +114,9 @@ export async function GET(request){
       const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
-      const radarIndex=buildRadarIndex(game,best?.index||null);
+      const feedback=best?feedbackForPick(feedbackProfile,{league,type:best.type,index:best.index}):{modifier:0,sample:0,note:"Building sample"};
+      const adjustedBettingIndex=best?Math.max(0,Math.min(100,best.index+feedback.modifier)):null;
+      const radarIndex=buildRadarIndex(game,adjustedBettingIndex);
       const preferredPick=best?{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
@@ -117,6 +124,8 @@ export async function GET(request){
         pick:best.pick,
         americanOdds:best.americanOdds??null,
         betRadarIndex:best.index,
+        feedbackAdjustedBetIndex:adjustedBettingIndex,
+        feedback,
         radarIndex:radarIndex.score,
         label:best.label,
         why:best.why,
@@ -143,6 +152,12 @@ export async function GET(request){
         opportunities,
         bestOpportunity:best,
         preferredPick,
+        feedback,
+        adjustedBettingIndex,
+        teamForm:{
+          home:teamForm.get(String(game.home?.id||game.home?.short||""))||null,
+          away:teamForm.get(String(game.away?.id||game.away?.short||""))||null
+        },
         opportunityIndex:best?.index||0,
         radarIndex
       };
@@ -161,7 +176,8 @@ export async function GET(request){
         historicalOddsGamesHydrated:historicalMarkets.size,
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,
-        vegasHistory
+        vegasHistory,
+        radarFeedback:feedbackProfile
       },
       games
     },{headers:{"Cache-Control":"private, no-store, max-age=0"}});

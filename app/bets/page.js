@@ -5,7 +5,7 @@ import { metadataChips, gameMetadata } from "../../lib/gameMetadata";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
-function footballRange(offset=1){
+function footballRange(offset=0){
   const now=new Date();
   const day=now.getDay();
   const daysSinceTuesday=(day+5)%7;
@@ -22,6 +22,23 @@ function rangeLabel(r){
   const a=r.startDate.toLocaleDateString([],{month:"short",day:"numeric"});
   const b=r.endDate.toLocaleDateString([],{month:"short",day:"numeric"});
   return a+"–"+b;
+}
+function weekName(offset){
+  if(offset===-1)return "LAST WEEK";
+  if(offset===0)return "THIS WEEK";
+  if(offset===1)return "NEXT WEEK";
+  if(offset>1)return "LOOK AHEAD · +"+offset;
+  return "PAST WEEK";
+}
+function WeekSelector({weekOffset,setWeekOffset,range,min=0,max=4}){
+  return <div className="weekSelector" aria-label="Select football week">
+    <button disabled={weekOffset<=min} onClick={()=>setWeekOffset(x=>Math.max(min,x-1))} aria-label="Previous week">‹</button>
+    <div>
+      <span>{weekName(weekOffset)}</span>
+      <strong>{rangeLabel(range)}</strong>
+    </div>
+    <button disabled={weekOffset>=max} onClick={()=>setWeekOffset(x=>Math.min(max,x+1))} aria-label="Next week">›</button>
+  </div>;
 }
 
 function gameTime(game){
@@ -480,7 +497,7 @@ function BetGameRow({game,league,weekStart,weekLabel,savedIds,onToggleSave}){
   </article>;
 }
 
-function BetFilterDrawer({open,onClose,games,filters,setFilters,weekOffset,setWeekOffset,range}){
+function BetFilterDrawer({open,onClose,games,filters,setFilters}){
   if(!open)return null;
   const conferences=[...new Set(games.flatMap(g=>[g.home?.conference,g.away?.conference]).filter(Boolean))].sort();
   const teams=[...new Map(games.flatMap(g=>[g.away,g.home]).filter(Boolean).map(t=>[String(t.id),t])).values()].sort((a,b)=>String(a.location||a.name).localeCompare(String(b.location||b.name)));
@@ -488,11 +505,6 @@ function BetFilterDrawer({open,onClose,games,filters,setFilters,weekOffset,setWe
   return <div className="brFilterScrim" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}>
     <aside className="brFilterDrawer">
       <div className="brFilterHead"><strong>Filters</strong><button onClick={onClose}>Done</button></div>
-      <div className="brWeekControl">
-        <button onClick={()=>setWeekOffset(x=>Math.max(0,x-1))}>‹</button>
-        <div><span>Betting week</span><strong>{rangeLabel(range)}</strong></div>
-        <button onClick={()=>setWeekOffset(x=>Math.min(4,x+1))}>›</button>
-      </div>
       <label>Conference<select value={filters.conference} onChange={e=>setFilters(x=>({...x,conference:e.target.value}))}><option value="">All conferences</option>{conferences.map(x=><option key={x}>{x}</option>)}</select></label>
       <label>Team<select value={filters.team} onChange={e=>setFilters(x=>({...x,team:e.target.value}))}><option value="">All teams</option>{teams.map(t=><option value={String(t.id)} key={t.id}>{t.location||t.name}</option>)}</select></label>
       <label>TV network<select value={filters.network} onChange={e=>setFilters(x=>({...x,network:e.target.value}))}><option value="">Any network</option>{networks.map(x=><option key={x}>{x}</option>)}</select></label>
@@ -511,7 +523,7 @@ export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
   const[prefsReady,setPrefsReady]=useState(false);
   const[data,setData]=useState({games:[],methodology:null,generatedAt:null});
-  const[weekOffset,setWeekOffset]=useState(1);
+  const[weekOffset,setWeekOffset]=useState(0);
   const[betSheet,setBetSheet]=useState([]);
   const[sheetReady,setSheetReady]=useState(false);
   const[query,setQuery]=useState("");
@@ -660,12 +672,15 @@ export default function BetsPage(){
     </header>
 
     <nav className="brPrimaryNav">
-      <div>
+      <div className="brPrimaryLinks">
         <a href="#top">Top Bets</a>
         <a href="#all">All Games</a>
         <a href="#parlays">Parlays</a>
       </div>
-      <button onClick={()=>setFiltersOpen(true)}>Filters{activeFilters.length?" · "+activeFilters.length:""}</button>
+      <div className="brPrimaryTools">
+        <WeekSelector weekOffset={weekOffset} setWeekOffset={setWeekOffset} range={range}/>
+        <button className="brFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilters.length?" · "+activeFilters.length:""}</button>
+      </div>
     </nav>
 
     {activeFilters.length?<div className="grActiveFilters">{activeFilters.map(([key,label])=><button key={key} onClick={()=>removeFilter(key)}>{label} ×</button>)}</div>:null}
@@ -686,7 +701,7 @@ export default function BetsPage(){
     {loading?<div className="grEmpty">Loading BetRadar…</div>:<>
       <section className="brSection" id="top">
         <div className="grSectionHead">
-          <div><h2>Top Bets</h2><p>{weekOffset===0?"This week":"Week of "+weekLabel} · strongest current signals</p></div>
+          <div><h2>Top Bets</h2><p>{weekName(weekOffset)} · {weekLabel} · strongest current signals</p></div>
           <button onClick={()=>setFiltersOpen(true)}>Narrow board</button>
         </div>
         {featured?<BetPickCard item={featured} featured league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,featured.game.id,pickKeyForOpportunity(featured)))} onToggleSave={toggleSavedPick}/>:<div className="grEmpty">No qualifying betting signals yet.</div>}
@@ -725,6 +740,6 @@ export default function BetsPage(){
       </section>
     </>}
 
-    <BetFilterDrawer open={filtersOpen} onClose={()=>setFiltersOpen(false)} games={games} filters={filters} setFilters={setFilters} weekOffset={weekOffset} setWeekOffset={setWeekOffset} range={range}/>
+    <BetFilterDrawer open={filtersOpen} onClose={()=>setFiltersOpen(false)} games={games} filters={filters} setFilters={setFilters}/>
   </main>;
 }

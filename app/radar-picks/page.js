@@ -18,20 +18,21 @@ function weekName(offset){
   if(offset===1)return "NEXT WEEK";
   return "LOOK AHEAD · +"+offset;
 }
-function matchup(g){return (g.away?.location||g.away?.short)+" @ "+(g.home?.location||g.home?.short)}
-function officialPick(game){
-  const best=game.bestOpportunity;
-  if(!best)return {pick:"PASS",index:0,label:"NO OFFICIAL EDGE",why:"No betting signal is strong enough to lock yet.",type:"PASS"};
-  return {pick:best.pick,index:best.index,label:best.label,why:best.why,type:best.type,americanOdds:best.americanOdds};
-}
 function ResultBadge({result}){
-  if(!result)return <span className="rpResult pending">PENDING</span>;
-  return <span className={"rpResult "+result.toLowerCase()}>{result}</span>;
+  const value=result||"PENDING";
+  return <span className={"rpResult "+value.toLowerCase()}>{value}</span>;
 }
+function weekRecord(picks=[]){
+  const graded=picks.filter(p=>["W","L","PUSH"].includes(p.result));
+  const wins=graded.filter(p=>p.result==="W").length;
+  const losses=graded.filter(p=>p.result==="L").length;
+  const pushes=graded.filter(p=>p.result==="PUSH").length;
+  return {wins,losses,pushes,decisions:wins+losses};
+}
+
 export default function RadarPicks(){
   const[league,setLeague]=useState("nfl");
   const[weekOffset,setWeekOffset]=useState(1);
-  const[data,setData]=useState({games:[]});
   const[ledger,setLedger]=useState({weeks:[],record:{}});
   const[loading,setLoading]=useState(true);
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
@@ -41,28 +42,23 @@ export default function RadarPicks(){
     async function load(){
       setLoading(true);
       try{
-        const [betsRes,ledgerRes]=await Promise.all([
-          fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"}),
-          fetch("/api/radar-picks",{cache:"no-store"})
-        ]);
-        const [bets,history]=await Promise.all([betsRes.json(),ledgerRes.json()]);
-        if(!ignore){setData(bets);setLedger(history)}
+        const res=await fetch("/api/radar-picks",{cache:"no-store"});
+        const history=await res.json();
+        if(!ignore)setLedger(history);
       }finally{if(!ignore)setLoading(false)}
     }
     load();
     return()=>{ignore=true};
-  },[league,weekOffset,range.start,range.end]);
+  },[]);
 
-  const games=(data.games||[]).slice().sort((a,b)=>(b.radarIndex?.score||0)-(a.radarIndex?.score||0));
-  const official=games.map(g=>({game:g,pick:officialPick(g)}));
-  const bets=official.filter(x=>x.pick.type!=="PASS");
-  const passes=official.length-bets.length;
-  const avg=bets.length?Math.round(bets.reduce((s,x)=>s+(x.pick.index||0),0)/bets.length):0;
-  const archive=(ledger.weeks||[]).filter(w=>w.league===league).slice().reverse();
+  const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
+  const picks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
+  const record=weekRecord(picks);
+  const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
 
   return <main className="rpPage">
     <header className="rpHeader">
-      <a href="/scores" className="rpBrand">RADAR<span>PICKS</span></a>
+      <a href="/radar-picks" className="rpBrand">RADAR<span>PICKS</span></a>
       <div className="rpLeague"><button className={league==="nfl"?"active":""} onClick={()=>setLeague("nfl")}>NFL</button><button className={league==="cfb"?"active":""} onClick={()=>setLeague("cfb")}>College</button></div>
       <div className="rpWeek">
         <button disabled={weekOffset===0} onClick={()=>setWeekOffset(x=>Math.max(0,x-1))}>‹</button>
@@ -73,25 +69,41 @@ export default function RadarPicks(){
     </header>
 
     <section className="rpHero">
-      <div><span>THE OFFICIAL BOARD</span><h1>One preferred action for every game.</h1><p>RadarIndex blends betting signal with matchup quality. We lock the preferred bet when there is a real edge, keep the line we recommended, and grade it after the game.</p></div>
-      <div className="rpStats"><div><strong>{bets.length}</strong><span>official bets</span></div><div><strong>{passes}</strong><span>passes</span></div><div><strong>{avg||"—"}</strong><span>avg bet signal</span></div></div>
+      <div>
+        <span>LOCKED MODEL PICKS</span>
+        <h1>These are the ones we're actually standing behind.</h1>
+        <p>Only selected RadarIndex picks appear here. Once a weekly card is locked, the pick and line do not move. After the games, we grade the exact recommendation W, L, or PUSH and carry the record forward.</p>
+      </div>
+      <div className="rpStats">
+        <div><strong>{picks.length||"—"}</strong><span>locked picks</span></div>
+        <div><strong>{selectedWeek?.lockedAt?new Date(selectedWeek.lockedAt).toLocaleDateString([],{month:"short",day:"numeric"}):"—"}</strong><span>locked</span></div>
+        <div><strong>{record.decisions?record.wins+"–"+record.losses:"—"}</strong><span>week record</span></div>
+      </div>
     </section>
 
-    {loading?<div className="grEmpty">Building the board…</div>:<section className="rpBoard">
-      {official.map(({game,pick})=><article className="rpGame" key={game.id}>
-        <div className="rpScore">{game.radarIndex?.score??game.interest?.score??"—"}</div>
-        <div className="rpMain">
-          <div className="rpMatchup"><strong>{matchup(game)}</strong><span>{new Date(game.date).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"})}{game.broadcasts?.[0]?" · "+game.broadcasts[0]:""}</span></div>
-          <div className="rpPreferred"><span>PREFERRED PICK</span><strong>{pick.pick}</strong><small>{pick.type==="PASS"?"No bet":pick.index+" BetRadar Index · "+pick.type}</small></div>
-          <p>{pick.why}</p>
-        </div>
-        <ResultBadge/>
-      </article>)}
-    </section>}
+    {loading?<div className="grEmpty">Loading locked picks…</div>:selectedWeek?<>
+      <section className="rpBoard">
+        {picks.map((pick,i)=><article className="rpGame" key={pick.gameId}>
+          <div className="rpScore">{pick.radarIndex??"—"}</div>
+          <div className="rpMain">
+            <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex} BetRadar Index · {pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <p>{pick.why}</p>
+            <small className="rpLockedLine">Locked line: {pick.line||pick.pick}</small>
+          </div>
+          <ResultBadge result={pick.result}/>
+        </article>)}
+      </section>
+      {!picks.length?<div className="grEmpty">No official picks were strong enough to lock for this week.</div>:null}
+    </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}
 
     <section className="rpHistory">
-      <div className="rpHistoryHead"><div><span>TRACK RECORD</span><h2>Week over week</h2></div><strong>{ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses:"Starts next week"}</strong></div>
-      {archive.length?archive.map(w=><details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {w.record?.wins||0}-{w.record?.losses||0}</summary><div>{(w.picks||[]).map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup}</span><strong>{p.pick}</strong><ResultBadge result={p.result}/></div>)}</div></details>):<div className="grEmpty">No graded weeks yet. The first official snapshot will be locked before next week's games.</div>}
+      <div className="rpHistoryHead"><div><span>TRACK RECORD</span><h2>Week over week</h2></div><strong>{ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses:"No graded picks yet"}</strong></div>
+      {archive.length?archive.map(w=>{
+        const official=(w.picks||[]).filter(p=>p.type!=="PASS");
+        const r=weekRecord(official);
+        return <details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {r.decisions?r.wins+"-"+r.losses:"Pending"}</summary><div>{official.map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup}</span><strong>{p.pick}</strong><ResultBadge result={p.result}/></div>)}</div></details>
+      }):<div className="grEmpty">No previous weeks yet. The record begins with the first locked slate.</div>}
     </section>
   </main>;
 }

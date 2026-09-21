@@ -6,5 +6,6 @@ async function safe(sport,start,end){try{return await fetchScoreboard(sport,star
 export async function GET(request){
  const {searchParams}=new URL(request.url),start=searchParams.get("start"),end=searchParams.get("end");
  const [cfb,nfl]=await Promise.all([safe("cfb",start,end),safe("nfl",start,end)]);
- return NextResponse.json({generatedAt:new Date().toISOString(),games:rankGames([...cfb,...nfl]),range:{start,end},sources:{nfl:"scoreboard feed",cfb:"scoreboard feed"}},{headers:{"Cache-Control":"public, s-maxage=20, stale-while-revalidate=40"}});
+ const top25=cfb.filter(game=>game.home.rank||game.away.rank);
+ return NextResponse.json({generatedAt:new Date().toISOString(),games:rankGames([...top25,...nfl]),range:{start,end},sources:{nfl:"scoreboard feed",cfb:"Top 25 games only"}},{headers:{"Cache-Control":"public, s-maxage=20, stale-while-revalidate=40"}});
 }

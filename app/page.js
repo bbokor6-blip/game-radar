@@ -1,3 +1,5 @@
+import RadarMenu from "./components/RadarMenu";
+
 export default function Home(){
   const areas=[
     {
@@ -27,15 +29,7 @@ export default function Home(){
   ];
   return <main className="homeRadar">
     <header className="homeTopbar">
-      <details className="homeMenu">
-        <summary aria-label="Open navigation">☰</summary>
-        <div>
-          <a href="/weekly">WeeklyRadar</a>
-          <a href="/scores">GameRadar</a>
-          <a href="/bets">BetRadar</a>
-          <a href="/pickradar">PickRadar</a>
-        </div>
-      </details>
+      <RadarMenu current="/" className="homeMenu"/>
       <a className="homeWordmark" href="/">GAME<span>RADAR</span></a>
       <div className="homeStatus"><i/> NFL + COLLEGE</div>
     </header>

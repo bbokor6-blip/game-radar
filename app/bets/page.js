@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
 import { metadataChips, gameMetadata } from "../../lib/gameMetadata";
+import RadarMenu from "../components/RadarMenu";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
@@ -669,7 +670,7 @@ export default function BetsPage(){
       </form>
       <a className="brSavedLink" href="#saved">★ My Bets <span>{weekSheet.length}</span></a>
       <a className="brGameLink" href={"/scores?league="+league+"&week="+weekOffset}>GameRadar</a>
-      <details className="suiteMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/pickradar">PickRadar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
+      <RadarMenu current="/bets" className="suiteMenu"/>
     </header>
 
     <nav className="brPrimaryNav">

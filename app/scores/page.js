@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation } from "../../lib/agentSearch";
 import { gameMetadata } from "../../lib/gameMetadata";
+import RadarMenu from "../components/RadarMenu";
 
 function footballRange(offset=0){
   const now=new Date();
@@ -327,7 +328,7 @@ export default function Scores(){
       </form>
       <button className={"grHeaderButton "+(favoritesOnly?"active":"")} onClick={()=>setFavoritesOnly(x=>!x)}>★ Favorites</button>
       <a className="grBetLink" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>BetRadar</a>
-      <details className="suiteMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/pickradar">PickRadar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
+      <RadarMenu current="/scores" className="suiteMenu"/>
     </header>
 
     <nav className="grPrimaryNav">

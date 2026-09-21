@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import RadarMenu from "../components/RadarMenu";
 
 function footballRange(offset=0){
   const now=new Date(), day=now.getDay(), daysSinceTuesday=(day+5)%7;
@@ -41,6 +42,8 @@ export default function RadarPicks(){
   const[weekOffset,setWeekOffset]=useState(1);
   const[confidence,setConfidence]=useState("all");
   const[ledger,setLedger]=useState({weeks:[],record:{}});
+  const[liveSignals,setLiveSignals]=useState({});
+  const[liveReady,setLiveReady]=useState(false);
   const[loading,setLoading]=useState(true);
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
 
@@ -58,12 +61,39 @@ export default function RadarPicks(){
     return()=>{ignore=true};
   },[]);
 
+  useEffect(()=>{
+    let ignore=false;
+    async function loadLiveSignals(){
+      setLiveReady(false);
+      try{
+        const res=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
+        if(!res.ok)throw new Error();
+        const payload=await res.json();
+        const next={};
+        for(const game of payload.games||[]){
+          next[game.id]={index:game.bestOpportunity?.index??null,pick:game.bestOpportunity?.pick??null};
+        }
+        if(!ignore)setLiveSignals(next);
+      }catch{
+        if(!ignore)setLiveSignals({});
+      }finally{
+        if(!ignore)setLiveReady(true);
+      }
+    }
+    loadLiveSignals();
+    return()=>{ignore=true};
+  },[league,range.start,range.end]);
+
   const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
   const allPicks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
-  const picks=allPicks.filter(p=>confidence==="all"||(confidence==="high"?(p.betRadarIndex||0)>=80:(p.betRadarIndex||0)>=70&&(p.betRadarIndex||0)<80));
+  const currentIndex=pick=>liveReady&&Object.hasOwn(liveSignals,pick.gameId)?liveSignals[pick.gameId].index:pick.betRadarIndex??null;
+  const picks=allPicks.filter(p=>{
+    const index=currentIndex(p)||0;
+    return confidence==="all"||(confidence==="high"?index>=80:index>=70&&index<80);
+  });
   const record=weekRecord(allPicks);
-  const highCount=allPicks.filter(p=>(p.betRadarIndex||0)>=80).length;
-  const leanCount=allPicks.filter(p=>(p.betRadarIndex||0)>=70&&(p.betRadarIndex||0)<80).length;
+  const highCount=allPicks.filter(p=>(currentIndex(p)||0)>=80).length;
+  const leanCount=allPicks.filter(p=>(currentIndex(p)||0)>=70&&(currentIndex(p)||0)<80).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const spread=feedback.byType?.SPREAD;
@@ -81,7 +111,7 @@ export default function RadarPicks(){
         <div><span>{weekName(weekOffset)}</span><strong>{rangeLabel(range)}</strong></div>
         <button disabled={weekOffset===4} onClick={()=>setWeekOffset(x=>Math.min(4,x+1))}>›</button>
       </div>
-      <details className="wrMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/pickradar">PickRadar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a></div></details>
+      <RadarMenu current="/pickradar" className="wrMenu"/>
     </header>
 
     <section className="rpHero">
@@ -92,7 +122,7 @@ export default function RadarPicks(){
       </div>
       <div className="rpStats">
         <div><strong>{allPicks.length||"—"}</strong><span>games picked</span></div>
-        <div><strong>{highCount||"—"}</strong><span>high confidence</span></div>
+        <div><strong>{liveReady?highCount:"—"}</strong><span>current 80+</span></div>
         <div><strong>{selectedWeek?.lockedAt?new Date(selectedWeek.lockedAt).toLocaleDateString([],{month:"short",day:"numeric"}):"—"}</strong><span>locked</span></div>
         <div><strong>{record.decisions?record.wins+"–"+record.losses:"—"}</strong><span>week record</span></div>
       </div>
@@ -103,23 +133,23 @@ export default function RadarPicks(){
         <div><strong>SHOW PICKS</strong><span>{picks.length} of {allPicks.length} games</span></div>
         <div>
           <button className={confidence==="all"?"active":""} onClick={()=>setConfidence("all")}>ALL GAMES <b>{allPicks.length}</b></button>
-          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>HIGH CONFIDENCE · 80+ <b>{highCount}</b></button>
-          <button className={confidence==="lean"?"active":""} onClick={()=>setConfidence("lean")}>MODEL LEANS · 70–79 <b>{leanCount}</b></button>
+          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>BETRADAR · 80+ <b>{highCount}</b></button>
+          <button className={confidence==="lean"?"active":""} onClick={()=>setConfidence("lean")}>BETRADAR · 70–79 <b>{leanCount}</b></button>
         </div>
       </section>
       <section className="rpBoard">
-        {picks.map((pick,i)=><article className="rpGame" key={pick.gameId}>
-          <div className="rpScore">{pick.betRadarIndex??pick.radarIndex??"—"}</div>
+        {picks.map((pick,i)=>{const liveIndex=currentIndex(pick);return <article className="rpGame" key={pick.gameId}>
+          <div className="rpScore"><small>BETRADAR</small><strong>{liveReady?(liveIndex??"—"):"…"}</strong></div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · {confidenceBand(pick.betRadarIndex)}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" PickRadar Confidence · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · LOCKED {confidenceBand(pick.betRadarIndex)}</span><strong>{pick.pick}</strong><small>{liveReady?"Live BetRadar "+(liveIndex??"—")+" · ":""}{pick.betRadarIndex!=null?"Lock index "+pick.betRadarIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
             <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
             {pick.modelProjection?<small className="rpModelInputs">MODEL: {pick.modelProjection.homeMargin>0?"HOME":"AWAY"} BY {Math.abs(pick.modelProjection.homeMargin).toFixed(1)} · PROJECTED TOTAL {pick.modelProjection.total.toFixed(1)} · {pick.modelProjection.historicalGames} PRIOR GAMES</small>:null}
             {pick.closingLineValue!=null?<small className={"rpClv "+(pick.closingLineValue>=0?"positive":"negative")}>CLOSING-LINE VALUE: {pick.closingLineValue>0?"+":""}{pick.closingLineValue}</small>:null}
           </div>
           <ResultBadge result={pick.result}/>
-        </article>)}
+        </article>})}
       </section>
       {!picks.length?<div className="grEmpty">No picks match this confidence filter.</div>:null}
     </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}

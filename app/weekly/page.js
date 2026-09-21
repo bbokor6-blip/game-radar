@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { gameMetadata } from "../../lib/gameMetadata";
 import { getWeeklyEditorial, editorialTake } from "../../lib/weeklyEditorial";
+import RadarMenu from "../components/RadarMenu";
 
 function footballRange(offset=0){
   const now=new Date(), day=now.getDay(), daysSinceTuesday=(day+5)%7;
@@ -114,7 +115,7 @@ export default function Weekly(){
         <div><span>{weekName(weekOffset)}</span><strong>{rangeLabel(range)}</strong></div>
         <button disabled={weekOffset===4} onClick={()=>setWeekOffset(x=>Math.min(4,x+1))}>›</button>
       </div>
-      <details className="wrMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/pickradar">PickRadar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
+      <RadarMenu current="/weekly" className="wrMenu"/>
     </header>
 
     <section className="wrHero">

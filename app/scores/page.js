@@ -188,8 +188,11 @@ export default function Home(){
     setLoading(true);
     load(false,weekOffset,league);
     if(mode!=="live"||weekOffset!==0)return;
-    const timer=setInterval(()=>load(false,0,league),30000);
-    return()=>clearInterval(timer);
+    const poll=()=>{if(typeof document==="undefined"||document.visibilityState==="visible")load(false,0,league);};
+    const timer=setInterval(poll,30000);
+    const onVisibility=()=>{if(document.visibilityState==="visible")load(false,0,league);};
+    document.addEventListener("visibilitychange",onVisibility);
+    return()=>{clearInterval(timer);document.removeEventListener("visibilitychange",onVisibility)};
   },[league,weekOffset,mode]);
 
   const games=data.games||[];

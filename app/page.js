@@ -208,7 +208,7 @@ export default function Home(){
         <h1>GAME COMMAND CENTER</h1>
         <p>Pick your football. Pick your timeframe. See what matters.</p>
       </div>
-      <button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button>
+      <div className="headerActions"><a className="betLabLink" href="/bets">BET LAB →</a><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></div>
     </header>
 
     <nav className="leagueHero" aria-label="League">

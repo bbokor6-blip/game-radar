@@ -7,13 +7,14 @@ function Team({team,possession}){
 }
 function GameCard({game,featured=false}){
  const live=game.state==="in",hot=game.interest.tier==="Turn it on now",watch=game.interest.tier==="Keep an eye on it";
- return <article className={`gameCard ${featured?"featured":""}`}>
+ const signal=live?(hot?"signalHot":watch?"signalWatch":"signalLow"):"";
+ return <article className={`gameCard ${featured?"featured":""} ${live?"isLive":""} ${signal}`}>
   <div className="scoreboardTop"><span className="lamp"/><span className="league">{game.sport==="cfb"?"COLLEGE FOOTBALL":"NFL"}</span><span className={live?"liveFlag":""}>{live?"● LIVE":game.status}</span><span className="screw"/></div>
   <div className="clockPanel"><div className="clockLabel">GAME CLOCK<span>{game.status||"GAME"}</span></div><div className="radarLabel">RADAR<span className="radarScore">{live?String(game.interest.score).padStart(2,"0"):game.state==="post"?"FINAL":"NEXT"}</span></div></div>
   <Team team={game.away} possession={game.possessionId===game.away.id}/>
   <div className="divider"><span>VISITOR</span><span>HOME</span></div>
   <Team team={game.home} possession={game.possessionId===game.home.id}/>
-  {live?<><div className={`tier ${hot?"hot":watch?"watch":""}`}>{hot?"▲ TURN IT ON NOW":watch?"◆ KEEP AN EYE ON IT":"SKIP FOR NOW"}</div><div className="why">{game.interest.reason}{game.downDistance?` · ${game.downDistance}`:""}</div><div className="meter"><div className="meterFill" style={{width:`${game.interest.score}%`}}/></div></>:null}
+  {live?<><div className={`signalBadge ${hot?"hot":watch?"watch":"low"}`}>{hot?"🔥 MUST WATCH":watch?"👀 WORTH WATCHING":"• LOW URGENCY"}</div><div className={`tier ${hot?"hot":watch?"watch":""}`}>{hot?"TURN IT ON NOW":watch?"KEEP AN EYE ON IT":"SKIP FOR NOW"}</div><div className="why">{game.interest.reason}{game.downDistance?` · ${game.downDistance}`:""}</div><div className="meter"><div className="meterFill" style={{width:`${game.interest.score}%`}}/></div></>:null}
  </article>
 }
 export default function Home(){

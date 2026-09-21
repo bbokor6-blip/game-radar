@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
+import { metadataChips } from "../../lib/gameMetadata";
 
 const LEAGUES=[
   ["nfl","NFL","Every NFL game"],
@@ -146,6 +147,11 @@ function GameRow({game,mode,league,weekOffset=0}){
   </article>;
 }
 
+function GameMetaStrip({game,limit=3}){
+  const chips=metadataChips(game,limit);
+  return chips.length?<div className="gameMetaStrip">{chips.map(chip=><span key={chip}>{chip}</span>)}</div>:null;
+}
+
 function AgentScoreCard({game,league,weekOffset}){
   const spread=spreadForGame(game);
   const conferences=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
@@ -161,6 +167,7 @@ function AgentScoreCard({game,league,weekOffset}){
     <div className="agentGameSignals">
       <span>{conferences.length?conferences.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
       <strong>{spread!=null?"SPREAD "+spread:marketLine(game)}</strong>
+      <GameMetaStrip game={game} limit={3}/>
     </div>
     <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
     <a className="agentOpen" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>OPEN IN BETRADAR →</a>
@@ -253,7 +260,7 @@ export default function Home(){
   },[league,mode,weekOffset,prefsReady]);
 
   function runAgentText(text){
-    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset});
+    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset,games:(data.games||[])});
     setAgentQuery(text);
     if(spec.isSaveAction){
       setAgentSpec({...spec,actionMessage:"SAVE ACTIONS LIVE IN BETRADAR — OPEN A RESULT THERE TO ADD IT TO YOUR SHEET."});
@@ -368,10 +375,10 @@ export default function Home(){
       </form>
       <div className="askPrompts">
         {[
-          "Tight Big Ten + SEC games this week",
-          "Top 25 games with spreads under 10",
-          "Close games Saturday after 7 PM",
-          "Best games next week"
+          "Tight Big Ten + SEC games",
+          "Ranked vs ranked",
+          "Primetime conference games",
+          "Power 4 games under 7.5"
         ].map(prompt=><button key={prompt} onClick={()=>runAgentText(prompt)}>{prompt}</button>)}
       </div>
       {agentSpec?<div className="agentInterpretation">

@@ -86,3 +86,7 @@ Ask GameRadar is a primary product surface, not a utility search box.
 
 ## Current release principle
 The production app uses one shared visual and metadata system across GameRadar and BetRadar. Search, team metadata, conference metadata, score presentation, betting context, and mobile layout should evolve in this single project rather than in separate forks.
+
+
+## Game-day production architecture
+GameRadar and BetRadar ship from the same production project and repository. Both products use the shared sticky league/week/search navigation, shared football metadata, and the same underlying game data. GameRadar prioritizes what to watch; BetRadar prioritizes betting signals and saved picks.

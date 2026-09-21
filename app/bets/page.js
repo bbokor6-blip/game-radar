@@ -600,14 +600,18 @@ export default function BetsPage(){
       <div><span>SAVED THIS WEEK</span><strong>{weekSheet.length}</strong></div>
     </section>
 
-    <section className="askRadar">
+    <section className="askRadar askRadarFeatured">
       <div className="askRadarHead">
-        <div><span>✦ ASK GAMERADAR</span><h2>FIND EXACTLY WHAT YOU CARE ABOUT</h2></div>
-        <small>Natural-language search across games, lines, rankings and BetRadar signals.</small>
+        <div>
+          <span className="askEyebrow">✦ ASK GAMERADAR</span>
+          <h2>SEARCH FOOTBALL LIKE YOU TALK ABOUT IT</h2>
+          <p>Find tight conference games, ranked matchups, sleeper bets, or the strongest BetRadar signals without digging through the board.</p>
+        </div>
+        <div className="askRadarBadge">AI SEARCH</div>
       </div>
       <form className="askRadarForm" onSubmit={submitAgent}>
-        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="e.g. Give me all the tight games for Big Ten and SEC schools this week"/>
-        <button type="submit">SEARCH →</button>
+        <input value={agentQuery} onChange={e=>setAgentQuery(e.target.value)} placeholder="Try: Give me the tight Big Ten + SEC games this week"/>
+        <button type="submit">ASK GAMERADAR →</button>
       </form>
       <div className="askPrompts">
         {[
@@ -632,6 +636,13 @@ export default function BetsPage(){
         }):!loading?<div className="notice">NO GAMES MATCH THAT SEARCH. TRY WIDENING THE SPREAD OR REMOVING A FILTER.</div>:null}
       </div>:null}
     </section>
+
+    <nav className="betsSectionNav" aria-label="BetRadar sections">
+      <a href="#top-bets"><span>01</span><strong>TOP BETS</strong><small>Best signals</small></a>
+      <a href="#parlays"><span>02</span><strong>PARLAYS + TEASERS</strong><small>Build a card</small></a>
+      <a href="#bet-sheet"><span>03</span><strong>MY BETTING SHEET</strong><small>{weekSheet.length} saved</small></a>
+      <a href="#every-game"><span>04</span><strong>EVERY GAME</strong><small>Full board</small></a>
+    </nav>
 
     <div className="leagueSwitchBlock">
       <span className="switchLabel">CHOOSE LEAGUE</span>
@@ -686,7 +697,7 @@ export default function BetsPage(){
     </section>
     {error?<div className="notice error">{error}</div>:null}
     {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
-      <section className="betSection simpleBetSection">
+      <section className="betSection simpleBetSection" id="top-bets">
         <div className="betSectionHead filterableHead">
           <span>01</span>
           <div>
@@ -706,7 +717,7 @@ export default function BetsPage(){
         </div>
       </section>
 
-      <section className="betSection">
+      <section className="betSection" id="parlays">
         <div className="betSectionHead">
           <span>02</span>
           <div><h2>PARLAYS + TEASERS</h2><p>College combinations start with ranked matchups, then allow a genuinely strong sleeper. No filler games just to complete a card.</p></div>
@@ -719,7 +730,7 @@ export default function BetsPage(){
         </div>
       </section>
 
-      <section className="betSection">
+      <section className="betSection" id="every-game">
         <div className="betSectionHead everyGameHead">
           <span>03</span>
           <div>

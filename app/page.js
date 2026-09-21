@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const LEAGUES=[
   ["nfl","NFL","Every NFL game"],
-  ["cfb","COLLEGE TOP 25","Only games involving a Top 25 team"]
+  ["cfb","COLLEGE FBS","Every FBS game · Top 25 featured"]
 ];
 const MODES=[
   ["recap","RECAP","What happened?"],
@@ -98,7 +98,7 @@ function GameRow({game,mode}){
 
   return <article className={"gameRow "+cls}>
     <div className="gameRowTop">
-      <span>{game.sport==="cfb"?"COLLEGE TOP 25":"NFL"}</span>
+      <span>{game.sport==="cfb"?"COLLEGE FBS":"NFL"}</span>
       <span className={live?"liveText":""}>{live?"● LIVE":game.state==="post"?"FINAL":gameTime(game)}</span>
     </div>
 
@@ -260,7 +260,7 @@ export default function Home(){
     <footer>
       {mode==="live"?"LIVE BOARD · AUTO-SCAN 30 SEC":"GAME COMMAND CENTER"}
       {data.generatedAt?" · "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}
-      <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · TOP 25 GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
+      <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · ALL FBS GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
     </footer>
   </main>;
 }

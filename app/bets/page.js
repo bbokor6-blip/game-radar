@@ -35,10 +35,22 @@ function matchup(game){
 }
 
 function indexClass(n){
-  if(n>=78)return "best";
-  if(n>=68)return "strong";
-  if(n>=58)return "lean";
+  if(n>=80)return "best";
+  if(n>=70)return "strong";
+  if(n>=60)return "lean";
   return "pass";
+}
+
+function oddsText(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return "ODDS N/A";
+  return (n>0?"+":"")+Math.round(n);
+}
+
+function moneyText(n){
+  const v=Number(n);
+  if(!Number.isFinite(v))return "—";
+  return "$"+v.toFixed(2);
 }
 
 function allOpportunities(games){
@@ -60,8 +72,13 @@ function OpportunityCard({item,rank}){
         <strong>{matchup(g)}</strong>
         <small>{gameTime(g)} · {item.type}</small>
       </div>
-      <h3>{item.pick}</h3>
-      {item.index>=68?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
+      <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
+      {item.payout?<div className="payoutStrip">
+        <span>$10 BET</span>
+        <strong>WIN {moneyText(item.payout.profit)}</strong>
+        <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
+      </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
+      {item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
       <div className="evidenceChips">
         {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
       </div>
@@ -71,7 +88,7 @@ function OpportunityCard({item,rank}){
       </div>
     </div>
     <div className="confidenceIndex">
-      <span>RADAR INDEX</span>
+      <span>BETRADAR INDEX</span>
       <strong>{item.index}</strong>
       <small>{item.label}</small>
     </div>
@@ -130,7 +147,7 @@ function TeaserCard({size,legs}){
         <div><strong>{leg.label}</strong><small>{matchup(leg.game)} · {leg.why}</small></div>
       </div>)}
     </div>
-    <p>Fun structure built only from spread opportunities that already clear the Radar Index floor. More legs still means more risk.</p>
+    <p>Fun structure built from teaser-friendly lines. Teaser pricing is sportsbook-specific, so we do not invent a payout until an actual teaser price is available.</p>
   </article>;
 }
 
@@ -142,8 +159,8 @@ function BoardRow({game}){
       <small>{gameTime(game)}</small>
     </div>
     <div><span>MARKET</span><strong>{game.marketConsensus?.line||game.market?.details||"—"}</strong></div>
-    <div><span>BEST LOOK</span><strong>{best?.pick||"PASS"}</strong></div>
-    <div><span>RADAR</span><strong className={indexClass(best?.index||0)}>{best?.index||0}</strong></div>
+    <div><span>BEST LOOK</span><strong>{best?.pick||"PASS"}{best?.americanOdds?" ("+oddsText(best.americanOdds)+")":""}</strong>{best?.payout?<small>$10 → {moneyText(best.payout.totalReturn)} total</small>:null}</div>
+    <div><span>BETRADAR</span><strong className={indexClass(best?.index||0)}>{best?.index||0}</strong></div>
   </article>;
 }
 
@@ -175,7 +192,7 @@ export default function BetsPage(){
 
   const games=data.games||[];
   const opportunities=allOpportunities(games);
-  const top=opportunities.filter(x=>x.index>=58).slice(0,10);
+  const top=opportunities.filter(x=>x.index>=60).slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
 
   return <main className="betsShell">
@@ -184,7 +201,7 @@ export default function BetsPage(){
         <a className="backLink" href="/">← GAME COMMAND CENTER</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BET LAB</h1>
-        <p>No fake projected line. Bet Radar simply surfaces the most interesting opportunities using actual season results, ATS/total trends and the current public market.</p>
+        <p>BetRadar finds interesting opportunities using actual season results, market history and the current line. Every suggested bet now shows the real American odds, the payout on a $10 unit, and a BetRadar Index.</p>
       </div>
     </header>
 
@@ -193,10 +210,10 @@ export default function BetsPage(){
     </nav>
 
     <section className="confidenceLegend">
-      <div className="best"><strong>78+</strong><span>STRONG LOOK</span></div>
-      <div className="strong"><strong>68–77</strong><span>INTERESTING</span></div>
-      <div className="lean"><strong>58–67</strong><span>WATCH</span></div>
-      <div className="pass"><strong>&lt;58</strong><span>PASS</span></div>
+      <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
+      <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
+      <div className="lean"><strong>60–69</strong><span>WATCH</span></div>
+      <div className="pass"><strong>&lt;60</strong><span>PASS</span></div>
     </section>
 
     {error?<div className="notice error">{error}</div>:null}
@@ -206,7 +223,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 OPPORTUNITIES</h2>
-            <p>Not a probability of winning. The Radar Index tells you how much evidence there is that a bet is worth a closer look.</p>
+            <p>Sorted by BetRadar Index. The index is not a win probability — it measures how strong the supporting signal is. Odds and $10-unit payouts are shown on every priced bet.</p>
           </div>
         </div>
         <div className="simplePickList">
@@ -236,10 +253,10 @@ export default function BetsPage(){
       </section>
 
       <details className="modelDetails">
-        <summary>What goes into the Radar Index?</summary>
+        <summary>What goes into the BetRadar Index?</summary>
         <div>
           <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, agreement across available market lines, and how similar spreads/totals have actually performed earlier this season.</p>
-          <p>It does not invent a “true” spread and it does not claim an 80 Index means an 80% chance of winning.</p>
+          <p>It does not invent a “true” spread and it does not claim an 80 BetRadar Index means an 80% chance of winning. The American odds determine the actual $10 payout shown on each bet.</p>
           <div className="detailMetrics">
             <span>Completed games reviewed: <strong>{data.methodology?.historyGames??0}</strong></span>
             <span>Historical spread lines used: <strong>{data.methodology?.historicalSpreadGames??0}</strong></span>
@@ -250,6 +267,6 @@ export default function BetsPage(){
       </details>
     </>}
 
-    <footer className="betsFooter">RADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · RECHECK LINES BEFORE WAGERING</footer>
+    <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · RECHECK LINES BEFORE WAGERING</footer>
   </main>;
 }

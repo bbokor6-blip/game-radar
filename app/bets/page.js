@@ -343,7 +343,10 @@ export default function BetsPage(){
     if(!game)return;
     const bet=params.get("bet");
     const id=bet?"bet-"+game+"-"+bet:"game-"+game;
-    setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+    setTimeout(()=>{
+      const target=document.getElementById(id)||document.getElementById("game-"+game);
+      target?.scrollIntoView({behavior:"smooth",block:"center"});
+    },80);
   },[loading,games.length,league]);
   const top=opportunities.slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);

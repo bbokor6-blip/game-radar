@@ -156,18 +156,29 @@ function teaserCandidate(game){
   };
 }
 
-function TeaserCard({size,legs}){
-  const names={2:"The Little Tickle",3:"Triple Tingle",4:"Four-Leg Flutter",5:"Five-Leg Fever"};
-  return <article className="teaserCard">
-    <div className="teaserBadge">{size}-WAY · 6 PT</div>
-    <h3>{names[size]}</h3>
+function bestTeasers(pool,size,count){
+  const source=pool.slice(0,12);
+  const combos=[];
+  function walk(start,chosen){
+    if(chosen.length===size){
+      const score=chosen.reduce((sum,x)=>sum+x.score,0)/size;
+      combos.push({legs:chosen.slice(),score});
+      return;
+    }
+    for(let i=start;i<source.length;i++)walk(i+1,[...chosen,source[i]]);
+  }
+  walk(0,[]);
+  return combos.sort((a,b)=>b.score-a.score).slice(0,count);
+}
+function TeaserCard({size,legs,number}){
+  return <article className="teaserCard compactTeaser">
+    <div className="teaserBadge">{size}-LEG TEASER #{number}</div>
     <div className="teaserLegs">
       {legs.map((leg,i)=><div key={leg.game.id+"-"+i}>
         <span>{i+1}</span>
-        <div><strong>{leg.label}</strong><small>{matchup(leg.game)} · {leg.why}</small></div>
+        <div><strong>{leg.label}</strong><small>{matchup(leg.game)}</small></div>
       </div>)}
     </div>
-    <p>Fun structure built from teaser-friendly lines. Teaser pricing is sportsbook-specific, so we do not invent a payout until an actual teaser price is available.</p>
   </article>;
 }
 
@@ -188,34 +199,26 @@ function BoardRow({game}){
     {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
   ]:[];
 
-  return <article className="gameBetCard">
-    <div className="gameBetHeader">
-      <div><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
-      <div className={"gameRadarScore "+indexClass(best?.index||0)}>
-        <span>BETRADAR INDEX</span><strong>{best?.index||0}</strong><small>{best?.label||"PASS"}</small>
-      </div>
-    </div>
+  return <details className="gameTableRow">
+    <summary>
+      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
+      <div className="tableMarket"><span>LINE</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"PASS"}</strong></div>
+      <div className={"tableIndex "+indexClass(best?.index||0)}><span>BETRADAR</span><strong>{best?.index||0}</strong></div>
+    </summary>
 
-    {!available?<div className="fanduelUnavailable">MARKET LINE NOT AVAILABLE YET · TEASE LINES WILL POPULATE WHEN THE PRICE LOADS</div>:<>
-      <div className="fanduelBar"><span>CURRENT MARKET</span><strong>{market.line||"LINE AVAILABLE"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
-      <div className="teaseMatrix">
-        {options.map(option=>{
-          const totalReturn=tenDollarReturn(option.odds);
-          return <div className={"teaseOption "+(option.suggested?"suggested":"")} key={option.key}>
-            <div className="teaseOptionTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:<small>OTHER SIDE</small>}</div>
-            <div className="baseBetLine"><span>STRAIGHT</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
-            {totalReturn!=null?<div className="unitPayout">$10 → ${totalReturn.toFixed(2)} total return</div>:null}
-            <div className="teasedBetLine"><span>SUGGESTED 6-PT TEASE</span><strong>{option.tease}</strong></div>
-          </div>;
-        })}
-      </div>
-      <div className="teaseNote">Every box shows the suggested 6-point tease from the current market line. BetRadar highlights the side it likes most, but both spread directions and both total directions stay visible.</div>
-    </>}
-
-    <div className="gameBetFooter">
-      <span>BEST LOOK</span><strong>{best?.pick||"PASS"}{best?.americanOdds?" "+formatAmerican(best.americanOdds):""}</strong>{best?.why?<small>{best.why}</small>:null}
-    </div>
-  </article>;
+    {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand">
+      {options.map(option=>{
+        const totalReturn=tenDollarReturn(option.odds);
+        return <div className={"tableBetOption "+(option.suggested?"suggested":"")} key={option.key}>
+          <div className="tableBetTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:null}</div>
+          <div className="tableTease"><span>SUGGESTED TEASE</span><strong>{option.tease}</strong></div>
+          <div className="tableStraight"><span>GAME LINE</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
+          {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)+" total return"}</small>:null}
+        </div>;
+      })}
+    </div>}
+  </details>;
 }
 
 export default function BetsPage(){
@@ -246,8 +249,14 @@ export default function BetsPage(){
 
   const games=data.games||[];
   const opportunities=allOpportunities(games);
-  const top=opportunities.filter(x=>x.index>=60).slice(0,10);
+  const top=opportunities.slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
+  const teaserGroups=[
+    {size:2,count:2,items:bestTeasers(teaserPool,2,2)},
+    {size:3,count:3,items:bestTeasers(teaserPool,3,3)},
+    {size:4,count:2,items:bestTeasers(teaserPool,4,2)},
+    {size:5,count:1,items:bestTeasers(teaserPool,5,1)}
+  ];
 
   return <main className="betsShell">
     <header className="betsHero simpleHero">
@@ -276,8 +285,8 @@ export default function BetsPage(){
         <div className="betSectionHead">
           <span>01</span>
           <div>
-            <h2>TOP 10 OPPORTUNITIES</h2>
-            <p>Sorted by BetRadar Index. The index is not a win probability — it measures how strong the supporting signal is. Odds and $10-unit payouts are shown on every priced bet.</p>
+            <h2>TOP 10 BETS OF THE WEEK</h2>
+            <p>Always the 10 best available looks, even when confidence is low. Sorted by BetRadar Index with odds and $10-unit payouts.</p>
           </div>
         </div>
         <div className="simplePickList">
@@ -288,18 +297,18 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>02</span>
-          <div><h2>FUN TICKLE TEASERS</h2><p>Built from teaser-friendly market lines first, then boosted when Bet Radar already likes the same side.</p></div>
+          <div><h2>BEST TEASERS</h2><p>2 two-leg teasers · 3 three-leg teasers · 2 four-leg teasers · 1 five-leg teaser. Built from the strongest teaser-friendly lines.</p></div>
         </div>
         <div className="teaserGrid">
-          {[2,3,4,5].filter(n=>teaserPool.length>=n).map(n=><TeaserCard key={n} size={n} legs={teaserPool.slice(0,n)}/>)}
-          {!teaserPool.length?<div className="notice">NO TEASER LEGS CLEAR THE RADAR FLOOR YET.</div>:null}
+          {teaserGroups.flatMap(group=>group.items.map((combo,i)=><TeaserCard key={group.size+"-"+i} size={group.size} number={i+1} legs={combo.legs}/>))}
+          {!teaserPool.length?<div className="notice">NO TEASER-FRIENDLY LINES AVAILABLE YET.</div>:null}
         </div>
       </section>
 
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME · TEASE BOARD</h2><p>Every matchup shows the current line, straight-bet odds and $10 return, plus a suggested 6-point tease in both spread directions and both total directions. The BetRadar-preferred side is highlighted.</p></div>
+          <div><h2>EVERY GAME</h2><p>One compact row per game. Expand any matchup to see suggested tease lines on top of the straight spread/total lines in all four directions.</p></div>
         </div>
         <div className="simpleBoard">
           {games.map(game=><BoardRow key={game.id} game={game}/>)}

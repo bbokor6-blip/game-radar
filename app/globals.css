@@ -683,3 +683,48 @@ footer{
   .everyGameHead{align-items:flex-start}
   .collegeSort{grid-column:2;margin-left:0;margin-top:7px}
 }
+
+
+/* PRIMARY PRODUCT + LEAGUE NAV */
+.productSwitcher{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px
+}
+.productSwitcher a{
+  min-height:68px;padding:12px 14px;border:1px solid #3b463c;background:#0d120e;
+  color:#858e83;text-decoration:none;display:flex;flex-direction:column;justify-content:center;
+  transition:border-color .15s ease,background .15s ease,transform .15s ease
+}
+.productSwitcher a:hover{border-color:#667066;transform:translateY(-1px)}
+.productSwitcher strong{
+  font:1000 15px "Courier New",monospace;letter-spacing:.08em;color:#d9ded5
+}
+.productSwitcher small{
+  margin-top:4px;font-size:10px;font-weight:750;color:#7f887e
+}
+.productSwitcher a.active{
+  border-color:var(--amber);background:linear-gradient(180deg,#242315,#17180f);
+  box-shadow:inset 0 -4px 0 var(--amber),0 0 20px #ffbb3312
+}
+.productSwitcher a.active strong{color:var(--white)}
+.productSwitcher a.active small{color:#c7c1a7}
+.productSwitcher a.gameradar.active{
+  border-color:var(--green);background:linear-gradient(180deg,#162016,#10160f);
+  box-shadow:inset 0 -4px 0 var(--green),0 0 20px #9af25c10
+}
+.productSwitcher a.gameradar.active small{color:#b8c7b0}
+
+.leagueSwitchBlock{margin:12px 0}
+.switchLabel{
+  display:block;margin:0 0 6px 2px;color:#6f796f;
+  font:1000 7px "Courier New",monospace;letter-spacing:.15em
+}
+.leagueSwitchBlock .betsLeagueToggle{margin:0}
+.scoreLeagueSwitch{margin:14px 0 10px}
+.scoreLeagueSwitch .leagueHero{margin:0}
+
+@media(max-width:620px){
+  .productSwitcher{gap:6px;margin-bottom:8px}
+  .productSwitcher a{min-height:58px;padding:10px 11px}
+  .productSwitcher strong{font-size:12px}
+  .productSwitcher small{font-size:8px;line-height:1.25}
+}

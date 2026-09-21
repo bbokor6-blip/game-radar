@@ -196,8 +196,8 @@ function BoardRow({game}){
       </div>
     </div>
 
-    {!available?<div className="fanduelUnavailable">FANDUEL LINE NOT AVAILABLE YET</div>:<>
-      <div className="fanduelBar"><span>FANDUEL</span><strong>{market.line||"LINE AVAILABLE"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
+    {!available?<div className="fanduelUnavailable">MARKET LINE NOT AVAILABLE YET · TEASE LINES WILL POPULATE WHEN THE PRICE LOADS</div>:<>
+      <div className="fanduelBar"><span>CURRENT MARKET</span><strong>{market.line||"LINE AVAILABLE"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
       <div className="teaseMatrix">
         {options.map(option=>{
           const totalReturn=tenDollarReturn(option.odds);
@@ -205,11 +205,11 @@ function BoardRow({game}){
             <div className="teaseOptionTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:<small>OTHER SIDE</small>}</div>
             <div className="baseBetLine"><span>STRAIGHT</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
             {totalReturn!=null?<div className="unitPayout">$10 → ${totalReturn.toFixed(2)} total return</div>:null}
-            <div className="teasedBetLine"><span>6-PT TEASE</span><strong>{option.tease}</strong></div>
+            <div className="teasedBetLine"><span>SUGGESTED 6-PT TEASE</span><strong>{option.tease}</strong></div>
           </div>;
         })}
       </div>
-      <div className="teaseNote">Teased lines show a 6-point adjustment from the current FanDuel line. Teaser payout depends on the full multi-leg ticket, so no standalone teaser odds are invented here.</div>
+      <div className="teaseNote">Every box shows the suggested 6-point tease from the current market line. BetRadar highlights the side it likes most, but both spread directions and both total directions stay visible.</div>
     </>}
 
     <div className="gameBetFooter">
@@ -255,7 +255,7 @@ export default function BetsPage(){
         <a className="backLink" href="/">← GAME COMMAND CENTER</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BET LAB</h1>
-        <p>BetRadar finds interesting opportunities using actual season results, market history and the current line. Every suggested bet now shows the real American odds, the payout on a $10 unit, and a BetRadar Index.</p>
+        <p>BetRadar finds interesting opportunities using actual season results, market history and the current line. Every suggested bet shows the American odds, the payout on a $10 unit, and a BetRadar Index.</p>
       </div>
     </header>
 
@@ -299,7 +299,7 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME · FANDUEL TEASE BOARD</h2><p>Every matchup shows the FanDuel line, straight-bet odds and $10 return, plus a 6-point tease in both spread directions and both total directions. The BetRadar-preferred side is highlighted.</p></div>
+          <div><h2>EVERY GAME · TEASE BOARD</h2><p>Every matchup shows the current line, straight-bet odds and $10 return, plus a suggested 6-point tease in both spread directions and both total directions. The BetRadar-preferred side is highlighted.</p></div>
         </div>
         <div className="simpleBoard">
           {games.map(game=><BoardRow key={game.id} game={game}/>)}

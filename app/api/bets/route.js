@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { fetchScoreboard, fetchSeasonScoreboard, fetchConsensusOdds } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
 import { buildTrendProfiles, buildVegasHistory, consensusMarket, evaluateOpportunity, marketSummary } from "../../../lib/opportunity";
+import { buildRadarIndex } from "../../../lib/radarIndex";
 
 export const dynamic = "force-dynamic";
 
@@ -113,9 +114,10 @@ export async function GET(request){
         marketConsensus:{...market,line:marketSummary(game,market),available:Boolean(market.homeMargin!=null||market.total!=null)},
         opportunities,
         bestOpportunity:best,
-        opportunityIndex:best?.index||0
+        opportunityIndex:best?.index||0,
+        radarIndex:buildRadarIndex(game,best?.index||null)
       };
-    }).sort((a,b)=>b.opportunityIndex-a.opportunityIndex||b.interest.score-a.interest.score);
+    }).sort((a,b)=>(b.radarIndex?.score||0)-(a.radarIndex?.score||0)||b.opportunityIndex-a.opportunityIndex);
 
     return NextResponse.json({
       generatedAt:new Date().toISOString(),

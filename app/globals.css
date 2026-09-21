@@ -510,3 +510,61 @@ footer{
   .payoutStrip strong{font-size:11px}
   .payoutStrip small{font-size:8px}
 }
+
+/* EVERY-GAME FANDUEL TEASE BOARD */
+.gameBetCard{
+  margin-bottom:14px;border:1px solid #39443a;background:linear-gradient(180deg,#141b15,#0e130f);
+  box-shadow:inset 0 0 0 1px #080b08
+}
+.gameBetHeader{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border-bottom:1px solid #303a31}
+.gameBetHeader>div:first-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gameBetHeader>div:first-child strong{font-size:15px}
+.gameBetHeader>div:first-child small{color:#747d74;font-size:9px}
+.gameRadarScore{display:flex;flex-direction:column;align-items:flex-end;min-width:88px}
+.gameRadarScore span{color:#707970;font:900 7px "Courier New",monospace;letter-spacing:.1em}
+.gameRadarScore strong{font:1000 27px/1 "Courier New",monospace;margin:3px 0 2px}
+.gameRadarScore.best strong{color:var(--green)}
+.gameRadarScore.strong strong{color:var(--amber)}
+.gameRadarScore.lean strong{color:#ddd8c8}
+.gameRadarScore.pass strong{color:#687168}
+.gameRadarScore small{font:900 7px "Courier New",monospace;letter-spacing:.08em;color:#929a91}
+.fanduelBar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 14px;background:#10160f;border-bottom:1px solid #303a31}
+.fanduelBar span{color:#7ab8ff;font:1000 8px "Courier New",monospace;letter-spacing:.12em}
+.fanduelBar strong{font:1000 11px "Courier New",monospace;color:#eef3ec}
+.fanduelBar small{color:#aab2a8;font:800 9px "Courier New",monospace}
+.fanduelUnavailable{padding:14px;color:#7f8880;font:900 9px "Courier New",monospace;letter-spacing:.08em}
+.teaseMatrix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px}
+.teaseOption{border:1px solid #344035;background:#0c110d;padding:10px;min-width:0}
+.teaseOption.suggested{border-color:#667f4b;box-shadow:inset 0 3px 0 var(--green);background:#0f170f}
+.teaseOptionTop{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px}
+.teaseOptionTop span{color:#aeb6ac;font:900 8px "Courier New",monospace;letter-spacing:.06em}
+.teaseOptionTop b{color:var(--green);font:1000 7px "Courier New",monospace;letter-spacing:.06em}
+.teaseOptionTop small{color:#626b63;font:800 7px "Courier New",monospace}
+.baseBetLine,.teasedBetLine{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.baseBetLine span,.teasedBetLine span{color:#697369;font:900 7px "Courier New",monospace;letter-spacing:.08em}
+.baseBetLine strong{font:1000 12px "Courier New",monospace;color:#e5e0d0}
+.baseBetLine em{font-style:normal;color:var(--amber);font:1000 10px "Courier New",monospace}
+.unitPayout{margin:5px 0 8px;color:#8f978d;font:800 8px "Courier New",monospace}
+.teasedBetLine{margin-top:6px;padding-top:7px;border-top:1px solid #2d362e}
+.teasedBetLine strong{color:var(--green);font:1000 15px "Courier New",monospace}
+.teaseNote{padding:0 14px 10px;color:#6f776f;font-size:9px;line-height:1.4}
+.gameBetFooter{display:grid;grid-template-columns:70px minmax(100px,.45fr) minmax(0,1fr);gap:10px;align-items:center;padding:10px 14px;border-top:1px solid #303a31}
+.gameBetFooter>span{color:#6f786f;font:900 7px "Courier New",monospace;letter-spacing:.09em}
+.gameBetFooter>strong{font:1000 11px "Courier New",monospace;color:#f2ecd8}
+.gameBetFooter>small{color:#979f96;font-size:9px;line-height:1.4}
+
+@media(max-width:900px){
+  .teaseMatrix{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .gameBetHeader{padding:11px}
+  .gameBetHeader>div:first-child strong{font-size:13px}
+  .gameRadarScore{min-width:72px}
+  .gameRadarScore strong{font-size:24px}
+  .teaseMatrix{grid-template-columns:1fr 1fr;gap:6px;padding:8px}
+  .teaseOption{padding:8px}
+  .baseBetLine strong{font-size:11px}
+  .teasedBetLine strong{font-size:13px}
+  .gameBetFooter{grid-template-columns:58px 1fr;gap:7px;padding:9px 10px}
+  .gameBetFooter>small{grid-column:1/-1}
+}

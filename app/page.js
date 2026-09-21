@@ -8,8 +8,8 @@ function Team({team,possession}){
 function GameCard({game,featured=false}){
  const live=game.state==="in",hot=game.interest.tier==="Turn it on now",watch=game.interest.tier==="Keep an eye on it";
  return <article className={`gameCard ${featured?"featured":""}`}>
-  <div className="scoreboardTop"><span className="league">{game.sport==="cfb"?"COLLEGE FOOTBALL":"NFL"}</span><span className={live?"liveFlag":""}>{live?"● LIVE":game.status}</span></div>
-  <div className="clockPanel"><span>{game.status||"GAME"}</span><span className="radarScore">{live?String(game.interest.score).padStart(2,"0"):game.state==="post"?"FINAL":"NEXT"}</span></div>
+  <div className="scoreboardTop"><span className="lamp"/><span className="league">{game.sport==="cfb"?"COLLEGE FOOTBALL":"NFL"}</span><span className={live?"liveFlag":""}>{live?"● LIVE":game.status}</span><span className="screw"/></div>
+  <div className="clockPanel"><div className="clockLabel">GAME CLOCK<span>{game.status||"GAME"}</span></div><div className="radarLabel">RADAR<span className="radarScore">{live?String(game.interest.score).padStart(2,"0"):game.state==="post"?"FINAL":"NEXT"}</span></div></div>
   <Team team={game.away} possession={game.possessionId===game.away.id}/>
   <div className="divider"><span>VISITOR</span><span>HOME</span></div>
   <Team team={game.home} possession={game.possessionId===game.home.id}/>
@@ -25,7 +25,7 @@ export default function Home(){
  const recent=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,12);
  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,10);
  return <main className="shell">
-  <header><div><div className="brand">GAME<span>RADAR</span></div><h1>WHAT SHOULD<br/>I WATCH?</h1><p>Live football. Ranked by urgency.</p></div><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></header>
+  <header className="stadiumHeader"><div className="bolt b1"/><div className="bolt b2"/><div><div className="brand">GAME<span>RADAR</span></div><div className="headerKicker">LIVE FOOTBALL COMMAND CENTER</div><h1>WHAT SHOULD<br/>I WATCH?</h1><p>Every game on the board. Ranked by urgency.</p></div><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></header>
   <nav className="tabs">{TABS.map(([v,l])=><button key={v} className={tab===v?"active":""} onClick={()=>setTab(v)}>{l}</button>)}</nav>
   {error?<div className="notice error">{error}</div>:null}
   {loading?<div className="notice">SCANNING THE BOARD...</div>:<>

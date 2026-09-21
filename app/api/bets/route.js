@@ -62,13 +62,13 @@ export async function GET(request){
 
   const year=Number(start.slice(0,4))||new Date().getFullYear();
   try{
-    const weekGames=await fetchScoreboard(league,start,end);
+    const weekGames=(await fetchScoreboard(league,start,end)).filter(g=>g.sport===league);
     const upcoming=rankGames(weekGames.filter(g=>g.state==="pre"));
 
     let seasonGames=[];
     let historyLoadError=null;
     try{
-      seasonGames=await fetchSeasonScoreboard(league,year);
+      seasonGames=(await fetchSeasonScoreboard(league,year)).filter(g=>g.sport===league);
     }catch(error){
       historyLoadError=String(error?.message||error);
       console.error("historical scoreboard error",error);
@@ -133,7 +133,7 @@ export async function GET(request){
         vegasHistory
       },
       games
-    },{headers:{"Cache-Control":"public, s-maxage=900, stale-while-revalidate=300"}});
+    },{headers:{"Cache-Control":"private, no-store, max-age=0"}});
   }catch(error){
     console.error("bet radar error",error);
     return NextResponse.json({error:"Bet radar unavailable",detail:String(error?.message||error)},{status:500});

@@ -267,6 +267,7 @@ export default function BetsPage(){
   useEffect(()=>{
     let ignore=false;
     async function load(){
+      setShowAllGames(false);
       setLoading(true);
       try{
         const r=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});

@@ -73,52 +73,13 @@ function moneyText(n){
   return "$"+v.toFixed(2);
 }
 
-function recordPct(record){
-  const m=String(record||"").match(/(\d+)-(\d+)/);
-  if(!m)return .5;
-  const wins=Number(m[1]),losses=Number(m[2]);
-  return wins+losses?wins/(wins+losses):.5;
-}
-
-function fallbackSpread(game){
-  const market=game.marketConsensus||{};
-  if(!market.available||!Number.isFinite(Number(market.homeMargin)))return null;
-  const homePct=recordPct(game.home.record),awayPct=recordPct(game.away.record);
-  let side;
-  if(homePct>awayPct+.05)side="home";
-  else if(awayPct>homePct+.05)side="away";
-  else side=Number(market.homeMargin)>0?"away":"home";
-  const homeSpread=-Number(market.homeMargin);
-  const spread=side==="home"?homeSpread:-homeSpread;
-  const team=side==="home"?game.home:game.away;
-  const odds=side==="home"?market.homeSpreadOdds:market.awaySpreadOdds;
-  const totalReturn=tenDollarReturn(odds);
-  const gamesPlayed=(String(game.home.record||"").match(/\d+/g)||[]).slice(0,2).reduce((s,n)=>s+Number(n),0)+
-    (String(game.away.record||"").match(/\d+/g)||[]).slice(0,2).reduce((s,n)=>s+Number(n),0);
-  const recordGap=Math.abs(homePct-awayPct);
-  const marketBreadth=Math.min(4,Number(market.providerCount)||0);
-  const fallbackIndex=Math.round(Math.min(54,38+(recordGap*14)+(marketBreadth*2)+Math.min(4,gamesPlayed/4)));
-  return {
-    type:"SPREAD",
-    pick:team.short+" "+formatSpread(spread),
-    americanOdds:odds,
-    payout:totalReturn==null?null:{stake:10,profit:Math.round((totalReturn-10)*100)/100,totalReturn},
-    index:fallbackIndex,
-    label:"LOW CONFIDENCE",
-    why:"BetRadar does not have a strong historical signal here. This is simply the best available lean from the current matchup and line.",
-    evidence:["Low-confidence fallback pick"],
-    side
-  };
-}
-
 function allOpportunities(games){
   const out=[];
   for(const game of games){
-    const spread=game.opportunities?.spread||fallbackSpread(game);
-    if(spread)out.push({...spread,game});
+    if(game.opportunities?.spread)out.push({...game.opportunities.spread,game});
     if(game.opportunities?.total)out.push({...game.opportunities.total,game});
   }
-  return out.sort((a,b)=>b.index-a.index);
+  return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
 function OpportunityCard({item,rank}){
@@ -149,6 +110,7 @@ function OpportunityCard({item,rank}){
     <div className="confidenceIndex">
       <span>BETRADAR INDEX</span>
       <strong>{item.index}</strong>
+      <small>{item.index>=80?"STRONG LOOK":item.index>=70?"INTERESTING":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
     </div>
   </article>;
 }
@@ -222,7 +184,7 @@ function TeaserCard({size,legs,number}){
 }
 
 function BoardRow({game}){
-  const best=game.bestOpportunity||fallbackSpread(game);
+  const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
   const homeSpread=Number.isFinite(Number(market.homeMargin))?-Number(market.homeMargin):null;
@@ -242,7 +204,7 @@ function BoardRow({game}){
     <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
-      <div className="tableBest"><span>BETRADAR PICK</span><strong>{best?.pick||"—"}</strong></div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong></div>
       <div className={"tableIndex "+indexClass(best?.index||0)}><span>BETRADAR</span><strong>{best?.index||0}</strong></div>
     </div>
 
@@ -306,7 +268,7 @@ export default function BetsPage(){
         <a className="backLink" href="/">← GAME COMMAND CENTER</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BET LAB</h1>
-        <p>BetRadar ranks the week using actual season results, historical market lines and the current line. Every suggested bet shows the American odds, the payout on a $10 unit, and a BetRadar Index so you can compare the strength of the signal.</p>
+        <p>BetRadar surfaces the most interesting games and the strongest betting signals from actual season results, historical market lines and the current line. Every suggested bet shows the odds, $10-unit payout and BetRadar Index.</p>
       </div>
     </header>
 
@@ -315,6 +277,12 @@ export default function BetsPage(){
     </nav>
 
 
+    <section className="confidenceLegend">
+      <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
+      <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
+      <div className="lean"><strong>60–69</strong><span>WATCH</span></div>
+      <div className="pass"><strong>&lt;60</strong><span>LOW CONFIDENCE</span></div>
+    </section>
     {error?<div className="notice error">{error}</div>:null}
     {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
       <section className="betSection simpleBetSection">
@@ -322,7 +290,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>Always the 10 highest-ranked bets available, even when the underlying signal is weak. Sorted by BetRadar Index with odds and $10-unit payouts.</p>
+            <p>The strongest real BetRadar signals for the week, ranked by confidence and then by game interest. Lower-confidence picks can still appear, but there are no random filler bets.</p>
           </div>
         </div>
         <div className="simplePickList">
@@ -344,7 +312,7 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME</h2><p>Tease lines stay visible for every shown game. The board starts with the top 15 games; expand the slate only when you want the rest.</p></div>
+          <div><h2>EVERY GAME</h2><p>Starts with the 15 most interesting games. Tease lines stay visible on every shown game; expand the slate only when you want the rest.</p></div>
         </div>
         <div className="simpleBoard">
           {visibleGames.map(game=><BoardRow key={game.id} game={game}/>)}

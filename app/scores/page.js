@@ -136,7 +136,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
       <div className="grGameSignals">
         <span className="grImportance">{label}</span>
-        <span className="grRadarBadge"><b>{game.interest?.score??"—"}</b> RADAR</span>
+        <span className="grRadarMark" title="RadarMark™" aria-label={"RadarMark score "+(game.interest?.score??"unavailable")}>{game.interest?.score??"—"}</span>
       </div>
     </div>
     <div className="grTeams">
@@ -154,7 +154,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <div>
         {context?<span>{context}</span>:null}
         {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
-        <span>GameRadar score: <strong>{game.interest?.score??"—"}</strong></span>
+        <span>RadarMark™: <strong>{game.interest?.score??"—"}</strong></span>
         <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
       </div>
     </details>

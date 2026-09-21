@@ -4305,3 +4305,367 @@ body{
 .rpLearningGrid small{display:block;margin-top:5px;color:#b6c0c8;font-size:12px}
 .rpLearnings>p{margin:9px 0 0;color:#8998a2;font-size:12px;line-height:1.45}
 @media(max-width:700px){.rpLearningGrid{grid-template-columns:1fr}}
+
+
+/* =========================================================
+   LANDING — FOUR RADAR PRODUCTS
+   ========================================================= */
+.homeRadar{
+  width:min(1160px,100%);
+  margin:0 auto;
+  padding:12px 18px 56px;
+  color:#f5f7f9;
+}
+.homeTopbar{
+  position:sticky;
+  top:0;
+  z-index:60;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:10px;
+  min-height:54px;
+  padding:7px 9px;
+  border:1px solid #263744;
+  background:#08131cf4;
+  backdrop-filter:blur(14px);
+}
+.homeMenu{position:relative}
+.homeMenu summary{
+  list-style:none;
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border:1px solid #30414e;
+  background:#0d1922;
+  color:#e0e7ec;
+  font-size:19px;
+  font-weight:900;
+  cursor:pointer;
+}
+.homeMenu summary::-webkit-details-marker{display:none}
+.homeMenu>div{
+  position:absolute;
+  left:0;
+  top:46px;
+  z-index:90;
+  min-width:190px;
+  padding:6px;
+  border:1px solid #344754;
+  background:#09151e;
+  box-shadow:0 14px 30px #0009;
+}
+.homeMenu a{
+  display:block;
+  padding:11px;
+  color:#e8edf1;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:850;
+}
+.homeMenu a:hover{background:#13222c}
+.homeWordmark{
+  justify-self:start;
+  color:#fff;
+  text-decoration:none;
+  font-size:20px;
+  font-weight:1000;
+  letter-spacing:-.045em;
+}
+.homeWordmark span{color:#4cdf73}
+.homeStatus{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#8f9ca5;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+.homeStatus i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#4cdf73;
+  box-shadow:0 0 12px #4cdf7380;
+}
+
+.homeHero{
+  padding:66px 6px 36px;
+  border-bottom:1px solid #273944;
+}
+.homeEyebrow{
+  color:#7ee895;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.12em;
+}
+.homeHero h1{
+  max-width:940px;
+  margin:9px 0 14px;
+  color:#fff;
+  font-size:clamp(48px,8vw,86px);
+  line-height:.94;
+  letter-spacing:-.06em;
+  font-style:normal;
+}
+.homeHero h1 span{color:#aab6bf}
+.homeHero p{
+  max-width:760px;
+  margin:0;
+  color:#b5c0c8;
+  font-size:17px;
+  line-height:1.55;
+}
+.homeFlow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+.homeFlow span{
+  padding:6px 9px;
+  border:1px solid #334652;
+  background:#0d1922;
+  color:#dfe5e9;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.06em;
+}
+.homeFlow b{color:#4cdf73}
+
+.homeAreaGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+.homeArea{
+  position:relative;
+  min-height:320px;
+  padding:18px;
+  border:1px solid #2d404c;
+  background:#0b1620;
+  color:#fff;
+  text-decoration:none;
+  overflow:hidden;
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;
+}
+.homeArea:hover{
+  transform:translateY(-2px);
+  border-color:#4c6657;
+  background:#0e1b25;
+}
+.homeArea:after{
+  content:"";
+  position:absolute;
+  inset:auto -12% -36% auto;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle,#4cdf7312 0,#4cdf7300 70%);
+  pointer-events:none;
+}
+.homeAreaTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  color:#73828d;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+.homeAreaTop b{color:#a7b4bd}
+.homeArea h2{
+  margin:22px 0 6px;
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-.045em;
+}
+.homeArea h3{
+  margin:0;
+  color:#dfe5e9;
+  font-size:18px;
+  line-height:1.25;
+}
+.homeArea p{
+  max-width:470px;
+  margin:12px 0 0;
+  color:#aab7c0;
+  font-size:14px;
+  line-height:1.5;
+}
+.homeAreaChips{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.homeAreaChips span{
+  padding:5px 7px;
+  border:1px solid #31434f;
+  background:#0d1922;
+  color:#aebac2;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+.homeEnter{
+  position:absolute;
+  left:18px;
+  bottom:17px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#f3f6f8;
+  font-size:12px;
+  font-weight:950;
+}
+.homeEnter b{color:#4cdf73;font-size:16px}
+.homeArea3{border-color:#4d4931}
+.homeArea3 .homeEnter b{color:#f0d169}
+.homeArea4{border-color:#3b5545}
+.homeArea4 .homeAreaTop b{color:#86d797}
+
+.homeIndexStrip{
+  display:grid;
+  grid-template-columns:74px minmax(0,1fr);
+  gap:16px;
+  align-items:center;
+  margin-top:18px;
+  padding:18px;
+  border:1px solid #31454f;
+  background:#0a151d;
+}
+.homeIndexBox{
+  width:64px;
+  height:64px;
+  display:grid;
+  place-items:center;
+  border:1px solid #41604a;
+  border-radius:10px;
+  background:#0f1d18;
+  color:#7ff397;
+  font-size:30px;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+}
+.homeIndexStrip span{
+  color:#78d98d;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+.homeIndexStrip h2{
+  margin:4px 0 3px;
+  font-size:21px;
+  letter-spacing:-.025em;
+}
+.homeIndexStrip p{
+  margin:0;
+  color:#98a7b0;
+  font-size:13px;
+  line-height:1.45;
+}
+.homeFooter{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:24px;
+  padding-top:14px;
+  border-top:1px solid #263844;
+  color:#65747e;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.05em;
+}
+
+/* Put the suite hamburger first on all product headers. */
+.grHeader,.brHeader{
+  grid-template-columns:auto auto auto minmax(0,1fr) auto auto!important;
+}
+.grHeader .suiteMenu,.brHeader .suiteMenu{
+  grid-column:1;
+  grid-row:1;
+}
+.grHeader .grLogo,.brHeader .brLogo{grid-column:2}
+.grHeader .grLeagueToggle,.brHeader .brLeagueToggle{grid-column:3}
+.grHeader .grSearch,.brHeader .brSearch{grid-column:4}
+.grHeader .grHeaderButton,.brHeader .brSavedLink{grid-column:5}
+.grHeader .grBetLink,.brHeader .brGameLink{grid-column:6}
+
+.wrHeader,.rpHeader{
+  grid-template-columns:auto auto auto minmax(190px,1fr)!important;
+}
+.wrHeader .wrMenu,.rpHeader .wrMenu{
+  grid-column:1;
+  grid-row:1;
+}
+.wrHeader .wrBrand,.rpHeader .rpBrand{grid-column:2}
+.wrHeader nav,.rpHeader .rpLeague{grid-column:3}
+.wrHeader .wrWeek,.rpHeader .rpWeek{grid-column:4}
+
+@media(max-width:930px){
+  .grHeader,.brHeader{
+    grid-template-columns:auto auto auto 1fr auto!important;
+  }
+  .grHeader .grSearch,.brHeader .brSearch{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+  }
+  .grHeader .grHeaderButton,.brHeader .brSavedLink{display:none}
+  .grHeader .grBetLink,.brHeader .brGameLink{grid-column:5}
+}
+
+@media(max-width:700px){
+  .homeRadar{padding:6px 8px 40px}
+  .homeTopbar{min-height:50px}
+  .homeHero{padding:42px 2px 26px}
+  .homeHero h1{font-size:48px}
+  .homeHero p{font-size:15px}
+  .homeFlow{gap:6px}
+  .homeFlow span{font-size:10px}
+  .homeAreaGrid{grid-template-columns:1fr}
+  .homeArea{min-height:285px;padding:16px}
+  .homeArea h2{font-size:30px}
+  .homeArea h3{font-size:17px}
+  .homeEnter{left:16px;bottom:15px}
+  .homeIndexStrip{grid-template-columns:56px minmax(0,1fr);padding:14px}
+  .homeIndexBox{width:52px;height:52px;font-size:25px}
+  .homeIndexStrip h2{font-size:18px}
+  .homeStatus{display:none}
+
+  .grHeader,.brHeader{
+    grid-template-columns:auto auto 1fr auto!important;
+  }
+  .grHeader .suiteMenu,.brHeader .suiteMenu{
+    display:block!important;
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  .grHeader .grLogo,.brHeader .brLogo{grid-column:2!important}
+  .grHeader .grLeagueToggle,.brHeader .brLeagueToggle{grid-column:3!important}
+  .grHeader .grBetLink,.brHeader .brGameLink{grid-column:4!important}
+  .grHeader .grSearch,.brHeader .brSearch{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+  }
+
+  .wrHeader,.rpHeader{
+    grid-template-columns:auto auto 1fr!important;
+  }
+  .wrHeader .wrMenu,.rpHeader .wrMenu{
+    grid-column:1!important;
+    grid-row:1!important;
+  }
+  .wrHeader .wrBrand,.rpHeader .rpBrand{grid-column:2!important}
+  .wrHeader nav,.rpHeader .rpLeague{grid-column:3!important}
+  .wrHeader .wrWeek,.rpHeader .rpWeek{
+    grid-column:1/-1!important;
+    grid-row:2!important;
+  }
+}

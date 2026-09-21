@@ -1348,3 +1348,15 @@ footer{
   .agentTeamPair img{width:20px;height:20px;flex-basis:20px}
   .agentTeamPair b{font-size:10px}
 }
+
+
+/* BETRADAR CONVICTION TIERS */
+.convictionBadge.noBrainer{
+  border-color:#7fa35b;background:#142010;color:#c9ff9f;
+  box-shadow:0 0 18px #9af25c1a,inset 0 0 0 1px #9af25c12
+}
+.noBrainerWhy{
+  border-color:#6f8c53;background:#111b0f;box-shadow:inset 3px 0 0 #9af25c
+}
+.noBrainerWhy>span{color:#c9ff9f}
+.noBrainerText{color:#c9ff9f!important}

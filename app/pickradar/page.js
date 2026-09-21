@@ -55,6 +55,11 @@ export default function RadarPicks(){
   const picks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
   const record=weekRecord(picks);
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
+  const feedback=ledger.feedback||{};
+  const spread=feedback.byType?.SPREAD;
+  const total=feedback.byType?.TOTAL;
+  const high=feedback.byBand?.["80+"];
+  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["80+ SIGNALS",high]:null].filter(Boolean);
 
   return <main className="rpPage">
     <header className="rpHeader">
@@ -96,6 +101,12 @@ export default function RadarPicks(){
       </section>
       {!picks.length?<div className="grEmpty">No official picks were strong enough to lock for this week.</div>:null}
     </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}
+
+    {learned.length?<section className="rpLearnings">
+      <div className="rpHistoryHead"><div><span>MODEL FEEDBACK</span><h2>What PickRadar is learning</h2></div></div>
+      <div className="rpLearningGrid">{learned.map(([label,x])=><div key={label}><span>{label}</span><strong>{Math.round((x.winPct||0)*100)}%</strong><small>{x.wins}-{x.losses} on {x.decisions} graded picks</small></div>)}</div>
+      <p>These results feed back into future RadarIndex scoring only after a meaningful sample develops, with small samples deliberately shrunk toward neutral.</p>
+    </section>:null}
 
     <section className="rpHistory">
       <div className="rpHistoryHead"><div><span>TRACK RECORD</span><h2>Week over week</h2></div><strong>{ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses:"No graded picks yet"}</strong></div>

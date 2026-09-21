@@ -136,7 +136,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
       <div className="grGameSignals">
         <span className="grImportance">{label}</span>
-        <span className="grRadarMark" title="RadarIndex" aria-label={"RadarIndex score "+(game.interest?.score??"unavailable")}>{game.interest?.score??"—"}</span>
+        <span className="grRadarMark" title="RadarIndex" aria-label={"RadarIndex score "+(game.radarIndex?.score??game.interest?.score??"unavailable")}>{game.radarIndex?.score??game.interest?.score??"—"}</span>
       </div>
     </div>
     <div className="grTeams">
@@ -154,7 +154,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <div>
         {context?<span>{context}</span>:null}
         {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
-        <span>RadarIndex: <strong>{game.interest?.score??"—"}</strong></span>
+        <span>RadarIndex: <strong>{game.radarIndex?.score??game.interest?.score??"—"}</strong></span>
         <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
       </div>
     </details>
@@ -271,8 +271,9 @@ export default function Scores(){
     return true;
   }),[games,filters,favoritesOnly,favorites,view,hasLive]);
 
-  const live=filtered.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
-  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>b.interest.score-a.interest.score||new Date(a.date)-new Date(b.date));
+  const radarScore=g=>g.radarIndex?.score??g.interest?.score??0;
+  const live=filtered.filter(g=>g.state==="in").sort((a,b)=>radarScore(b)-radarScore(a));
+  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>radarScore(b)-radarScore(a)||new Date(a.date)-new Date(b.date));
   const finals=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
   const featured=live[0]||upcoming[0]||null;
   const otherLive=featured&&featured.state==="in"?live.slice(1):live;

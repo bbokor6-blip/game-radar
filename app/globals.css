@@ -461,3 +461,10 @@ footer{
   .simpleBoard{overflow-x:auto}
   .simpleBoardRow{min-width:650px}
 }
+
+
+.evidenceChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.evidenceChips span{
+  padding:5px 7px;border:1px solid #344035;background:#0c110d;
+  color:#c1c7bc;font:800 8px "Courier New",monospace
+}

@@ -82,3 +82,7 @@ Ask GameRadar is a primary product surface, not a utility search box.
 - Keep tap targets around 44–54 px where practical.
 - Collapse low-priority metadata before shrinking important text.
 - Make My Bets easy to reach from anywhere.
+
+
+## Current release principle
+The production app uses one shared visual and metadata system across GameRadar and BetRadar. Search, team metadata, conference metadata, score presentation, betting context, and mobile layout should evolve in this single project rather than in separate forks.

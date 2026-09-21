@@ -92,6 +92,14 @@ function contextLine(game){
   if(meta.broadcasts[0])bits.push(meta.broadcasts[0]);
   return bits.slice(0,2).join(" · ");
 }
+function whyInteresting(game){
+  const reason=String(game?.interest?.reason||"").trim();
+  if(reason)return reason.charAt(0).toUpperCase()+reason.slice(1);
+  const context=contextLine(game);
+  if(context)return context+".";
+  if(game.state==="in")return "Live now and worth tracking.";
+  return "One of the stronger games on this week's board.";
+}
 
 function Team({team,showScore,poss,favorite,onToggleFavorite}){
   return <div className="grTeam">
@@ -126,21 +134,27 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
   return <article className={"grGameCard "+(featured?"featured ":"")+(live?"live ":"")}>
     <div className="grGameTop">
       <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
-      <span className="grImportance">{label}</span>
+      <div className="grGameSignals">
+        <span className="grImportance">{label}</span>
+        <span className="grRadarBadge"><b>{game.interest?.score??"—"}</b> RADAR</span>
+      </div>
     </div>
     <div className="grTeams">
       <Team team={game.away} showScore={showScore} poss={game.possessionId===game.away.id} favorite={favorites.has(String(game.away.id))} onToggleFavorite={onToggleFavorite}/>
       <Team team={game.home} showScore={showScore} poss={game.possessionId===game.home.id} favorite={favorites.has(String(game.home.id))} onToggleFavorite={onToggleFavorite}/>
     </div>
     <GameMeta game={game}/>
-    {context?<div className="grContext">{context}</div>:null}
+    <div className="grWhyInteresting">
+      <span>Why this game is interesting</span>
+      <p>{whyInteresting(game)}</p>
+    </div>
     {live&&game.downDistance?<div className="grContext grLiveContext">{game.downDistance}</div>:null}
     <details className="grDetails">
-      <summary>Game details</summary>
+      <summary>More game details</summary>
       <div>
-        <span>GameRadar interest: <strong>{game.interest?.score??"—"}</strong></span>
-        {game.interest?.reason?<span>{game.interest.reason}</span>:null}
+        {context?<span>{context}</span>:null}
         {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
+        <span>GameRadar score: <strong>{game.interest?.score??"—"}</strong></span>
         <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
       </div>
     </details>

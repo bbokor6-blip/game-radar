@@ -19,6 +19,40 @@ async function mapLimit(items,limit,fn){
   return out;
 }
 
+function selectRelevantHistory(history,upcoming,league){
+  const wanted=new Set(upcoming.flatMap(g=>[String(g.home?.id||""),String(g.away?.id||"")]).filter(Boolean));
+  const counts=new Map();
+  const selected=[];
+  const maxGames=league==="cfb"?150:48;
+  const sorted=history.slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
+  for(const game of sorted){
+    const ids=[String(game.home?.id||""),String(game.away?.id||"")];
+    const useful=ids.some(id=>wanted.has(id)&&(counts.get(id)||0)<2);
+    if(!useful)continue;
+    selected.push(game);
+    for(const id of ids)if(wanted.has(id))counts.set(id,(counts.get(id)||0)+1);
+    if(selected.length>=maxGames)break;
+  }
+  return selected;
+}
+
+function mergeHistoricalMarket(game,market){
+  if(!market)return game;
+  return {
+    ...game,
+    market:{
+      ...(game.market||{}),
+      homeMargin:market.homeMargin,
+      overUnder:market.total,
+      homeSpreadOdds:market.homeSpreadOdds,
+      awaySpreadOdds:market.awaySpreadOdds,
+      overOdds:market.overOdds,
+      underOdds:market.underOdds,
+      provider:market.spreadSource||market.totalSource||game.market?.provider||null
+    }
+  };
+}
+
 export async function GET(request){
   const {searchParams}=new URL(request.url);
   const league=searchParams.get("league")==="cfb"?"cfb":"nfl";
@@ -35,10 +69,22 @@ export async function GET(request){
 
     const upcoming=rankGames(weekGames.filter(g=>g.state==="pre"));
     const history=seasonGames.filter(g=>g.state==="post"&&new Date(g.date)<new Date(start+"T12:00:00Z"));
-    const profiles=buildTrendProfiles(history);
-    const vegasHistory=buildVegasHistory(history,league);
+    const selectedHistory=selectRelevantHistory(history,upcoming,league);
 
-    const oddsResults=await mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId));
+    const [oddsResults,historicalOdds]=await Promise.all([
+      mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId)),
+      mapLimit(selectedHistory,12,game=>fetchConsensusOdds(league,game.sourceId,game.competitionId))
+    ]);
+
+    const historicalMarkets=new Map();
+    selectedHistory.forEach((game,index)=>{
+      const quotes=historicalOdds[index]||[];
+      if(quotes.length)historicalMarkets.set(game.id,consensusMarket(game,quotes));
+    });
+    const hydratedHistory=history.map(game=>historicalMarkets.has(game.id)?mergeHistoricalMarket(game,historicalMarkets.get(game.id)):game);
+
+    const profiles=buildTrendProfiles(hydratedHistory);
+    const vegasHistory=buildVegasHistory(hydratedHistory,league);
 
     const games=upcoming.map((game,index)=>{
       const allOdds=oddsResults[index]||[];
@@ -62,6 +108,7 @@ export async function GET(request){
         name:"Bet Radar",
         description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current sportsbook lines. Outlier quotes are rejected against the broader market before display.",
         historyGames:history.length,
+        historicalOddsGamesHydrated:historicalMarkets.size,
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,
         vegasHistory

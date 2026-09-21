@@ -20,23 +20,19 @@ export async function GET(request){
   const league=searchParams.get("league")==="cfb"?"cfb":"nfl";
 
   const result=await safe(league,start,end);
-  const leagueGames=league==="cfb"
-    ? result.games.filter(game=>game.home.rank||game.away.rank)
-    : result.games;
 
   return NextResponse.json({
     generatedAt:new Date().toISOString(),
     league,
-    games:rankGames(leagueGames),
+    games:rankGames(result.games),
     range:{start,end},
     health:{
       ok:result.ok,
-      count:leagueGames.length,
-      rawCount:result.games.length,
+      count:result.games.length,
       error:result.error||null
     },
     source:league==="cfb"
-      ?"ESPN prototype scoreboard · Top 25 games only"
+      ?"ESPN prototype scoreboard · All FBS games"
       :"ESPN prototype scoreboard"
   },{headers:{"Cache-Control":"no-store"}});
 }

@@ -967,3 +967,89 @@ footer{
   .boardControls{grid-template-columns:1fr}
   .boardCount{justify-self:start}
 }
+
+
+/* BETTING WEEK + SAVED BETTING SHEET */
+.betWeekNav{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;
+  margin:0 0 10px;padding:11px;border:1px solid #3a453b;background:#0d120e
+}
+.betWeekNav>div:first-child{display:flex;flex-direction:column;gap:3px}
+.betWeekNav>div:first-child span{
+  color:#707a70;font:1000 7px "Courier New",monospace;letter-spacing:.12em
+}
+.betWeekNav>div:first-child strong{
+  color:#dfe4da;font:1000 10px "Courier New",monospace;letter-spacing:.04em
+}
+.betWeekButtons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.betWeekButtons button{
+  min-width:46px;border:1px solid #39443a;background:#0b100c;color:#7e887d;padding:8px 9px;
+  font:1000 7px "Courier New",monospace;letter-spacing:.07em;cursor:pointer
+}
+.betWeekButtons button.active{
+  border-color:var(--amber);background:#18160f;color:var(--amber);box-shadow:inset 0 -2px 0 var(--amber)
+}
+
+.betSheet{
+  margin:0 0 12px;border:1px solid #4e5f48;background:linear-gradient(180deg,#111811,#0d120e)
+}
+.betSheetHead{
+  display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:14px 15px;border-bottom:1px solid #344035
+}
+.betSheetHead>div{min-width:0}
+.betSheetHead span{
+  display:block;color:var(--green);font:1000 7px "Courier New",monospace;letter-spacing:.14em
+}
+.betSheetHead h2{margin:4px 0 3px;font-size:18px;letter-spacing:-.03em}
+.betSheetHead p{margin:0;color:#8f988d;font-size:10px;line-height:1.45;max-width:700px}
+.betSheetHead>button{
+  border:1px solid #4b554b;background:#0d120e;color:#7f887e;padding:7px 8px;
+  font:1000 7px "Courier New",monospace;letter-spacing:.07em;white-space:nowrap
+}
+.betSheetRows{display:grid}
+.betSheetRow{
+  display:grid;grid-template-columns:minmax(180px,1.4fr) minmax(150px,.95fr) 70px 60px auto;
+  gap:10px;align-items:center;padding:10px 13px;border-top:1px solid #2f3930
+}
+.betSheetRow:first-child{border-top:0}
+.betSheetRow>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.betSheetRow>div:first-child strong{font-size:12px;color:#edf1e8}
+.betSheetRow>div:first-child small{color:#7e887d;font-size:9px}
+.betSheetRow span{color:#677168;font:1000 6.5px "Courier New",monospace;letter-spacing:.08em}
+.betSheetRow>div:not(:first-child) strong{color:#d7dccf;font:1000 9px "Courier New",monospace}
+.betSheetRow>button{
+  border:1px solid #493a37;background:#130e0d;color:#9b7770;padding:6px 7px;
+  font:1000 6.5px "Courier New",monospace;letter-spacing:.06em
+}
+.betSheetEmpty{
+  padding:13px 15px;color:#7e887d;font:850 8px "Courier New",monospace;letter-spacing:.04em
+}
+
+.savePick{
+  border:1px solid #485147;background:#0d120e;color:#8b9589;padding:5px 7px;
+  font:1000 6.5px "Courier New",monospace;letter-spacing:.07em;white-space:nowrap
+}
+.savePick:hover{border-color:#6b795f;color:#d8dfd2}
+.savePick.saved{
+  border-color:#6e7f4d;background:#11190f;color:var(--green)
+}
+.savePick.compact{display:block;margin-top:7px;width:100%}
+
+@media(max-width:760px){
+  .betWeekNav{grid-template-columns:1fr}
+  .betWeekButtons{justify-content:flex-start}
+  .betSheetHead{flex-direction:column;gap:9px}
+  .betSheetRow{
+    grid-template-columns:minmax(0,1.5fr) minmax(110px,1fr) 58px;
+    gap:7px;padding:9px
+  }
+  .betSheetRow>div:nth-child(4){display:none}
+  .betSheetRow>button{grid-column:3;grid-row:2}
+}
+@media(max-width:500px){
+  .betWeekButtons{display:grid;grid-template-columns:repeat(5,1fr);width:100%}
+  .betWeekButtons button{min-width:0;padding:8px 4px}
+  .betSheetRow{grid-template-columns:1fr 90px}
+  .betSheetRow>div:nth-child(3){display:none}
+  .betSheetRow>button{grid-column:2;grid-row:2}
+}

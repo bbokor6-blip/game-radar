@@ -203,8 +203,9 @@ export default function Home(){
   const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
 
   return <main className="shell">
+    <a className="suiteHome" href="/">← GAME RADAR HOME</a>
     <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="betradar" href="/">
+      <a className="betradar" href="/bets">
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>

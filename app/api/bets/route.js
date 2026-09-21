@@ -38,16 +38,21 @@ export async function GET(request){
     const profiles=buildTrendProfiles(history);
     const vegasHistory=buildVegasHistory(history,league);
 
-    const oddsResults=await mapLimit(upcoming.slice(0,32),8,game=>fetchConsensusOdds(league,game.sourceId));
+    const oddsResults=await mapLimit(upcoming,10,game=>fetchConsensusOdds(league,game.sourceId));
 
     const games=upcoming.map((game,index)=>{
-      const market=consensusMarket(game,oddsResults[index]||[]);
+      const allOdds=oddsResults[index]||[];
+      const fanDuel=allOdds.find(o=>String(o.providerId)==="37"||/fanduel/i.test(String(o.provider||"")));
+      const market=fanDuel?consensusMarket(game,[fanDuel]):{
+        homeMargin:null,total:null,homeSpreadOdds:null,awaySpreadOdds:null,overOdds:null,underOdds:null,
+        providerCount:0,providers:[],spreadDispersion:0,totalDispersion:0
+      };
       const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
       return {
         ...game,
-        marketConsensus:{...market,line:marketSummary(game,market)},
+        marketConsensus:{...market,line:marketSummary(game,market),book:"FanDuel",available:Boolean(fanDuel)},
         opportunities,
         bestOpportunity:best,
         opportunityIndex:best?.index||0
@@ -59,7 +64,7 @@ export async function GET(request){
       league,year,range:{start,end},
       methodology:{
         name:"Bet Radar",
-        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current public market lines. No independent projected spread.",
+        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current FanDuel lines. No independent projected spread.",
         historyGames:history.length,
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,

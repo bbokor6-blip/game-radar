@@ -52,7 +52,7 @@ export async function GET(request){
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
       return {
         ...game,
-        marketConsensus:{...market,line:marketSummary(game,market),book:"FanDuel",available:Boolean(fanDuel)},
+        marketConsensus:{...market,line:fanDuel?marketSummary(game,market):null,book:"FanDuel",available:Boolean(fanDuel)},
         opportunities,
         bestOpportunity:best,
         opportunityIndex:best?.index||0

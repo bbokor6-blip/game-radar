@@ -650,3 +650,21 @@ footer{
   .gameTableSummary{grid-template-columns:minmax(120px,1.3fr) 78px 48px}
   .gameTableSummary .tableBest{display:none}
 }
+
+/* HIGH-CONVICTION BETRADAR CALLOUTS */
+.pickHeadline{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.pickHeadline h3{margin:5px 0 3px}
+.convictionBadge{
+  display:inline-flex;align-items:center;padding:5px 7px;border:1px solid #5f7e47;background:#10190f;
+  color:var(--green);font:1000 7px "Courier New",monospace;letter-spacing:.09em
+}
+.convictionBadge.medium{border-color:#756536;background:#17150e;color:var(--amber)}
+.convictionWhy{border-color:#5f7e47;background:#10190f}
+.convictionWhy>span{color:var(--green)}
+.tableConviction{
+  margin-top:2px;color:var(--green)!important;font:1000 6.5px "Courier New",monospace!important;letter-spacing:.08em
+}
+
+@media(max-width:620px){
+  .convictionBadge{padding:4px 6px;font-size:6.5px}
+}

@@ -264,7 +264,7 @@ export default function BetsPage(){
     return()=>{ignore=true;clearInterval(timer)};
   },[league]);
 
-  const games=data.games||[];
+  const games=(data.games||[]).filter(g=>g.sport===league);
   const orderedGames=useMemo(()=>{
     if(league!=="cfb"||collegeSort!=="top25")return games;
     return games.slice().sort((a,b)=>{

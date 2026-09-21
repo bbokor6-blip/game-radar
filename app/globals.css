@@ -4237,6 +4237,8 @@ body{
 .rpPreferred>span{color:#e0c861;font-size:10px;font-weight:950;letter-spacing:.06em}
 .rpPreferred strong{font-size:18px}
 .rpMain p{grid-column:1/-1;margin:2px 0 0;color:#b9c4cb;font-size:13px;line-height:1.42}
+.rpModelInputs,.rpClv{grid-column:1/-1;color:#82929e;font-size:10px;font-weight:850;letter-spacing:.035em}
+.rpClv.positive{color:#7ff397}.rpClv.negative{color:#f0a0a0}
 .rpResult{min-width:66px;padding:6px 8px;border:1px solid #3a4b56;background:#101b23;color:#aeb8bf;text-align:center;font-size:11px;font-weight:950}
 .rpResult.w{border-color:#3f6c4a;color:#8cf29e}
 .rpResult.l{border-color:#6e4141;color:#f4a1a1}

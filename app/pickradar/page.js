@@ -29,6 +29,12 @@ function weekRecord(picks=[]){
   const pushes=graded.filter(p=>p.result==="PUSH").length;
   return {wins,losses,pushes,decisions:wins+losses};
 }
+function confidenceBand(index){
+  const score=Number(index)||0;
+  if(score>=80)return "HIGH CONFIDENCE";
+  if(score>=70)return "MODEL LEAN";
+  return "FULL-SLATE PICK";
+}
 
 export default function RadarPicks(){
   const[league,setLeague]=useState("nfl");
@@ -54,15 +60,17 @@ export default function RadarPicks(){
 
   const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
   const allPicks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
-  const picks=allPicks.filter(p=>confidence==="all"||(p.betRadarIndex||0)>=(confidence==="elite"?80:70));
+  const picks=allPicks.filter(p=>confidence==="all"||(confidence==="high"?(p.betRadarIndex||0)>=80:(p.betRadarIndex||0)>=70&&(p.betRadarIndex||0)<80));
   const record=weekRecord(allPicks);
-  const highCount=allPicks.filter(p=>(p.betRadarIndex||0)>=70).length;
+  const highCount=allPicks.filter(p=>(p.betRadarIndex||0)>=80).length;
+  const leanCount=allPicks.filter(p=>(p.betRadarIndex||0)>=70&&(p.betRadarIndex||0)<80).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const spread=feedback.byType?.SPREAD;
   const total=feedback.byType?.TOTAL;
   const high=feedback.byBand?.["80+"];
-  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["80+ SIGNALS",high]:null].filter(Boolean);
+  const leans=feedback.byBand?.["70-79"];
+  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["HIGH CONFIDENCE · 80+",high]:null,leans&&leans.decisions>=6?["MODEL LEANS · 70–79",leans]:null].filter(Boolean);
 
   return <main className="rpPage">
     <header className="rpHeader">
@@ -80,7 +88,7 @@ export default function RadarPicks(){
       <div>
         <span>FULL-SLATE MODEL LEDGER</span>
         <h1>One locked pick for every game.</h1>
-        <p>PickRadar now takes a side on the entire NFL and college slate so we can measure the model honestly. Use the confidence filters to isolate the strongest plays. Every pick and line stays locked for grading and the weekly feedback loop.</p>
+        <p>PickRadar takes a side on the entire NFL and college slate. High Confidence is reserved for 80+ spread signals; 70–79 is a Model Lean, and totals remain on watch while that model builds a stronger record.</p>
       </div>
       <div className="rpStats">
         <div><strong>{allPicks.length||"—"}</strong><span>games picked</span></div>
@@ -95,8 +103,8 @@ export default function RadarPicks(){
         <div><strong>SHOW PICKS</strong><span>{picks.length} of {allPicks.length} games</span></div>
         <div>
           <button className={confidence==="all"?"active":""} onClick={()=>setConfidence("all")}>ALL GAMES <b>{allPicks.length}</b></button>
-          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>HIGH CONFIDENCE <b>{highCount}</b></button>
-          <button className={confidence==="elite"?"active":""} onClick={()=>setConfidence("elite")}>80+ ONLY <b>{allPicks.filter(p=>(p.betRadarIndex||0)>=80).length}</b></button>
+          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>HIGH CONFIDENCE · 80+ <b>{highCount}</b></button>
+          <button className={confidence==="lean"?"active":""} onClick={()=>setConfidence("lean")}>MODEL LEANS · 70–79 <b>{leanCount}</b></button>
         </div>
       </section>
       <section className="rpBoard">
@@ -104,9 +112,11 @@ export default function RadarPicks(){
           <div className="rpScore">{pick.betRadarIndex??pick.radarIndex??"—"}</div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · {pick.confidenceBand||"STANDARD"}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" PickRadar Confidence · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · {confidenceBand(pick.betRadarIndex)}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" PickRadar Confidence · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
             <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
+            {pick.modelProjection?<small className="rpModelInputs">MODEL: {pick.modelProjection.homeMargin>0?"HOME":"AWAY"} BY {Math.abs(pick.modelProjection.homeMargin).toFixed(1)} · PROJECTED TOTAL {pick.modelProjection.total.toFixed(1)} · {pick.modelProjection.historicalGames} PRIOR GAMES</small>:null}
+            {pick.closingLineValue!=null?<small className={"rpClv "+(pick.closingLineValue>=0?"positive":"negative")}>CLOSING-LINE VALUE: {pick.closingLineValue>0?"+":""}{pick.closingLineValue}</small>:null}
           </div>
           <ResultBadge result={pick.result}/>
         </article>)}
@@ -117,7 +127,7 @@ export default function RadarPicks(){
     {learned.length?<section className="rpLearnings">
       <div className="rpHistoryHead"><div><span>MODEL FEEDBACK</span><h2>What PickRadar is learning</h2></div></div>
       <div className="rpLearningGrid">{learned.map(([label,x])=><div key={label}><span>{label}</span><strong>{Math.round((x.winPct||0)*100)}%</strong><small>{x.wins}-{x.losses} on {x.decisions} graded picks</small></div>)}</div>
-      <p>These results feed back into future RadarIndex scoring only after a meaningful sample develops, with small samples deliberately shrunk toward neutral.</p>
+      <p>Results affect future scoring only after at least 20 graded decisions. Small samples are deliberately pulled toward neutral, and closing-line value is stored separately from wins and losses.</p>
     </section>:null}
 
     <section className="rpHistory">

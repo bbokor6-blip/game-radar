@@ -1,6 +1,7 @@
 import { GET } from "../app/api/bets/route.js";
 import fs from "node:fs";
 import path from "node:path";
+import { pickConfidenceBand, isHighConfidence } from "../lib/pickCalibration.js";
 
 async function main() {
   const league = process.argv[2] === "cfb" ? "cfb" : "nfl";
@@ -24,12 +25,15 @@ async function main() {
     const generated={
       ...game.preferredPick,
       league,
+      modelVersion:"pickradar-v2",
       result:"PENDING",
       lockedAt,
       selectionBasis:game.preferredPick.fullSlateFallback
         ? "Full-slate fallback model"
         : "BetRadar trend model plus current market consensus",
-      confidenceBand:game.preferredPick.betRadarIndex>=80?"ELITE":game.preferredPick.betRadarIndex>=70?"HIGH":"STANDARD",
+      confidenceBand:pickConfidenceBand(game.preferredPick.betRadarIndex),
+      closingMarket:null,
+      closingLineValue:null,
       versionHistory:[{
         lockedAt,
         pick:game.preferredPick.pick,
@@ -45,7 +49,7 @@ async function main() {
       ...generated,...locked,
       league,betRadarIndex,
       radarIndex:locked.radarIndex??generated.radarIndex,
-      confidenceBand:betRadarIndex>=80?"ELITE":betRadarIndex>=70?"HIGH":"STANDARD"
+      confidenceBand:pickConfidenceBand(betRadarIndex)
     };
   });
   const week={
@@ -59,7 +63,7 @@ async function main() {
   ledger.updatedAt=lockedAt;
   ledger.weeks=[...(ledger.weeks||[]).filter(w=>!(w.league===league&&w.weekStart===start)),week];
   fs.writeFileSync(ledgerPath,JSON.stringify(ledger,null,2)+"\n");
-  process.stdout.write(JSON.stringify({league,start,end,picks:picks.length,highConfidence:picks.filter(p=>(p.betRadarIndex||0)>=70).length}));
+  process.stdout.write(JSON.stringify({league,start,end,picks:picks.length,highConfidence:picks.filter(p=>isHighConfidence(p.betRadarIndex)).length}));
 }
 
 main();

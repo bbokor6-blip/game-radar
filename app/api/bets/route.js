@@ -6,6 +6,8 @@ import { buildRadarIndex } from "../../../lib/radarIndex";
 import { buildFeedbackProfile, feedbackForPick } from "../../../lib/radarFeedback";
 import { buildTeamForm } from "../../../lib/teamForm";
 import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
+import { buildPowerModel, calibrateModel, projectGame } from "../../../lib/radarModel";
+import { calibratePickIndex, pickConfidenceBand } from "../../../lib/pickCalibration";
 import radarLedger from "../../../data/radar-picks.json";
 
 export const dynamic = "force-dynamic";
@@ -143,26 +145,36 @@ export async function GET(request){
     const profiles=buildTrendProfiles(hydratedHistory);
     const vegasHistory=buildVegasHistory(hydratedHistory,league);
     const teamForm=buildTeamForm(hydratedHistory,profiles);
+    const powerModel=buildPowerModel(hydratedHistory,league);
+    const modelCalibration=calibrateModel(hydratedHistory,league);
     const feedbackProfile=buildFeedbackProfile(radarLedger);
 
     const games=upcoming.map((game)=>{
       const allOdds=currentMarkets.get(game.id)||[];
       const market=consensusMarket(game,allOdds);
-      const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
+      const projection=projectGame(game,powerModel);
+      const rawOpportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league,{projection});
+      const opportunities=Object.fromEntries(Object.entries(rawOpportunities).map(([key,value])=>{
+        if(!value)return [key,value];
+        const index=calibratePickIndex(value.index,{league,type:value.type});
+        return [key,{...value,index,label:pickConfidenceBand(index),highConviction:index>=80,noBrainer:index>=85}];
+      }));
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
       const feedback=best?feedbackForPick(feedbackProfile,{league,type:best.type,index:best.index}):{modifier:0,sample:0,note:"Building sample"};
-      const adjustedBettingIndex=best?Math.max(0,Math.min(100,best.index+feedback.modifier)):null;
+      const adjustedBettingIndex=best?calibratePickIndex(best.index+feedback.modifier,{league,type:best.type}):null;
       const radarIndex=buildRadarIndex(game,adjustedBettingIndex);
-      const official=best||fullSlateFallback(game,market,radarIndex);
+      const official=best?{...best,index:adjustedBettingIndex}:fullSlateFallback(game,market,radarIndex);
       const preferredPick=official?{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
         type:official.type,
+        side:official.side||null,
         pick:official.pick,
         americanOdds:official.americanOdds??null,
         betRadarIndex:official.index,
         feedbackAdjustedBetIndex:best?adjustedBettingIndex:official.index,
+        confidenceBand:pickConfidenceBand(official.index),
         feedback,
         radarIndex:radarIndex.score,
         label:official.label,
@@ -170,7 +182,23 @@ export async function GET(request){
         line:marketSummary(game,market),
         gameDate:game.date,
         status:"OPEN",
-        fullSlateFallback:Boolean(official.fullSlateFallback)
+        fullSlateFallback:Boolean(official.fullSlateFallback),
+        lockedMarket:{
+          homeMargin:market.homeMargin??null,
+          total:market.total??null,
+          providerCount:market.providerCount||0,
+          providers:market.providers||[]
+        },
+        modelProjection:{
+          homeMargin:projection.homeMargin,
+          total:projection.total,
+          homePoints:projection.homePoints,
+          awayPoints:projection.awayPoints,
+          historicalGames:powerModel.completedCount,
+          calibrationSamples:modelCalibration.samples
+        },
+        closingMarket:null,
+        closingLineValue:null
       }:{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
@@ -207,7 +235,7 @@ export async function GET(request){
       league,year,range:{start,end},
       methodology:{
         name:"Bet Radar",
-        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current sportsbook lines. Outlier quotes are rejected against the broader market before display.",
+        description:"Opponent-adjusted team strength and projected margin lead the model; ATS trends, market history and current consensus lines provide supporting evidence and confidence calibration.",
         historyGames:history.length,
         seasonCoverage:seasonCoverage(seasonGames),
         seasonSource:"ESPN week-by-week schedule archive",
@@ -218,7 +246,13 @@ export async function GET(request){
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,
         vegasHistory,
-        radarFeedback:feedbackProfile
+        radarFeedback:feedbackProfile,
+        powerModel:{
+          historicalGames:powerModel.completedCount,
+          calibration:modelCalibration,
+          weights:{fundamentals:0.70,trends:0.30},
+          confidenceRules:{highConfidence:80,modelLean:70,totalsCap:69}
+        }
       },
       games
     },{headers:{"Cache-Control":"private, no-store, max-age=0"}});

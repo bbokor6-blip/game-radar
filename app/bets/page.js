@@ -23,7 +23,7 @@ function rangeLabel(r){
 }
 
 function gameTime(game){
-  return new Date(game.date).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"});
+  return new Date(game.date).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
 }
 
 function teamDisplay(team){
@@ -101,6 +101,13 @@ function ShareButton({path,params,title="Game Radar"}){
   return <button className="shareMini" onClick={share} type="button">{copied?"COPIED":"SHARE"}</button>;
 }
 
+function pickKeyForOpportunity(item){
+  if(item.type==="SPREAD")return item.side+"-spread";
+  return item.side;
+}
+function savedPickId(league,weekStart,gameId,key){
+  return [league,weekStart,gameId,key].join("|");
+}
 function allOpportunities(games){
   const out=[];
   for(const game of games){
@@ -110,7 +117,7 @@ function allOpportunities(games){
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
-function OpportunityCard({item,rank,league,generatedAt}){
+function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,isSaved,onToggleSave}){
   const g=item.game;
   const cls=indexClass(item.index);
   return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls}>
@@ -119,7 +126,13 @@ function OpportunityCard({item,rank,league,generatedAt}){
       <div className="simpleMatch">
         <strong>{matchup(g)}</strong>
         <small>{gameTime(g)} · {item.type}</small>
-        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase()}} title={matchup(g)+" · "+item.pick}/>
+        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase(),week:weekStart}} title={matchup(g)+" · "+item.pick}/>
+        <button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onToggleSave({
+          id:savedPickId(league,weekStart,g.id,pickKeyForOpportunity(item)),
+          league,weekStart,weekLabel,gameId:g.id,key:pickKeyForOpportunity(item),
+          matchup:matchup(g),gameDate:g.date,pick:item.pick,odds:item.americanOdds,index:item.index,
+          source:"BetRadar Top Picks"
+        })}>{isSaved?"★ SAVED":"☆ SAVE PICK"}</button>
       </div>
       <div className="pickHeadline">
         <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
@@ -216,7 +229,7 @@ function TeaserCard({size,legs,number}){
   </article>;
 }
 
-function BoardRow({game,league,generatedAt}){
+function BoardRow({game,league,generatedAt,weekStart,weekLabel,savedIds,onToggleSave}){
   const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
@@ -236,7 +249,7 @@ function BoardRow({game,league,generatedAt}){
 
   return <article id={"game-"+game.id} className="gameTableRow openRow">
     <div className="gameTableSummary">
-      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id}} title={matchup(game)}/></div>
+      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,week:weekStart}} title={matchup(game)}/></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
       <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
       <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
@@ -249,6 +262,13 @@ function BoardRow({game,league,generatedAt}){
           <div className="tableBetTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:null}</div>
           <div className="tableTease"><span>SUGGESTED TEASE</span><strong>{option.tease}</strong></div>
           <div className="tableStraight"><span>GAME LINE</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
+          <button className={"savePick compact "+(savedIds.has(savedPickId(league,weekStart,game.id,option.key))?"saved":"")} type="button" onClick={()=>onToggleSave({
+            id:savedPickId(league,weekStart,game.id,option.key),
+            league,weekStart,weekLabel,gameId:game.id,key:option.key,
+            matchup:matchup(game),gameDate:game.date,pick:option.base,odds:option.odds,
+            index:option.suggested?game.bestOpportunity?.index||null:null,
+            source:option.suggested?"BetRadar Likes":"Every Game"
+          })}>{savedIds.has(savedPickId(league,weekStart,game.id,option.key))?"★ SAVED":"☆ SAVE"}</button>
           {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)}</small>:null}
         </div>;
       })}
@@ -261,19 +281,28 @@ export default function BetsPage(){
   const[prefsReady,setPrefsReady]=useState(false);
   const[data,setData]=useState({games:[],methodology:null,generatedAt:null});
   const[nowTick,setNowTick]=useState(()=>Date.now());
+  const[weekOffset,setWeekOffset]=useState(1);
+  const[betSheet,setBetSheet]=useState([]);
+  const[sheetReady,setSheetReady]=useState(false);
   const[showAllGames,setShowAllGames]=useState(false);
   const[boardSort,setBoardSort]=useState("index");
   const[signalFilter,setSignalFilter]=useState("all");
   const[topType,setTopType]=useState("all");
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
-  const range=useMemo(()=>footballRange(1),[]);
+  const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
+  const weekLabel=rangeLabel(range);
 
   useEffect(()=>{
     if(typeof window==="undefined")return;
-    const q=new URLSearchParams(window.location.search).get("league");
+    const params=new URLSearchParams(window.location.search);
+    const q=params.get("league");
     const saved=window.localStorage.getItem("gameRadarLeague");
+    const qWeek=Number(params.get("weekOffset"));
     setLeague(q==="cfb"||q==="nfl"?q:saved==="cfb"?"cfb":"nfl");
+    if(Number.isFinite(qWeek)&&params.has("weekOffset"))setWeekOffset(Math.max(0,Math.min(4,qWeek)));
+    try{setBetSheet(JSON.parse(window.localStorage.getItem("gameRadarBetSheet")||"[]"));}catch{setBetSheet([]);}
+    setSheetReady(true);
     setPrefsReady(true);
   },[]);
 
@@ -282,8 +311,14 @@ export default function BetsPage(){
     window.localStorage.setItem("gameRadarLeague",league);
     const url=new URL(window.location.href);
     url.searchParams.set("league",league);
+    url.searchParams.set("weekOffset",String(weekOffset));
     window.history.replaceState({},"",url.pathname+url.search+url.hash);
-  },[league,prefsReady]);
+  },[league,weekOffset,prefsReady]);
+
+  useEffect(()=>{
+    if(!sheetReady||typeof window==="undefined")return;
+    window.localStorage.setItem("gameRadarBetSheet",JSON.stringify(betSheet));
+  },[betSheet,sheetReady]);
 
   useEffect(()=>{
     const timer=setInterval(()=>setNowTick(Date.now()),60000);
@@ -317,9 +352,20 @@ export default function BetsPage(){
       if(typeof document==="undefined"||document.visibilityState==="visible")load(false);
     },30*60*1000);
     return()=>{ignore=true;clearInterval(timer)};
-  },[league,prefsReady]);
+  },[league,weekOffset,prefsReady]);
+
+  function toggleSavedPick(pick){
+    setBetSheet(current=>current.some(x=>x.id===pick.id)?current.filter(x=>x.id!==pick.id):[...current,{...pick,savedAt:new Date().toISOString()}]);
+  }
+  function clearWeekSheet(){
+    setBetSheet(current=>current.filter(x=>!(x.league===league&&x.weekStart===range.start)));
+  }
 
   const games=(data.games||[]).filter(g=>g.sport===league);
+  const savedIds=useMemo(()=>new Set(betSheet.map(x=>x.id)),[betSheet]);
+  const weekSheet=useMemo(()=>betSheet
+    .filter(x=>x.league===league&&x.weekStart===range.start)
+    .sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)),[betSheet,league,range.start]);
   const filteredGames=useMemo(()=>{
     if(signalFilter==="70plus")return games.filter(g=>(g.bestOpportunity?.index||0)>=70);
     if(signalFilter==="conviction")return games.filter(g=>Boolean(g.bestOpportunity?.highConviction));
@@ -376,11 +422,11 @@ export default function BetsPage(){
   return <main className="betsShell">
     <a className="suiteHome" href="/">← GAME RADAR HOME</a>
     <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="active betradar" href={"/bets?league="+league}>
+      <a className="active betradar" href={"/bets?league="+league+"&weekOffset="+weekOffset}>
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>
-      <a className="gameradar" href={"/scores?league="+league}>
+      <a className="gameradar" href={"/scores?league="+league+"&week="+Math.max(0,weekOffset-1)+"&mode="+(weekOffset===0?"live":"ahead")}>
         <strong>GAMERADAR</strong>
         <small>Live scores · what to watch</small>
       </a>
@@ -388,7 +434,7 @@ export default function BetsPage(){
 
     <header className="betsHero simpleHero">
       <div>
-        <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
+        <div className="betsKicker">{weekOffset===0?"THIS FOOTBALL WEEK":"LOOK AHEAD · +"+weekOffset+" WEEK"+(weekOffset===1?"":"S")} · {weekLabel}</div>
         <h1>BETRADAR</h1>
         <p>BetRadar surfaces the most interesting games and the strongest betting signals from actual season results, historical market lines and the current line. Every suggested bet shows the odds, $10-unit payout and BetRadar Index.</p>
       </div>
@@ -401,11 +447,42 @@ export default function BetsPage(){
       </nav>
     </div>
 
+    <section className="betWeekNav">
+      <div>
+        <span>BETTING WEEK</span>
+        <strong>{weekOffset===0?"THIS WEEK":weekOffset===1?"NEXT WEEK":"+"+weekOffset+" WEEKS"} · {weekLabel}</strong>
+      </div>
+      <div className="betWeekButtons">
+        {[0,1,2,3,4].map(offset=><button key={offset} className={weekOffset===offset?"active":""} onClick={()=>setWeekOffset(offset)}>
+          {offset===0?"THIS":offset===1?"NEXT":"+"+offset}
+        </button>)}
+      </div>
+    </section>
 
     <section className={"marketTrust "+(data.generatedAt&&Date.now()-new Date(data.generatedAt).getTime()>60*60000?"stale":"")}>
       <span>MARKET STATUS</span>
       <strong>{marketFreshness(data.generatedAt,nowTick)}</strong>
       <small>LINES CACHED ≤15 MIN · {data.methodology?.currentOddsGamesHydrated??0}/{data.methodology?.currentGames??0} GAMES MULTI-BOOK CHECKED</small>
+    </section>
+
+    <section className="betSheet">
+      <div className="betSheetHead">
+        <div>
+          <span>MY BETTING SHEET</span>
+          <h2>{weekSheet.length?weekSheet.length+" SAVED PICK"+(weekSheet.length===1?"":"S"):"BUILD YOUR CARD"}</h2>
+          <p>Save the bets you want to remember for {weekLabel}. Your sheet stays on this device while you move around BetRadar.</p>
+        </div>
+        {weekSheet.length?<button onClick={clearWeekSheet}>CLEAR WEEK</button>:null}
+      </div>
+      {weekSheet.length?<div className="betSheetRows">
+        {weekSheet.map(pick=><div className="betSheetRow" key={pick.id}>
+          <div><strong>{pick.pick}</strong><small>{pick.matchup}</small></div>
+          <div><span>GAME</span><strong>{new Date(pick.gameDate).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</strong></div>
+          <div><span>ODDS</span><strong>{formatAmerican(pick.odds)}</strong></div>
+          <div><span>INDEX</span><strong>{pick.index??"—"}</strong></div>
+          <button onClick={()=>toggleSavedPick(pick)}>REMOVE</button>
+        </div>)}
+      </div>:<div className="betSheetEmpty">Tap ☆ SAVE PICK on a BetRadar recommendation or ☆ SAVE on any game line below.</div>}
     </section>
 
     <section className="confidenceLegend">
@@ -432,7 +509,7 @@ export default function BetsPage(){
           </div>
         </div>
         <div className="simplePickList">
-          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1} league={league} generatedAt={data.generatedAt}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
+          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} isSaved={savedIds.has(savedPickId(league,range.start,item.game.id,pickKeyForOpportunity(item)))} onToggleSave={toggleSavedPick}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
         </div>
       </section>
 
@@ -473,7 +550,7 @@ export default function BetsPage(){
           <div className="boardCount">{orderedGames.length} GAME{orderedGames.length===1?"":"S"}</div>
         </div>
         <div className="simpleBoard">
-          {visibleGames.length?visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt}/>):<div className="notice">NO GAMES MATCH THIS FILTER.</div>}
+          {visibleGames.length?visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} savedIds={savedIds} onToggleSave={toggleSavedPick}/>):<div className="notice">NO GAMES MATCH THIS FILTER.</div>}
         </div>
         {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
           {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}

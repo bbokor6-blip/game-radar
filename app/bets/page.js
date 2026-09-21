@@ -79,21 +79,43 @@ function OpportunityCard({item,rank}){
 }
 
 function teaserCandidate(game){
-  const opp=game.opportunities?.spread;
   const market=game.marketConsensus;
-  if(!opp||opp.index<68||!Number.isFinite(Number(market?.homeMargin)))return null;
+  if(!Number.isFinite(Number(market?.homeMargin)))return null;
 
-  const side=opp.side;
-  const marketSpread=side==="home"?-Number(market.homeMargin):Number(market.homeMargin);
-  if(marketSpread<-8.5||marketSpread>3.5)return null;
+  const abs=Math.abs(Number(market.homeMargin));
+  const homeFav=Number(market.homeMargin)>0;
+  const favorite=homeFav?game.home:game.away;
+  const dog=homeFav?game.away:game.home;
+  const spreadOpp=game.opportunities?.spread;
 
-  const teased=marketSpread+6;
-  const team=side==="home"?game.home.short:game.away.short;
+  let team=null,original=null,teased=null,why="";
+  if(abs>=4&&abs<=8.5){
+    team=favorite;
+    original=-abs;
+    teased=original+6;
+    const crossed=[];
+    if(original<=-7&&teased>-7)crossed.push("7");
+    if(original<=-3&&teased>-3)crossed.push("3");
+    why="A 6-point teaser takes "+favorite.short+" from "+original.toFixed(1)+" to "+(teased>0?"+":"")+teased.toFixed(1)+(crossed.length?" and moves through "+crossed.join(" and "):"")+".";
+  }else if(abs>=1.5&&abs<=3.5){
+    team=dog;
+    original=abs;
+    teased=original+6;
+    const crossed=[];
+    if(original<3&&teased>=3)crossed.push("3");
+    if(original<7&&teased>=7)crossed.push("7");
+    why="A 6-point teaser takes "+dog.short+" from +"+original.toFixed(1)+" to +"+teased.toFixed(1)+(crossed.length?" and moves through "+crossed.join(" and "):"")+".";
+  }else{
+    return null;
+  }
+
+  const supported=spreadOpp&&spreadOpp.side===(team.id===game.home.id?"home":"away");
+  const score=Math.round(64+(supported?Math.max(0,(spreadOpp.index||0)-58)*.6:0)+(game.sport==="nfl"?4:0));
   return {
     game,
-    label:team+" "+(teased>0?"+":"")+teased.toFixed(1),
-    score:opp.index,
-    why:marketSpread<0?"Moves the favorite through key numbers":"Pushes the underdog farther above a touchdown"
+    label:team.short+" "+(teased>0?"+":"")+teased.toFixed(1),
+    score,
+    why:supported?why+" Bet Radar already likes that side.":why+" The line itself makes this an interesting teaser shape."
   };
 }
 
@@ -195,7 +217,7 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>02</span>
-          <div><h2>FUN TICKLE TEASERS</h2><p>Only spread opportunities already rated INTERESTING or better are eligible.</p></div>
+          <div><h2>FUN TICKLE TEASERS</h2><p>Built from teaser-friendly market lines first, then boosted when Bet Radar already likes the same side.</p></div>
         </div>
         <div className="teaserGrid">
           {[2,3,4,5].filter(n=>teaserPool.length>=n).map(n=><TeaserCard key={n} size={n} legs={teaserPool.slice(0,n)}/>)}
@@ -216,11 +238,13 @@ export default function BetsPage(){
       <details className="modelDetails">
         <summary>What goes into the Radar Index?</summary>
         <div>
-          <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, and agreement across the available market lines.</p>
+          <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, agreement across available market lines, and how similar spreads/totals have actually performed earlier this season.</p>
           <p>It does not invent a “true” spread and it does not claim an 80 Index means an 80% chance of winning.</p>
           <div className="detailMetrics">
             <span>Completed games reviewed: <strong>{data.methodology?.historyGames??0}</strong></span>
-            <span>Method: <strong>Trend + market opportunity</strong></span>
+            <span>Historical spread lines used: <strong>{data.methodology?.historicalSpreadGames??0}</strong></span>
+            <span>Historical totals used: <strong>{data.methodology?.historicalTotalGames??0}</strong></span>
+            <span>Method: <strong>Trend + market history + current line</strong></span>
           </div>
         </div>
       </details>

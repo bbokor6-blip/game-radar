@@ -163,7 +163,7 @@ function AgentScoreCard({game,league,weekOffset}){
       <strong>{spread!=null?"SPREAD "+spread:marketLine(game)}</strong>
     </div>
     <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
-    <a className="agentOpen" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset+1)+"&game="+game.id}>OPEN IN BETRADAR →</a>
+    <a className="agentOpen" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>OPEN IN BETRADAR →</a>
   </article>;
 }
 
@@ -333,7 +333,7 @@ export default function Home(){
   return <main className="shell">
     <a className="suiteHome" href="/">← GAME RADAR HOME</a>
     <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="betradar" href={"/bets?league="+league}>
+      <a className="betradar" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>

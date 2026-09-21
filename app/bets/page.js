@@ -262,7 +262,9 @@ export default function BetsPage(){
   const[data,setData]=useState({games:[],methodology:null,generatedAt:null});
   const[nowTick,setNowTick]=useState(()=>Date.now());
   const[showAllGames,setShowAllGames]=useState(false);
-  const[collegeSort,setCollegeSort]=useState("radar");
+  const[boardSort,setBoardSort]=useState("index");
+  const[signalFilter,setSignalFilter]=useState("all");
+  const[topType,setTopType]=useState("all");
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const range=useMemo(()=>footballRange(1),[]);
@@ -294,7 +296,9 @@ export default function BetsPage(){
     async function load(initial=false){
       if(initial){
         setShowAllGames(false);
-        setCollegeSort("radar");
+        setBoardSort("index");
+        setSignalFilter("all");
+        setTopType("all");
         setLoading(true);
       }
       try{
@@ -316,23 +320,35 @@ export default function BetsPage(){
   },[league,prefsReady]);
 
   const games=(data.games||[]).filter(g=>g.sport===league);
+  const filteredGames=useMemo(()=>{
+    if(signalFilter==="70plus")return games.filter(g=>(g.bestOpportunity?.index||0)>=70);
+    if(signalFilter==="conviction")return games.filter(g=>Boolean(g.bestOpportunity?.highConviction));
+    return games;
+  },[games,signalFilter]);
+
   const orderedGames=useMemo(()=>{
-    if(league!=="cfb"||collegeSort!=="top25")return games;
-    return games.slice().sort((a,b)=>{
-      const aRanks=[a.home?.rank,a.away?.rank].filter(Boolean);
-      const bRanks=[b.home?.rank,b.away?.rank].filter(Boolean);
-      const aRanked=aRanks.length>0?1:0;
-      const bRanked=bRanks.length>0?1:0;
-      if(aRanked!==bRanked)return bRanked-aRanked;
-      const aBest=aRanks.length?Math.min(...aRanks):99;
-      const bBest=bRanks.length?Math.min(...bRanks):99;
-      if(aBest!==bBest)return aBest-bBest;
-      const aTwo=aRanks.length===2?1:0;
-      const bTwo=bRanks.length===2?1:0;
-      if(aTwo!==bTwo)return bTwo-aTwo;
-      return (b.opportunityIndex||0)-(a.opportunityIndex||0);
-    });
-  },[games,league,collegeSort]);
+    const list=filteredGames.slice();
+    if(boardSort==="kickoff")return list.sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(boardSort==="interest")return list.sort((a,b)=>(b.interest?.score||0)-(a.interest?.score||0)||(b.opportunityIndex||0)-(a.opportunityIndex||0));
+    if(boardSort==="top25"&&league==="cfb"){
+      return list.sort((a,b)=>{
+        const aRanks=[a.home?.rank,a.away?.rank].filter(Boolean);
+        const bRanks=[b.home?.rank,b.away?.rank].filter(Boolean);
+        const aRanked=aRanks.length?1:0;
+        const bRanked=bRanks.length?1:0;
+        if(aRanked!==bRanked)return bRanked-aRanked;
+        const aTwo=aRanks.length===2?1:0;
+        const bTwo=bRanks.length===2?1:0;
+        if(aTwo!==bTwo)return bTwo-aTwo;
+        const aBest=aRanks.length?Math.min(...aRanks):99;
+        const bBest=bRanks.length?Math.min(...bRanks):99;
+        if(aBest!==bBest)return aBest-bBest;
+        return (b.opportunityIndex||0)-(a.opportunityIndex||0);
+      });
+    }
+    return list.sort((a,b)=>(b.opportunityIndex||0)-(a.opportunityIndex||0)||(b.interest?.score||0)-(a.interest?.score||0));
+  },[filteredGames,boardSort,league]);
+
   const visibleGames=showAllGames?orderedGames:orderedGames.slice(0,15);
   const opportunities=allOpportunities(games);
 
@@ -348,7 +364,7 @@ export default function BetsPage(){
       target?.scrollIntoView({behavior:"smooth",block:"center"});
     },80);
   },[loading,games.length,league]);
-  const top=opportunities.slice(0,10);
+  const top=opportunities.filter(item=>topType==="all"||item.type.toLowerCase()===topType).slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
   const teaserGroups=[
     {size:2,count:2,items:bestTeasers(teaserPool,2,2)},
@@ -401,11 +417,18 @@ export default function BetsPage(){
     {error?<div className="notice error">{error}</div>:null}
     {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
       <section className="betSection simpleBetSection">
-        <div className="betSectionHead">
+        <div className="betSectionHead filterableHead">
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>The strongest real BetRadar signals for the week, ranked by confidence and then by game interest. When the evidence is especially strong, BetRadar calls it out as HIGH CONVICTION.</p>
+            <p>Always ranked by BetRadar Index first. Filter by bet type when you only want spreads or totals.</p>
+          </div>
+          <div className="miniFilter" aria-label="Top bet type">
+            {[
+              ["all","ALL"],
+              ["spread","SPREADS"],
+              ["total","TOTALS"]
+            ].map(([v,label])=><button key={v} className={topType===v?"active":""} onClick={()=>setTopType(v)}>{label}</button>)}
           </div>
         </div>
         <div className="simplePickList">
@@ -429,15 +452,28 @@ export default function BetsPage(){
           <span>03</span>
           <div>
             <h2>EVERY GAME</h2>
-            <p>{league==="cfb"&&collegeSort==="top25"?"Top 25 games are pushed to the top, then the rest of the FBS slate follows.":"Starts with the 15 most interesting games. Tease lines stay visible on every shown game; expand the slate only when you want the rest."}</p>
+            <p>BetRadar Index is the default ranking because this is the betting board. Use Interest or Kickoff only when you want to browse the slate differently.</p>
           </div>
-          {league==="cfb"?<div className="collegeSort">
-            <button className={collegeSort==="radar"?"active":""} onClick={()=>{setCollegeSort("radar");setShowAllGames(false)}}>BETRADAR</button>
-            <button className={collegeSort==="top25"?"active":""} onClick={()=>{setCollegeSort("top25");setShowAllGames(false)}}>TOP 25 FIRST</button>
-          </div>:null}
+        </div>
+
+        <div className="boardControls">
+          <div className="boardControlGroup">
+            <span>SORT</span>
+            <button className={boardSort==="index"?"active":""} onClick={()=>{setBoardSort("index");setShowAllGames(false)}}>BET INDEX</button>
+            <button className={boardSort==="interest"?"active":""} onClick={()=>{setBoardSort("interest");setShowAllGames(false)}}>GAME INTEREST</button>
+            <button className={boardSort==="kickoff"?"active":""} onClick={()=>{setBoardSort("kickoff");setShowAllGames(false)}}>KICKOFF</button>
+            {league==="cfb"?<button className={boardSort==="top25"?"active":""} onClick={()=>{setBoardSort("top25");setShowAllGames(false)}}>TOP 25 FIRST</button>:null}
+          </div>
+          <div className="boardControlGroup">
+            <span>FILTER</span>
+            <button className={signalFilter==="all"?"active":""} onClick={()=>{setSignalFilter("all");setShowAllGames(false)}}>ALL</button>
+            <button className={signalFilter==="70plus"?"active":""} onClick={()=>{setSignalFilter("70plus");setShowAllGames(false)}}>70+ SIGNAL</button>
+            <button className={signalFilter==="conviction"?"active":""} onClick={()=>{setSignalFilter("conviction");setShowAllGames(false)}}>HIGH CONVICTION</button>
+          </div>
+          <div className="boardCount">{orderedGames.length} GAME{orderedGames.length===1?"":"S"}</div>
         </div>
         <div className="simpleBoard">
-          {visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt}/>)}
+          {visibleGames.length?visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt}/>):<div className="notice">NO GAMES MATCH THIS FILTER.</div>}
         </div>
         {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
           {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}

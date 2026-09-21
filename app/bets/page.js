@@ -117,7 +117,7 @@ function allOpportunities(games){
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
-function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,isSaved,onToggleSave}){
+function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekOffset,isSaved,onToggleSave}){
   const g=item.game;
   const cls=indexClass(item.index);
   return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls}>
@@ -126,7 +126,7 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,isSav
       <div className="simpleMatch">
         <strong>{matchup(g)}</strong>
         <small>{gameTime(g)} · {item.type}</small>
-        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase(),week:weekStart}} title={matchup(g)+" · "+item.pick}/>
+        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase(),weekOffset}} title={matchup(g)+" · "+item.pick}/>
         <button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onToggleSave({
           id:savedPickId(league,weekStart,g.id,pickKeyForOpportunity(item)),
           league,weekStart,weekLabel,gameId:g.id,key:pickKeyForOpportunity(item),
@@ -229,7 +229,7 @@ function TeaserCard({size,legs,number}){
   </article>;
 }
 
-function BoardRow({game,league,generatedAt,weekStart,weekLabel,savedIds,onToggleSave}){
+function BoardRow({game,league,generatedAt,weekStart,weekLabel,weekOffset,savedIds,onToggleSave}){
   const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
@@ -249,7 +249,7 @@ function BoardRow({game,league,generatedAt,weekStart,weekLabel,savedIds,onToggle
 
   return <article id={"game-"+game.id} className="gameTableRow openRow">
     <div className="gameTableSummary">
-      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,week:weekStart}} title={matchup(game)}/></div>
+      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,weekOffset}} title={matchup(game)}/></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
       <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
       <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
@@ -470,7 +470,7 @@ export default function BetsPage(){
         <div>
           <span>MY BETTING SHEET</span>
           <h2>{weekSheet.length?weekSheet.length+" SAVED PICK"+(weekSheet.length===1?"":"S"):"BUILD YOUR CARD"}</h2>
-          <p>Save the bets you want to remember for {weekLabel}. Your sheet stays on this device while you move around BetRadar.</p>
+          <p>Save the bets you want to remember for {weekLabel}. Your sheet stays on this device while you move around BetRadar. {betSheet.length>weekSheet.length?betSheet.length-weekSheet.length+" more saved in other weeks.":""}</p>
         </div>
         {weekSheet.length?<button onClick={clearWeekSheet}>CLEAR WEEK</button>:null}
       </div>
@@ -509,7 +509,7 @@ export default function BetsPage(){
           </div>
         </div>
         <div className="simplePickList">
-          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} isSaved={savedIds.has(savedPickId(league,range.start,item.game.id,pickKeyForOpportunity(item)))} onToggleSave={toggleSavedPick}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
+          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,item.game.id,pickKeyForOpportunity(item)))} onToggleSave={toggleSavedPick}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
         </div>
       </section>
 
@@ -550,7 +550,7 @@ export default function BetsPage(){
           <div className="boardCount">{orderedGames.length} GAME{orderedGames.length===1?"":"S"}</div>
         </div>
         <div className="simpleBoard">
-          {visibleGames.length?visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} savedIds={savedIds} onToggleSave={toggleSavedPick}/>):<div className="notice">NO GAMES MATCH THIS FILTER.</div>}
+          {visibleGames.length?visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} savedIds={savedIds} onToggleSave={toggleSavedPick}/>):<div className="notice">NO GAMES MATCH THIS FILTER.</div>}
         </div>
         {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
           {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}

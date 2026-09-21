@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
+import { metadataChips } from "../../lib/gameMetadata";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
@@ -57,6 +58,10 @@ function featuredOpportunities(games){
 }
 function TeamMini({team}){
   return <span className="teamMini">{team?.logo?<img src={team.logo} alt=""/>:<i/>}<b>{teamDisplay(team)}</b></span>;
+}
+function GameMetaStrip({game,limit=3}){
+  const chips=metadataChips(game,limit);
+  return chips.length?<div className="gameMetaStrip">{chips.map(chip=><span key={chip}>{chip}</span>)}</div>:null;
 }
 
 function indexClass(n){
@@ -209,15 +214,22 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
         <strong>WIN {moneyText(item.payout.profit)}</strong>
         <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
       </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
-      {item.noBrainer?<div className="interestingWhy noBrainerWhy"><span>WHY THIS SCORES ABOVE 80</span><p>{item.why}</p></div>:item.highConviction?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:<p>{item.why}</p>}
-      <div className="evidenceChips">
-        {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
+      <GameMetaStrip game={g} limit={3}/>
+      <div className="pickReason">
+        <span>WHY IT'S HERE</span>
+        <p>{item.why}</p>
       </div>
-      <div className="simpleWhy">
-        <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
-        {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
-        <small>{g.marketConsensus?.providerCount?g.marketConsensus.providerCount+" BOOK"+(g.marketConsensus.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small>
-      </div>
+      <details className="pickDetails">
+        <summary>MARKET + EVIDENCE</summary>
+        <div className="evidenceChips">
+          {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
+        </div>
+        <div className="simpleWhy">
+          <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
+          {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
+          <small>{g.marketConsensus?.providerCount?g.marketConsensus.providerCount+" BOOK"+(g.marketConsensus.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small>
+        </div>
+      </details>
     </div>
     <div className="confidenceIndex">
       <span>BETRADAR INDEX</span>
@@ -327,6 +339,7 @@ function AgentGameCard({game,league,weekStart,weekLabel,weekOffset,isSaved,onSav
     <div className="agentGameSignals">
       <span>{conference.length?conference.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
       <strong>{spread!=null?"SPREAD "+spread:"LINE PENDING"}</strong>
+      <GameMetaStrip game={game} limit={3}/>
     </div>
     <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
     <div className="agentScore bet"><span>BETRADAR</span><strong>{best?.index||"—"}</strong></div>
@@ -486,7 +499,7 @@ export default function BetsPage(){
     if(pick)toggleSavedPick(pick);
   }
   function runAgentText(text){
-    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset});
+    const spec=parseAgentQuery(text,{currentLeague:league,currentWeekOffset:weekOffset,games:(data.games||[])});
     setAgentQuery(text);
     if(spec.isSaveAction){
       const prior=agentSpec?searchGames((data.games||[]).filter(g=>g.sport===league),agentSpec):[];
@@ -615,10 +628,10 @@ export default function BetsPage(){
       </form>
       <div className="askPrompts">
         {[
-          "Tight Big Ten + SEC games this week",
-          "Top 25 games with spreads under 10",
-          "Sleeper picks with BetRadar over 75",
-          "Best bets next week",
+          "Tight Big Ten + SEC games",
+          "Ranked vs ranked",
+          "SEC underdogs BetRadar likes",
+          "Primetime high-conviction bets",
           "Save the best 3"
         ].map(prompt=><button key={prompt} onClick={()=>runAgentText(prompt)}>{prompt}</button>)}
       </div>
@@ -638,10 +651,10 @@ export default function BetsPage(){
     </section>
 
     <nav className="betsSectionNav" aria-label="BetRadar sections">
-      <a href="#bet-sheet"><span>★</span><strong>MY BETS</strong><small>{weekSheet.length} saved</small></a>
-      <a href="#top-bets"><span>01</span><strong>TOP BETS</strong><small>Best signals</small></a>
-      <a href="#parlays"><span>02</span><strong>PARLAYS + TEASERS</strong><small>Build a card</small></a>
-      <a href="#every-game"><span>03</span><strong>EVERY GAME</strong><small>Full board</small></a>
+      <a href="#top-bets"><strong>TOP BETS</strong><small>Ranked signals</small></a>
+      <a href="#bet-sheet"><strong>MY BETS</strong><small>{weekSheet.length} saved</small></a>
+      <a href="#parlays"><strong>PARLAYS</strong><small>Curated cards</small></a>
+      <a href="#every-game"><strong>ALL GAMES</strong><small>Full data board</small></a>
     </nav>
 
     <div className="leagueSwitchBlock">

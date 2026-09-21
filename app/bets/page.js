@@ -580,7 +580,7 @@ export default function BetsPage(){
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>
-      <a className="gameradar" href={"/scores?league="+league+"&week="+Math.max(0,weekOffset-1)+"&mode="+(weekOffset===0?"live":"ahead")}>
+      <a className="gameradar" href={"/scores?league="+league+"&week="+weekOffset+"&mode="+(weekOffset===0?"live":"ahead")}>
         <strong>GAMERADAR</strong>
         <small>Live scores · what to watch</small>
       </a>

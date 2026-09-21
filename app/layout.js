@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Game Radar",
-  description: "Know what football game to watch right now.",
+  title: "Game Radar | BetRadar + GameRadar",
+  description: "Football intelligence for the bets worth your attention and the live games you cannot miss.",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1"
 };
 

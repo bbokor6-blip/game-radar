@@ -61,7 +61,7 @@ function OpportunityCard({item,rank}){
         <small>{gameTime(g)} · {item.type}</small>
       </div>
       <h3>{item.pick}</h3>
-      <p>{item.why}</p>
+      {item.index>=68?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
       <div className="evidenceChips">
         {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
       </div>

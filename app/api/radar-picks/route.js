@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import ledger from "../../../data/radar-picks.json";
+import { buildFeedbackProfile } from "../../../lib/radarFeedback";
 
 export const dynamic = "force-dynamic";
 
@@ -10,8 +11,10 @@ export async function GET(){
   const losses=graded.filter(p=>p.result==="L").length;
   const pushes=graded.filter(p=>p.result==="PUSH").length;
   const decisions=wins+losses;
+  const feedback=buildFeedbackProfile(ledger);
   return NextResponse.json({
     ...ledger,
+    feedback,
     record:{
       wins,losses,pushes,
       decisions,

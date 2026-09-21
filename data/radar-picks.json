@@ -1,5 +1,121 @@
 {
-  "version": 1,
-  "updatedAt": null,
-  "weeks": []
+  "version": 2,
+  "updatedAt": "2026-09-21T06:38:00Z",
+  "weeks": [
+    {
+      "league": "cfb",
+      "weekStart": "2026-09-22",
+      "weekEnd": "2026-09-28",
+      "label": "College Week 4 · Sep 22–28",
+      "lockedAt": "2026-09-21T06:38:00Z",
+      "lockType": "MANUAL_EARLY_LOCK",
+      "picks": [
+        {
+          "gameId": "cfb-2026-09-26-texas-tennessee",
+          "matchup": "Texas @ Tennessee",
+          "gameDate": "2026-09-26T12:00:00-04:00",
+          "league": "cfb",
+          "type": "SPREAD",
+          "pick": "Texas -3.5",
+          "americanOdds": -111,
+          "betRadarIndex": null,
+          "radarIndex": null,
+          "label": "EARLY LOCK",
+          "why": "Texas is laying only 3.5 in a matchup where the current projection gap is materially wider. The early number gives us room before the market potentially moves toward Texas later in the week.",
+          "line": "Texas -3.5",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Texas -3.5",
+              "line": "Texas -3.5",
+              "americanOdds": -111,
+              "reason": "Initial PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-2026-09-26-oregon-usc",
+          "matchup": "Oregon @ USC",
+          "gameDate": "2026-09-26T19:30:00-04:00",
+          "league": "cfb",
+          "type": "SPREAD",
+          "pick": "Oregon -2.5",
+          "americanOdds": null,
+          "betRadarIndex": null,
+          "radarIndex": null,
+          "label": "EARLY LOCK",
+          "why": "Oregon is priced inside a field goal while the current projection gap points to a meaningfully larger Oregon advantage. We want the -2.5 before a key-number move would make the bet less attractive.",
+          "line": "Oregon -2.5",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Oregon -2.5",
+              "line": "Oregon -2.5",
+              "americanOdds": null,
+              "reason": "Initial PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-2026-09-26-oklahoma-georgia",
+          "matchup": "Oklahoma @ Georgia",
+          "gameDate": "2026-09-26T15:30:00-04:00",
+          "league": "cfb",
+          "type": "SPREAD",
+          "pick": "Oklahoma +13.5",
+          "americanOdds": -110,
+          "betRadarIndex": null,
+          "radarIndex": null,
+          "label": "EARLY LOCK",
+          "why": "Georgia is the stronger team, but the number is doing a lot of work. A current projection has Georgia by roughly one score, not two touchdowns, creating one of the larger spread-value gaps on the board.",
+          "line": "Oklahoma +13.5",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Oklahoma +13.5",
+              "line": "Oklahoma +13.5",
+              "americanOdds": -110,
+              "reason": "Initial PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-2026-09-26-ole-miss-florida",
+          "matchup": "Ole Miss @ Florida",
+          "gameDate": "2026-09-26T15:30:00-04:00",
+          "league": "cfb",
+          "type": "SPREAD",
+          "pick": "Ole Miss +3.5",
+          "americanOdds": -122,
+          "betRadarIndex": null,
+          "radarIndex": null,
+          "label": "EARLY LOCK · THURSDAY REVIEW",
+          "why": "The market is giving unbeaten Ole Miss more than a field goal even though one current projection makes the Rebels the better team. Kewan Lacy's shoulder status is the key Thursday review item.",
+          "line": "Ole Miss +3.5",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap; injury review required",
+          "reviewThursday": true,
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Ole Miss +3.5",
+              "line": "Ole Miss +3.5",
+              "americanOdds": -122,
+              "reason": "Initial PickRadar lock; monitor Kewan Lacy"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

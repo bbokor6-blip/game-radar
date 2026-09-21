@@ -3895,3 +3895,77 @@ body{
   }
   .weekSelector strong{font-size:11px!important}
 }
+
+
+/* GameRadar signal surfacing */
+.grGameSignals{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.grRadarBadge{
+  display:inline-flex;
+  align-items:baseline;
+  gap:4px;
+  min-height:28px;
+  padding:4px 8px;
+  border:1px solid #395044;
+  background:#0f1d18;
+  color:#a9c9b1;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:850;
+  white-space:nowrap;
+}
+.grRadarBadge b{
+  color:#7ff397;
+  font-size:17px;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.grWhyInteresting{
+  margin-top:9px;
+  padding:9px 10px;
+  border-left:3px solid #4cdf73;
+  background:#0b171d;
+}
+.grWhyInteresting>span{
+  display:block;
+  color:#88d59a;
+  font-size:12px;
+  font-weight:900;
+  text-transform:none;
+}
+.grWhyInteresting p{
+  margin:2px 0 0;
+  color:#d9e0e5;
+  font-size:14px;
+  line-height:1.42;
+}
+.grGameCard.featured .grWhyInteresting p{font-size:15px}
+
+@media(max-width:700px){
+  .grGameTop{
+    align-items:flex-start;
+  }
+  .grGameSignals{
+    justify-content:flex-end;
+    gap:5px;
+  }
+  .grImportance{font-size:12px}
+  .grRadarBadge{
+    min-height:26px;
+    padding:3px 7px;
+    font-size:10px;
+  }
+  .grRadarBadge b{font-size:16px}
+  .grWhyInteresting{
+    margin-top:8px;
+    padding:8px 9px;
+  }
+  .grWhyInteresting>span{font-size:11px}
+  .grWhyInteresting p,
+  .grGameCard.featured .grWhyInteresting p{font-size:13px}
+}

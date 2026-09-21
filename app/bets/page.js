@@ -205,7 +205,7 @@ function BoardRow({game}){
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
       <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong></div>
-      <div className={"tableIndex "+indexClass(best?.index||0)}><span>BETRADAR</span><strong>{best?.index||0}</strong></div>
+      <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
     </div>
 
     {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand alwaysVisible">

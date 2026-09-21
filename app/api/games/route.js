@@ -20,15 +20,16 @@ export async function GET(request){
   const league=searchParams.get("league")==="cfb"?"cfb":"nfl";
 
   const result=await safe(league,start,end);
+  const leagueGames=result.games.filter(g=>g.sport===league);
 
   return NextResponse.json({
     generatedAt:new Date().toISOString(),
     league,
-    games:rankGames(result.games),
+    games:rankGames(leagueGames),
     range:{start,end},
     health:{
       ok:result.ok,
-      count:result.games.length,
+      count:leagueGames.length,
       error:result.error||null
     },
     source:league==="cfb"

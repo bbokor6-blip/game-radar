@@ -37,8 +37,20 @@ function why(game){
   if(m.rivalry)parts.push("rivalry");
   return parts.length?parts.join(" · ")+".":"One of the strongest games on the board.";
 }
+function teamFact(team,form){
+  if(!form)return null;
+  const bits=[];
+  const sample=(form.last3Wins||0)+(form.last3Losses||0);
+  if(sample)bits.push((team.short||team.location)+": "+form.last3Wins+"-"+form.last3Losses+" last "+sample);
+  if(Number.isFinite(form.last3Margin))bits.push((form.last3Margin>=0?"+":"")+form.last3Margin+" avg margin");
+  if(form.atsGames>=2)bits.push(form.atsWins+"-"+(form.atsGames-form.atsWins)+" ATS");
+  if(form.rankedWins)bits.push(form.rankedWins+" ranked win"+(form.rankedWins===1?"":"s"));
+  return bits.slice(0,2).join(" · ");
+}
 function GameSpotlight({game,rank,edition}){
   const meta=gameMetadata(game);
+  const awayFact=teamFact(game.away,game.teamForm?.away);
+  const homeFact=teamFact(game.home,game.teamForm?.home);
   return <article className="wrGame">
     <div className="wrGameHead">
       <span className="wrRank">#{rank}</span>
@@ -46,6 +58,11 @@ function GameSpotlight({game,rank,edition}){
       <span className="wrRadarIndex" title="RadarIndex">{game.radarIndex?.score??game.interest?.score??"—"}</span>
     </div>
     <p>{editorialTake(game,edition)||why(game)}</p>
+    {(awayFact||homeFact)?<div className="wrHardFacts">
+      <span>NUMBERS THAT MATTER</span>
+      {awayFact?<b>{awayFact}</b>:null}
+      {homeFact?<b>{homeFact}</b>:null}
+    </div>:null}
     <div className="wrGameFoot">
       <div>
         {meta.conferenceGame?<span>Conference</span>:null}

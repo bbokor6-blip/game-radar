@@ -93,12 +93,17 @@ function fallbackSpread(game){
   const team=side==="home"?game.home:game.away;
   const odds=side==="home"?market.homeSpreadOdds:market.awaySpreadOdds;
   const totalReturn=tenDollarReturn(odds);
+  const gamesPlayed=(String(game.home.record||"").match(/\d+/g)||[]).slice(0,2).reduce((s,n)=>s+Number(n),0)+
+    (String(game.away.record||"").match(/\d+/g)||[]).slice(0,2).reduce((s,n)=>s+Number(n),0);
+  const recordGap=Math.abs(homePct-awayPct);
+  const marketBreadth=Math.min(4,Number(market.providerCount)||0);
+  const fallbackIndex=Math.round(Math.min(54,38+(recordGap*14)+(marketBreadth*2)+Math.min(4,gamesPlayed/4)));
   return {
     type:"SPREAD",
     pick:team.short+" "+formatSpread(spread),
     americanOdds:odds,
     payout:totalReturn==null?null:{stake:10,profit:Math.round((totalReturn-10)*100)/100,totalReturn},
-    index:35,
+    index:fallbackIndex,
     label:"LOW CONFIDENCE",
     why:"BetRadar does not have a strong historical signal here. This is simply the best available lean from the current matchup and line.",
     evidence:["Low-confidence fallback pick"],
@@ -144,7 +149,6 @@ function OpportunityCard({item,rank}){
     <div className="confidenceIndex">
       <span>BETRADAR INDEX</span>
       <strong>{item.index}</strong>
-      <small>{item.label}</small>
     </div>
   </article>;
 }
@@ -218,7 +222,7 @@ function TeaserCard({size,legs,number}){
 }
 
 function BoardRow({game}){
-  const best=game.bestOpportunity;
+  const best=game.bestOpportunity||fallbackSpread(game);
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
   const homeSpread=Number.isFinite(Number(market.homeMargin))?-Number(market.homeMargin):null;
@@ -238,7 +242,7 @@ function BoardRow({game}){
     <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"PASS"}</strong></div>
+      <div className="tableBest"><span>BETRADAR PICK</span><strong>{best?.pick||"—"}</strong></div>
       <div className={"tableIndex "+indexClass(best?.index||0)}><span>BETRADAR</span><strong>{best?.index||0}</strong></div>
     </div>
 
@@ -302,7 +306,7 @@ export default function BetsPage(){
         <a className="backLink" href="/">← GAME COMMAND CENTER</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BET LAB</h1>
-        <p>BetRadar finds interesting opportunities using actual season results, market history and the current line. Every suggested bet shows the American odds, the payout on a $10 unit, and a BetRadar Index.</p>
+        <p>BetRadar ranks the week using actual season results, historical market lines and the current line. Every suggested bet shows the American odds, the payout on a $10 unit, and a BetRadar Index so you can compare the strength of the signal.</p>
       </div>
     </header>
 
@@ -310,12 +314,6 @@ export default function BetsPage(){
       {LEAGUES.map(([v,label])=><button key={v} className={league===v?"active":""} onClick={()=>setLeague(v)}>{label}</button>)}
     </nav>
 
-    <section className="confidenceLegend">
-      <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
-      <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
-      <div className="lean"><strong>60–69</strong><span>WATCH</span></div>
-      <div className="pass"><strong>&lt;60</strong><span>PASS</span></div>
-    </section>
 
     {error?<div className="notice error">{error}</div>:null}
     {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
@@ -324,7 +322,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>Always the 10 best available looks, even when confidence is low. Sorted by BetRadar Index with odds and $10-unit payouts.</p>
+            <p>Always the 10 highest-ranked bets available, even when the underlying signal is weak. Sorted by BetRadar Index with odds and $10-unit payouts.</p>
           </div>
         </div>
         <div className="simplePickList">
@@ -360,9 +358,10 @@ export default function BetsPage(){
         <summary>What goes into the BetRadar Index?</summary>
         <div>
           <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, agreement across available market lines, and how similar spreads/totals have actually performed earlier this season.</p>
-          <p>It does not invent a “true” spread and it does not claim an 80 BetRadar Index means an 80% chance of winning. The American odds determine the actual $10 payout shown on each bet.</p>
+          <p>The BetRadar Index is a relative signal score, not a win probability. Higher means more supporting evidence from team ATS/total history, similar past market lines and the current market. Low scores simply mean the evidence is thin.</p>
           <div className="detailMetrics">
             <span>Completed games reviewed: <strong>{data.methodology?.historyGames??0}</strong></span>
+            <span>Historical games with odds reloaded: <strong>{data.methodology?.historicalOddsGamesHydrated??0}</strong></span>
             <span>Historical spread lines used: <strong>{data.methodology?.historicalSpreadGames??0}</strong></span>
             <span>Historical totals used: <strong>{data.methodology?.historicalTotalGames??0}</strong></span>
             <span>Method: <strong>Trend + market history + current line</strong></span>

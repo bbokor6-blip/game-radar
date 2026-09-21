@@ -629,3 +629,24 @@ footer{
   .tableBest{display:none}
   .gameTableExpand{grid-template-columns:1fr 1fr}
 }
+
+/* EVERY GAME: TEASERS ALWAYS VISIBLE, LIST COLLAPSES AFTER 15 */
+.gameTableRow.openRow{display:block}
+.gameTableSummary{
+  display:grid;grid-template-columns:minmax(190px,1.4fr) minmax(110px,.75fr) minmax(130px,.9fr) 76px;
+  gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid #303a31
+}
+.gameTableExpand.alwaysVisible{border-top:0}
+.showMoreGames{
+  width:100%;margin-top:10px;padding:12px 14px;border:1px solid #465248;background:#121812;
+  color:#d7ddcf;font:1000 10px "Courier New",monospace;letter-spacing:.08em;cursor:pointer
+}
+.showMoreGames:hover{border-color:#687c62;background:#161d16}
+
+@media(max-width:760px){
+  .gameTableSummary{grid-template-columns:minmax(130px,1.2fr) 86px 92px 54px;gap:6px;padding:9px}
+}
+@media(max-width:460px){
+  .gameTableSummary{grid-template-columns:minmax(120px,1.3fr) 78px 48px}
+  .gameTableSummary .tableBest{display:none}
+}

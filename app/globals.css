@@ -238,3 +238,69 @@ footer{
   .betMain strong{font-size:12px}
   .betScore{font-size:18px}
 }
+
+
+/* BET LAB */
+.betsShell{width:min(1180px,100%);margin:auto;padding:22px 18px 70px}
+.betsHero{padding:28px;border:2px solid #4a503f;background:linear-gradient(135deg,#1b2116,#10140e 70%);box-shadow:0 14px 38px #0008}
+.backLink{color:#9da596;text-decoration:none;font:900 9px "Courier New",monospace;letter-spacing:.12em}
+.betsKicker{margin-top:18px;color:var(--amber);font:900 10px "Courier New",monospace;letter-spacing:.16em}
+.betsHero h1{margin:6px 0 8px;font-size:clamp(46px,8vw,82px);line-height:.86}
+.betsHero p{margin:0;max-width:720px;color:#afb5aa;font-size:14px;line-height:1.5}
+.betsLeagueToggle{display:grid;grid-template-columns:1fr 1fr;margin:12px 0;border:1px solid #3c473c}
+.betsLeagueToggle button{min-height:54px;border:0;border-right:1px solid #3c473c;background:#101510;color:#929a8f;font:1000 12px "Courier New",monospace;letter-spacing:.08em}
+.betsLeagueToggle button:last-child{border-right:0}
+.betsLeagueToggle button.active{background:#ece6d2;color:#11150f;box-shadow:inset 0 -4px 0 var(--amber)}
+.sourceStrip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:26px;padding:10px 12px;border:1px solid #333c33;background:#0d120e;color:#737d73;font:850 8px "Courier New",monospace;letter-spacing:.08em}
+.sourceStrip>a{color:var(--amber);text-decoration:none;border:1px solid #4a4733;padding:6px 8px}
+.sourceNote{flex:1;min-width:240px;line-height:1.45}
+.betSection{margin-top:28px}
+.betSectionHead{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:start;margin-bottom:12px}
+.betSectionHead>span{display:grid;place-items:center;width:38px;height:38px;border:1px solid #4d584e;color:var(--green);font:1000 13px "Courier New",monospace}
+.betSectionHead h2{margin:0;font-size:clamp(23px,4vw,34px);letter-spacing:-.03em}
+.betSectionHead p{margin:4px 0 0;color:#969e92;font-size:12px;line-height:1.45}
+.pickGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pickCard{border:1px solid #3a443a;background:linear-gradient(180deg,#151b15,#0e130f);padding:14px}
+.pickTop{display:flex;align-items:center;justify-content:space-between;color:#778177;font:900 8px "Courier New",monospace;letter-spacing:.12em}
+.pickTop strong{color:var(--green);font-size:18px}
+.pickCard h3{margin:8px 0 4px;font-size:24px;letter-spacing:-.03em;color:var(--white)}
+.pickGame{color:#cbc6b2;font-weight:900;font-size:12px}
+.pickCard p{margin:8px 0;color:#a8b0a4;font-size:12px;line-height:1.45}
+.pickMeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;color:var(--amber);font:900 9px "Courier New",monospace}
+.pickMeta span{border:1px solid #494731;padding:5px 7px;background:#15150f}
+.teaserGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.teaserCard{border:1px solid #4d4132;background:linear-gradient(180deg,#1a1710,#100f0b);padding:15px}
+.teaserBadge{display:inline-block;padding:5px 7px;border:1px solid #6a5531;color:var(--amber);font:1000 8px "Courier New",monospace;letter-spacing:.12em}
+.teaserCard h3{margin:9px 0 12px;font-size:23px;letter-spacing:-.03em}
+.teaserLegs{display:grid;gap:7px}
+.teaserLegs>div{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:center;padding:8px 9px;background:#0c0e0a;border:1px solid #302f24}
+.teaserLegs span{color:#6f766d;font:900 9px "Courier New",monospace}
+.teaserLegs strong{font:900 14px "Courier New",monospace;color:#f1ead0}
+.teaserCard p{margin:11px 0 0;color:#8f968b;font-size:11px;line-height:1.45}
+.fullBetBoard{border-top:1px solid #384238}
+.fullBetRow{display:grid;grid-template-columns:minmax(190px,1.4fr) repeat(3,minmax(80px,.55fr));gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid #303a31}
+.fullBetRow>div{display:flex;flex-direction:column;gap:3px}
+.fullBetRow>div:first-child strong{font-size:14px}
+.fullBetRow small{color:#757f75;font-size:10px}
+.fullBetRow span{color:#6e786f;font:900 8px "Courier New",monospace;letter-spacing:.1em}
+.fullBetRow>div:not(:first-child) strong{font:1000 13px "Courier New",monospace;color:#e7e1ce}
+.fullBetRow>div:last-child strong{color:var(--green)}
+.betsFooter{margin-top:30px;text-align:center;color:#646c63;font:800 8px "Courier New",monospace;letter-spacing:.1em}
+.headerActions{display:flex;gap:8px;align-items:flex-start}
+.betLabLink{display:inline-flex;align-items:center;min-height:36px;padding:0 11px;border:1px solid #67552f;background:#17150e;color:var(--amber);text-decoration:none;font:1000 9px "Courier New",monospace;letter-spacing:.09em}
+
+@media(max-width:720px){
+  .betsShell{padding:10px 9px 48px}
+  .betsHero{padding:20px 15px}
+  .betsHero h1{font-size:48px}
+  .betsHero p{font-size:12px}
+  .sourceStrip{align-items:flex-start}
+  .pickGrid,.teaserGrid{grid-template-columns:1fr}
+  .fullBetRow{grid-template-columns:minmax(0,1fr) 68px 58px 66px;gap:7px}
+  .fullBetRow>div:first-child strong{font-size:12px}
+  .fullBetRow>div:not(:first-child) strong{font-size:11px}
+  .fullBetRow span{font-size:6.5px}
+  .pickCard h3{font-size:22px}
+  .teaserCard h3{font-size:21px}
+  .headerActions{flex-direction:column;align-items:flex-end}
+}

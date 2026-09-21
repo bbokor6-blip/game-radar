@@ -859,3 +859,77 @@ footer{
   .landingChoice h3{font-size:17px}
   .landingValue{padding:20px 18px}
 }
+
+
+/* LAUNCH POLISH: TRUST, SHARING + GAME OF THE MOMENT */
+.shareMini{
+  border:1px solid #3c473d;background:#0b100c;color:#7f897e;padding:4px 6px;
+  font:1000 6.5px "Courier New",monospace;letter-spacing:.08em;line-height:1;white-space:nowrap
+}
+.shareMini:hover{border-color:#68756a;color:#d9dfd5}
+
+.marketTrust{
+  display:grid;grid-template-columns:auto auto 1fr;gap:9px;align-items:center;
+  margin:0 0 10px;padding:9px 11px;border:1px solid #405043;background:#0d140e
+}
+.marketTrust>span{
+  color:#788278;font:1000 7px "Courier New",monospace;letter-spacing:.12em
+}
+.marketTrust>strong{
+  color:var(--green);font:1000 9px "Courier New",monospace;letter-spacing:.06em
+}
+.marketTrust>small{
+  justify-self:end;color:#778177;font:850 7px "Courier New",monospace;letter-spacing:.06em
+}
+.marketTrust.stale{border-color:#765733;background:#17120c}
+.marketTrust.stale>strong{color:var(--amber)}
+
+.gameRowStatus{display:flex;align-items:center;gap:8px}
+.gameRowStatus .shareMini{margin-left:2px}
+
+.gameMoment{
+  margin:0 0 10px;padding:16px;border:1px solid #6c8b56;background:
+  linear-gradient(135deg,#152214,#0c120d 70%);
+  box-shadow:inset 4px 0 0 var(--green),0 10px 30px #0005
+}
+.momentTop{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px
+}
+.momentTop>div{display:flex;align-items:center;gap:9px}
+.momentTop span{color:var(--green);font:1000 9px "Courier New",monospace;letter-spacing:.08em}
+.momentTop strong{color:#dfe7da;font:1000 9px "Courier New",monospace;letter-spacing:.12em}
+.momentScore{
+  display:grid;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr);gap:10px;align-items:end
+}
+.momentScore>div{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.momentScore>div:last-child{flex-direction:row-reverse}
+.momentScore small{
+  color:#dce2d8;font:1000 14px "Courier New",monospace;letter-spacing:.02em
+}
+.momentScore strong{
+  color:var(--white);font:1000 42px/1 Arial,Helvetica,sans-serif;letter-spacing:-.05em
+}
+.momentScore>span{
+  align-self:center;text-align:center;color:#647064;font:900 16px "Courier New",monospace
+}
+.momentMeta{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;
+  padding-top:10px;border-top:1px solid #354536
+}
+.momentMeta span{color:var(--amber);font:900 8px "Courier New",monospace}
+.momentMeta b{color:var(--green);font:1000 8px "Courier New",monospace;letter-spacing:.08em}
+.gameMoment p{margin:9px 0 0;color:#aeb8aa;font-size:11px;line-height:1.45}
+.otherLiveList{margin-top:10px}
+
+@media(max-width:620px){
+  .marketTrust{grid-template-columns:1fr auto;gap:5px 8px}
+  .marketTrust>small{grid-column:1/-1;justify-self:start;font-size:6.5px}
+  .simpleMatch .shareMini{margin-left:auto}
+  .gameRowStatus{gap:5px}
+  .gameRowStatus .shareMini{font-size:6px;padding:3px 5px}
+  .gameMoment{padding:12px}
+  .momentTop strong{font-size:7px}
+  .momentScore small{font-size:11px}
+  .momentScore strong{font-size:34px}
+  .momentMeta{align-items:flex-start;flex-direction:column;gap:5px}
+}

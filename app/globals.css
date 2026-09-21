@@ -1,11 +1,172 @@
-:root{--ink:#050708;--board:#142018;--board2:#0b120e;--cream:#efe8cf;--paint:#d9d1b7;--red:#ff3b22;--amber:#ffb21a;--green:#8df43c;--metal:#6f746c;--line:#354137;--muted:#9a9b8c}*{box-sizing:border-box}html,body{margin:0;background:#050807;color:var(--cream);font-family:Arial,Helvetica,sans-serif}body{background:radial-gradient(circle at 50% -20%,#1c2921 0,#080d0a 42%,#030504 100%);min-height:100vh}body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 4px)}button{font:inherit}.shell{width:min(100%,820px);margin:auto;padding:28px 16px 70px}.stadiumHeader{position:relative;display:flex;justify-content:space-between;gap:20px;align-items:flex-start;padding:25px 25px 22px;background:linear-gradient(180deg,#202b22,#111812);border:3px solid #4b5148;box-shadow:inset 0 0 0 2px #080b08,0 18px 55px #000a}.stadiumHeader:before{content:"";position:absolute;inset:8px;border:1px solid #30382f;pointer-events:none}.bolt,.screw{width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c3c3b5,#4b4e48 55%,#111);box-shadow:0 1px 2px #000}.bolt{position:absolute;z-index:2}.b1{left:10px;top:10px}.b2{right:10px;bottom:10px}.brand{font-weight:1000;letter-spacing:.2em;font-style:italic;font-size:14px}.brand span{color:var(--red);text-shadow:0 0 10px #ff3b2266}.headerKicker{margin-top:10px;font:700 9px "Courier New",monospace;letter-spacing:.24em;color:#858b7d}h1{font-size:clamp(40px,9vw,72px);line-height:.82;letter-spacing:-.06em;font-style:italic;margin:15px 0 12px;text-shadow:3px 3px 0 #000}.stadiumHeader p{color:#a4a895;margin:0;font-weight:700}.refresh{position:relative;z-index:3;background:#080c09;color:var(--amber);border:2px solid #555d52;padding:12px 14px;font:900 11px "Courier New",monospace;letter-spacing:.1em;box-shadow:inset 0 0 12px #000;cursor:pointer}.tabs{display:grid;grid-template-columns:repeat(3,1fr);border:3px solid #3e463d;margin:15px 0 25px;background:#0b0f0c;box-shadow:0 10px 30px #0008}.tabs button{border:0;border-right:1px solid #3e463d;background:#111812;color:#777e72;padding:14px 4px;font:950 11px "Courier New",monospace;letter-spacing:.14em;cursor:pointer}.tabs button:last-child{border:0}.tabs .active{background:var(--paint);color:#101510;box-shadow:inset 0 -4px 0 var(--red)}.sectionLabel{display:flex;align-items:center;gap:9px;font:950 10px "Courier New",monospace;letter-spacing:.2em;color:#aaa996;margin:22px 3px 9px}.sectionLabel:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 9px var(--red)}.gameCard{position:relative;background:linear-gradient(145deg,#17241b,#0b120d 70%);border:4px solid #3f493f;padding:17px;margin-bottom:15px;box-shadow:inset 0 0 0 2px #060806,inset 0 0 40px #0007,0 14px 30px #0008}.gameCard:before{content:"";position:absolute;inset:7px;border:1px solid #2a342c;pointer-events:none}.gameCard.featured{border-color:#777d70;box-shadow:inset 0 0 0 2px #070907,inset 0 0 45px #0008,0 0 25px #8df43c12,0 18px 40px #000}.scoreboardTop,.clockPanel,.team,.divider{display:flex;align-items:center;justify-content:space-between}.scoreboardTop{position:relative;z-index:1;display:grid;grid-template-columns:12px 1fr auto 10px;gap:8px;font:950 9px "Courier New",monospace;letter-spacing:.16em;color:#969b8c;margin-bottom:11px}.lamp{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 9px var(--green)}.liveFlag{color:var(--red);text-shadow:0 0 8px #f33}.clockPanel{position:relative;z-index:1;background:#020302;border:4px inset #303831;padding:10px 14px;margin-bottom:12px;box-shadow:inset 0 0 22px #000}.clockLabel,.radarLabel{display:flex;flex-direction:column;gap:4px;color:#687068;font:800 8px "Courier New",monospace;letter-spacing:.15em}.clockLabel span{color:var(--red);font-size:19px;letter-spacing:.02em;text-shadow:0 0 9px #ff3b2288}.radarLabel{align-items:flex-end}.radarScore{color:var(--green);font-size:28px;letter-spacing:.04em;text-shadow:0 0 10px #8df43c99}.team{position:relative;z-index:1;min-height:66px;padding:3px 4px}.teamIdentity{display:flex;align-items:center;gap:12px}.logo,.logoFallback{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 2px 3px #000)}.logoFallback{background:#263329;border:1px solid #465147}.teamName{display:flex;align-items:baseline;gap:8px;font-weight:1000;font-style:italic;font-size:22px;text-shadow:2px 2px #000}.rank{font:900 10px "Courier New",monospace;color:var(--amber);font-style:normal}.ball{font-size:9px;color:var(--green);text-shadow:0 0 8px var(--green)}.teamScore{min-width:65px;text-align:right;font-family:"Courier New",monospace;font-size:47px;line-height:1;font-weight:900;color:var(--amber);letter-spacing:-.12em;text-shadow:0 0 7px #ffb21a99,0 0 18px #ffb21a33}.divider{position:relative;z-index:1;border-top:1px solid #364238;color:#697167;font:900 7px "Courier New",monospace;letter-spacing:.18em;padding:5px 4px 0}.tier{position:relative;z-index:1;margin-top:13px;border:2px solid #343c34;background:#080b08;padding:10px 11px;font:1000 12px "Courier New",monospace;letter-spacing:.08em}.tier.hot{color:var(--red);border-color:#6d3029;text-shadow:0 0 7px #f33}.tier.watch{color:var(--amber);border-color:#66552e}.why{position:relative;z-index:1;font:700 12px "Courier New",monospace;color:#c1c2b4;margin:10px 3px 0;line-height:1.45}.meter{position:relative;z-index:1;height:7px;background:#020302;border:1px solid #293129;margin-top:12px}.meterFill{height:100%;background:repeating-linear-gradient(90deg,var(--green) 0 6px,transparent 6px 9px);filter:drop-shadow(0 0 4px var(--green))}.notice{border:4px solid #3d473e;background:#111912;padding:32px 18px;text-align:center;font:900 12px "Courier New",monospace;letter-spacing:.1em;color:#9da294;box-shadow:inset 0 0 30px #000}.error{color:#ff8177}footer{text-align:center;color:#656b62;font:900 8px "Courier New",monospace;letter-spacing:.13em;line-height:1.9;margin-top:28px}@media(max-width:520px){.shell{padding:14px 10px 50px}.stadiumHeader{padding:20px 17px}.stadiumHeader p{font-size:12px}.refresh{padding:9px;font-size:9px}.gameCard{padding:13px;border-width:3px}.teamName{font-size:19px;gap:5px}.teamScore{font-size:39px}.logo,.logoFallback{width:31px;height:31px}.rank{font-size:8px}.clockLabel span{font-size:15px}.radarScore{font-size:23px}}.weekBar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:-10px 0 24px;padding:10px 12px;background:#090d0a;border:2px solid #343d35;font:900 9px "Courier New",monospace;letter-spacing:.14em;color:#858b7d}.weekBar select{min-height:42px;background:#151d16;color:var(--amber);border:1px solid #50584e;padding:0 36px 0 12px;font:900 11px "Courier New",monospace;letter-spacing:.08em;cursor:pointer}@media(max-width:520px){.weekBar{margin-top:-11px}.weekBar select{max-width:190px;font-size:10px}}
-.gameCard.isLive{animation:livePulse 2.8s ease-in-out infinite}
-.gameCard.signalHot{border-color:#ff3b22;box-shadow:inset 0 0 0 2px #190503,inset 0 0 44px #ff3b2212,0 0 12px #ff3b22aa,0 0 34px #ff3b2255,0 18px 40px #000}
-.gameCard.signalWatch{border-color:#ffb21a;box-shadow:inset 0 0 0 2px #171003,inset 0 0 40px #ffb21a0d,0 0 10px #ffb21a88,0 0 28px #ffb21a44,0 18px 40px #000}
-.gameCard.signalLow{border-color:#54704b;box-shadow:inset 0 0 0 2px #071006,inset 0 0 35px #8df43c08,0 0 8px #8df43c55,0 16px 35px #000}
-.signalBadge{position:relative;z-index:2;display:inline-block;margin-top:12px;padding:6px 9px;border:1px solid;font:1000 9px "Courier New",monospace;letter-spacing:.12em;background:#050705}
-.signalBadge.hot{color:var(--red);border-color:#8b3429;text-shadow:0 0 8px #ff3b22}
-.signalBadge.watch{color:var(--amber);border-color:#7d672d;text-shadow:0 0 8px #ffb21a88}
-.signalBadge.low{color:var(--green);border-color:#466238}
-@keyframes livePulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.07)}}
-@media(prefers-reduced-motion:reduce){.gameCard.isLive{animation:none}}
+:root{
+  --bg:#070a08;
+  --panel:#111711;
+  --panel2:#171e17;
+  --line:#303a31;
+  --cream:#f1ecd9;
+  --muted:#9da496;
+  --red:#ff4b32;
+  --amber:#ffb629;
+  --green:#9cf55a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--cream);font-family:Inter,Arial,Helvetica,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at 50% -10%,#1b281e 0,#0a0f0b 40%,#050706 100%)}
+button,select{font:inherit}
+button{cursor:pointer}
+.shell{width:min(1180px,100%);margin:auto;padding:24px 18px 64px}
+
+.stadiumHeader{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  padding:26px 28px;border:2px solid #465147;background:linear-gradient(180deg,#1a231b,#111711);
+  box-shadow:inset 0 0 0 1px #080b08,0 14px 36px #0008
+}
+.brand{font-size:13px;font-weight:1000;letter-spacing:.18em;font-style:italic}
+.brand span{color:var(--red)}
+.headerKicker{margin-top:8px;color:#80897d;font:800 10px "Courier New",monospace;letter-spacing:.16em}
+h1{margin:12px 0 8px;font-size:clamp(36px,6vw,68px);line-height:.92;letter-spacing:-.055em;font-style:italic}
+.stadiumHeader p{margin:0;color:#b1b7aa;font-size:15px;font-weight:650}
+.refresh{
+  flex:0 0 auto;border:1px solid #535d53;background:#0b0f0c;color:var(--amber);
+  padding:11px 13px;font:900 11px "Courier New",monospace;letter-spacing:.08em
+}
+
+.modeRail{
+  margin:14px 0;display:grid;grid-template-columns:repeat(3,1fr);
+  border:2px solid var(--line);background:#0b0f0c
+}
+.modeRail button{
+  min-height:68px;border:0;border-right:1px solid var(--line);background:#111711;color:#8e968a;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:12px 16px
+}
+.modeRail button:last-child{border-right:0}
+.modeRail button span{font:1000 13px "Courier New",monospace;letter-spacing:.1em}
+.modeRail button small{margin-top:5px;font-size:12px}
+.modeRail button.active{background:#ede7d4;color:#0b100c;box-shadow:inset 0 -4px 0 var(--red)}
+
+.controlDeck{
+  display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 24px;
+  padding:14px 16px;border:1px solid var(--line);background:#0d120e
+}
+.leagueBlock{min-width:0;flex:1}
+.controlLabel,.weekPicker{font:900 9px "Courier New",monospace;letter-spacing:.15em;color:#7f887d}
+.leagueToggle{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
+.leagueToggle button{
+  min-height:39px;border:1px solid #3c473d;background:#141b15;color:#aeb5a9;
+  padding:0 13px;font:900 10px "Courier New",monospace;letter-spacing:.06em
+}
+.leagueToggle button.active{background:var(--amber);color:#161006;border-color:var(--amber)}
+.weekPicker{display:flex;flex-direction:column;gap:7px}
+.weekPicker select{
+  min-height:39px;background:#151c16;color:var(--cream);border:1px solid #465147;
+  padding:0 34px 0 11px;font:800 11px "Courier New",monospace
+}
+
+.sectionIntro{margin:26px 0 12px}
+.sectionIntro>span{font:900 10px "Courier New",monospace;letter-spacing:.18em;color:var(--amber)}
+.sectionIntro h2{margin:5px 0 5px;font-size:clamp(24px,4vw,36px);letter-spacing:-.035em}
+.sectionIntro p{margin:0;color:#9da598;font-size:14px;max-width:720px;line-height:1.45}
+
+.scoreList{min-width:0}
+.listHeader{
+  display:grid;grid-template-columns:1fr auto;gap:10px;padding:0 4px 8px;color:#747e73;
+  font:900 9px "Courier New",monospace;letter-spacing:.13em
+}
+.gameRow{
+  margin-bottom:10px;border:1px solid #384238;background:linear-gradient(180deg,#141b15,#0e130f);
+  padding:14px 16px;box-shadow:inset 0 0 0 1px #090c09
+}
+.gameRow.hot{border-color:#9a392d;box-shadow:inset 4px 0 0 var(--red)}
+.gameRow.watch{border-color:#7e662f;box-shadow:inset 4px 0 0 var(--amber)}
+.gameRowTop{
+  display:flex;justify-content:space-between;gap:12px;margin-bottom:9px;color:#8d9589;
+  font:850 9px "Courier New",monospace;letter-spacing:.1em
+}
+.leaguePill{color:#b8beb4}
+.liveText{color:var(--red);font-weight:1000;text-shadow:0 0 7px #ff4b3266}
+.gameRowBody{display:grid;grid-template-columns:minmax(0,1fr) 108px;gap:18px;align-items:center}
+.scoreSide{min-width:0}
+.teamLine{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:50px}
+.teamLeft{display:flex;align-items:center;gap:11px;min-width:0}
+.teamLogo{width:32px;height:32px;object-fit:contain;flex:0 0 auto}
+.teamLogo.fallback{background:#243025;border:1px solid #445046;border-radius:50%}
+.teamMeta{min-width:0}
+.teamLabel{display:flex;align-items:center;gap:7px;font-size:18px;font-weight:900;letter-spacing:-.01em}
+.record{margin-top:2px;color:#727b71;font:800 9px "Courier New",monospace}
+.rankTag{color:var(--amber);font:900 10px "Courier New",monospace}
+.ball{color:var(--green);font-size:8px}
+.plainScore{
+  min-width:54px;text-align:right;font:900 34px/1 "Courier New",monospace;color:#f5edd2;
+  letter-spacing:-.07em
+}
+.interestSide{
+  align-self:stretch;border-left:1px solid #334035;padding-left:16px;
+  display:flex;flex-direction:column;align-items:flex-end;justify-content:center
+}
+.interestLabel{font:900 8px "Courier New",monospace;letter-spacing:.12em;color:#7f887d;text-align:right}
+.interestSide strong{font:1000 34px/1 "Courier New",monospace;color:var(--green);margin:5px 0 4px}
+.interestSide small{color:#b0b6aa;font-size:10px;text-align:right}
+.lineBar{
+  margin-top:10px;padding-top:9px;border-top:1px solid #2f3930;
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  color:var(--amber);font:900 10px "Courier New",monospace
+}
+.reasonLine{margin-top:9px;color:#aeb5a8;font-size:12px;line-height:1.4}
+
+.aheadGrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.8fr);gap:18px;align-items:start}
+.betPanel{
+  position:sticky;top:12px;border:2px solid #4a4430;background:#12140f;
+  box-shadow:inset 0 0 0 1px #090a07
+}
+.betHeader{padding:16px 16px 12px;border-bottom:1px solid #3a3a2c;background:#18180f}
+.betHeader>span{color:var(--amber);font:900 9px "Courier New",monospace;letter-spacing:.14em}
+.betHeader h3{margin:5px 0 6px;font-size:20px;letter-spacing:-.02em}
+.betHeader p{margin:0;color:#9d9f92;font-size:12px;line-height:1.4}
+.betRow{
+  display:grid;grid-template-columns:30px minmax(0,1fr) 42px;gap:10px;align-items:center;
+  padding:12px 13px;border-bottom:1px solid #303126
+}
+.betRank{font:900 12px "Courier New",monospace;color:#73786d}
+.betMain{min-width:0;display:flex;flex-direction:column;gap:3px}
+.betMain strong{font-size:13px}
+.betMain span{color:#d8d0b8;font:800 10px "Courier New",monospace;white-space:normal}
+.betMain small{color:var(--amber);font:900 8px "Courier New",monospace;letter-spacing:.08em}
+.betScore{text-align:right;color:var(--green);font:1000 20px "Courier New",monospace}
+.betEmpty{padding:22px 16px;color:#8d9488;font:800 10px "Courier New",monospace}
+.betFoot{padding:12px 14px;color:#70776d;font-size:10px;line-height:1.45}
+
+.notice{
+  border:1px solid #3c473d;background:#111711;padding:28px 18px;text-align:center;
+  color:#98a092;font:900 11px "Courier New",monospace;letter-spacing:.08em
+}
+.error{color:#ff8177}
+footer{
+  margin-top:28px;text-align:center;color:#646c63;font:800 8px "Courier New",monospace;
+  letter-spacing:.1em;line-height:1.8
+}
+
+@media(max-width:860px){
+  .aheadGrid{grid-template-columns:1fr}
+  .betPanel{position:static}
+}
+@media(max-width:620px){
+  .shell{padding:12px 10px 48px}
+  .stadiumHeader{padding:20px 16px}
+  .stadiumHeader p{font-size:13px}
+  .refresh{padding:9px;font-size:9px}
+  .modeRail button{padding:10px 9px;min-height:62px}
+  .modeRail button span{font-size:11px}
+  .modeRail button small{font-size:10px}
+  .controlDeck{align-items:stretch;flex-direction:column}
+  .leagueToggle{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .leagueToggle button{padding:0 6px;font-size:8px}
+  .weekPicker select{width:100%}
+  .gameRow{padding:12px}
+  .gameRowBody{grid-template-columns:minmax(0,1fr) 82px;gap:10px}
+  .teamLabel{font-size:16px}
+  .teamLogo{width:28px;height:28px}
+  .plainScore{font-size:29px;min-width:44px}
+  .interestSide{padding-left:10px}
+  .interestSide strong{font-size:29px}
+  .interestLabel{font-size:7px}
+}

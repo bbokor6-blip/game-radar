@@ -92,9 +92,9 @@ export default function RadarPicks(){
           <div className="rpScore">{pick.radarIndex??"—"}</div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex} BetRadar Index · {pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" BetRadar Index · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
-            <small className="rpLockedLine">Locked line: {pick.line||pick.pick}</small>
+            <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
           </div>
           <ResultBadge result={pick.result}/>
         </article>)}

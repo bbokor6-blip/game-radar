@@ -34,76 +34,66 @@ function matchup(game){
   return teamDisplay(game.away)+" @ "+teamDisplay(game.home);
 }
 
-function top25(game){
-  return Boolean(game.home.rank||game.away.rank);
-}
-
-function allCandidates(games){
-  const out=[];
-  for(const game of games){
-    if(game.bets?.spreadBet)out.push({...game.bets.spreadBet,game});
-    if(game.bets?.totalBet)out.push({...game.bets.totalBet,game});
-  }
-  return out.sort((a,b)=>(b.confidence||0)-(a.confidence||0)||(b.evAtMinus110||0)-(a.evAtMinus110||0));
-}
-
-function confidenceClass(n){
-  if(n>=80)return "best";
-  if(n>=70)return "strong";
-  if(n>=60)return "lean";
+function indexClass(n){
+  if(n>=78)return "best";
+  if(n>=68)return "strong";
+  if(n>=58)return "lean";
   return "pass";
 }
 
-function comparisonText(item){
-  const g=item.game;
-  if(item.type==="SPREAD"){
-    return "Radar "+(g.projection?.line||"—")+" vs market "+(g.marketConsensus?.line||"—")+" · "+item.edge+" pt edge";
+function allOpportunities(games){
+  const out=[];
+  for(const game of games){
+    if(game.opportunities?.spread)out.push({...game.opportunities.spread,game});
+    if(game.opportunities?.total)out.push({...game.opportunities.total,game});
   }
-  return "Radar total "+(g.projection?.total??"—")+" vs market "+(g.marketConsensus?.total??"—")+" · "+item.edge+" pt edge";
+  return out.sort((a,b)=>b.index-a.index);
 }
 
-function SimplePick({item,rank}){
-  const cls=confidenceClass(item.confidence||0);
+function OpportunityCard({item,rank}){
+  const g=item.game;
+  const cls=indexClass(item.index);
   return <article className={"simplePick "+cls}>
     <div className="simplePickRank">#{rank}</div>
     <div className="simplePickMain">
       <div className="simpleMatch">
-        {top25(item.game)?<span className="featuredTag">TOP 25</span>:null}
-        <strong>{matchup(item.game)}</strong>
-        <small>{gameTime(item.game)} · {item.type}</small>
+        <strong>{matchup(g)}</strong>
+        <small>{gameTime(g)} · {item.type}</small>
       </div>
       <h3>{item.pick}</h3>
-      <p>{comparisonText(item)}</p>
+      <p>{item.why}</p>
+      <div className="evidenceChips">
+        {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
+      </div>
       <div className="simpleWhy">
-        <span>MODEL: {item.confidenceLabel||"PASS"}</span>
-        <small>Est. cover {Number(item.coverProbability||0).toFixed(1)}% · EV {Number(item.evAtMinus110||0)>=0?"+":""}{Number(item.evAtMinus110||0).toFixed(1)}%</small>
+        <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
+        {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
       </div>
     </div>
     <div className="confidenceIndex">
-      <span>CONFIDENCE</span>
-      <strong>{item.confidence||0}</strong>
-      <small>{item.confidenceLabel||"PASS"}</small>
+      <span>RADAR INDEX</span>
+      <strong>{item.index}</strong>
+      <small>{item.label}</small>
     </div>
   </article>;
 }
 
 function teaserCandidate(game){
-  const bet=game.bets?.spreadBet;
+  const opp=game.opportunities?.spread;
   const market=game.marketConsensus;
-  if(!bet||!Number.isFinite(Number(market?.homeMargin))||(bet.confidence||0)<65)return null;
+  if(!opp||opp.index<68||!Number.isFinite(Number(market?.homeMargin)))return null;
 
-  const side=bet.side;
+  const side=opp.side;
   const marketSpread=side==="home"?-Number(market.homeMargin):Number(market.homeMargin);
   if(marketSpread<-8.5||marketSpread>3.5)return null;
 
   const teased=marketSpread+6;
   const team=side==="home"?game.home.short:game.away.short;
-  const keyBonus=(marketSpread<=-4&&marketSpread>=-8.5)||(marketSpread>=1.5&&marketSpread<=3.5)?8:3;
   return {
     game,
     label:team+" "+(teased>0?"+":"")+teased.toFixed(1),
-    score:(bet.confidence||0)+keyBonus,
-    why:marketSpread<0?"Favorite moved through key numbers":"Underdog moved above a touchdown"
+    score:opp.index,
+    why:marketSpread<0?"Moves the favorite through key numbers":"Pushes the underdog farther above a touchdown"
   };
 }
 
@@ -115,30 +105,29 @@ function TeaserCard({size,legs}){
     <div className="teaserLegs">
       {legs.map((leg,i)=><div key={leg.game.id+"-"+i}>
         <span>{i+1}</span>
-        <div><strong>{leg.label}</strong><small>{leg.game.away.short} @ {leg.game.home.short} · {leg.why}</small></div>
+        <div><strong>{leg.label}</strong><small>{matchup(leg.game)} · {leg.why}</small></div>
       </div>)}
     </div>
-    <p>For fun, not certainty: adding legs compounds the risk even when each individual move looks attractive.</p>
+    <p>Fun structure built only from spread opportunities that already clear the Radar Index floor. More legs still means more risk.</p>
   </article>;
 }
 
 function BoardRow({game}){
-  const candidates=[game.bets?.spreadBet,game.bets?.totalBet].filter(Boolean).sort((a,b)=>(b.confidence||0)-(a.confidence||0));
-  const best=candidates[0];
+  const best=game.bestOpportunity;
   return <article className="simpleBoardRow">
     <div>
-      <strong>{top25(game)?<span className="featuredTag">TOP 25</span>:null}{matchup(game)}</strong>
+      <strong>{matchup(game)}</strong>
       <small>{gameTime(game)}</small>
     </div>
+    <div><span>MARKET</span><strong>{game.marketConsensus?.line||game.market?.details||"—"}</strong></div>
     <div><span>BEST LOOK</span><strong>{best?.pick||"PASS"}</strong></div>
-    <div><span>CONF.</span><strong className={confidenceClass(best?.confidence||0)}>{best?.confidence||0}</strong></div>
-    <div><span>RADAR SCORE</span><strong>{game.projection?.projectedScore||"—"}</strong></div>
+    <div><span>RADAR</span><strong className={indexClass(best?.index||0)}>{best?.index||0}</strong></div>
   </article>;
 }
 
 export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
-  const[data,setData]=useState({games:[],model:null});
+  const[data,setData]=useState({games:[],methodology:null});
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const range=useMemo(()=>footballRange(1),[]);
@@ -153,7 +142,7 @@ export default function BetsPage(){
         const json=await r.json();
         if(!ignore){setData(json);setError("");}
       }catch{
-        if(!ignore)setError("RADAR MODEL TEMPORARILY OFFLINE");
+        if(!ignore)setError("BET RADAR TEMPORARILY OFFLINE");
       }finally{
         if(!ignore)setLoading(false);
       }
@@ -163,8 +152,8 @@ export default function BetsPage(){
   },[league]);
 
   const games=data.games||[];
-  const candidates=allCandidates(games);
-  const topBets=candidates.filter(x=>(x.confidence||0)>=60).slice(0,10);
+  const opportunities=allOpportunities(games);
+  const top=opportunities.filter(x=>x.index>=58).slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
 
   return <main className="betsShell">
@@ -173,7 +162,7 @@ export default function BetsPage(){
         <a className="backLink" href="/">← GAME COMMAND CENTER</a>
         <div className="betsKicker">NEXT FOOTBALL WEEK · {rangeLabel(range)}</div>
         <h1>BET LAB</h1>
-        <p>One number to keep it simple: the <strong>Radar Confidence Index</strong>. Higher means the model sees a larger edge and has more reason to trust it.</p>
+        <p>No fake projected line. Bet Radar simply surfaces the most interesting opportunities using actual season results, ATS/total trends and the current public market.</p>
       </div>
     </header>
 
@@ -182,42 +171,42 @@ export default function BetsPage(){
     </nav>
 
     <section className="confidenceLegend">
-      <div className="best"><strong>80–95</strong><span>BEST BET</span></div>
-      <div className="strong"><strong>70–79</strong><span>STRONG</span></div>
-      <div className="lean"><strong>60–69</strong><span>LEAN</span></div>
-      <div className="pass"><strong>&lt;60</strong><span>PASS</span></div>
+      <div className="best"><strong>78+</strong><span>STRONG LOOK</span></div>
+      <div className="strong"><strong>68–77</strong><span>INTERESTING</span></div>
+      <div className="lean"><strong>58–67</strong><span>WATCH</span></div>
+      <div className="pass"><strong>&lt;58</strong><span>PASS</span></div>
     </section>
 
     {error?<div className="notice error">{error}</div>:null}
-    {loading?<div className="notice">RUNNING RADAR MODEL...</div>:<>
+    {loading?<div className="notice">BUILDING THE BET RADAR...</div>:<>
       <section className="betSection simpleBetSection">
         <div className="betSectionHead">
           <span>01</span>
           <div>
-            <h2>TOP 10 BETS THIS WEEK</h2>
-            <p>Sorted by Radar Confidence. You should be able to screenshot this list and send it to the group chat.</p>
+            <h2>TOP 10 OPPORTUNITIES</h2>
+            <p>Not a probability of winning. The Radar Index tells you how much evidence there is that a bet is worth a closer look.</p>
           </div>
         </div>
         <div className="simplePickList">
-          {topBets.length?topBets.map((item,i)=><SimplePick key={item.game.id+"-"+item.type} item={item} rank={i+1}/>):<div className="notice">NO BETS CLEAR THE CONFIDENCE FLOOR YET.</div>}
+          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
         </div>
       </section>
 
       <section className="betSection">
         <div className="betSectionHead">
           <span>02</span>
-          <div><h2>FUN TICKLE TEASERS</h2><p>Only uses spread legs that already score at least 65 on the Radar Confidence Index.</p></div>
+          <div><h2>FUN TICKLE TEASERS</h2><p>Only spread opportunities already rated INTERESTING or better are eligible.</p></div>
         </div>
         <div className="teaserGrid">
           {[2,3,4,5].filter(n=>teaserPool.length>=n).map(n=><TeaserCard key={n} size={n} legs={teaserPool.slice(0,n)}/>)}
-          {!teaserPool.length?<div className="notice">NO TEASER LEGS CLEAR THE CONFIDENCE FLOOR YET.</div>:null}
+          {!teaserPool.length?<div className="notice">NO TEASER LEGS CLEAR THE RADAR FLOOR YET.</div>:null}
         </div>
       </section>
 
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME</h2><p>A compact board for everything else. Best model look first; PASS means the model does not see enough separation.</p></div>
+          <div><h2>EVERY GAME</h2><p>Current market number plus the strongest trend-based opportunity, if one exists.</p></div>
         </div>
         <div className="simpleBoard">
           {games.map(game=><BoardRow key={game.id} game={game}/>)}
@@ -225,20 +214,18 @@ export default function BetsPage(){
       </section>
 
       <details className="modelDetails">
-        <summary>How does the Confidence Index work?</summary>
+        <summary>What goes into the Radar Index?</summary>
         <div>
-          <p>The 0–100 index combines five things: the size of the Radar-vs-market edge, estimated cover probability, how much season data exists for both teams, agreement across available market lines, and how many books contribute to the consensus.</p>
-          <p>The model still projects the spread and total independently first. The technical backtest is underneath the index, not something you need to read every time.</p>
+          <p>It is deliberately simple: season ATS performance, recent ATS form, over/under trends, sample size, and agreement across the available market lines.</p>
+          <p>It does not invent a “true” spread and it does not claim an 80 Index means an 80% chance of winning.</p>
           <div className="detailMetrics">
-            <span>Season games: <strong>{data.model?.completedGames??0}</strong></span>
-            <span>Backtest sample: <strong>{data.model?.calibration?.samples??0}</strong></span>
-            <span>Margin MAE: <strong>{data.model?.calibration?.marginMae??"—"}</strong></span>
-            <span>Total MAE: <strong>{data.model?.calibration?.totalMae??"—"}</strong></span>
+            <span>Completed games reviewed: <strong>{data.methodology?.historyGames??0}</strong></span>
+            <span>Method: <strong>Trend + market opportunity</strong></span>
           </div>
         </div>
       </details>
     </>}
 
-    <footer className="betsFooter">CONFIDENCE IS A MODEL INDEX, NOT A GUARANTEE · LINES MOVE · RECHECK BEFORE WAGERING</footer>
+    <footer className="betsFooter">RADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · RECHECK LINES BEFORE WAGERING</footer>
   </main>;
 }

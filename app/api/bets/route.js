@@ -42,17 +42,13 @@ export async function GET(request){
 
     const games=upcoming.map((game,index)=>{
       const allOdds=oddsResults[index]||[];
-      const fanDuel=allOdds.find(o=>String(o.providerId)==="37"||/fanduel/i.test(String(o.provider||"")));
-      const market=fanDuel?consensusMarket(game,[fanDuel]):{
-        homeMargin:null,total:null,homeSpreadOdds:null,awaySpreadOdds:null,overOdds:null,underOdds:null,
-        providerCount:0,providers:[],spreadDispersion:0,totalDispersion:0
-      };
+      const market=consensusMarket(game,allOdds);
       const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
       return {
         ...game,
-        marketConsensus:{...market,line:fanDuel?marketSummary(game,market):null,book:"FanDuel",available:Boolean(fanDuel)},
+        marketConsensus:{...market,line:marketSummary(game,market),available:Boolean(market.homeMargin!=null||market.total!=null)},
         opportunities,
         bestOpportunity:best,
         opportunityIndex:best?.index||0
@@ -64,7 +60,7 @@ export async function GET(request){
       league,year,range:{start,end},
       methodology:{
         name:"Bet Radar",
-        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current FanDuel lines. No independent projected spread.",
+        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current sportsbook lines. Outlier quotes are rejected against the broader market before display.",
         historyGames:history.length,
         historicalSpreadGames:vegasHistory.spreadGames,
         historicalTotalGames:vegasHistory.totalGames,

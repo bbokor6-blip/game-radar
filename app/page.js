@@ -72,6 +72,11 @@ function moneyText(n){
   if(!Number.isFinite(v))return "—";
   return "$"+v.toFixed(2);
 }
+function marketNumber(value){
+  if(value===null||value===undefined||value==="")return null;
+  const n=Number(value);
+  return Number.isFinite(n)?n:null;
+}
 
 function allOpportunities(games){
   const out=[];
@@ -120,7 +125,7 @@ function OpportunityCard({item,rank}){
 
 function teaserCandidate(game){
   const market=game.marketConsensus;
-  if(!Number.isFinite(Number(market?.homeMargin)))return null;
+  if(marketNumber(market?.homeMargin)==null)return null;
 
   const abs=Math.abs(Number(market.homeMargin));
   const homeFav=Number(market.homeMargin)>0;
@@ -190,15 +195,16 @@ function BoardRow({game}){
   const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
-  const homeSpread=Number.isFinite(Number(market.homeMargin))?-Number(market.homeMargin):null;
-  const awaySpread=Number.isFinite(Number(market.homeMargin))?Number(market.homeMargin):null;
-  const total=Number.isFinite(Number(market.total))?Number(market.total):null;
+  const homeMargin=marketNumber(market.homeMargin);
+  const total=marketNumber(market.total);
+  const homeSpread=homeMargin==null?null:-homeMargin;
+  const awaySpread=homeMargin==null?null:homeMargin;
   const spreadSide=game.opportunities?.spread?.side;
   const totalSide=game.opportunities?.total?.side;
 
   const options=available?[
-    {key:"away-spread",label:teamDisplay(game.away),base:teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
-    {key:"home-spread",label:teamDisplay(game.home),base:teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
+    {key:"away-spread",label:teamDisplay(game.away),base:awaySpread==null?"—":teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:awaySpread==null?"—":teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
+    {key:"home-spread",label:teamDisplay(game.home),base:homeSpread==null?"—":teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:homeSpread==null?"—":teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
     {key:"over",label:"OVER",base:total==null?"—":"OVER "+total.toFixed(1),odds:market.overOdds,tease:total==null?"—":"OVER "+(total-6).toFixed(1),suggested:totalSide==="over"},
     {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
   ]:[];

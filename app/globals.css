@@ -1248,3 +1248,103 @@ footer{
   .parlayLegList small{font-size:7.5px}
   .momentTeam img{width:24px;height:24px;flex-basis:24px}
 }
+
+
+/* ASK GAMERADAR */
+.askRadar{
+  margin:12px 0;padding:14px;border:1px solid #425044;background:
+    radial-gradient(circle at top right,#1b26192b,transparent 38%),
+    linear-gradient(180deg,#101710,#0b100c);
+  box-shadow:0 8px 26px #0004
+}
+.askRadarHead{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px
+}
+.askRadarHead>div>span{
+  display:block;color:var(--green);font:1000 7.5px "Courier New",monospace;letter-spacing:.14em
+}
+.askRadarHead h2{margin:4px 0 0;font-size:18px;letter-spacing:-.025em}
+.askRadarHead>small{max-width:460px;color:#8f998e;font-size:10px;line-height:1.4;text-align:right}
+.askRadarForm{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}
+.askRadarForm input{
+  min-width:0;border:1px solid #3c493e;background:#080d09;color:#edf1e9;
+  padding:12px 13px;font-size:13px;outline:none
+}
+.askRadarForm input:focus{border-color:#637a56;box-shadow:0 0 0 2px #9af25c0d}
+.askRadarForm input::placeholder{color:#657066}
+.askRadarForm button{
+  border:1px solid #6c7e4f;background:#182114;color:var(--green);
+  padding:0 15px;font:1000 8px "Courier New",monospace;letter-spacing:.08em;cursor:pointer
+}
+.askPrompts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.askPrompts button{
+  border:1px solid #303a31;background:#0a0f0b;color:#8c968b;padding:6px 8px;
+  font:900 7px "Courier New",monospace;letter-spacing:.04em;cursor:pointer
+}
+.askPrompts button:hover{border-color:#536153;color:#d5dbd0}
+.agentInterpretation{
+  margin-top:10px;padding:9px 10px;border-left:3px solid var(--green);background:#0a100b
+}
+.agentChips{display:flex;gap:5px;flex-wrap:wrap}
+.agentChips span{
+  padding:4px 6px;border:1px solid #40513c;background:#10170f;color:#b2c2ab;
+  font:1000 6.5px "Courier New",monospace;letter-spacing:.07em
+}
+.agentInterpretation p{margin:7px 0 0;color:#8f998e;font-size:10px;line-height:1.4}
+.agentMessage{
+  margin-top:9px;padding:9px 10px;border:1px solid #566746;background:#11190f;color:var(--green);
+  font:1000 8px "Courier New",monospace;letter-spacing:.06em
+}
+.agentResults{margin-top:10px}
+.agentResultsHead{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px
+}
+.agentResultsHead strong{color:#e3e8df;font:1000 9px "Courier New",monospace;letter-spacing:.07em}
+.agentResultsHead span{color:#677268;font:900 6.5px "Courier New",monospace;letter-spacing:.08em}
+.agentGameCard{
+  display:grid;grid-template-columns:minmax(240px,1.5fr) minmax(120px,.75fr) 74px 74px minmax(110px,.7fr);
+  gap:9px;align-items:center;padding:9px 10px;border:1px solid #303a31;border-top:0;background:#0b100c
+}
+.agentGameCard:first-of-type{border-top:1px solid #303a31}
+.agentGameTeams{display:flex;flex-direction:column;gap:4px;min-width:0}
+.agentGameTeams small{color:#8a9489;font:900 7.5px "Courier New",monospace;letter-spacing:.05em}
+.agentGameSignals{display:flex;flex-direction:column;gap:3px;min-width:0}
+.agentGameSignals span{color:#778277;font:1000 6.5px "Courier New",monospace;letter-spacing:.08em}
+.agentGameSignals strong{color:#ddd; font:1000 9px "Courier New",monospace}
+.agentScore{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.agentScore span{color:#687268;font:1000 6px "Courier New",monospace}
+.agentScore strong{color:var(--green);font:1000 20px/1 "Courier New",monospace}
+.agentScore.bet strong{color:var(--amber)}
+.agentGameCard>.savePick{justify-self:stretch}
+.agentNoBet{color:#666f67;font:900 6.5px "Courier New",monospace}
+.agentTeamPair{display:flex;align-items:center;gap:7px;min-width:0}
+.agentTeamPair>span{display:flex;align-items:center;gap:5px;min-width:0}
+.agentTeamPair img{width:22px;height:22px;object-fit:contain;flex:0 0 22px}
+.agentTeamPair b{font-size:11px;white-space:nowrap}
+.agentTeamPair em{font-style:normal;color:#5e685f;font:900 8px "Courier New",monospace}
+.agentOpen{
+  justify-self:stretch;text-align:center;text-decoration:none;border:1px solid #4b584b;background:#0d130e;
+  color:#aeb8aa;padding:8px;font:1000 6.5px "Courier New",monospace;letter-spacing:.05em
+}
+.scoreAgentCard{grid-template-columns:minmax(230px,1.6fr) minmax(120px,.75fr) 76px minmax(120px,.7fr)}
+
+@media(max-width:760px){
+  .askRadar{padding:11px}
+  .askRadarHead{flex-direction:column;gap:5px}
+  .askRadarHead>small{text-align:left;font-size:9px}
+  .askRadarForm{grid-template-columns:1fr}
+  .askRadarForm input{font-size:12px;padding:11px}
+  .askRadarForm button{padding:10px}
+  .askPrompts{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}
+  .askPrompts button{flex:0 0 auto}
+  .agentResultsHead{align-items:flex-start;flex-direction:column;gap:3px}
+  .agentGameCard,.scoreAgentCard{
+    grid-template-columns:minmax(0,1fr) 58px 58px;padding:9px;gap:7px
+  }
+  .agentGameSignals{grid-column:1}
+  .agentScore{grid-row:1;align-self:center}
+  .agentGameCard>.savePick,.agentOpen{grid-column:1/-1}
+  .agentTeamPair{gap:5px;flex-wrap:wrap}
+  .agentTeamPair img{width:20px;height:20px;flex-basis:20px}
+  .agentTeamPair b{font-size:10px}
+}

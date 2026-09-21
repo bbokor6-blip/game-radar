@@ -1,55 +1,80 @@
 export default function Home(){
-  return <main className="landingShell">
-    <section className="landingHero">
-      <div className="landingBrand">GAME<span>RADAR</span></div>
-      <div className="landingKicker">FOOTBALL INTELLIGENCE · NFL + COLLEGE FBS</div>
-      <h1>BET SMARTER.<br/>MISS NOTHING.</h1>
-      <p>One football command center. Two ways to use it. BetRadar helps you focus on the strongest betting opportunities. GameRadar keeps the entire week of football organized so the action that matters is always at the top.</p>
+  const areas=[
+    {
+      n:"01",name:"WEEKLYRADAR",eyebrow:"THE BRIEFING",href:"/weekly",
+      title:"Know the week before it starts.",
+      copy:"The storylines, numbers and matchups worth knowing — distilled into a fast weekly read.",
+      chips:["WHAT MATTERS","NUMBERS THAT MATTER","WEEK-AHEAD"]
+    },
+    {
+      n:"02",name:"GAMERADAR",eyebrow:"THE BOARD",href:"/scores",
+      title:"Know what deserves your attention.",
+      copy:"Live scores, RadarIndex and a simple explanation of why each game is interesting.",
+      chips:["LIVE","RADARINDEX","WHY IT MATTERS"]
+    },
+    {
+      n:"03",name:"BETRADAR",eyebrow:"THE SIGNALS",href:"/bets",
+      title:"See where the model sees something.",
+      copy:"Search and filter the betting board, compare signals and understand what is driving the model.",
+      chips:["SPREADS + TOTALS","SIGNAL STRENGTH","SEARCH"]
+    },
+    {
+      n:"04",name:"PICKRADAR",eyebrow:"THE RECEIPTS",href:"/pickradar",
+      title:"The picks we actually stand behind.",
+      copy:"A small set of locked recommendations, graded every week with the record carried forward.",
+      chips:["LOCKED PICKS","W / L / PUSH","TRACK RECORD"]
+    }
+  ];
+  return <main className="homeRadar">
+    <header className="homeTopbar">
+      <details className="homeMenu">
+        <summary aria-label="Open navigation">☰</summary>
+        <div>
+          <a href="/weekly">WeeklyRadar</a>
+          <a href="/scores">GameRadar</a>
+          <a href="/bets">BetRadar</a>
+          <a href="/pickradar">PickRadar</a>
+        </div>
+      </details>
+      <a className="homeWordmark" href="/">GAME<span>RADAR</span></a>
+      <div className="homeStatus"><i/> NFL + COLLEGE</div>
+    </header>
+
+    <section className="homeHero">
+      <div className="homeEyebrow">FOOTBALL, FILTERED</div>
+      <h1>Know what matters.<br/><span>Then know what to do with it.</span></h1>
+      <p>One place for the week ahead, the games worth watching, the betting signals worth exploring, and the picks we're willing to put on the record.</p>
+      <div className="homeFlow">
+        <span>READ</span><b>→</b><span>WATCH</span><b>→</b><span>EXPLORE</span><b>→</b><span>COMMIT</span>
+      </div>
     </section>
 
-    <section className="landingChoiceGrid" aria-label="Choose your Game Radar experience">
-      <a className="landingChoice betChoice" href="/bets">
-        <div className="choiceTop">
-          <span>01</span>
-          <b>BETTING INTELLIGENCE</b>
+    <section className="homeAreaGrid" aria-label="GameRadar products">
+      {areas.map((area,i)=><a className={"homeArea homeArea"+(i+1)} href={area.href} key={area.name}>
+        <div className="homeAreaTop">
+          <span>{area.n}</span>
+          <b>{area.eyebrow}</b>
         </div>
-        <h2>BETRADAR</h2>
-        <h3>Find the bets worth your attention.</h3>
-        <p>BetRadar is built to give you an edge in where you focus. It narrows the board to the most interesting, highest-conviction opportunities using current lines, team betting trends and historical market results.</p>
-        <div className="choiceFeatures">
-          <span>TOP BETS</span>
-          <span>BETRADAR INDEX</span>
-          <span>HIGH-CONVICTION CALLOUTS</span>
-          <span>TEASERS</span>
-        </div>
-        <strong className="choiceCta">ENTER BETRADAR →</strong>
-      </a>
-
-      <a className="landingChoice gameChoice" href="/scores">
-        <div className="choiceTop">
-          <span>02</span>
-          <b>LIVE FOOTBALL COMMAND CENTER</b>
-        </div>
-        <h2>GAMERADAR</h2>
-        <h3>Never miss the action that matters.</h3>
-        <p>GameRadar organizes every NFL and college game around what is happening now. Live games jump to the top, close games get prioritized, and the full weekly scoreboard stays in one place.</p>
-        <div className="choiceFeatures">
-          <span>LIVE SCORES</span>
-          <span>THIS WEEK</span>
-          <span>INTEREST RANKING</span>
-          <span>FULL FBS + NFL</span>
-        </div>
-        <strong className="choiceCta">ENTER GAMERADAR →</strong>
-      </a>
+        <h2>{area.name}</h2>
+        <h3>{area.title}</h3>
+        <p>{area.copy}</p>
+        <div className="homeAreaChips">{area.chips.map(x=><span key={x}>{x}</span>)}</div>
+        <strong className="homeEnter">OPEN {area.name} <b>→</b></strong>
+      </a>)}
     </section>
 
-    <section className="landingValue">
-      <span className="landingValueLabel">THE IDEA</span>
-      <h2>Less searching. Better decisions. More football.</h2>
-      <p>BetRadar tells you where the betting signal is strongest. GameRadar tells you where the action is strongest. Use either one on its own, or move between them all weekend with the persistent toggle inside both interfaces.</p>
-      <div className="landingTrust">DATA-DRIVEN SIGNALS · LIVE SCORE TRACKING · NFL + COLLEGE FBS · BUILT FOR THE FULL FOOTBALL WEEK</div>
+    <section className="homeIndexStrip">
+      <div className="homeIndexBox">84</div>
+      <div>
+        <span>RADARINDEX</span>
+        <h2>One number for how much a game deserves your attention.</h2>
+        <p>Betting signal + matchup excitement. The model learns from what PickRadar gets right and wrong each week.</p>
+      </div>
     </section>
 
-    <footer className="landingFooter">GAME RADAR · FOOTBALL INTELLIGENCE IN ONE PLACE</footer>
+    <footer className="homeFooter">
+      <span>GAME RADAR</span>
+      <span>WEEKLYRADAR · GAMERADAR · BETRADAR · PICKRADAR</span>
+    </footer>
   </main>;
 }

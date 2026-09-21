@@ -136,7 +136,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
       <div className="grGameSignals">
         <span className="grImportance">{label}</span>
-        <span className="grRadarMark" title="RadarMark™" aria-label={"RadarMark score "+(game.interest?.score??"unavailable")}>{game.interest?.score??"—"}</span>
+        <span className="grRadarMark" title="RadarIndex" aria-label={"RadarIndex score "+(game.interest?.score??"unavailable")}>{game.interest?.score??"—"}</span>
       </div>
     </div>
     <div className="grTeams">
@@ -154,7 +154,7 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <div>
         {context?<span>{context}</span>:null}
         {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
-        <span>RadarMark™: <strong>{game.interest?.score??"—"}</strong></span>
+        <span>RadarIndex: <strong>{game.interest?.score??"—"}</strong></span>
         <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
       </div>
     </details>
@@ -324,6 +324,7 @@ export default function Scores(){
       </form>
       <button className={"grHeaderButton "+(favoritesOnly?"active":"")} onClick={()=>setFavoritesOnly(x=>!x)}>★ Favorites</button>
       <a className="grBetLink" href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)}>BetRadar</a>
+      <details className="suiteMenu"><summary>☰</summary><div><a href="/weekly">Weekly Radar</a><a href="/scores">GameRadar</a><a href="/bets">BetRadar</a><a href="/">Home</a></div></details>
     </header>
 
     <nav className="grPrimaryNav">

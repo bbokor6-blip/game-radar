@@ -4294,3 +4294,14 @@ body{
   }
   .wrHardFacts>b{width:100%}
 }
+
+
+/* PickRadar model feedback */
+.rpLearnings{margin-top:30px}
+.rpLearningGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rpLearningGrid>div{padding:13px;border:1px solid #314550;background:#0b1720}
+.rpLearningGrid span{display:block;color:#9aa8b2;font-size:10px;font-weight:950;letter-spacing:.07em}
+.rpLearningGrid strong{display:block;margin-top:5px;color:#7ff397;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.rpLearningGrid small{display:block;margin-top:5px;color:#b6c0c8;font-size:12px}
+.rpLearnings>p{margin:9px 0 0;color:#8998a2;font-size:12px;line-height:1.45}
+@media(max-width:700px){.rpLearningGrid{grid-template-columns:1fr}}

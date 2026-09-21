@@ -154,9 +154,9 @@ function GameOfMoment({game,league,weekOffset}){
       <ShareButton params={{league,week:weekOffset,mode:"live",game:game.id}} title={matchupLabel(game)}/>
     </div>
     <div className="momentScore">
-      <div><small>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</small><strong>{game.away.score}</strong></div>
+      <div><div className="momentTeam">{game.away.logo?<img src={game.away.logo} alt=""/>:null}<small>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</small></div><strong>{game.away.score}</strong></div>
       <span>—</span>
-      <div><small>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</small><strong>{game.home.score}</strong></div>
+      <div><div className="momentTeam">{game.home.logo?<img src={game.home.logo} alt=""/>:null}<small>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</small></div><strong>{game.home.score}</strong></div>
     </div>
     <div className="momentMeta">
       <span>{status||"LIVE NOW"}</span>

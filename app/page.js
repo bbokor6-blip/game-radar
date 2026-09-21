@@ -251,8 +251,11 @@ export default function BetsPage(){
         if(!ignore)setLoading(false);
       }
     }
-    load();
-    return()=>{ignore=true};
+    load(true);
+    const timer=setInterval(()=>{
+      if(typeof document==="undefined"||document.visibilityState==="visible")load(false);
+    },30*60*1000);
+    return()=>{ignore=true;clearInterval(timer)};
   },[league]);
 
   const games=data.games||[];
@@ -367,6 +370,6 @@ export default function BetsPage(){
       </details>
     </>}
 
-    <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · RECHECK LINES BEFORE WAGERING</footer>
+    <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · MARKET AUTO-REFRESH 30 MIN{data.generatedAt?" · UPDATED "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</footer>
   </main>;
 }

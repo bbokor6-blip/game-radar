@@ -8,6 +8,7 @@ import { buildTeamForm } from "../../../lib/teamForm";
 import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
 import { buildPowerModel, calibrateModel, projectGame } from "../../../lib/radarModel";
 import { calibratePickIndex, pickConfidenceBand } from "../../../lib/pickCalibration";
+import { footballSourceMetadata, mergeWithSeasonSnapshot } from "../../../lib/footballSource";
 import radarLedger from "../../../data/radar-picks.json";
 
 export const dynamic = "force-dynamic";
@@ -27,20 +28,22 @@ async function mapLimit(items,limit,fn){
 }
 
 function selectRelevantHistory(history,upcoming,league){
-  const wanted=new Set(upcoming.flatMap(g=>[String(g.home?.id||""),String(g.away?.id||"")]).filter(Boolean));
-  const counts=new Map();
-  const selected=[];
-  const maxGames=league==="cfb"?48:24;
+  const selected=new Map();
+  const maxGames=league==="cfb"?60:32;
   const sorted=history.slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
-  for(const game of sorted){
-    const ids=[String(game.home?.id||""),String(game.away?.id||"")];
-    const useful=ids.some(id=>wanted.has(id)&&(counts.get(id)||0)<2);
-    if(!useful)continue;
-    selected.push(game);
-    for(const id of ids)if(wanted.has(id))counts.set(id,(counts.get(id)||0)+1);
-    if(selected.length>=maxGames)break;
+  // Preserve fuller history for the highest-ranked current matchups first.
+  // Lower-ranked games can still use complete score records, but their ATS
+  // sample remains explicitly ineligible if archived market lines are sparse.
+  for(const current of upcoming){
+    for(const teamId of [current.home?.id,current.away?.id].map(String)){
+      const teamGames=sorted.filter(game=>String(game.home?.id)===teamId||String(game.away?.id)===teamId).slice(0,6);
+      for(const game of teamGames){
+        selected.set(game.id,game);
+        if(selected.size>=maxGames)return [...selected.values()];
+      }
+    }
   }
-  return selected;
+  return [...selected.values()];
 }
 
 function mergeHistoricalMarket(game,market){
@@ -109,10 +112,12 @@ export async function GET(request){
     let seasonGames=[];
     let historyLoadError=null;
     try{
-      seasonGames=(await fetchSeasonScoreboard(league,year,throughWeek)).filter(g=>g.sport===league);
+      const liveSeason=(await fetchSeasonScoreboard(league,year,throughWeek)).filter(g=>g.sport===league);
+      seasonGames=mergeWithSeasonSnapshot(liveSeason,league,year,throughWeek);
     }catch(error){
       historyLoadError=String(error?.message||error);
       console.error("historical scoreboard error",error);
+      seasonGames=mergeWithSeasonSnapshot([],league,year,throughWeek);
     }
 
     const contextualWeekGames=enrichGamesWithSeasonContext(rawWeekGames,seasonGames);
@@ -244,6 +249,7 @@ export async function GET(request){
         historyGames:history.length,
         seasonCoverage:seasonCoverage(seasonGames),
         seasonSource:"ESPN week-by-week schedule archive",
+        sourceSnapshot:footballSourceMetadata(),
         historyLoadError,
         currentGames:upcoming.length,
         currentOddsGamesHydrated:currentMarkets.size,

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { fetchScoreboard, fetchSeasonScoreboard } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
 import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
+import { footballSourceMetadata, mergeWithSeasonSnapshot } from "../../../lib/footballSource";
 
 export const dynamic = "force-dynamic";
 
@@ -27,10 +28,12 @@ export async function GET(request){
   let seasonGames=[];
   let seasonError=null;
   try{
-    seasonGames=await fetchSeasonScoreboard(league,year,throughWeek);
+    const liveSeason=await fetchSeasonScoreboard(league,year,throughWeek);
+    seasonGames=mergeWithSeasonSnapshot(liveSeason,league,year,throughWeek);
   }catch(error){
     seasonError=String(error?.message||error);
     console.error(`${league} season context error`,error);
+    seasonGames=mergeWithSeasonSnapshot([],league,year,throughWeek);
   }
   const leagueGames=enrichGamesWithSeasonContext(rawLeagueGames,seasonGames);
 
@@ -50,7 +53,8 @@ export async function GET(request){
       error:result.error||null,
       seasonContextOk:!seasonError,
       seasonContextError:seasonError,
-      seasonCoverage:seasonCoverage(seasonGames)
+      seasonCoverage:seasonCoverage(seasonGames),
+      sourceSnapshot:footballSourceMetadata()
     },
     source:league==="cfb"
       ?"ESPN live scoreboard · week-by-week FBS season archive"

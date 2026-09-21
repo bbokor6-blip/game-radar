@@ -33,6 +33,7 @@ function weekRecord(picks=[]){
 export default function RadarPicks(){
   const[league,setLeague]=useState("nfl");
   const[weekOffset,setWeekOffset]=useState(1);
+  const[confidence,setConfidence]=useState("all");
   const[ledger,setLedger]=useState({weeks:[],record:{}});
   const[loading,setLoading]=useState(true);
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
@@ -52,8 +53,10 @@ export default function RadarPicks(){
   },[]);
 
   const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
-  const picks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
-  const record=weekRecord(picks);
+  const allPicks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
+  const picks=allPicks.filter(p=>confidence==="all"||(p.betRadarIndex||0)>=(confidence==="elite"?80:70));
+  const record=weekRecord(allPicks);
+  const highCount=allPicks.filter(p=>(p.betRadarIndex||0)>=70).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const spread=feedback.byType?.SPREAD;
@@ -75,31 +78,40 @@ export default function RadarPicks(){
 
     <section className="rpHero">
       <div>
-        <span>LOCKED MODEL PICKS</span>
-        <h1>These are the ones we're actually standing behind.</h1>
-        <p>Only selected PickRadar selections appear here. Once a weekly card is locked, the pick and line do not move. After the games, we grade the exact recommendation W, L, or PUSH and carry the record forward.</p>
+        <span>FULL-SLATE MODEL LEDGER</span>
+        <h1>One locked pick for every game.</h1>
+        <p>PickRadar now takes a side on the entire NFL and college slate so we can measure the model honestly. Use the confidence filters to isolate the strongest plays. Every pick and line stays locked for grading and the weekly feedback loop.</p>
       </div>
       <div className="rpStats">
-        <div><strong>{picks.length||"—"}</strong><span>locked picks</span></div>
+        <div><strong>{allPicks.length||"—"}</strong><span>games picked</span></div>
+        <div><strong>{highCount||"—"}</strong><span>high confidence</span></div>
         <div><strong>{selectedWeek?.lockedAt?new Date(selectedWeek.lockedAt).toLocaleDateString([],{month:"short",day:"numeric"}):"—"}</strong><span>locked</span></div>
         <div><strong>{record.decisions?record.wins+"–"+record.losses:"—"}</strong><span>week record</span></div>
       </div>
     </section>
 
     {loading?<div className="grEmpty">Loading locked picks…</div>:selectedWeek?<>
+      <section className="rpFilters" aria-label="Filter picks by confidence">
+        <div><strong>SHOW PICKS</strong><span>{picks.length} of {allPicks.length} games</span></div>
+        <div>
+          <button className={confidence==="all"?"active":""} onClick={()=>setConfidence("all")}>ALL GAMES <b>{allPicks.length}</b></button>
+          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>HIGH CONFIDENCE <b>{highCount}</b></button>
+          <button className={confidence==="elite"?"active":""} onClick={()=>setConfidence("elite")}>80+ ONLY <b>{allPicks.filter(p=>(p.betRadarIndex||0)>=80).length}</b></button>
+        </div>
+      </section>
       <section className="rpBoard">
         {picks.map((pick,i)=><article className="rpGame" key={pick.gameId}>
-          <div className="rpScore">{pick.radarIndex??"—"}</div>
+          <div className="rpScore">{pick.betRadarIndex??pick.radarIndex??"—"}</div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" BetRadar Index · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · {pick.confidenceBand||"STANDARD"}</span><strong>{pick.pick}</strong><small>{pick.betRadarIndex!=null?pick.betRadarIndex+" PickRadar Confidence · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
             <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
           </div>
           <ResultBadge result={pick.result}/>
         </article>)}
       </section>
-      {!picks.length?<div className="grEmpty">No official picks were strong enough to lock for this week.</div>:null}
+      {!picks.length?<div className="grEmpty">No picks match this confidence filter.</div>:null}
     </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}
 
     {learned.length?<section className="rpLearnings">

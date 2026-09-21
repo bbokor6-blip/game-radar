@@ -1,57 +1,40 @@
 {
-  "version": 2,
-  "updatedAt": "2026-09-21T06:38:00Z",
+  "version": 3,
+  "updatedAt": "2026-09-21T06:47:16.587Z",
   "weeks": [
     {
       "league": "cfb",
       "weekStart": "2026-09-22",
       "weekEnd": "2026-09-28",
-      "label": "College Week 4 · Sep 22–28",
+      "label": "College · 2026-09-22–2026-09-28",
       "lockedAt": "2026-09-21T06:38:00Z",
-      "lockType": "MANUAL_EARLY_LOCK",
+      "lockType": "FULL_SLATE_MODEL_LOCK",
       "picks": [
-        {
-          "gameId": "cfb-2026-09-26-texas-tennessee",
-          "matchup": "Texas @ Tennessee",
-          "gameDate": "2026-09-26T12:00:00-04:00",
-          "league": "cfb",
-          "type": "SPREAD",
-          "pick": "Texas -3.5",
-          "americanOdds": -111,
-          "betRadarIndex": null,
-          "radarIndex": null,
-          "label": "EARLY LOCK",
-          "why": "Texas is laying only 3.5 in a matchup where the current projection gap is materially wider. The early number gives us room before the market potentially moves toward Texas later in the week.",
-          "line": "Texas -3.5",
-          "result": "PENDING",
-          "lockedAt": "2026-09-21T06:38:00Z",
-          "selectionBasis": "Current market line plus projection gap",
-          "versionHistory": [
-            {
-              "lockedAt": "2026-09-21T06:38:00Z",
-              "pick": "Texas -3.5",
-              "line": "Texas -3.5",
-              "americanOdds": -111,
-              "reason": "Initial PickRadar lock"
-            }
-          ]
-        },
         {
           "gameId": "cfb-2026-09-26-oregon-usc",
           "matchup": "Oregon @ USC",
-          "gameDate": "2026-09-26T19:30:00-04:00",
-          "league": "cfb",
           "type": "SPREAD",
           "pick": "Oregon -2.5",
           "americanOdds": null,
-          "betRadarIndex": null,
+          "betRadarIndex": 75,
+          "feedbackAdjustedBetIndex": 70,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
           "radarIndex": null,
           "label": "EARLY LOCK",
           "why": "Oregon is priced inside a field goal while the current projection gap points to a meaningfully larger Oregon advantage. We want the -2.5 before a key-number move would make the bet less attractive.",
           "line": "Oregon -2.5",
+          "gameDate": "2026-09-26T19:30:00-04:00",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
           "result": "PENDING",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap",
+          "confidenceBand": "STANDARD",
           "versionHistory": [
             {
               "lockedAt": "2026-09-21T06:38:00Z",
@@ -63,21 +46,591 @@
           ]
         },
         {
+          "gameId": "cfb-401856703",
+          "matchup": "Missouri @ Mississippi State",
+          "type": "TOTAL",
+          "pick": "OVER 59.5",
+          "americanOdds": -105,
+          "betRadarIndex": 71,
+          "feedbackAdjustedBetIndex": 71,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 76,
+          "label": "HIGH CONVICTION",
+          "why": "MSST games have gone over their posted total in 1 of 1 games, and MIZ games have gone over in 1 of 1. With this total set at 59.5, both teams are pointing in the same direction.",
+          "line": "MSST -6.0",
+          "gameDate": "2026-09-26T23:45Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "HIGH",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "OVER 59.5",
+              "line": "MSST -6.0",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856815",
+          "matchup": "TCU @ UCF",
+          "type": "SPREAD",
+          "pick": "UCF +3",
+          "americanOdds": -105,
+          "betRadarIndex": 80,
+          "feedbackAdjustedBetIndex": 80,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 74,
+          "label": "HIGH CONVICTION",
+          "why": "UCF has covered the spread in 1 of 1 games, compared with TCU at 0 of 1. UCF has also been better against the spread lately.  Underdogs in tight spreads (0–3.5) have covered 2 of 5 this season. With the current line at UCF +3, UCF is the more interesting side.",
+          "line": "TCU -3.0",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UCF +3",
+              "line": "TCU -3.0",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401866429",
+          "matchup": "Massachusetts @ Sacramento State",
+          "type": "SPREAD",
+          "pick": "MASS -5.5",
+          "americanOdds": null,
+          "betRadarIndex": 84,
+          "feedbackAdjustedBetIndex": 84,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 72,
+          "label": "NO BRAINER",
+          "why": "MASS has covered the spread in 1 of 1 games, compared with SAC at 0 of 1. MASS has also been better against the spread lately.  Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at MASS -5.5, MASS is the more interesting side.",
+          "line": "MASS -5.5",
+          "gameDate": "2026-09-27T01:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MASS -5.5",
+              "line": "MASS -5.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-2026-09-26-ole-miss-florida",
+          "matchup": "Ole Miss @ Florida",
+          "type": "SPREAD",
+          "pick": "Ole Miss +3.5",
+          "americanOdds": -122,
+          "betRadarIndex": 75,
+          "feedbackAdjustedBetIndex": 56,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": null,
+          "label": "EARLY LOCK · THURSDAY REVIEW",
+          "why": "The market is giving unbeaten Ole Miss more than a field goal even though one current projection makes the Rebels the better team. Kewan Lacy's shoulder status is the key Thursday review item.",
+          "line": "Ole Miss +3.5",
+          "gameDate": "2026-09-26T15:30:00-04:00",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap; injury review required",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Ole Miss +3.5",
+              "line": "Ole Miss +3.5",
+              "americanOdds": -122,
+              "reason": "Initial PickRadar lock; monitor Kewan Lacy"
+            }
+          ],
+          "reviewThursday": true
+        },
+        {
+          "gameId": "cfb-2026-09-26-texas-tennessee",
+          "matchup": "Texas @ Tennessee",
+          "type": "SPREAD",
+          "pick": "Texas -3.5",
+          "americanOdds": -111,
+          "betRadarIndex": 75,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": null,
+          "label": "EARLY LOCK",
+          "why": "Texas is laying only 3.5 in a matchup where the current projection gap is materially wider. The early number gives us room before the market potentially moves toward Texas later in the week.",
+          "line": "Texas -3.5",
+          "gameDate": "2026-09-26T12:00:00-04:00",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:38:00Z",
+          "selectionBasis": "Current market line plus projection gap",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:38:00Z",
+              "pick": "Texas -3.5",
+              "line": "Texas -3.5",
+              "americanOdds": -111,
+              "reason": "Initial PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864512",
+          "matchup": "UNLV @ Akron",
+          "type": "SPREAD",
+          "pick": "AKR +12.5",
+          "americanOdds": null,
+          "betRadarIndex": 84,
+          "feedbackAdjustedBetIndex": 84,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 64,
+          "label": "NO BRAINER",
+          "why": "AKR has covered the spread in 1 of 1 games, compared with UNLV at 0 of 1. AKR has also been better against the spread lately.  With the current line at AKR +12.5, AKR is the more interesting side.",
+          "line": "UNLV -12.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "AKR +12.5",
+              "line": "UNLV -12.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856816",
+          "matchup": "Utah @ Iowa State",
+          "type": "SPREAD",
+          "pick": "UTAH -7.5",
+          "americanOdds": -115,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 63,
+          "label": "WATCH",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at UTAH -7.5, UTAH is the side worth a closer look.",
+          "line": "UTAH -7.5",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UTAH -7.5",
+              "line": "UTAH -7.5",
+              "americanOdds": -115,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856814",
+          "matchup": "Kansas State @ Cincinnati",
+          "type": "SPREAD",
+          "pick": "KSU -6.5",
+          "americanOdds": -110,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 62,
+          "label": "WATCH",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at KSU -6.5, KSU is the side worth a closer look.",
+          "line": "KSU -6.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "KSU -6.5",
+              "line": "KSU -6.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401869931",
+          "matchup": "Kennesaw State @ Arkansas State",
+          "type": "SPREAD",
+          "pick": "KENN +4.5",
+          "americanOdds": -112,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 60,
+          "label": "WATCH",
+          "why": "Underdogs in one-score spreads (4–7.5) have covered 4 of 9 this season. With the current line at KENN +4.5, KENN is the side worth a closer look.",
+          "line": "ARST -4.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "KENN +4.5",
+              "line": "ARST -4.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858240",
+          "matchup": "Georgia Tech @ Stanford",
+          "type": "SPREAD",
+          "pick": "STAN +3.5",
+          "americanOdds": -112,
+          "betRadarIndex": 59,
+          "feedbackAdjustedBetIndex": 59,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 60,
+          "label": "LOW CONFIDENCE",
+          "why": "Underdogs in tight spreads (0–3.5) have covered 2 of 5 this season. With the current line at STAN +3.5, STAN is the side worth a closer look.",
+          "line": "GT -3.5",
+          "gameDate": "2026-09-27T02:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "STAN +3.5",
+              "line": "GT -3.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858463",
+          "matchup": "Iowa @ Michigan",
+          "type": "SPREAD",
+          "pick": "MICH -4.5",
+          "americanOdds": -112,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 60,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at MICH -4.5, MICH is the side worth a closer look.",
+          "line": "MICH -4.5",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MICH -4.5",
+              "line": "MICH -4.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856696",
+          "matchup": "South Carolina @ Alabama",
+          "type": "SPREAD",
+          "pick": "SC +13.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 59,
+          "label": "WATCH",
+          "why": "There is not much history behind this one yet. SC is only a low-confidence lean at the current line of SC +13.5.",
+          "line": "ALA -13.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "SC +13.5",
+              "line": "ALA -13.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864510",
+          "matchup": "Hawai'i @ Wyoming",
+          "type": "SPREAD",
+          "pick": "WYO +3",
+          "americanOdds": -105,
+          "betRadarIndex": 59,
+          "feedbackAdjustedBetIndex": 59,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 59,
+          "label": "LOW CONFIDENCE",
+          "why": "Underdogs in tight spreads (0–3.5) have covered 2 of 5 this season. With the current line at WYO +3, WYO is the side worth a closer look.",
+          "line": "HAW -3.0",
+          "gameDate": "2026-09-26T19:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "WYO +3",
+              "line": "HAW -3.0",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856881",
+          "matchup": "Oklahoma State @ West Virginia",
+          "type": "SPREAD",
+          "pick": "WVU -1.5",
+          "americanOdds": -118,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 59,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at WVU -1.5, WVU is the side worth a closer look.",
+          "line": "WVU -1.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "WVU -1.5",
+              "line": "WVU -1.5",
+              "americanOdds": -118,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858234",
+          "matchup": "Clemson @ California",
+          "type": "SPREAD",
+          "pick": "CAL -1.5",
+          "americanOdds": -105,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 58,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at CAL -1.5, CAL is the side worth a closer look.",
+          "line": "CAL -1.5",
+          "gameDate": "2026-09-26T02:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "CAL -1.5",
+              "line": "CAL -1.5",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862778",
+          "matchup": "Navy @ UAB",
+          "type": "SPREAD",
+          "pick": "NAVY -7",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 57,
+          "label": "WATCH",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at NAVY -7, NAVY is the side worth a closer look.",
+          "line": "NAVY -7.0",
+          "gameDate": "2026-09-25T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "NAVY -7",
+              "line": "NAVY -7.0",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
           "gameId": "cfb-2026-09-26-oklahoma-georgia",
           "matchup": "Oklahoma @ Georgia",
-          "gameDate": "2026-09-26T15:30:00-04:00",
-          "league": "cfb",
           "type": "SPREAD",
           "pick": "Oklahoma +13.5",
           "americanOdds": -110,
-          "betRadarIndex": null,
+          "betRadarIndex": 75,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
           "radarIndex": null,
           "label": "EARLY LOCK",
           "why": "Georgia is the stronger team, but the number is doing a lot of work. A current projection has Georgia by roughly one score, not two touchdowns, creating one of the larger spread-value gaps on the board.",
           "line": "Oklahoma +13.5",
+          "gameDate": "2026-09-26T15:30:00-04:00",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
           "result": "PENDING",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap",
+          "confidenceBand": "STANDARD",
           "versionHistory": [
             {
               "lockedAt": "2026-09-21T06:38:00Z",
@@ -89,29 +642,2427 @@
           ]
         },
         {
-          "gameId": "cfb-2026-09-26-ole-miss-florida",
-          "matchup": "Ole Miss @ Florida",
-          "gameDate": "2026-09-26T15:30:00-04:00",
-          "league": "cfb",
+          "gameId": "cfb-401858462",
+          "matchup": "UCLA @ Maryland",
           "type": "SPREAD",
-          "pick": "Ole Miss +3.5",
-          "americanOdds": -122,
-          "betRadarIndex": null,
-          "radarIndex": null,
-          "label": "EARLY LOCK · THURSDAY REVIEW",
-          "why": "The market is giving unbeaten Ole Miss more than a field goal even though one current projection makes the Rebels the better team. Kewan Lacy's shoulder status is the key Thursday review item.",
-          "line": "Ole Miss +3.5",
+          "pick": "UCLA -2.5",
+          "americanOdds": -102,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 57,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at UCLA -2.5, UCLA is the side worth a closer look.",
+          "line": "UCLA -2.5",
+          "gameDate": "2026-09-26T17:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
           "result": "PENDING",
-          "lockedAt": "2026-09-21T06:38:00Z",
-          "selectionBasis": "Current market line plus projection gap; injury review required",
-          "reviewThursday": true,
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
           "versionHistory": [
             {
-              "lockedAt": "2026-09-21T06:38:00Z",
-              "pick": "Ole Miss +3.5",
-              "line": "Ole Miss +3.5",
-              "americanOdds": -122,
-              "reason": "Initial PickRadar lock; monitor Kewan Lacy"
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UCLA -2.5",
+              "line": "UCLA -2.5",
+              "americanOdds": -102,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856702",
+          "matchup": "Texas A&M @ LSU",
+          "type": "TOTAL",
+          "pick": "UNDER 52.5",
+          "americanOdds": -108,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 56,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "LSU -9.5",
+          "gameDate": "2026-09-26T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 52.5",
+              "line": "LSU -9.5",
+              "americanOdds": -108,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401871048",
+          "matchup": "Middle Tennessee @ Jacksonville State",
+          "type": "SPREAD",
+          "pick": "MTSU +8.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 55,
+          "label": "WATCH",
+          "why": "There is not much history behind this one yet. MTSU is only a low-confidence lean at the current line of MTSU +8.5.",
+          "line": "JXST -8.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MTSU +8.5",
+              "line": "JXST -8.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858243",
+          "matchup": "Wake Forest @ Louisville",
+          "type": "TOTAL",
+          "pick": "OVER 58.5",
+          "americanOdds": -105,
+          "betRadarIndex": 56,
+          "feedbackAdjustedBetIndex": 56,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 55,
+          "label": "LOW CONFIDENCE",
+          "why": "LOU games have gone over their posted total in 0 of 0 games, and WAKE games have gone over in 2 of 2. With this total set at 58.5, both teams are pointing in the same direction.",
+          "line": "LOU -12.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "OVER 58.5",
+              "line": "LOU -12.5",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401866425",
+          "matchup": "Ball State @ Kent State",
+          "type": "SPREAD",
+          "pick": "KENT -3.5",
+          "americanOdds": -105,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 53,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at KENT -3.5, KENT is the side worth a closer look.",
+          "line": "KENT -3.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "KENT -3.5",
+              "line": "KENT -3.5",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401869941",
+          "matchup": "Liberty @ Coastal Carolina",
+          "type": "SPREAD",
+          "pick": "LIB -2.5",
+          "americanOdds": -112,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 52,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at LIB -2.5, LIB is the side worth a closer look.",
+          "line": "LIB -2.5",
+          "gameDate": "2026-09-24T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "LIB -2.5",
+              "line": "LIB -2.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860893",
+          "matchup": "San Diego State @ Toledo",
+          "type": "SPREAD",
+          "pick": "TOL -2.5",
+          "americanOdds": -112,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 52,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at TOL -2.5, TOL is the side worth a closer look.",
+          "line": "TOL -2.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "TOL -2.5",
+              "line": "TOL -2.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860894",
+          "matchup": "Troy @ Utah State",
+          "type": "SPREAD",
+          "pick": "USU -2.5",
+          "americanOdds": -105,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 52,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at USU -2.5, USU is the side worth a closer look.",
+          "line": "USU -2.5",
+          "gameDate": "2026-09-26T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "USU -2.5",
+              "line": "USU -2.5",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862779",
+          "matchup": "Army @ Temple",
+          "type": "SPREAD",
+          "pick": "ARMY -3",
+          "americanOdds": -112,
+          "betRadarIndex": 49,
+          "feedbackAdjustedBetIndex": 49,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 51,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in tight spreads (0–3.5) have covered 3 of 5 this season. With the current line at ARMY -3, ARMY is the side worth a closer look.",
+          "line": "ARMY -3.0",
+          "gameDate": "2026-09-25T20:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "ARMY -3",
+              "line": "ARMY -3.0",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864572",
+          "matchup": "App State @ NC State",
+          "type": "SPREAD",
+          "pick": "APP +13.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 50,
+          "label": "WATCH",
+          "why": "There is not much history behind this one yet. APP is only a low-confidence lean at the current line of APP +13.5.",
+          "line": "NCSU -13.5",
+          "gameDate": "2026-09-26T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "APP +13.5",
+              "line": "NCSU -13.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858239",
+          "matchup": "Delaware @ Virginia",
+          "type": "TOTAL",
+          "pick": "UNDER 52.5",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "feedbackAdjustedBetIndex": 71,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "HIGH CONVICTION",
+          "why": "UVA games have stayed under their posted total in 1 of 1 games, and DEL games have stayed under in 1 of 1. With this total set at 52.5, both teams are pointing toward a lower-scoring game.",
+          "line": "UVA -20.5",
+          "gameDate": "2026-09-26T22:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "HIGH",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 52.5",
+              "line": "UVA -20.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864579",
+          "matchup": "New Mexico @ New Mexico State",
+          "type": "SPREAD",
+          "pick": "NMSU +12.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "WATCH",
+          "why": "There is not much history behind this one yet. NMSU is only a low-confidence lean at the current line of NMSU +12.5.",
+          "line": "UNM -12.5",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "NMSU +12.5",
+              "line": "UNM -12.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858238",
+          "matchup": "Central Michigan @ Miami",
+          "type": "SPREAD",
+          "pick": "MIA -41.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "WATCH",
+          "why": "Favorites in big spreads (14+) have covered 5 of 10 this season. With the current line at MIA -41.5, MIA is the side worth a closer look.",
+          "line": "MIA -41.5",
+          "gameDate": "2026-09-26T22:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MIA -41.5",
+              "line": "MIA -41.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856804",
+          "matchup": "Arizona @ Washington State",
+          "type": "SPREAD",
+          "pick": "WSU +10.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "WATCH",
+          "why": "There is not much history behind this one yet. WSU is only a low-confidence lean at the current line of WSU +10.5.",
+          "line": "ARIZ -10.5",
+          "gameDate": "2026-09-26T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "WSU +10.5",
+              "line": "ARIZ -10.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864509",
+          "matchup": "Air Force @ Nevada",
+          "type": "SPREAD",
+          "pick": "AFA -4",
+          "americanOdds": -110,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at AFA -4, AFA is the side worth a closer look.",
+          "line": "AFA -4.0",
+          "gameDate": "2026-09-27T02:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "AFA -4",
+              "line": "AFA -4.0",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858464",
+          "matchup": "Nebraska @ Michigan State",
+          "type": "SPREAD",
+          "pick": "NEB -5.5",
+          "americanOdds": -112,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 49,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at NEB -5.5, NEB is the side worth a closer look.",
+          "line": "NEB -5.5",
+          "gameDate": "2026-09-26T21:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "NEB -5.5",
+              "line": "NEB -5.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860897",
+          "matchup": "Boise State @ Western Michigan",
+          "type": "SPREAD",
+          "pick": "BOIS -7",
+          "americanOdds": -112,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 48,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at BOIS -7, BOIS is the side worth a closer look.",
+          "line": "BOIS -7.0",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "BOIS -7",
+              "line": "BOIS -7.0",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860891",
+          "matchup": "Rice @ Fresno State",
+          "type": "SPREAD",
+          "pick": "FRES -14.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 47,
+          "label": "WATCH",
+          "why": "Favorites in big spreads (14+) have covered 5 of 10 this season. With the current line at FRES -14.5, FRES is the side worth a closer look.",
+          "line": "FRES -14.5",
+          "gameDate": "2026-09-27T02:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "FRES -14.5",
+              "line": "FRES -14.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858241",
+          "matchup": "Missouri State @ SMU",
+          "type": "SPREAD",
+          "pick": "SMU -34.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 47,
+          "label": "WATCH",
+          "why": "Favorites in big spreads (14+) have covered 5 of 10 this season. With the current line at SMU -34.5, SMU is the side worth a closer look.",
+          "line": "SMU -34.5",
+          "gameDate": "2026-09-27T01:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "SMU -34.5",
+              "line": "SMU -34.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401869961",
+          "matchup": "James Madison @ Old Dominion",
+          "type": "SPREAD",
+          "pick": "JMU -5.5",
+          "americanOdds": null,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 47,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at JMU -5.5, JMU is the side worth a closer look.",
+          "line": "JMU -5.5",
+          "gameDate": "2026-09-26T22:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "JMU -5.5",
+              "line": "JMU -5.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856697",
+          "matchup": "Tulsa @ Arkansas",
+          "type": "SPREAD",
+          "pick": "ARK -6.5",
+          "americanOdds": null,
+          "betRadarIndex": 44,
+          "feedbackAdjustedBetIndex": 44,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 46,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in one-score spreads (4–7.5) have covered 5 of 9 this season. With the current line at ARK -6.5, ARK is the side worth a closer look.",
+          "line": "ARK -6.5",
+          "gameDate": "2026-09-27T00:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "ARK -6.5",
+              "line": "ARK -6.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401861970",
+          "matchup": "UConn @ Miami (OH)",
+          "type": "TOTAL",
+          "pick": "UNDER 51.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 46,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "M-OH -4.5",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 51.5",
+              "line": "M-OH -4.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856805",
+          "matchup": "Sam Houston @ Texas Tech",
+          "type": "SPREAD",
+          "pick": "SHSU +35.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 45,
+          "label": "WATCH",
+          "why": "Underdogs in big spreads (14+) have covered 5 of 10 this season. With the current line at SHSU +35.5, SHSU is the side worth a closer look.",
+          "line": "TTU -35.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "SHSU +35.5",
+              "line": "TTU -35.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858461",
+          "matchup": "Northwestern @ Indiana",
+          "type": "SPREAD",
+          "pick": "IU -21",
+          "americanOdds": null,
+          "betRadarIndex": 50,
+          "feedbackAdjustedBetIndex": 50,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 45,
+          "label": "LOW CONFIDENCE",
+          "why": "Favorites in big spreads (14+) have covered 5 of 10 this season. With the current line at IU -21, IU is the side worth a closer look.",
+          "line": "IU -21.0",
+          "gameDate": "2026-09-26T00:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "IU -21",
+              "line": "IU -21.0",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856698",
+          "matchup": "Vanderbilt @ Auburn",
+          "type": "TOTAL",
+          "pick": "UNDER 54.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 45,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "AUB -9.5",
+          "gameDate": "2026-09-26T20:15Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 54.5",
+              "line": "AUB -9.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858466",
+          "matchup": "Wisconsin @ Penn State",
+          "type": "SPREAD",
+          "pick": "PSU -10",
+          "americanOdds": null,
+          "betRadarIndex": 48,
+          "feedbackAdjustedBetIndex": 48,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 45,
+          "label": "LOW CONFIDENCE",
+          "why": "The full-slate model requires a side in every game. With no stronger trend signal available, this is the lower-confidence lean based on team strength, record and home field at the locked market number.",
+          "line": "PSU -10.0",
+          "gameDate": "2026-09-26T21:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "PSU -10",
+              "line": "PSU -10.0",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858470",
+          "matchup": "Minnesota @ Washington",
+          "type": "SPREAD",
+          "pick": "WASH -8.5",
+          "americanOdds": null,
+          "betRadarIndex": 48,
+          "feedbackAdjustedBetIndex": 48,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 43,
+          "label": "LOW CONFIDENCE",
+          "why": "The full-slate model requires a side in every game. With no stronger trend signal available, this is the lower-confidence lean based on team strength, record and home field at the locked market number.",
+          "line": "WASH -8.5",
+          "gameDate": "2026-09-27T03:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "WASH -8.5",
+              "line": "WASH -8.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856813",
+          "matchup": "Colorado @ Baylor",
+          "type": "TOTAL",
+          "pick": "UNDER 54.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 42,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "BAY -10.0",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 54.5",
+              "line": "BAY -10.0",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864511",
+          "matchup": "Northern Illinois @ Georgia State",
+          "type": "TOTAL",
+          "pick": "UNDER 55.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 41,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "GAST -9.5",
+          "gameDate": "2026-09-26T18:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 55.5",
+              "line": "GAST -9.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860896",
+          "matchup": "Colorado State @ UTSA",
+          "type": "TOTAL",
+          "pick": "UNDER 57.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 41,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "UTSA -12.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 57.5",
+              "line": "UTSA -12.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860895",
+          "matchup": "Oregon State @ UTEP",
+          "type": "TOTAL",
+          "pick": "UNDER 54.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 40,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "ORST -11.5",
+          "gameDate": "2026-09-27T01:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 54.5",
+              "line": "ORST -11.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858465",
+          "matchup": "Illinois @ Ohio State",
+          "type": "TOTAL",
+          "pick": "UNDER 53.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 39,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "OSU -27.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 53.5",
+              "line": "OSU -27.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858242",
+          "matchup": "Virginia Tech @ Boston College",
+          "type": "TOTAL",
+          "pick": "UNDER 52.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 39,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "VT -14.5",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 52.5",
+              "line": "VT -14.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401866427",
+          "matchup": "Lindenwood @ Eastern Michigan",
+          "type": "MONEYLINE",
+          "pick": "EMU TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 39,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "EMU TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401866428",
+          "matchup": "Stonehill @ Ohio",
+          "type": "MONEYLINE",
+          "pick": "OHIO TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 39,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "OHIO TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862780",
+          "matchup": "Louisiana @ Charlotte",
+          "type": "TOTAL",
+          "pick": "UNDER 49.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 37,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "UL -10.5",
+          "gameDate": "2026-09-26T22:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 49.5",
+              "line": "UL -10.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862782",
+          "matchup": "Florida Atlantic @ UL Monroe",
+          "type": "TOTAL",
+          "pick": "UNDER 57.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 37,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "FAU -13.5",
+          "gameDate": "2026-09-27T00:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 57.5",
+              "line": "FAU -13.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858467",
+          "matchup": "Notre Dame @ Purdue",
+          "type": "TOTAL",
+          "pick": "UNDER 57.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 35,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "ND -27.5",
+          "gameDate": "2026-09-26T18:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 57.5",
+              "line": "ND -27.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858237",
+          "matchup": "Central Arkansas @ Florida State",
+          "type": "MONEYLINE",
+          "pick": "CARK TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 33,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T19:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "CARK TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862781",
+          "matchup": "North Carolina Central @ East Carolina",
+          "type": "MONEYLINE",
+          "pick": "NCCU TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 33,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T20:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "NCCU TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401870745",
+          "matchup": "Mercyhurst @ Western Kentucky",
+          "type": "MONEYLINE",
+          "pick": "MERC TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 33,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MERC TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862783",
+          "matchup": "Houston Christian @ North Texas",
+          "type": "MONEYLINE",
+          "pick": "HCU TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 33,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T23:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "HCU TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401864576",
+          "matchup": "South Alabama @ Kentucky",
+          "type": "TOTAL",
+          "pick": "UNDER 54.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 32,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "UK -20.5",
+          "gameDate": "2026-09-26T16:45Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 54.5",
+              "line": "UK -20.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401856806",
+          "matchup": "Houston @ Georgia Southern",
+          "type": "TOTAL",
+          "pick": "UNDER 54.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 32,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "HOU -17.5",
+          "gameDate": "2026-09-26T20:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 54.5",
+              "line": "HOU -17.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862784",
+          "matchup": "Southern Miss @ Tulane",
+          "type": "TOTAL",
+          "pick": "UNDER 52.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 31,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "TULN -18.5",
+          "gameDate": "2026-09-26T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 52.5",
+              "line": "TULN -18.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401862785",
+          "matchup": "South Florida @ Bowling Green",
+          "type": "TOTAL",
+          "pick": "UNDER 49.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "feedbackAdjustedBetIndex": 43,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 30,
+          "label": "LOW CONFIDENCE",
+          "why": "Unders in mid-range college totals (48.5–59.5) have hit 10 of 18 times this season.",
+          "line": "USF -17.5",
+          "gameDate": "2026-09-26T21:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UNDER 49.5",
+              "line": "USF -17.5",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858236",
+          "matchup": "Bucknell @ Pittsburgh",
+          "type": "MONEYLINE",
+          "pick": "PITT TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 29,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T16:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "PITT TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858244",
+          "matchup": "William & Mary @ Duke",
+          "type": "MONEYLINE",
+          "pick": "DUKE TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 29,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "DUKE TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401858468",
+          "matchup": "Howard @ Rutgers",
+          "type": "MONEYLINE",
+          "pick": "HOW TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-25T23:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "HOW TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401866426",
+          "matchup": "Robert Morris @ Buffalo",
+          "type": "MONEYLINE",
+          "pick": "RMU TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "RMU TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401868188",
+          "matchup": "Gardner-Webb @ Marshall",
+          "type": "MONEYLINE",
+          "pick": "MRSH TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T19:30Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "MRSH TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401860892",
+          "matchup": "Incarnate Word @ Texas State",
+          "type": "MONEYLINE",
+          "pick": "UIW TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T22:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "UIW TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "cfb-401867909",
+          "matchup": "Long Island University @ Florida International",
+          "type": "MONEYLINE",
+          "pick": "FIU TO WIN",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "feedbackAdjustedBetIndex": 40,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+          "line": "LINE PENDING",
+          "gameDate": "2026-09-26T22:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": true,
+          "league": "cfb",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:46:55.355Z",
+          "selectionBasis": "Full-slate fallback model",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:46:55.355Z",
+              "pick": "FIU TO WIN",
+              "line": "LINE PENDING",
+              "americanOdds": null,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "league": "nfl",
+      "weekStart": "2026-09-22",
+      "weekEnd": "2026-09-28",
+      "label": "NFL · 2026-09-22–2026-09-28",
+      "lockedAt": "2026-09-21T06:47:16.587Z",
+      "lockType": "FULL_SLATE_MODEL_LOCK",
+      "picks": [
+        {
+          "gameId": "nfl-401872950",
+          "matchup": "Cincinnati @ Pittsburgh",
+          "type": "SPREAD",
+          "pick": "CIN -3.5",
+          "americanOdds": -115,
+          "betRadarIndex": 88,
+          "feedbackAdjustedBetIndex": 88,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 78,
+          "label": "NO BRAINER",
+          "why": "CIN has covered the spread in 2 of 2 games, compared with PIT at 0 of 1. CIN has also been better against the spread lately.  Favorites in tight spreads (0–3.5) have covered 7 of 11 this season. With the current line at CIN -3.5, CIN is the more interesting side.",
+          "line": "CIN -3.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "CIN -3.5",
+              "line": "CIN -3.5",
+              "americanOdds": -115,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872959",
+          "matchup": "Minnesota @ Tampa Bay",
+          "type": "SPREAD",
+          "pick": "MIN -2.5",
+          "americanOdds": -112,
+          "betRadarIndex": 88,
+          "feedbackAdjustedBetIndex": 88,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 77,
+          "label": "NO BRAINER",
+          "why": "MIN has covered the spread in 2 of 2 games, compared with TB at 0 of 2. MIN has also been better against the spread lately.  Favorites in tight spreads (0–3.5) have covered 7 of 11 this season. With the current line at MIN -2.5, MIN is the more interesting side.",
+          "line": "MIN -2.5",
+          "gameDate": "2026-09-27T20:05Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "MIN -2.5",
+              "line": "MIN -2.5",
+              "americanOdds": -112,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872954",
+          "matchup": "New York @ Detroit",
+          "type": "SPREAD",
+          "pick": "NYJ +6.5",
+          "americanOdds": -110,
+          "betRadarIndex": 88,
+          "feedbackAdjustedBetIndex": 88,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 73,
+          "label": "NO BRAINER",
+          "why": "NYJ has covered the spread in 2 of 2 games, compared with DET at 0 of 2. NYJ has also been better against the spread lately.  Underdogs in one-score spreads (4–7.5) have covered 6 of 9 this season. With the current line at NYJ +6.5, NYJ is the more interesting side.",
+          "line": "DET -6.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "NYJ +6.5",
+              "line": "DET -6.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872951",
+          "matchup": "Houston @ Indianapolis",
+          "type": "SPREAD",
+          "pick": "IND +2.5",
+          "americanOdds": -110,
+          "betRadarIndex": 80,
+          "feedbackAdjustedBetIndex": 80,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 73,
+          "label": "HIGH CONVICTION",
+          "why": "IND has covered the spread in 1 of 1 games, compared with HOU at 0 of 1. IND has also been better against the spread lately.  Underdogs in tight spreads (0–3.5) have covered 4 of 11 this season. With the current line at IND +2.5, IND is the more interesting side.",
+          "line": "HOU -2.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "IND +2.5",
+              "line": "HOU -2.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872957",
+          "matchup": "New England @ Jacksonville",
+          "type": "SPREAD",
+          "pick": "NE +2.5",
+          "americanOdds": -102,
+          "betRadarIndex": 80,
+          "feedbackAdjustedBetIndex": 80,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 73,
+          "label": "HIGH CONVICTION",
+          "why": "NE has covered the spread in 1 of 1 games, compared with JAX at 0 of 1. NE has also been better against the spread lately.  Underdogs in tight spreads (0–3.5) have covered 4 of 11 this season. With the current line at NE +2.5, NE is the more interesting side.",
+          "line": "JAX -2.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "NE +2.5",
+              "line": "JAX -2.5",
+              "americanOdds": -102,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872953",
+          "matchup": "Los Angeles @ Buffalo",
+          "type": "SPREAD",
+          "pick": "BUF -7",
+          "americanOdds": -110,
+          "betRadarIndex": 80,
+          "feedbackAdjustedBetIndex": 80,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 69,
+          "label": "HIGH CONVICTION",
+          "why": "BUF has covered the spread in 1 of 1 games, compared with LAC at 0 of 2. BUF has also been better against the spread lately.  Favorites in one-score spreads (4–7.5) have covered 3 of 9 this season. With the current line at BUF -7, BUF is the more interesting side.",
+          "line": "BUF -7.0",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "ELITE",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "BUF -7",
+              "line": "BUF -7.0",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872961",
+          "matchup": "Las Vegas @ New Orleans",
+          "type": "TOTAL",
+          "pick": "UNDER 44.5",
+          "americanOdds": -105,
+          "betRadarIndex": 64,
+          "feedbackAdjustedBetIndex": 64,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 63,
+          "label": "WATCH",
+          "why": "NO games have stayed under their posted total in 1 of 2 games, and LV games have stayed under in 2 of 2. With this total set at 44.5, both teams are pointing toward a lower-scoring game.",
+          "line": "NO -3.5",
+          "gameDate": "2026-09-27T20:25Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "UNDER 44.5",
+              "line": "NO -3.5",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872960",
+          "matchup": "Baltimore @ Dallas",
+          "type": "SPREAD",
+          "pick": "DAL +3",
+          "americanOdds": -115,
+          "betRadarIndex": 61,
+          "feedbackAdjustedBetIndex": 61,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 61,
+          "label": "WATCH",
+          "why": "DAL has covered the spread in 1 of 2 games, compared with BAL at 0 of 1. DAL has also been better against the spread lately.  Underdogs in tight spreads (0–3.5) have covered 4 of 11 this season. With the current line at DAL +3, DAL is the more interesting side.",
+          "line": "BAL -3.0",
+          "gameDate": "2026-09-27T20:25Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "DAL +3",
+              "line": "BAL -3.0",
+              "americanOdds": -115,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872958",
+          "matchup": "Arizona @ San Francisco",
+          "type": "SPREAD",
+          "pick": "SF -8.5",
+          "americanOdds": -110,
+          "betRadarIndex": 65,
+          "feedbackAdjustedBetIndex": 65,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 59,
+          "label": "WATCH",
+          "why": "SF has covered the spread in 1 of 1 games, compared with ARI at 1 of 2. SF has also been better against the spread lately.  With the current line at SF -8.5, SF is the more interesting side.",
+          "line": "SF -8.5",
+          "gameDate": "2026-09-27T20:05Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "SF -8.5",
+              "line": "SF -8.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872962",
+          "matchup": "Los Angeles @ Denver",
+          "type": "TOTAL",
+          "pick": "UNDER 45.5",
+          "americanOdds": -110,
+          "betRadarIndex": 61,
+          "feedbackAdjustedBetIndex": 61,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 59,
+          "label": "WATCH",
+          "why": "DEN games have stayed under their posted total in 2 of 2 games, and LAR games have stayed under in 0 of 0. With this total set at 45.5, both teams are pointing toward a lower-scoring game.",
+          "line": "LAR -2.5",
+          "gameDate": "2026-09-28T00:20Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "UNDER 45.5",
+              "line": "LAR -2.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872948",
+          "matchup": "Atlanta @ Green Bay",
+          "type": "TOTAL",
+          "pick": "UNDER 44.5",
+          "americanOdds": -110,
+          "betRadarIndex": 63,
+          "feedbackAdjustedBetIndex": 63,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 56,
+          "label": "WATCH",
+          "why": "GB games have stayed under their posted total in 1 of 2 games, and ATL games have stayed under in 1 of 1. With this total set at 44.5, both teams are pointing toward a lower-scoring game.",
+          "line": "GB -7.0",
+          "gameDate": "2026-09-25T00:15Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "UNDER 44.5",
+              "line": "GB -7.0",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872956",
+          "matchup": "Tennessee @ New York",
+          "type": "SPREAD",
+          "pick": "NYG -6",
+          "americanOdds": -110,
+          "betRadarIndex": 61,
+          "feedbackAdjustedBetIndex": 61,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 56,
+          "label": "WATCH",
+          "why": "NYG has covered the spread in 1 of 1 games, compared with TEN at 1 of 2. NYG has also been better against the spread lately.  Favorites in one-score spreads (4–7.5) have covered 3 of 9 this season. With the current line at NYG -6, NYG is the more interesting side.",
+          "line": "NYG -6.0",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "NYG -6",
+              "line": "NYG -6.0",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872955",
+          "matchup": "Seattle @ Washington",
+          "type": "SPREAD",
+          "pick": "SEA -6.5",
+          "americanOdds": -110,
+          "betRadarIndex": 61,
+          "feedbackAdjustedBetIndex": 61,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 56,
+          "label": "WATCH",
+          "why": "SEA has covered the spread in 1 of 1 games, compared with WSH at 1 of 2. SEA has also been better against the spread lately.  Favorites in one-score spreads (4–7.5) have covered 3 of 9 this season. With the current line at SEA -6.5, SEA is the more interesting side.",
+          "line": "SEA -6.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "SEA -6.5",
+              "line": "SEA -6.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872963",
+          "matchup": "Philadelphia @ Chicago",
+          "type": "SPREAD",
+          "pick": "CHI +4.5",
+          "americanOdds": -115,
+          "betRadarIndex": 51,
+          "feedbackAdjustedBetIndex": 51,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 55,
+          "label": "LOW CONFIDENCE",
+          "why": "CHI has covered the spread in 0 of 1 games, compared with PHI at 0 of 2.  Underdogs in one-score spreads (4–7.5) have covered 6 of 9 this season. With the current line at CHI +4.5, CHI is the more interesting side.",
+          "line": "PHI -4.5",
+          "gameDate": "2026-09-29T00:15Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "CHI +4.5",
+              "line": "PHI -4.5",
+              "americanOdds": -115,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872952",
+          "matchup": "Kansas City @ Miami",
+          "type": "SPREAD",
+          "pick": "KC -10.5",
+          "americanOdds": -110,
+          "betRadarIndex": 67,
+          "feedbackAdjustedBetIndex": 67,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 53,
+          "label": "WATCH",
+          "why": "KC has covered the spread in 1 of 2 games, compared with MIA at 0 of 2. KC has also been better against the spread lately.  With the current line at KC -10.5, KC is the more interesting side.",
+          "line": "KC -10.5",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "KC -10.5",
+              "line": "KC -10.5",
+              "americanOdds": -110,
+              "reason": "Initial full-slate PickRadar lock"
+            }
+          ]
+        },
+        {
+          "gameId": "nfl-401872949",
+          "matchup": "Carolina @ Cleveland",
+          "type": "SPREAD",
+          "pick": "CAR -3",
+          "americanOdds": -105,
+          "betRadarIndex": 51,
+          "feedbackAdjustedBetIndex": 51,
+          "feedback": {
+            "modifier": 0,
+            "sample": 0,
+            "note": "Building sample"
+          },
+          "radarIndex": 53,
+          "label": "LOW CONFIDENCE",
+          "why": "CAR has covered the spread in 1 of 1 games, compared with CLE at 1 of 1.  Favorites in tight spreads (0–3.5) have covered 7 of 11 this season. With the current line at CAR -3, CAR is the more interesting side.",
+          "line": "CAR -3.0",
+          "gameDate": "2026-09-27T17:00Z",
+          "status": "OPEN",
+          "fullSlateFallback": false,
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-21T06:47:16.587Z",
+          "selectionBasis": "BetRadar trend model plus current market consensus",
+          "confidenceBand": "STANDARD",
+          "versionHistory": [
+            {
+              "lockedAt": "2026-09-21T06:47:16.587Z",
+              "pick": "CAR -3",
+              "line": "CAR -3.0",
+              "americanOdds": -105,
+              "reason": "Initial full-slate PickRadar lock"
             }
           ]
         }

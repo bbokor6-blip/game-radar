@@ -21,8 +21,8 @@ export default function Home(){
     {
       n:"04",name:"PICKRADAR",eyebrow:"THE RECEIPTS",href:"/pickradar",
       title:"The picks we actually stand behind.",
-      copy:"A small set of locked recommendations, graded every week with the record carried forward.",
-      chips:["LOCKED PICKS","W / L / PUSH","TRACK RECORD"]
+      copy:"A locked pick on every NFL and college game, with confidence filters and a record that carries forward.",
+      chips:["FULL SLATE","HIGH CONFIDENCE","TRACK RECORD"]
     }
   ];
   return <main className="homeRadar">

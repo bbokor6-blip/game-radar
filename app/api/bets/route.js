@@ -57,6 +57,40 @@ function mergeHistoricalMarket(game,market){
   };
 }
 
+function recordWins(record){
+  const wins=Number(String(record||"").split("-")[0]);
+  return Number.isFinite(wins)?wins:0;
+}
+
+function fullSlateFallback(game,market,radarIndex){
+  const homeRank=Number(game.home?.rank)||99;
+  const awayRank=Number(game.away?.rank)||99;
+  const homeWins=recordWins(game.home?.record);
+  const awayWins=recordWins(game.away?.record);
+  const homeScore=(awayRank-homeRank)*2+(homeWins-awayWins)*3+2;
+  const side=homeScore>=0?"home":"away";
+  const team=side==="home"?game.home:game.away;
+
+  if(Number.isFinite(market.homeMargin)){
+    const homeSpread=-market.homeMargin;
+    const spread=side==="home"?homeSpread:-homeSpread;
+    const pick=team.short+" "+(spread>0?"+":"")+Math.round(spread*10)/10;
+    return {
+      type:"SPREAD",pick,
+      americanOdds:side==="home"?market.homeSpreadOdds:market.awaySpreadOdds,
+      index:48,label:"LOW CONFIDENCE",
+      why:"The full-slate model requires a side in every game. With no stronger trend signal available, this is the lower-confidence lean based on team strength, record and home field at the locked market number.",
+      side,fullSlateFallback:true,radarIndex:radarIndex.score
+    };
+  }
+
+  return {
+    type:"MONEYLINE",pick:team.short+" TO WIN",americanOdds:null,index:40,label:"LOW CONFIDENCE",
+    why:"No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
+    side,fullSlateFallback:true,radarIndex:radarIndex.score
+  };
+}
+
 export async function GET(request){
   const {searchParams}=new URL(request.url);
   const league=searchParams.get("league")==="cfb"?"cfb":"nfl";
@@ -117,21 +151,23 @@ export async function GET(request){
       const feedback=best?feedbackForPick(feedbackProfile,{league,type:best.type,index:best.index}):{modifier:0,sample:0,note:"Building sample"};
       const adjustedBettingIndex=best?Math.max(0,Math.min(100,best.index+feedback.modifier)):null;
       const radarIndex=buildRadarIndex(game,adjustedBettingIndex);
-      const preferredPick=best?{
+      const official=best||fullSlateFallback(game,market,radarIndex);
+      const preferredPick=official?{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
-        type:best.type,
-        pick:best.pick,
-        americanOdds:best.americanOdds??null,
-        betRadarIndex:best.index,
-        feedbackAdjustedBetIndex:adjustedBettingIndex,
+        type:official.type,
+        pick:official.pick,
+        americanOdds:official.americanOdds??null,
+        betRadarIndex:official.index,
+        feedbackAdjustedBetIndex:best?adjustedBettingIndex:official.index,
         feedback,
         radarIndex:radarIndex.score,
-        label:best.label,
-        why:best.why,
+        label:official.label,
+        why:official.why,
         line:marketSummary(game,market),
         gameDate:game.date,
-        status:"OPEN"
+        status:"OPEN",
+        fullSlateFallback:Boolean(official.fullSlateFallback)
       }:{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),

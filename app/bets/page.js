@@ -92,13 +92,16 @@ function OpportunityCard({item,rank}){
         <strong>{matchup(g)}</strong>
         <small>{gameTime(g)} · {item.type}</small>
       </div>
-      <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
+      <div className="pickHeadline">
+        <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
+        {item.index>=80?<span className="convictionBadge">HIGH CONVICTION</span>:item.index>=70?<span className="convictionBadge medium">STRONG INTEREST</span>:null}
+      </div>
       {item.payout?<div className="payoutStrip">
         <span>$10 BET</span>
         <strong>WIN {moneyText(item.payout.profit)}</strong>
         <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
       </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
-      {item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
+      {item.index>=80?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
       <div className="evidenceChips">
         {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
       </div>
@@ -204,7 +207,7 @@ function BoardRow({game}){
     <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong></div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.index>=80?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
       <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
     </div>
 
@@ -290,7 +293,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>The strongest real BetRadar signals for the week, ranked by confidence and then by game interest. Lower-confidence picks can still appear, but there are no random filler bets.</p>
+            <p>The strongest real BetRadar signals for the week, ranked by confidence and then by game interest. When the evidence is especially strong, BetRadar calls it out as HIGH CONVICTION.</p>
           </div>
         </div>
         <div className="simplePickList">

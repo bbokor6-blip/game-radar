@@ -2541,3 +2541,513 @@ body{
   .agentGameSignals>strong{font-size:10px!important}
   .agentScore strong{font-size:20px!important}
 }
+
+
+/* =========================================================
+   GAMERADAR GAME-DAY SCOREBOARD
+   Games first. Controls second. Explanations last.
+   ========================================================= */
+.grPage{
+  width:min(1180px,100%);
+  margin:0 auto;
+  padding:10px 18px 70px;
+  color:#f5f7f9;
+}
+.grHeader{
+  position:sticky;
+  top:0;
+  z-index:40;
+  display:grid;
+  grid-template-columns:auto auto minmax(280px,1fr) auto auto;
+  gap:10px;
+  align-items:center;
+  min-height:64px;
+  margin:0 0 8px;
+  padding:8px 10px;
+  border:1px solid #263744;
+  background:#08131cea;
+  backdrop-filter:blur(14px);
+}
+.grLogo{
+  color:#f5f7f9;
+  text-decoration:none;
+  font-size:19px;
+  font-weight:1000;
+  letter-spacing:-.04em;
+  white-space:nowrap;
+}
+.grLogo span{color:#4cdf73}
+.grLeagueToggle{
+  display:flex;
+  padding:3px;
+  border:1px solid #30414e;
+  background:#0d1922;
+}
+.grLeagueToggle button{
+  min-height:38px;
+  padding:0 13px;
+  border:0;
+  background:transparent;
+  color:#aab6bf;
+  font-size:14px;
+  font-weight:850;
+  cursor:pointer;
+}
+.grLeagueToggle button.active{
+  background:#1a2732;
+  color:#fff;
+}
+.grSearch{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  border:1px solid #344a59;
+  background:#07111a;
+}
+.grSearch input{
+  min-width:0;
+  min-height:42px;
+  padding:0 13px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font-size:15px;
+}
+.grSearch input::placeholder{color:#71818e}
+.grSearch button{
+  min-height:42px;
+  padding:0 14px;
+  border:0;
+  border-left:1px solid #344a59;
+  background:#102332;
+  color:#c8e9fa;
+  font-size:13px;
+  font-weight:850;
+  cursor:pointer;
+}
+.grHeaderButton,.grBetLink{
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 12px;
+  border:1px solid #30414e;
+  background:#0d1922;
+  color:#d5dde3;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:850;
+  white-space:nowrap;
+  cursor:pointer;
+}
+.grHeaderButton.active{border-color:#6f6128;color:#ffd862}
+.grBetLink{border-color:#6d5a27;color:#ffd34e}
+
+.grPrimaryNav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  border-bottom:1px solid #263744;
+}
+.grPrimaryNav>div{display:flex;gap:4px}
+.grPrimaryNav button{
+  min-height:44px;
+  padding:0 15px;
+  border:0;
+  border-bottom:3px solid transparent;
+  background:transparent;
+  color:#aab5bf;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.grPrimaryNav button.active{
+  color:#fff;
+  border-bottom-color:#4cdf73;
+}
+.grPrimaryNav .grFilterButton{
+  border:1px solid #30414e;
+  border-bottom:1px solid #30414e;
+  min-height:38px;
+  margin-bottom:5px;
+  background:#0c1821;
+  color:#e2e7eb;
+}
+.grActiveFilters,.grSearchChips{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin:8px 0 12px;
+}
+.grActiveFilters button,.grSearchChips span{
+  min-height:30px;
+  display:inline-flex;
+  align-items:center;
+  padding:0 9px;
+  border:1px solid #354b59;
+  background:#0d1a23;
+  color:#c6d0d7;
+  font-size:13px;
+  font-weight:800;
+}
+.grActiveFilters button{cursor:pointer}
+
+.grSection,.grSearchResults{margin-top:22px}
+.grLeadSection{margin-top:12px}
+.grSectionHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.grSectionHead h2{
+  margin:0;
+  color:#fff;
+  font-size:26px;
+  line-height:1.05;
+  letter-spacing:-.03em;
+}
+.grSectionHead p{
+  margin:4px 0 0;
+  color:#9ba8b2;
+  font-size:13px;
+  line-height:1.4;
+}
+.grSectionHead>button{
+  min-height:36px;
+  padding:0 11px;
+  border:1px solid #314654;
+  background:#0c1821;
+  color:#bac6cf;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.grGameCard{
+  border-top:1px solid #2b3c48;
+  background:#0b1620;
+  padding:12px 14px;
+}
+.grGameCard:last-child{border-bottom:1px solid #2b3c48}
+.grGameCard.featured{
+  padding:16px 18px;
+  border:1px solid #42624e;
+  background:#0d1b21;
+}
+.grGameCard.live{box-shadow:inset 3px 0 0 #4cdf73}
+.grGameTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.grStatus{
+  color:#aeb8c0;
+  font-size:13px;
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.grStatus.live{color:#7ff397}
+.grImportance{
+  color:#f1d161;
+  font-size:13px;
+  font-weight:900;
+}
+.grTeams{display:grid;gap:2px}
+.grTeam{
+  min-height:50px;
+  display:grid;
+  grid-template-columns:24px 42px minmax(0,1fr) auto;
+  gap:9px;
+  align-items:center;
+}
+.grFavStar{
+  border:0;
+  background:transparent;
+  color:#64727d;
+  font-size:19px;
+  cursor:pointer;
+}
+.grFavStar.active{color:#ffd04c}
+.grTeamLogo{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+}
+.grGameCard.featured .grTeamLogo{width:44px;height:44px}
+.grLogoFallback{border:1px solid #394b57;border-radius:50%}
+.grTeamText{min-width:0}
+.grTeamName{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+.grTeamName strong{
+  min-width:0;
+  color:#f7f9fb;
+  font-size:19px;
+  line-height:1.15;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.grGameCard.featured .grTeamName strong{font-size:22px}
+.grTeamText>span{
+  display:block;
+  margin-top:2px;
+  color:#98a6b1;
+  font-size:13px;
+}
+.grRank{
+  color:#ffd05a;
+  font-size:14px;
+  font-weight:950;
+}
+.grPoss{color:#4cdf73;font-size:13px}
+.grScore{
+  min-width:48px;
+  text-align:right;
+  color:#fff;
+  font-size:34px;
+  line-height:1;
+  font-weight:950;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.04em;
+}
+.grGameCard.featured .grScore{font-size:40px}
+.grMeta{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:8px;
+  color:#c2ccd4;
+  font-size:14px;
+  font-variant-numeric:tabular-nums;
+}
+.grMeta span+span:before{
+  content:"·";
+  margin-right:12px;
+  color:#586874;
+}
+.grContext{
+  margin-top:7px;
+  color:#9eabb5;
+  font-size:13px;
+  line-height:1.4;
+}
+.grLiveContext{color:#d2dae0}
+.grDetails{
+  margin-top:8px;
+  padding-top:7px;
+  border-top:1px solid #263744;
+}
+.grDetails summary{
+  color:#8998a3;
+  font-size:13px;
+  cursor:pointer;
+}
+.grDetails>div{
+  display:flex;
+  gap:8px 16px;
+  flex-wrap:wrap;
+  margin-top:8px;
+  color:#aab6bf;
+  font-size:13px;
+}
+.grDetails a{color:#f2cd56;text-decoration:none}
+
+.grWorthGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.grWorthGrid .grGameCard{
+  border:1px solid #2b3c48;
+}
+.grCompactList{
+  border-left:1px solid #2b3c48;
+  border-right:1px solid #2b3c48;
+}
+.grCompactList .grGameCard{
+  border-left:0;
+  border-right:0;
+}
+.grEmpty{
+  padding:22px 14px;
+  border:1px solid #2a3d49;
+  background:#0b1620;
+  color:#9faab3;
+  font-size:14px;
+}
+.grSearchResults{
+  padding:14px;
+  border:1px solid #345366;
+  background:#0b1923;
+}
+
+/* Advanced filters live off-canvas so the default board stays clean. */
+.grFilterScrim{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:flex;
+  justify-content:flex-end;
+  background:#0008;
+}
+.grFilterDrawer{
+  width:min(390px,94vw);
+  height:100%;
+  overflow:auto;
+  padding:16px;
+  border-left:1px solid #344754;
+  background:#0a151e;
+  box-shadow:-14px 0 40px #0008;
+}
+.grFilterHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.grFilterHead strong{font-size:24px}
+.grFilterHead button,.grClearFilters{
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid #344754;
+  background:#101d27;
+  color:#eef2f5;
+  font-size:13px;
+  cursor:pointer;
+}
+.grWeekControl{
+  display:grid;
+  grid-template-columns:40px 1fr 40px;
+  align-items:center;
+  margin-bottom:14px;
+  border:1px solid #30424f;
+}
+.grWeekControl button{
+  height:48px;
+  border:0;
+  background:#0f1c26;
+  color:#fff;
+  font-size:22px;
+}
+.grWeekControl div{text-align:center}
+.grWeekControl span,.grWeekControl strong{display:block}
+.grWeekControl span{color:#8f9ca6;font-size:13px}
+.grWeekControl strong{font-size:14px}
+.grFilterDrawer>label{
+  display:grid;
+  gap:6px;
+  margin:12px 0;
+  color:#bac4cb;
+  font-size:13px;
+  font-weight:800;
+}
+.grFilterDrawer select{
+  min-height:44px;
+  padding:0 10px;
+  border:1px solid #334754;
+  background:#0d1a23;
+  color:#f4f7f9;
+  font-size:14px;
+}
+.grFilterChecks{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+.grFilterChecks label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#d2d8dd;
+  font-size:14px;
+}
+.grFilterChecks input{width:17px;height:17px}
+.grClearFilters{width:100%}
+
+@media(max-width:900px){
+  .grHeader{
+    grid-template-columns:auto auto 1fr auto;
+  }
+  .grHeaderButton{display:none}
+  .grBetLink{grid-column:4}
+  .grSearch{grid-column:1/-1;grid-row:2}
+}
+@media(max-width:700px){
+  .grPage{padding:6px 8px 60px}
+  .grHeader{
+    grid-template-columns:auto 1fr auto;
+    gap:7px;
+    padding:7px;
+  }
+  .grLogo{font-size:17px}
+  .grLeagueToggle{justify-self:start}
+  .grLeagueToggle button{min-height:34px;padding:0 10px;font-size:13px}
+  .grBetLink{grid-column:3;min-height:36px;padding:0 9px}
+  .grSearch{
+    grid-column:1/-1;
+    grid-row:2;
+  }
+  .grSearch input{min-height:44px;font-size:14px}
+  .grSearch button{min-height:44px;font-size:13px;padding:0 11px}
+
+  .grPrimaryNav{
+    position:sticky;
+    top:106px;
+    z-index:30;
+    background:#08131cf4;
+    overflow:visible;
+  }
+  .grPrimaryNav>div{
+    overflow-x:auto;
+    min-width:0;
+  }
+  .grPrimaryNav button{
+    flex:0 0 auto;
+    min-height:42px;
+    padding:0 12px;
+    font-size:13px;
+  }
+  .grPrimaryNav .grFilterButton{
+    position:fixed;
+    right:12px;
+    bottom:12px;
+    z-index:70;
+    min-height:46px;
+    padding:0 16px;
+    border-color:#607047;
+    background:#182316;
+    color:#dff6c5;
+    box-shadow:0 8px 28px #0008;
+  }
+
+  .grSection,.grSearchResults{margin-top:18px}
+  .grSectionHead h2{font-size:24px}
+  .grSectionHead p{font-size:13px}
+  .grWorthGrid{grid-template-columns:1fr}
+  .grGameCard,.grGameCard.featured{padding:11px 10px}
+  .grGameTop{margin-bottom:6px}
+  .grStatus,.grImportance{font-size:13px}
+  .grTeam{
+    min-height:47px;
+    grid-template-columns:22px 36px minmax(0,1fr) auto;
+    gap:7px;
+  }
+  .grFavStar{font-size:18px}
+  .grTeamLogo,.grGameCard.featured .grTeamLogo{width:33px;height:33px}
+  .grTeamName strong,.grGameCard.featured .grTeamName strong{font-size:18px}
+  .grTeamText>span{font-size:13px}
+  .grRank{font-size:13px}
+  .grScore,.grGameCard.featured .grScore{font-size:32px}
+  .grMeta{font-size:13px;gap:8px}
+  .grMeta span+span:before{margin-right:8px}
+  .grContext,.grDetails summary,.grDetails>div{font-size:13px}
+}

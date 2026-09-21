@@ -54,6 +54,12 @@ function GameCard({ game, featured = false }) {
       <div className="why">
         <strong>Why:</strong> {game.interest.reason}
       </div>
+      {game.market ? (
+        <div className="why">
+          <strong>Market:</strong> {game.market.spread == null ? "Spread —" : `${game.home.short} ${game.market.spread > 0 ? "+" : ""}${game.market.spread}`}
+          {game.market.total == null ? "" : ` · O/U ${game.market.total}`}
+        </div>
+      ) : null}
 
       <div className="meter" aria-label={`Interest score ${game.interest.score} out of 100`}>
         <div className="meterFill" style={{ width: `${game.interest.score}%` }} />
@@ -148,7 +154,7 @@ export default function Home() {
       <footer>
         <span>Auto-refreshes every 30 seconds</span>
         {data.generatedAt ? <span> · Last scan {new Date(data.generatedAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</span> : null}
-        <div className="sourceNote">Prototype live feed via an ESPN scoreboard adapter. Interest scoring is calculated by Game Radar.</div>
+        <div className="sourceNote">Score and odds feeds use configurable server-side adapters. Interest scoring is calculated by Game Radar.</div>
       </footer>
     </main>
   );

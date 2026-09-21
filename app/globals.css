@@ -568,3 +568,64 @@ footer{
   .gameBetFooter{grid-template-columns:58px 1fr;gap:7px;padding:9px 10px}
   .gameBetFooter>small{grid-column:1/-1}
 }
+
+/* COMPACT THREE-SECTION BET LAB */
+.compactTeaser{padding:12px}
+.compactTeaser .teaserBadge{margin-bottom:8px}
+.compactTeaser .teaserLegs{gap:5px}
+.compactTeaser .teaserLegs>div{padding:7px 8px}
+
+.gameTableRow{
+  border:1px solid #344035;background:#0f140f;margin-bottom:6px
+}
+.gameTableRow summary{
+  list-style:none;display:grid;grid-template-columns:minmax(190px,1.4fr) minmax(110px,.75fr) minmax(130px,.9fr) 76px;
+  gap:10px;align-items:center;padding:10px 12px;cursor:pointer
+}
+.gameTableRow summary::-webkit-details-marker{display:none}
+.gameTableRow summary:after{content:"＋";color:#697369;font:1000 14px "Courier New",monospace;position:absolute;right:8px}
+.gameTableRow[open] summary:after{content:"−"}
+.gameTableRow summary{position:relative;padding-right:28px}
+.tableMatch,.tableMarket,.tableBest,.tableIndex{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tableMatch strong{font-size:12px}
+.tableMatch small{color:#747d74;font-size:9px}
+.tableMarket span,.tableBest span,.tableIndex span{color:#687268;font:900 7px "Courier New",monospace;letter-spacing:.08em}
+.tableMarket strong,.tableBest strong{font:1000 10px "Courier New",monospace;color:#e5dfcf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tableMarket small{color:#8b948a;font-size:8px}
+.tableIndex{align-items:flex-end;text-align:right}
+.tableIndex strong{font:1000 20px/1 "Courier New",monospace}
+.tableIndex.best strong{color:var(--green)}
+.tableIndex.strong strong{color:var(--amber)}
+.tableIndex.lean strong{color:#ddd8c8}
+.tableIndex.pass strong{color:#687168}
+.gameTableExpand{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 10px 10px;border-top:1px solid #303a31;background:#0b100c}
+.tableBetOption{border:1px solid #303a31;background:#0d120e;padding:8px;min-width:0}
+.tableBetOption.suggested{border-color:#5d7448;box-shadow:inset 0 2px 0 var(--green)}
+.tableBetTop{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px}
+.tableBetTop span{color:#aeb6ad;font:900 7px "Courier New",monospace;letter-spacing:.06em}
+.tableBetTop b{color:var(--green);font:1000 6.5px "Courier New",monospace;letter-spacing:.05em}
+.tableTease{padding:7px 8px;background:#111a10;border:1px solid #3e5538;margin-bottom:6px}
+.tableTease span{display:block;color:#7c9173;font:900 6.5px "Courier New",monospace;letter-spacing:.08em}
+.tableTease strong{display:block;margin-top:3px;color:var(--green);font:1000 14px "Courier New",monospace}
+.tableStraight{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.tableStraight span{color:#677168;font:900 6.5px "Courier New",monospace;letter-spacing:.07em}
+.tableStraight strong{font:1000 10px "Courier New",monospace;color:#e1dccd}
+.tableStraight em{font-style:normal;color:var(--amber);font:1000 9px "Courier New",monospace}
+.tableBetOption>small{display:block;margin-top:5px;color:#7d867c;font-size:8px}
+.gameTableUnavailable{padding:12px;border-top:1px solid #303a31;color:#747d74;font:900 8px "Courier New",monospace}
+
+@media(max-width:760px){
+  .gameTableRow summary{grid-template-columns:minmax(130px,1.2fr) 86px 92px 54px;gap:6px;padding:9px 24px 9px 9px}
+  .tableMatch strong{font-size:10px}
+  .tableMarket strong,.tableBest strong{font-size:8px}
+  .tableIndex strong{font-size:17px}
+  .gameTableExpand{grid-template-columns:1fr 1fr;padding:7px;gap:5px}
+  .tableBetOption{padding:7px}
+  .tableTease strong{font-size:12px}
+}
+
+@media(max-width:460px){
+  .gameTableRow summary{grid-template-columns:minmax(120px,1.3fr) 78px 48px}
+  .tableBest{display:none}
+  .gameTableExpand{grid-template-columns:1fr 1fr}
+}

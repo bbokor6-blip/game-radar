@@ -38,7 +38,7 @@ function why(game){
   return parts.length?parts.join(" · ")+".":"One of the strongest games on the board.";
 }
 function GameSpotlight({game,rank,edition}){
-  const meta=gameMetadata(game), best=game.bestOpportunity;
+  const meta=gameMetadata(game);
   return <article className="wrGame">
     <div className="wrGameHead">
       <span className="wrRank">#{rank}</span>
@@ -53,7 +53,6 @@ function GameSpotlight({game,rank,edition}){
         {meta.rivalry?<span>Rivalry</span>:null}
         {game.marketConsensus?.line?<span>{game.marketConsensus.line}</span>:null}
       </div>
-      {best?<div className="wrPick"><span>Radar Pick</span><strong>{best.pick}</strong><small>{best.index} BetRadar Index</small></div>:null}
     </div>
   </article>;
 }
@@ -85,7 +84,6 @@ export default function Weekly(){
   const edition=getWeeklyEditorial(league,range.start);
   const games=(data.games||[]).slice().sort((a,b)=>(b.radarIndex?.score||b.interest?.score||0)-(a.radarIndex?.score||a.interest?.score||0));
   const top=games.slice(0,5);
-  const picks=games.filter(g=>g.bestOpportunity).sort((a,b)=>(b.bestOpportunity?.index||0)-(a.bestOpportunity?.index||0)).slice(0,3);
   const ranked=games.filter(g=>gameMetadata(g).rankedMatchup).length;
   const close=games.filter(g=>{const s=gameMetadata(g).spread;return s!=null&&s<=7.5}).length;
 
@@ -112,7 +110,6 @@ export default function Weekly(){
 
     {error?<div className="grEmpty">{error}</div>:loading?<div className="grEmpty">Building the weekly radar…</div>:<>
       <section className="wrSection"><div className="wrSectionHead"><div><span>START HERE</span><h2>5 games to know</h2></div><a href={"/scores?league="+league+"&week="+weekOffset}>Full board →</a></div><div className="wrGames">{top.map((g,i)=><GameSpotlight key={g.id} game={g} rank={i+1} edition={edition}/>)}</div></section>
-      <section className="wrSection"><div className="wrSectionHead"><div><span>BETRADAR</span><h2>3 picks worth a look</h2></div><a href={"/bets?league="+league+"&weekOffset="+weekOffset}>BetRadar →</a></div><div className="wrPickGrid">{picks.map(g=><article key={g.id} className="wrPickCard"><TeamPair game={g}/><strong>{g.bestOpportunity.pick}</strong><span>{g.bestOpportunity.index} BetRadar Index</span><p>{g.bestOpportunity.why}</p></article>)}{!picks.length?<div className="grEmpty">No strong betting signals yet.</div>:null}</div></section>
       <section className="wrSection wrTakeaway"><span>THE READ</span><h2>{top[0]?((top[0].away?.location||top[0].away?.short)+" @ "+(top[0].home?.location||top[0].home?.short)):"This week's board"} leads the Radar.</h2><p>{top[0]?(editorialTake(top[0],edition)||why(top[0])):"Check back as the slate fills in."}</p></section>
     </>}
   </main>;

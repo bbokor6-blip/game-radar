@@ -6,8 +6,8 @@ const LEAGUES=[
   ["cfb","COLLEGE FBS","Every FBS game · Top 25 featured"]
 ];
 const MODES=[
-  ["recap","RECAP","What happened?"],
-  ["live","LIVE","What matters now?"],
+  ["recap","RECAP","What happened last week?"],
+  ["live","THIS WEEK / LIVE GAMES","Live first · full weekly board"],
   ["ahead","WEEK AHEAD","What should I circle?"]
 ];
 
@@ -110,7 +110,7 @@ function GameRow({game,mode}){
         <TeamLine team={game.home} possession={game.possessionId===game.home.id} showScore={showScore}/>
       </div>
       <div className="interestSide">
-        <span className="interestLabel">{mode==="recap"?"RECAP":live?"LIVE INTEREST":"FUTURE INTEREST"}</span>
+        <span className="interestLabel">{live?"LIVE INTEREST":game.state==="post"?(mode==="recap"?"RECAP":"FINAL"):game.state==="pre"?"FUTURE INTEREST":"GAME INTEREST"}</span>
         <strong>{game.interest.score}</strong>
         <small>{game.interest.tier}</small>
       </div>
@@ -195,11 +195,10 @@ export default function Home(){
     return()=>{clearInterval(timer);document.removeEventListener("visibilitychange",onVisibility)};
   },[league,weekOffset,mode]);
 
-  const games=data.games||[];
+  const games=(data.games||[]).filter(g=>g.sport===league);
   const live=games.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
-  const finals=games.filter(g=>g.state==="post").sort((a,b)=>b.interest.score-a.interest.score);
-  const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>b.interest.score-a.interest.score);
-  const liveBoard=live.length?live:games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,10);
+  const finals=games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date));
   const weekNumber=games.find(g=>g.week)?.week||null;
   const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
 
@@ -267,15 +266,33 @@ export default function Home(){
           <BetBoard games={upcoming} league={league}/>
         </div>
       </>:<>
-        <div className="sectionIntro"><span>LIVE</span><h2>{live.length?"WHAT DESERVES YOUR SCREEN":"LATEST SCORES"}</h2><p>{live.length?"Close games receive the biggest Interest boost. Anything inside 10 points is called out immediately.":"No game is live right now. Showing the latest completed scores for this football week."}</p></div>
-        <section className="scoreList">
-          {liveBoard.length?liveBoard.map(g=><GameRow key={g.id} game={g} mode={g.state==="in"?"live":"recap"}/>):<div className="notice">NO GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
+        {live.length?<section className="weekScoreSection livePriority">
+          <div className="sectionIntro"><span>● LIVE NOW</span><h2>WHAT DESERVES YOUR SCREEN</h2><p>Live games are always pinned to the top, with the highest-interest games first.</p></div>
+          <div className="scoreList">
+            {live.map(g=><GameRow key={g.id} game={g} mode="live"/>)}
+          </div>
+        </section>:null}
+
+        {upcoming.length?<section className="weekScoreSection">
+          <div className="sectionIntro"><span>UP NEXT THIS WEEK</span><h2>UPCOMING</h2><p>Everything still to come in the selected football week.</p></div>
+          <div className="scoreList">
+            {upcoming.map(g=><GameRow key={g.id} game={g} mode="current"/>)}
+          </div>
+        </section>:null}
+
+        <section className="weekScoreSection">
+          <div className="sectionIntro"><span>FINAL THIS WEEK</span><h2>COMPLETED GAMES</h2><p>Every completed game from the selected football week, newest first.</p></div>
+          <div className="scoreList">
+            {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="current"/>):<div className="notice">NO COMPLETED GAMES YET THIS WEEK</div>}
+          </div>
         </section>
+
+        {!live.length&&!upcoming.length&&!finals.length?<div className="notice">NO GAMES FOUND FOR THIS FOOTBALL WEEK</div>:null}
       </>}
     </>}
 
     <footer>
-      {mode==="live"?"LIVE BOARD · AUTO-SCAN 30 SEC":"GAME COMMAND CENTER"}
+      {mode==="live"?"THIS WEEK / LIVE GAMES · AUTO-SCAN 30 SEC":"GAME COMMAND CENTER"}
       {data.generatedAt?" · "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}
       <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · ALL FBS GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
     </footer>

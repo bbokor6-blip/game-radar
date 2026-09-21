@@ -41,6 +41,26 @@ function indexClass(n){
   return "pass";
 }
 
+function formatAmerican(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return "—";
+  return (n>0?"+":"")+Math.round(n);
+}
+
+function tenDollarReturn(odds){
+  const n=Number(odds);
+  if(!Number.isFinite(n)||n===0)return null;
+  const profit=n>0?10*(n/100):10*(100/Math.abs(n));
+  return Math.round((10+profit)*100)/100;
+}
+
+function formatSpread(n){
+  const v=Number(n);
+  if(!Number.isFinite(v))return "—";
+  if(Math.abs(v)<.05)return "PK";
+  return (v>0?"+":"")+v.toFixed(1);
+}
+
 function oddsText(odds){
   const n=Number(odds);
   if(!Number.isFinite(n)||n===0)return "ODDS N/A";
@@ -153,14 +173,48 @@ function TeaserCard({size,legs}){
 
 function BoardRow({game}){
   const best=game.bestOpportunity;
-  return <article className="simpleBoardRow">
-    <div>
-      <strong>{matchup(game)}</strong>
-      <small>{gameTime(game)}</small>
+  const market=game.marketConsensus||{};
+  const available=Boolean(market.available);
+  const homeSpread=Number.isFinite(Number(market.homeMargin))?-Number(market.homeMargin):null;
+  const awaySpread=Number.isFinite(Number(market.homeMargin))?Number(market.homeMargin):null;
+  const total=Number.isFinite(Number(market.total))?Number(market.total):null;
+  const spreadSide=game.opportunities?.spread?.side;
+  const totalSide=game.opportunities?.total?.side;
+
+  const options=available?[
+    {key:"away-spread",label:teamDisplay(game.away)+" SPREAD",base:teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
+    {key:"home-spread",label:teamDisplay(game.home)+" SPREAD",base:teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
+    {key:"over",label:"OVER",base:total==null?"—":"OVER "+total.toFixed(1),odds:market.overOdds,tease:total==null?"—":"OVER "+(total-6).toFixed(1),suggested:totalSide==="over"},
+    {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
+  ]:[];
+
+  return <article className="gameBetCard">
+    <div className="gameBetHeader">
+      <div><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
+      <div className={"gameRadarScore "+indexClass(best?.index||0)}>
+        <span>BETRADAR INDEX</span><strong>{best?.index||0}</strong><small>{best?.label||"PASS"}</small>
+      </div>
     </div>
-    <div><span>MARKET</span><strong>{game.marketConsensus?.line||game.market?.details||"—"}</strong></div>
-    <div><span>BEST LOOK</span><strong>{best?.pick||"PASS"}{best?.americanOdds?" ("+oddsText(best.americanOdds)+")":""}</strong>{best?.payout?<small>$10 → {moneyText(best.payout.totalReturn)} total</small>:null}</div>
-    <div><span>BETRADAR</span><strong className={indexClass(best?.index||0)}>{best?.index||0}</strong></div>
+
+    {!available?<div className="fanduelUnavailable">FANDUEL LINE NOT AVAILABLE YET</div>:<>
+      <div className="fanduelBar"><span>FANDUEL</span><strong>{market.line||"LINE AVAILABLE"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
+      <div className="teaseMatrix">
+        {options.map(option=>{
+          const totalReturn=tenDollarReturn(option.odds);
+          return <div className={"teaseOption "+(option.suggested?"suggested":"")} key={option.key}>
+            <div className="teaseOptionTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:<small>OTHER SIDE</small>}</div>
+            <div className="baseBetLine"><span>STRAIGHT</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
+            {totalReturn!=null?<div className="unitPayout">$10 → ${totalReturn.toFixed(2)} total return</div>:null}
+            <div className="teasedBetLine"><span>6-PT TEASE</span><strong>{option.tease}</strong></div>
+          </div>;
+        })}
+      </div>
+      <div className="teaseNote">Teased lines show a 6-point adjustment from the current FanDuel line. Teaser payout depends on the full multi-leg ticket, so no standalone teaser odds are invented here.</div>
+    </>}
+
+    <div className="gameBetFooter">
+      <span>BEST LOOK</span><strong>{best?.pick||"PASS"}{best?.americanOdds?" "+formatAmerican(best.americanOdds):""}</strong>{best?.why?<small>{best.why}</small>:null}
+    </div>
   </article>;
 }
 
@@ -245,7 +299,7 @@ export default function BetsPage(){
       <section className="betSection">
         <div className="betSectionHead">
           <span>03</span>
-          <div><h2>EVERY GAME</h2><p>Current market number plus the strongest trend-based opportunity, if one exists.</p></div>
+          <div><h2>EVERY GAME · FANDUEL TEASE BOARD</h2><p>Every matchup shows the FanDuel line, straight-bet odds and $10 return, plus a 6-point tease in both spread directions and both total directions. The BetRadar-preferred side is highlighted.</p></div>
         </div>
         <div className="simpleBoard">
           {games.map(game=><BoardRow key={game.id} game={game}/>)}

@@ -202,14 +202,14 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
       </div>
       <div className="pickHeadline">
         <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
-        {item.highConviction?<span className="convictionBadge">HIGH CONVICTION</span>:item.index>=70?<span className="convictionBadge medium">STRONG INTEREST</span>:null}
+        {item.noBrainer?<span className="convictionBadge noBrainer">NO BRAINER</span>:item.highConviction?<span className="convictionBadge">HIGH CONVICTION</span>:null}
       </div>
       {item.payout?<div className="payoutStrip">
         <span>$10 BET</span>
         <strong>WIN {moneyText(item.payout.profit)}</strong>
         <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
       </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
-      {item.highConviction?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
+      {item.noBrainer?<div className="interestingWhy noBrainerWhy"><span>WHY THIS SCORES ABOVE 80</span><p>{item.why}</p></div>:item.highConviction?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:<p>{item.why}</p>}
       <div className="evidenceChips">
         {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
       </div>
@@ -222,7 +222,7 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
     <div className="confidenceIndex">
       <span>BETRADAR INDEX</span>
       <strong>{item.index}</strong>
-      <small>{item.index>=80?"STRONG LOOK":item.index>=70?"INTERESTING":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
+      <small>{item.index>80?"NO BRAINER":item.index>70?"HIGH CONVICTION":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
     </div>
   </article>;
 }
@@ -358,7 +358,7 @@ function BoardRow({game,league,generatedAt,weekStart,weekLabel,weekOffset,savedI
     <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,weekOffset}} title={matchup(game)}/></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.noBrainer?<small className="tableConviction noBrainerText">NO BRAINER</small>:best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
       <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
     </div>
 
@@ -596,7 +596,7 @@ export default function BetsPage(){
 
     <section className="heroStats">
       <div><span>FEATURED PICKS</span><strong>{top.length}</strong></div>
-      <div><span>HIGH CONVICTION</span><strong>{top.filter(x=>x.highConviction).length}</strong></div>
+      <div><span>HIGH CONVICTION 71+</span><strong>{top.filter(x=>x.highConviction).length}</strong></div>
       <div><span>SAVED THIS WEEK</span><strong>{weekSheet.length}</strong></div>
     </section>
 
@@ -679,9 +679,9 @@ export default function BetsPage(){
     </section>
 
     <section className="confidenceLegend">
-      <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
-      <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
-      <div className="lean"><strong>60–69</strong><span>WATCH</span></div>
+      <div className="best"><strong>81+</strong><span>NO BRAINER</span></div>
+      <div className="strong"><strong>71–80</strong><span>HIGH CONVICTION</span></div>
+      <div className="lean"><strong>60–70</strong><span>WATCH</span></div>
       <div className="pass"><strong>&lt;60</strong><span>LOW CONFIDENCE</span></div>
     </section>
     {error?<div className="notice error">{error}</div>:null}
@@ -691,7 +691,7 @@ export default function BetsPage(){
           <span>01</span>
           <div>
             <h2>TOP 10 BETS OF THE WEEK</h2>
-            <p>Ranked by BetRadar Index first, with college picks focused on Top 25 matchups plus only the strongest sleeper spots.</p>
+            <p>Ranked by BetRadar Index first. Scores above 70 are HIGH CONVICTION; scores above 80 are labeled NO BRAINER. College picks still favor Top 25 matchups plus the strongest sleeper spots.</p>
           </div>
           <div className="miniFilter" aria-label="Top bet type">
             {[
@@ -740,7 +740,7 @@ export default function BetsPage(){
             <span>FILTER</span>
             <button className={signalFilter==="all"?"active":""} onClick={()=>{setSignalFilter("all");setShowAllGames(false)}}>ALL</button>
             <button className={signalFilter==="70plus"?"active":""} onClick={()=>{setSignalFilter("70plus");setShowAllGames(false)}}>70+ SIGNAL</button>
-            <button className={signalFilter==="conviction"?"active":""} onClick={()=>{setSignalFilter("conviction");setShowAllGames(false)}}>HIGH CONVICTION</button>
+            <button className={signalFilter==="conviction"?"active":""} onClick={()=>{setSignalFilter("conviction");setShowAllGames(false)}}>HIGH CONVICTION 71+</button>
           </div>
           <div className="boardCount">{orderedGames.length} GAME{orderedGames.length===1?"":"S"}</div>
         </div>
@@ -770,6 +770,6 @@ export default function BetsPage(){
 
     <a className="mobileBetSheet" href="#bet-sheet">MY BETS · {weekSheet.length}</a>
 
-    <footer className="betsFooter">BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · MARKET AUTO-REFRESH 30 MIN{data.generatedAt?" · UPDATED "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</footer>
+    <footer className="betsFooter">NO BRAINER = BETRADAR INDEX ABOVE 80, NOT A GUARANTEE · BETRADAR INDEX = STRENGTH OF OPPORTUNITY SIGNAL, NOT WIN PROBABILITY · $10 UNIT · MARKET AUTO-REFRESH 30 MIN{data.generatedAt?" · UPDATED "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}</footer>
   </main>;
 }

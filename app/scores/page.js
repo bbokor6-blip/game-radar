@@ -71,6 +71,23 @@ function betIdea(game){
   return "MARKET WATCH";
 }
 
+function ShareButton({params,title="Game Radar"}){
+  const[copied,setCopied]=useState(false);
+  async function share(){
+    if(typeof window==="undefined")return;
+    const url=new URL("/scores",window.location.origin);
+    Object.entries(params||{}).forEach(([key,value])=>{if(value!=null&&value!=="")url.searchParams.set(key,String(value));});
+    try{
+      if(navigator.share)await navigator.share({title,url:url.toString()});
+      else if(navigator.clipboard)await navigator.clipboard.writeText(url.toString());
+      else return;
+      setCopied(true);
+      setTimeout(()=>setCopied(false),1400);
+    }catch{}
+  }
+  return <button className="shareMini" onClick={share} type="button">{copied?"COPIED":"SHARE"}</button>;
+}
+
 function TeamLine({team,possession,showScore=true}){
   return <div className="teamLine">
     <div className="teamLeft">
@@ -88,7 +105,7 @@ function TeamLine({team,possession,showScore=true}){
   </div>;
 }
 
-function GameRow({game,mode}){
+function GameRow({game,mode,league,weekOffset=0}){
   const live=game.state==="in";
   const showScore=game.state!=="pre";
   const close=closeCallout(game);
@@ -96,10 +113,13 @@ function GameRow({game,mode}){
   const watch=live&&game.interest.score>=58;
   const cls=[hot?"hot":"",watch&&!hot?"watch":"",close?"closeMatch":""].filter(Boolean).join(" ");
 
-  return <article className={"gameRow "+cls}>
+  return <article id={"game-"+game.id} className={"gameRow "+cls}>
     <div className="gameRowTop">
       <span>{game.sport==="cfb"?"COLLEGE FBS":"NFL"}</span>
-      <span className={live?"liveText":""}>{live?"● LIVE":game.state==="post"?"FINAL":gameTime(game)}</span>
+      <div className="gameRowStatus">
+        <span className={live?"liveText":""}>{live?"● LIVE":game.state==="post"?"FINAL":gameTime(game)}</span>
+        <ShareButton params={{league,week:weekOffset,mode:mode==="current"?"live":mode,game:game.id}} title={matchupLabel(game)}/>
+      </div>
     </div>
 
     {close?<div className="closeCallout">{close}</div>:null}
@@ -123,6 +143,27 @@ function GameRow({game,mode}){
 
     <div className="reasonLine">{game.interest.reason}{live&&game.downDistance?" · "+game.downDistance:""}</div>
   </article>;
+}
+
+function GameOfMoment({game,league,weekOffset}){
+  if(!game)return null;
+  const status=[game.status,game.downDistance].filter(Boolean).join(" · ");
+  return <section id={"game-"+game.id} className="gameMoment">
+    <div className="momentTop">
+      <div><span>● LIVE</span><strong>GAME OF THE MOMENT</strong></div>
+      <ShareButton params={{league,week:weekOffset,mode:"live",game:game.id}} title={matchupLabel(game)}/>
+    </div>
+    <div className="momentScore">
+      <div><small>{game.away.rank?"#"+game.away.rank+" ":""}{game.away.short}</small><strong>{game.away.score}</strong></div>
+      <span>—</span>
+      <div><small>{game.home.rank?"#"+game.home.rank+" ":""}{game.home.short}</small><strong>{game.home.score}</strong></div>
+    </div>
+    <div className="momentMeta">
+      <span>{status||"LIVE NOW"}</span>
+      <b>INTEREST {game.interest.score}</b>
+    </div>
+    <p>{game.interest.reason}{game.downDistance?" · "+game.downDistance:""}</p>
+  </section>;
 }
 
 function BetBoard({games,league}){
@@ -154,12 +195,38 @@ export default function Home(){
   const[league,setLeague]=useState("nfl");
   const[weekOffset,setWeekOffset]=useState(0);
   const[mode,setMode]=useState("live");
+  const[prefsReady,setPrefsReady]=useState(false);
   const[data,setData]=useState({games:[],generatedAt:null});
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
   const[refreshing,setRefreshing]=useState(false);
 
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
+  const hasLiveNow=(data.games||[]).some(g=>g.sport===league&&g.state==="in");
+
+  useEffect(()=>{
+    if(typeof window==="undefined")return;
+    const params=new URLSearchParams(window.location.search);
+    const qLeague=params.get("league");
+    const saved=window.localStorage.getItem("gameRadarLeague");
+    const qMode=params.get("mode");
+    const qWeek=Number(params.get("week"));
+    const nextMode=["recap","live","ahead"].includes(qMode)?qMode:"live";
+    setLeague(qLeague==="cfb"||qLeague==="nfl"?qLeague:saved==="cfb"?"cfb":"nfl");
+    setMode(nextMode);
+    setWeekOffset(Number.isFinite(qWeek)&&params.has("week")?Math.max(-8,Math.min(2,qWeek)):nextMode==="recap"?-1:nextMode==="ahead"?1:0);
+    setPrefsReady(true);
+  },[]);
+
+  useEffect(()=>{
+    if(!prefsReady||typeof window==="undefined")return;
+    window.localStorage.setItem("gameRadarLeague",league);
+    const url=new URL(window.location.href);
+    url.searchParams.set("league",league);
+    url.searchParams.set("mode",mode);
+    url.searchParams.set("week",String(weekOffset));
+    window.history.replaceState({},"",url.pathname+url.search+url.hash);
+  },[league,mode,weekOffset,prefsReady]);
 
   function chooseMode(next){
     setMode(next);
@@ -185,31 +252,45 @@ export default function Home(){
   }
 
   useEffect(()=>{
+    if(!prefsReady)return;
     setLoading(true);
     load(false,weekOffset,league);
-    if(mode!=="live"||weekOffset!==0)return;
+  },[league,weekOffset,mode,prefsReady]);
+
+  useEffect(()=>{
+    if(!prefsReady||mode!=="live"||weekOffset!==0)return;
+    const delay=hasLiveNow?30000:5*60*1000;
     const poll=()=>{if(typeof document==="undefined"||document.visibilityState==="visible")load(false,0,league);};
-    const timer=setInterval(poll,30000);
+    const timer=setInterval(poll,delay);
     const onVisibility=()=>{if(document.visibilityState==="visible")load(false,0,league);};
     document.addEventListener("visibilitychange",onVisibility);
     return()=>{clearInterval(timer);document.removeEventListener("visibilitychange",onVisibility)};
-  },[league,weekOffset,mode]);
+  },[league,weekOffset,mode,prefsReady,hasLiveNow]);
 
   const games=(data.games||[]).filter(g=>g.sport===league);
   const live=games.filter(g=>g.state==="in").sort((a,b)=>b.interest.score-a.interest.score);
   const finals=games.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
   const upcoming=games.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const gameOfMoment=live[0]||null;
+  const otherLive=live.slice(1);
   const weekNumber=games.find(g=>g.week)?.week||null;
   const weekTitle=(league==="nfl"?"NFL":"COLLEGE")+(weekNumber?" WEEK "+weekNumber:" FOOTBALL WEEK")+" · "+rangeLabel(range);
+
+  useEffect(()=>{
+    if(loading||!games.length||typeof window==="undefined")return;
+    const game=new URLSearchParams(window.location.search).get("game");
+    if(!game)return;
+    setTimeout(()=>document.getElementById("game-"+game)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+  },[loading,games.length,league,weekOffset]);
 
   return <main className="shell">
     <a className="suiteHome" href="/">← GAME RADAR HOME</a>
     <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="betradar" href="/bets">
+      <a className="betradar" href={"/bets?league="+league}>
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>
-      <a className="active gameradar" href="/scores">
+      <a className="active gameradar" href={"/scores?league="+league+"&mode="+mode+"&week="+weekOffset}>
         <strong>GAMERADAR</strong>
         <small>Live scores · what to watch</small>
       </a>
@@ -255,36 +336,37 @@ export default function Home(){
       {mode==="recap"?<>
         <div className="sectionIntro"><span>RECAP</span><h2>THE GAMES THAT WERE WORTH IT</h2><p>Finished games ranked by closeness, drama and matchup importance.</p></div>
         <section className="scoreList">
-          {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="recap"/>):<div className="notice">NO FINALS FOUND FOR THIS FOOTBALL WEEK</div>}
+          {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="recap" league={league} weekOffset={weekOffset}/>):<div className="notice">NO FINALS FOUND FOR THIS FOOTBALL WEEK</div>}
         </section>
       </>:mode==="ahead"?<>
         <div className="sectionIntro"><span>WEEK AHEAD</span><h2>EVERY UPCOMING GAME GETS A FUTURE INTEREST SCORE</h2><p>Close projected matchups matter most. Spread, records and matchup context shape every 0–100 score.</p></div>
         <div className="aheadGrid">
           <section className="scoreList">
             <div className="listHeader"><span>UPCOMING GAMES</span><span>INTEREST</span></div>
-            {upcoming.length?upcoming.map(g=><GameRow key={g.id} game={g} mode="ahead"/>):<div className="notice">NO UPCOMING GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
+            {upcoming.length?upcoming.map(g=><GameRow key={g.id} game={g} mode="ahead" league={league} weekOffset={weekOffset}/>):<div className="notice">NO UPCOMING GAMES FOUND FOR THIS FOOTBALL WEEK</div>}
           </section>
           <BetBoard games={upcoming} league={league}/>
         </div>
       </>:<>
         {live.length?<section className="weekScoreSection livePriority">
-          <div className="sectionIntro"><span>● LIVE NOW</span><h2>WHAT DESERVES YOUR SCREEN</h2><p>Live games are always pinned to the top, with the highest-interest games first.</p></div>
-          <div className="scoreList">
-            {live.map(g=><GameRow key={g.id} game={g} mode="live"/>)}
-          </div>
+          <div className="sectionIntro"><span>● LIVE NOW</span><h2>WHAT DESERVES YOUR SCREEN</h2><p>GameRadar pins the best live action to the top, then ranks every other live game underneath it.</p></div>
+          <GameOfMoment game={gameOfMoment} league={league} weekOffset={weekOffset}/>
+          {otherLive.length?<div className="scoreList otherLiveList">
+            {otherLive.map(g=><GameRow key={g.id} game={g} mode="live" league={league} weekOffset={weekOffset}/>)}
+          </div>:null}
         </section>:null}
 
         {upcoming.length?<section className="weekScoreSection">
           <div className="sectionIntro"><span>UP NEXT THIS WEEK</span><h2>UPCOMING</h2><p>Everything still to come in the selected football week.</p></div>
           <div className="scoreList">
-            {upcoming.map(g=><GameRow key={g.id} game={g} mode="current"/>)}
+            {upcoming.map(g=><GameRow key={g.id} game={g} mode="current" league={league} weekOffset={weekOffset}/>)}
           </div>
         </section>:null}
 
         <section className="weekScoreSection">
           <div className="sectionIntro"><span>FINAL THIS WEEK</span><h2>COMPLETED GAMES</h2><p>Every completed game from the selected football week, newest first.</p></div>
           <div className="scoreList">
-            {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="current"/>):<div className="notice">NO COMPLETED GAMES YET THIS WEEK</div>}
+            {finals.length?finals.map(g=><GameRow key={g.id} game={g} mode="current" league={league} weekOffset={weekOffset}/>):<div className="notice">NO COMPLETED GAMES YET THIS WEEK</div>}
           </div>
         </section>
 
@@ -293,7 +375,7 @@ export default function Home(){
     </>}
 
     <footer>
-      {mode==="live"?"THIS WEEK / LIVE GAMES · AUTO-SCAN 30 SEC":"GAME COMMAND CENTER"}
+      {mode==="live"?(hasLiveNow?"THIS WEEK / LIVE GAMES · LIVE AUTO-SCAN 30 SEC":"THIS WEEK / LIVE GAMES · CHECKING EVERY 5 MIN UNTIL LIVE"):"GAME COMMAND CENTER"}
       {data.generatedAt?" · "+new Date(data.generatedAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""}
       <div>{league==="nfl"?"NFL · ALL GAMES":"COLLEGE · ALL FBS GAMES"} · CLOSE MATCHUPS WEIGHTED HEAVILY</div>
     </footer>

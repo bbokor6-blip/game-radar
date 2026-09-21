@@ -63,7 +63,7 @@ function opportunityTag(item){
   const ranked=rankedCount(item.game);
   if(ranked===2)return "TOP 25 MATCHUP";
   if(ranked===1)return "RANKED MATCHUP";
-  return item.index>=76?"SLEEPER PICK":"UNDER THE RADAR";
+  return item.index>=76?"SLEEPER SIGNAL":"UNDER THE RADAR";
 }
 function featuredOpportunities(games){
   return allOpportunities(games).filter(item=>{
@@ -674,7 +674,7 @@ export default function BetsPage(){
 
     <nav className="brPrimaryNav">
       <div className="brPrimaryLinks">
-        <a href="#top">Top Bets</a>
+        <a href="#top">Top Signals</a>
         <a href="#all">All Games</a>
         <a href="#parlays">Parlays</a>
       </div>
@@ -702,7 +702,7 @@ export default function BetsPage(){
     {loading?<div className="grEmpty">Loading BetRadar…</div>:<>
       <section className="brSection" id="top">
         <div className="grSectionHead">
-          <div><h2>Top Bets</h2><p>{weekName(weekOffset)} · {weekLabel} · strongest current signals</p></div>
+          <div><h2>Top Signals</h2><p>{weekName(weekOffset)} · {weekLabel} · live model signals, not locked Radar Picks</p></div>
           <button onClick={()=>setFiltersOpen(true)}>Narrow board</button>
         </div>
         {featured?<BetPickCard item={featured} featured league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,featured.game.id,pickKeyForOpportunity(featured)))} onToggleSave={toggleSavedPick}/>:<div className="grEmpty">No qualifying betting signals yet.</div>}
@@ -724,7 +724,7 @@ export default function BetsPage(){
 
       <section className="brSection" id="all">
         <div className="grSectionHead">
-          <div><h2>All Games</h2><p>Best BetRadar look from every game with a market.</p></div>
+          <div><h2>All Games</h2><p>Strongest current BetRadar signal from every game with a market.</p></div>
         </div>
         <div className="brGameList">
           {allGames.length?allGames.map(game=><BetGameRow key={game.id} game={game} league={league} weekStart={range.start} weekLabel={weekLabel} savedIds={savedIds} onToggleSave={toggleSavedPick}/>):<div className="grEmpty">No games match these filters.</div>}

@@ -77,6 +77,29 @@ function marketNumber(value){
   const n=Number(value);
   return Number.isFinite(n)?n:null;
 }
+function marketFreshness(ts,now=Date.now()){
+  if(!ts)return "CHECK PENDING";
+  const minutes=Math.max(0,Math.floor((now-new Date(ts).getTime())/60000));
+  if(minutes<2)return "CHECKED NOW";
+  if(minutes<=60)return "CHECKED "+minutes+"M AGO";
+  return "STALE · "+minutes+"M AGO";
+}
+function ShareButton({path,params,title="Game Radar"}){
+  const[copied,setCopied]=useState(false);
+  async function share(){
+    if(typeof window==="undefined")return;
+    const url=new URL(path,window.location.origin);
+    Object.entries(params||{}).forEach(([key,value])=>{if(value!=null&&value!=="")url.searchParams.set(key,String(value));});
+    try{
+      if(navigator.share)await navigator.share({title,url:url.toString()});
+      else if(navigator.clipboard)await navigator.clipboard.writeText(url.toString());
+      else return;
+      setCopied(true);
+      setTimeout(()=>setCopied(false),1400);
+    }catch{}
+  }
+  return <button className="shareMini" onClick={share} type="button">{copied?"COPIED":"SHARE"}</button>;
+}
 
 function allOpportunities(games){
   const out=[];
@@ -87,32 +110,34 @@ function allOpportunities(games){
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
-function OpportunityCard({item,rank}){
+function OpportunityCard({item,rank,league,generatedAt}){
   const g=item.game;
   const cls=indexClass(item.index);
-  return <article className={"simplePick "+cls}>
+  return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls}>
     <div className="simplePickRank">#{rank}</div>
     <div className="simplePickMain">
       <div className="simpleMatch">
         <strong>{matchup(g)}</strong>
         <small>{gameTime(g)} · {item.type}</small>
+        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase()}} title={matchup(g)+" · "+item.pick}/>
       </div>
       <div className="pickHeadline">
         <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
-        {item.index>=80?<span className="convictionBadge">HIGH CONVICTION</span>:item.index>=70?<span className="convictionBadge medium">STRONG INTEREST</span>:null}
+        {item.highConviction?<span className="convictionBadge">HIGH CONVICTION</span>:item.index>=70?<span className="convictionBadge medium">STRONG INTEREST</span>:null}
       </div>
       {item.payout?<div className="payoutStrip">
         <span>$10 BET</span>
         <strong>WIN {moneyText(item.payout.profit)}</strong>
         <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
       </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
-      {item.index>=80?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
+      {item.highConviction?<div className="interestingWhy convictionWhy"><span>WHY WE HAVE CONVICTION</span><p>{item.why}</p></div>:item.index>=70?<div className="interestingWhy"><span>WHY THIS IS INTERESTING</span><p>{item.why}</p></div>:<p>{item.why}</p>}
       <div className="evidenceChips">
         {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
       </div>
       <div className="simpleWhy">
         <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
         {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
+        <small>{g.marketConsensus?.providerCount?g.marketConsensus.providerCount+" BOOK"+(g.marketConsensus.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small>
       </div>
     </div>
     <div className="confidenceIndex">
@@ -191,7 +216,7 @@ function TeaserCard({size,legs,number}){
   </article>;
 }
 
-function BoardRow({game}){
+function BoardRow({game,league,generatedAt}){
   const best=game.bestOpportunity;
   const market=game.marketConsensus||{};
   const available=Boolean(market.available);
@@ -209,11 +234,11 @@ function BoardRow({game}){
     {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
   ]:[];
 
-  return <article className="gameTableRow openRow">
+  return <article id={"game-"+game.id} className="gameTableRow openRow">
     <div className="gameTableSummary">
-      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small></div>
-      <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}</div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.index>=80?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
+      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id}} title={matchup(game)}/></div>
+      <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
       <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
     </div>
 
@@ -233,7 +258,9 @@ function BoardRow({game}){
 
 export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
-  const[data,setData]=useState({games:[],methodology:null});
+  const[prefsReady,setPrefsReady]=useState(false);
+  const[data,setData]=useState({games:[],methodology:null,generatedAt:null});
+  const[nowTick,setNowTick]=useState(()=>Date.now());
   const[showAllGames,setShowAllGames]=useState(false);
   const[collegeSort,setCollegeSort]=useState("radar");
   const[loading,setLoading]=useState(true);
@@ -241,11 +268,35 @@ export default function BetsPage(){
   const range=useMemo(()=>footballRange(1),[]);
 
   useEffect(()=>{
+    if(typeof window==="undefined")return;
+    const q=new URLSearchParams(window.location.search).get("league");
+    const saved=window.localStorage.getItem("gameRadarLeague");
+    setLeague(q==="cfb"||q==="nfl"?q:saved==="cfb"?"cfb":"nfl");
+    setPrefsReady(true);
+  },[]);
+
+  useEffect(()=>{
+    if(!prefsReady||typeof window==="undefined")return;
+    window.localStorage.setItem("gameRadarLeague",league);
+    const url=new URL(window.location.href);
+    url.searchParams.set("league",league);
+    window.history.replaceState({},"",url.pathname+url.search+url.hash);
+  },[league,prefsReady]);
+
+  useEffect(()=>{
+    const timer=setInterval(()=>setNowTick(Date.now()),60000);
+    return()=>clearInterval(timer);
+  },[]);
+
+  useEffect(()=>{
+    if(!prefsReady)return;
     let ignore=false;
-    async function load(){
-      setShowAllGames(false);
-      setCollegeSort("radar");
-      setLoading(true);
+    async function load(initial=false){
+      if(initial){
+        setShowAllGames(false);
+        setCollegeSort("radar");
+        setLoading(true);
+      }
       try{
         const r=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
         if(!r.ok)throw new Error();
@@ -262,7 +313,7 @@ export default function BetsPage(){
       if(typeof document==="undefined"||document.visibilityState==="visible")load(false);
     },30*60*1000);
     return()=>{ignore=true;clearInterval(timer)};
-  },[league]);
+  },[league,prefsReady]);
 
   const games=(data.games||[]).filter(g=>g.sport===league);
   const orderedGames=useMemo(()=>{
@@ -284,6 +335,16 @@ export default function BetsPage(){
   },[games,league,collegeSort]);
   const visibleGames=showAllGames?orderedGames:orderedGames.slice(0,15);
   const opportunities=allOpportunities(games);
+
+  useEffect(()=>{
+    if(loading||!games.length||typeof window==="undefined")return;
+    const params=new URLSearchParams(window.location.search);
+    const game=params.get("game");
+    if(!game)return;
+    const bet=params.get("bet");
+    const id=bet?"bet-"+game+"-"+bet:"game-"+game;
+    setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"center"}),80);
+  },[loading,games.length,league]);
   const top=opportunities.slice(0,10);
   const teaserPool=games.map(teaserCandidate).filter(Boolean).sort((a,b)=>b.score-a.score);
   const teaserGroups=[
@@ -296,11 +357,11 @@ export default function BetsPage(){
   return <main className="betsShell">
     <a className="suiteHome" href="/">← GAME RADAR HOME</a>
     <nav className="productSwitcher" aria-label="Game Radar products">
-      <a className="active betradar" href="/bets">
+      <a className="active betradar" href={"/bets?league="+league}>
         <strong>BETRADAR</strong>
         <small>Bets · confidence · teasers</small>
       </a>
-      <a className="gameradar" href="/scores">
+      <a className="gameradar" href={"/scores?league="+league}>
         <strong>GAMERADAR</strong>
         <small>Live scores · what to watch</small>
       </a>
@@ -322,6 +383,12 @@ export default function BetsPage(){
     </div>
 
 
+    <section className={"marketTrust "+(data.generatedAt&&Date.now()-new Date(data.generatedAt).getTime()>60*60000?"stale":"")}>
+      <span>MARKET STATUS</span>
+      <strong>{marketFreshness(data.generatedAt,nowTick)}</strong>
+      <small>LINES CACHED ≤15 MIN · {data.methodology?.currentOddsGamesHydrated??0}/{data.methodology?.currentGames??0} GAMES MULTI-BOOK CHECKED</small>
+    </section>
+
     <section className="confidenceLegend">
       <div className="best"><strong>80+</strong><span>STRONG LOOK</span></div>
       <div className="strong"><strong>70–79</strong><span>INTERESTING</span></div>
@@ -339,7 +406,7 @@ export default function BetsPage(){
           </div>
         </div>
         <div className="simplePickList">
-          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
+          {top.length?top.map((item,i)=><OpportunityCard key={item.game.id+"-"+item.type} item={item} rank={i+1} league={league} generatedAt={data.generatedAt}/>):<div className="notice">NOT ENOUGH TREND + MARKET EVIDENCE YET.</div>}
         </div>
       </section>
 
@@ -367,7 +434,7 @@ export default function BetsPage(){
           </div>:null}
         </div>
         <div className="simpleBoard">
-          {visibleGames.map(game=><BoardRow key={game.id} game={game}/>)}
+          {visibleGames.map(game=><BoardRow key={game.id} game={game} league={league} generatedAt={data.generatedAt}/>)}
         </div>
         {orderedGames.length>15?<button className="showMoreGames" onClick={()=>setShowAllGames(v=>!v)}>
           {showAllGames?"SHOW TOP 15 ONLY":"SHOW ALL "+orderedGames.length+" GAMES"}

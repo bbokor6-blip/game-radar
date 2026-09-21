@@ -25,7 +25,7 @@ export default function Home(){
  const recent=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,12);
  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,10);
  return <main className="shell">
-  <header className="stadiumHeader"><div className="bolt b1"/><div className="bolt b2"/><div><div className="brand">GAME<span>RADAR</span></div><div className="headerKicker">LIVE FOOTBALL COMMAND CENTER</div><h1>WHAT SHOULD<br/>I WATCH?</h1><p>Every game on the board. Ranked by urgency.</p></div><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></header>
+  <header className="stadiumHeader"><div className="bolt b1"/><div className="bolt b2"/><div><div className="brand">GAME<span>RADAR</span></div><div className="headerKicker">LIVE FOOTBALL COMMAND CENTER</div><h1>GAME COMMAND<br/>CENTER</h1><p>Every game on the board. Ranked by urgency.</p></div><button className="refresh" onClick={()=>load(true)}>{refreshing?"SCANNING":"↻ SCAN"}</button></header>
   <nav className="tabs">{TABS.map(([v,l])=><button key={v} className={tab===v?"active":""} onClick={()=>setTab(v)}>{l}</button>)}</nav>
   {error?<div className="notice error">{error}</div>:null}
   {loading?<div className="notice">SCANNING THE BOARD...</div>:<>

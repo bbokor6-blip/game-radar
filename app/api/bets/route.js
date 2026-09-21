@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchScoreboard, fetchSeasonScoreboard, fetchConsensusOdds } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
-import { buildTrendProfiles, consensusMarket, evaluateOpportunity, marketSummary } from "../../../lib/opportunity";
+import { buildTrendProfiles, buildVegasHistory, consensusMarket, evaluateOpportunity, marketSummary } from "../../../lib/opportunity";
 
 export const dynamic = "force-dynamic";
 
@@ -36,12 +36,13 @@ export async function GET(request){
     const upcoming=rankGames(weekGames.filter(g=>g.state==="pre"));
     const history=seasonGames.filter(g=>g.state==="post"&&new Date(g.date)<new Date(start+"T12:00:00Z"));
     const profiles=buildTrendProfiles(history);
+    const vegasHistory=buildVegasHistory(history,league);
 
     const oddsResults=await mapLimit(upcoming.slice(0,32),8,game=>fetchConsensusOdds(league,game.sourceId));
 
     const games=upcoming.map((game,index)=>{
       const market=consensusMarket(game,oddsResults[index]||[]);
-      const opportunities=evaluateOpportunity(game,profiles,market);
+      const opportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league);
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
       return {
@@ -58,8 +59,11 @@ export async function GET(request){
       league,year,range:{start,end},
       methodology:{
         name:"Bet Radar",
-        description:"Transparent opportunity signals from ATS/total trends and current public market lines. No independent projected spread.",
-        historyGames:history.length
+        description:"Transparent opportunity signals from ATS/total trends, historical market outcomes and current public market lines. No independent projected spread.",
+        historyGames:history.length,
+        historicalSpreadGames:vegasHistory.spreadGames,
+        historicalTotalGames:vegasHistory.totalGames,
+        vegasHistory
       },
       games
     },{headers:{"Cache-Control":"public, s-maxage=300, stale-while-revalidate=300"}});

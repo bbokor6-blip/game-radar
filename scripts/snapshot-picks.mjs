@@ -48,6 +48,7 @@ async function main() {
     return {
       ...generated,...locked,
       league,betRadarIndex,
+      gameIndex:locked.gameIndex??locked.radarIndex??generated.gameIndex,
       radarIndex:locked.radarIndex??generated.radarIndex,
       confidenceBand:pickConfidenceBand(betRadarIndex)
     };

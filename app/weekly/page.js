@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { gameMetadata } from "../../lib/gameMetadata";
 import { getWeeklyEditorial, editorialTake } from "../../lib/weeklyEditorial";
+import { gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
 
 function footballRange(offset=0){
@@ -53,11 +54,13 @@ function GameSpotlight({game,rank,edition}){
   const meta=gameMetadata(game);
   const awayFact=teamFact(game.away,game.teamForm?.away);
   const homeFact=teamFact(game.home,game.teamForm?.home);
+  const index=gameIndexScore(game);
+  const tier=gameIndexTier(index);
   return <article className="wrGame">
     <div className="wrGameHead">
       <span className="wrRank">#{rank}</span>
       <div><TeamPair game={game}/><small>{new Date(game.date).toLocaleString([],{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}{meta.broadcasts?.[0]?" · "+meta.broadcasts[0]:""}</small></div>
-      <span className="wrRadarIndex" title="RadarIndex">{game.radarIndex?.score??game.interest?.score??"—"}</span>
+      <span className={"wrRadarIndex indexTier-"+tier.key} title={"GameIndex · "+tier.label}>{index}</span>
     </div>
     <p>{editorialTake(game,edition)||why(game)}</p>
     {(awayFact||homeFact)?<div className="wrHardFacts">
@@ -101,7 +104,7 @@ export default function Weekly(){
   },[league,weekOffset,range.start,range.end]);
 
   const edition=getWeeklyEditorial(league,range.start);
-  const games=(data.games||[]).slice().sort((a,b)=>(b.radarIndex?.score||b.interest?.score||0)-(a.radarIndex?.score||a.interest?.score||0));
+  const games=(data.games||[]).slice().sort((a,b)=>gameIndexScore(b)-gameIndexScore(a));
   const top=games.slice(0,5);
   const ranked=games.filter(g=>gameMetadata(g).rankedMatchup).length;
   const close=games.filter(g=>{const s=gameMetadata(g).spread;return s!=null&&s<=7.5}).length;

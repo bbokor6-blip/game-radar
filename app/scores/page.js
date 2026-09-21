@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation } from "../../lib/agentSearch";
 import { gameMetadata } from "../../lib/gameMetadata";
+import { gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
 
 function footballRange(offset=0){
@@ -75,7 +76,7 @@ function importanceLabel(game){
   if(game.state==="in"&&Math.abs(Number(game.home.score)-Number(game.away.score))<=8)return "Close Game";
   if(meta.rivalry)return "Rivalry";
   if(meta.rankedMatchup)return "Ranked Matchup";
-  if((game.interest?.score||0)>=76)return "Must Watch";
+  if(gameIndexScore(game)>=80)return "Must Watch";
   if(meta.conferenceGame)return "Conference Game";
   if(meta.undefeatedInvolved)return "Undefeated Team";
   if(meta.spread!=null&&meta.spread<=7.5)return "Close Game";
@@ -133,13 +134,15 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
   const label=importanceLabel(game);
   const status=live?(game.status||[game.period?"Q"+game.period:null,game.clock].filter(Boolean).join(" ")):final?"Final":kickoff(game);
   const context=contextLine(game);
+  const index=gameIndexScore(game);
+  const indexTier=gameIndexTier(index);
 
   return <article className={"grGameCard "+(featured?"featured ":"")+(live?"live ":"")}>
     <div className="grGameTop">
       <span className={"grStatus "+(live?"live":"")}>{live?"● LIVE · "+status:status}</span>
       <div className="grGameSignals">
         <span className="grImportance">{label}</span>
-        <span className="grRadarMark" title="RadarIndex" aria-label={"RadarIndex score "+(game.radarIndex?.score??game.interest?.score??"unavailable")}>{game.radarIndex?.score??game.interest?.score??"—"}</span>
+        <span className={"grRadarMark indexTier-"+indexTier.key} title={"GameIndex · "+indexTier.label} aria-label={"GameIndex score "+index+", "+indexTier.label}>{index}</span>
       </div>
     </div>
     <div className="grTeams">
@@ -157,7 +160,8 @@ function GameCard({game,featured=false,favorites,onToggleFavorite,league,weekOff
       <div>
         {context?<span>{context}</span>:null}
         {game.venueCity?<span>{game.venueCity}{game.venueState?", "+game.venueState:""}</span>:null}
-        <span>RadarIndex: <strong>{game.radarIndex?.score??game.interest?.score??"—"}</strong></span>
+        <span>GameIndex: <strong>{index}</strong> · {indexTier.label}</span>
+        <a href="/indexes">How the indexes work →</a>
         <a href={"/bets?league="+league+"&weekOffset="+Math.max(0,weekOffset)+"&game="+game.id}>Open in BetRadar →</a>
       </div>
     </details>
@@ -274,9 +278,8 @@ export default function Scores(){
     return true;
   }),[games,filters,favoritesOnly,favorites,view,hasLive]);
 
-  const radarScore=g=>g.radarIndex?.score??g.interest?.score??0;
-  const live=filtered.filter(g=>g.state==="in").sort((a,b)=>radarScore(b)-radarScore(a));
-  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>radarScore(b)-radarScore(a)||new Date(a.date)-new Date(b.date));
+  const live=filtered.filter(g=>g.state==="in").sort((a,b)=>gameIndexScore(b)-gameIndexScore(a));
+  const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>gameIndexScore(b)-gameIndexScore(a)||new Date(a.date)-new Date(b.date));
   const finals=filtered.filter(g=>g.state==="post").sort((a,b)=>new Date(b.date)-new Date(a.date));
   const featured=live[0]||upcoming[0]||null;
   const otherLive=featured&&featured.state==="in"?live.slice(1):live;

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import RadarMenu from "../components/RadarMenu";
+import { betIndexTier } from "../../lib/indexTiers";
 
 function footballRange(offset=0){
   const now=new Date(), day=now.getDay(), daysSinceTuesday=(day+5)%7;
@@ -31,10 +32,7 @@ function weekRecord(picks=[]){
   return {wins,losses,pushes,decisions:wins+losses};
 }
 function confidenceBand(index){
-  const score=Number(index)||0;
-  if(score>=80)return "HIGH CONFIDENCE";
-  if(score>=70)return "MODEL LEAN";
-  return "FULL-SLATE PICK";
+  return betIndexTier(index).label.toUpperCase();
 }
 
 export default function RadarPicks(){
@@ -89,18 +87,24 @@ export default function RadarPicks(){
   const currentIndex=pick=>liveReady&&Object.hasOwn(liveSignals,pick.gameId)?liveSignals[pick.gameId].index:pick.betRadarIndex??null;
   const picks=allPicks.filter(p=>{
     const index=currentIndex(p)||0;
-    return confidence==="all"||(confidence==="high"?index>=80:index>=70&&index<80);
+    return confidence==="all"||
+      (confidence==="best"&&index>=80)||
+      (confidence==="strong"&&index>=70&&index<80)||
+      (confidence==="lean"&&index>=60&&index<70)||
+      (confidence==="pass"&&index<60);
   });
   const record=weekRecord(allPicks);
-  const highCount=allPicks.filter(p=>(currentIndex(p)||0)>=80).length;
-  const leanCount=allPicks.filter(p=>(currentIndex(p)||0)>=70&&(currentIndex(p)||0)<80).length;
+  const bestCount=allPicks.filter(p=>(currentIndex(p)||0)>=80).length;
+  const strongCount=allPicks.filter(p=>(currentIndex(p)||0)>=70&&(currentIndex(p)||0)<80).length;
+  const leanCount=allPicks.filter(p=>(currentIndex(p)||0)>=60&&(currentIndex(p)||0)<70).length;
+  const passCount=allPicks.filter(p=>(currentIndex(p)||0)<60).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const spread=feedback.byType?.SPREAD;
   const total=feedback.byType?.TOTAL;
   const high=feedback.byBand?.["80+"];
   const leans=feedback.byBand?.["70-79"];
-  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["HIGH CONFIDENCE · 80+",high]:null,leans&&leans.decisions>=6?["MODEL LEANS · 70–79",leans]:null].filter(Boolean);
+  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["BEST BETS · 80+",high]:null,leans&&leans.decisions>=6?["STRONG · 70–79",leans]:null].filter(Boolean);
 
   return <main className="rpPage">
     <header className="rpHeader">
@@ -118,11 +122,11 @@ export default function RadarPicks(){
       <div>
         <span>FULL-SLATE MODEL LEDGER</span>
         <h1>One locked pick for every game.</h1>
-        <p>PickRadar takes a side on the entire NFL and college slate. High Confidence is reserved for 80+ spread signals; 70–79 is a Model Lean, and totals remain on watch while that model builds a stronger record.</p>
+        <p>PickRadar takes a side on the entire NFL and college slate. BetIndex grades signal strength: 80+ Best Bet, 70–79 Strong, 60–69 Lean and below 60 Pass.</p>
       </div>
       <div className="rpStats">
         <div><strong>{allPicks.length||"—"}</strong><span>games picked</span></div>
-        <div><strong>{liveReady?highCount:"—"}</strong><span>current 80+</span></div>
+        <div><strong>{liveReady?bestCount:"—"}</strong><span>Best Bets · 80+</span></div>
         <div><strong>{selectedWeek?.lockedAt?new Date(selectedWeek.lockedAt).toLocaleDateString([],{month:"short",day:"numeric"}):"—"}</strong><span>locked</span></div>
         <div><strong>{record.decisions?record.wins+"–"+record.losses:"—"}</strong><span>week record</span></div>
       </div>
@@ -133,13 +137,15 @@ export default function RadarPicks(){
         <div><strong>SHOW PICKS</strong><span>{picks.length} of {allPicks.length} games</span></div>
         <div>
           <button className={confidence==="all"?"active":""} onClick={()=>setConfidence("all")}>ALL GAMES <b>{allPicks.length}</b></button>
-          <button className={confidence==="high"?"active":""} onClick={()=>setConfidence("high")}>BETRADAR · 80+ <b>{highCount}</b></button>
-          <button className={confidence==="lean"?"active":""} onClick={()=>setConfidence("lean")}>BETRADAR · 70–79 <b>{leanCount}</b></button>
+          <button className={"tierFilter indexTier-green "+(confidence==="best"?"active":"")} onClick={()=>setConfidence("best")}>BEST BET · 80+ <b>{bestCount}</b></button>
+          <button className={"tierFilter indexTier-yellow "+(confidence==="strong"?"active":"")} onClick={()=>setConfidence("strong")}>STRONG · 70–79 <b>{strongCount}</b></button>
+          <button className={"tierFilter indexTier-orange "+(confidence==="lean"?"active":"")} onClick={()=>setConfidence("lean")}>LEAN · 60–69 <b>{leanCount}</b></button>
+          <button className={"tierFilter indexTier-red "+(confidence==="pass"?"active":"")} onClick={()=>setConfidence("pass")}>PASS · &lt;60 <b>{passCount}</b></button>
         </div>
       </section>
       <section className="rpBoard">
-        {picks.map((pick,i)=>{const liveIndex=currentIndex(pick);return <article className="rpGame" key={pick.gameId}>
-          <div className="rpScore"><small>BETRADAR</small><strong>{liveReady?(liveIndex??"—"):"…"}</strong></div>
+        {picks.map((pick,i)=>{const liveIndex=currentIndex(pick);const tier=betIndexTier(liveIndex??pick.betRadarIndex);return <article className="rpGame" key={pick.gameId}>
+          <div className={"rpScore indexTier-"+tier.key}><small>BETINDEX</small><strong>{liveReady?(liveIndex??"—"):"…"}</strong></div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
             <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · LOCKED {confidenceBand(pick.betRadarIndex)}</span><strong>{pick.pick}</strong><small>{liveReady?"Live BetRadar "+(liveIndex??"—")+" · ":""}{pick.betRadarIndex!=null?"Lock index "+pick.betRadarIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>

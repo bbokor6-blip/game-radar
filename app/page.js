@@ -11,8 +11,8 @@ export default function Home(){
     {
       n:"02",name:"GAMERADAR",eyebrow:"THE BOARD",href:"/scores",
       title:"Know what deserves your attention.",
-      copy:"Live scores, RadarIndex and a simple explanation of why each game is interesting.",
-      chips:["LIVE","RADARINDEX","WHY IT MATTERS"]
+      copy:"Live scores, GameIndex and a simple explanation of why each game is interesting.",
+      chips:["LIVE","GAMEINDEX","WHY IT MATTERS"]
     },
     {
       n:"03",name:"BETRADAR",eyebrow:"THE SIGNALS",href:"/bets",
@@ -24,7 +24,7 @@ export default function Home(){
       n:"04",name:"PICKRADAR",eyebrow:"THE RECEIPTS",href:"/pickradar",
       title:"The picks we actually stand behind.",
       copy:"A locked pick on every NFL and college game, with confidence filters and a record that carries forward.",
-      chips:["FULL SLATE","HIGH CONFIDENCE","TRACK RECORD"]
+      chips:["FULL SLATE","BEST BETS","TRACK RECORD"]
     }
   ];
   return <main className="homeRadar">
@@ -57,14 +57,14 @@ export default function Home(){
       </a>)}
     </section>
 
-    <section className="homeIndexStrip">
-      <div className="homeIndexBox">84</div>
+    <a className="homeIndexStrip" href="/indexes">
+      <div className="homeIndexPair"><span className="homeIndexBox indexTier-green">84</span><span className="homeIndexBox indexTier-yellow">74</span></div>
       <div>
-        <span>RADARINDEX</span>
-        <h2>One number for how much a game deserves your attention.</h2>
-        <p>Betting signal + matchup excitement. The model learns from what PickRadar gets right and wrong each week.</p>
+        <span>GAMEINDEX + BETINDEX</span>
+        <h2>Two numbers. Two different questions.</h2>
+        <p>GameIndex measures how interesting a game is. BetIndex measures confidence in a betting signal. See exactly how both work →</p>
       </div>
-    </section>
+    </a>
 
     <footer className="homeFooter">
       <span>GAME RADAR</span>

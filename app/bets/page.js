@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
 import { metadataChips, gameMetadata } from "../../lib/gameMetadata";
+import { betIndexTier, gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
@@ -64,14 +65,14 @@ function opportunityTag(item){
   const ranked=rankedCount(item.game);
   if(ranked===2)return "TOP 25 MATCHUP";
   if(ranked===1)return "RANKED MATCHUP";
-  return item.index>=76?"SLEEPER SIGNAL":"UNDER THE RADAR";
+  return item.index>=70?"SLEEPER SIGNAL":"UNDER THE RADAR";
 }
 function featuredOpportunities(games){
   return allOpportunities(games).filter(item=>{
     if(item.game.sport!=="cfb")return true;
     const ranked=rankedCount(item.game);
     if(ranked>0)return item.index>=60;
-    return item.index>=76&&(item.game.interest?.score||0)>=50;
+    return item.index>=70&&gameIndexScore(item.game)>=50;
   }).sort((a,b)=>b.index-a.index||rankedCount(b.game)-rankedCount(a.game)||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 function TeamMini({team}){
@@ -83,10 +84,9 @@ function GameMetaStrip({game,limit=3}){
 }
 
 function indexClass(n){
-  if(n>=80)return "best";
-  if(n>=70)return "strong";
-  if(n>=60)return "lean";
-  return "pass";
+  const tier=betIndexTier(n);
+  const legacy=tier.key==="green"?"best":tier.key==="yellow"?"strong":tier.key==="orange"?"lean":"pass";
+  return legacy+" indexTier-"+tier.key;
 }
 
 function formatAmerican(odds){
@@ -191,7 +191,7 @@ function featuredParlays(pool,league){
         if(league==="cfb"){
           if(ranked===0)return;
           if(config.size>=3&&ranked<2)return;
-          if(chosen.some(x=>rankedCount(x.game)===0&&x.index<76))return;
+          if(chosen.some(x=>rankedCount(x.game)===0&&x.index<70))return;
           if(sleepers>1)return;
         }
         const score=chosen.reduce((s,x)=>s+x.index,0)/chosen.length+(ranked*1.5)+(sleepers===1?1.5:0);
@@ -208,6 +208,7 @@ function featuredParlays(pool,league){
 function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekOffset,isSaved,onToggleSave}){
   const g=item.game;
   const cls=indexClass(item.index);
+  const tier=betIndexTier(item.index);
   return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls+(rank<=3?" featuredPick":"")}>
     <div className="simplePickRank">#{rank}</div>
     <div className="simplePickMain">
@@ -225,7 +226,7 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
       </div>
       <div className="pickHeadline">
         <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
-        {item.noBrainer?<span className="convictionBadge noBrainer">NO BRAINER</span>:item.highConviction?<span className="convictionBadge">HIGH CONVICTION</span>:null}
+        {item.noBrainer?<span className="convictionBadge noBrainer">ELITE SIGNAL</span>:item.highConviction?<span className="convictionBadge">BEST BET</span>:null}
       </div>
       {item.payout?<div className="payoutStrip">
         <span>$10 BET</span>
@@ -250,9 +251,9 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
       </details>
     </div>
     <div className="confidenceIndex">
-      <span>BETRADAR INDEX</span>
+      <span>BETINDEX</span>
       <strong>{item.index}</strong>
-      <small>{item.index>80?"NO BRAINER":item.index>70?"HIGH CONVICTION":item.index>=60?"WATCH":"LOW CONFIDENCE"}</small>
+      <small>{tier.label.toUpperCase()}</small>
     </div>
   </article>;
 }
@@ -347,6 +348,8 @@ function TeaserCard({size,legs,number}){
 
 function AgentGameCard({game,league,weekStart,weekLabel,weekOffset,isSaved,onSave}){
   const best=game.bestOpportunity;
+  const gameTier=gameIndexTier(gameIndexScore(game));
+  const betTier=betIndexTier(best?.index||0);
   const spread=spreadForGame(game);
   const conference=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
   return <article className="agentGameCard">
@@ -359,8 +362,8 @@ function AgentGameCard({game,league,weekStart,weekLabel,weekOffset,isSaved,onSav
       <strong>{spread!=null?"SPREAD "+spread:"LINE PENDING"}</strong>
       <GameMetaStrip game={game} limit={3}/>
     </div>
-    <div className="agentScore"><span>GAMERADAR</span><strong>{game.interest?.score||"—"}</strong></div>
-    <div className="agentScore bet"><span>BETRADAR</span><strong>{best?.index||"—"}</strong></div>
+    <div className={"agentScore indexTier-"+gameTier.key}><span>GAMEINDEX</span><strong>{gameIndexScore(game)||"—"}</strong></div>
+    <div className={"agentScore bet indexTier-"+betTier.key}><span>BETINDEX</span><strong>{best?.index||"—"}</strong></div>
     {best?<button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onSave(game)}>
       {isSaved?"★ SAVED":"☆ SAVE "+best.pick}
     </button>:<span className="agentNoBet">NO BET SIGNAL</span>}
@@ -389,8 +392,8 @@ function BoardRow({game,league,generatedAt,weekStart,weekLabel,weekOffset,savedI
     <div className="gameTableSummary">
       <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,weekOffset}} title={matchup(game)}/></div>
       <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?.noBrainer?<small className="tableConviction noBrainerText">NO BRAINER</small>:best?.highConviction?<small className="tableConviction">HIGH CONVICTION</small>:null}</div>
-      <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETRADAR</span><strong>{best?.index??"—"}</strong></div>
+      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?<small className="tableConviction">{betIndexTier(best.index).label.toUpperCase()}</small>:null}</div>
+      <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETINDEX</span><strong>{best?.index??"—"}</strong></div>
     </div>
 
     {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand alwaysVisible">
@@ -424,7 +427,8 @@ function BetPickCard({item,featured=false,league,weekStart,weekLabel,weekOffset,
     matchup:matchup(g),gameDate:g.date,pick:item.pick,odds:item.americanOdds,index:item.index,
     source:"BetRadar"
   };
-  return <article className={"brPickCard "+(featured?"featured ":"")+(item.noBrainer?"noBrainer ":"")}>
+  const tier=betIndexTier(item.index);
+  return <article className={"brPickCard indexTier-"+tier.key+" "+(featured?"featured ":"")+(item.noBrainer?"noBrainer ":"")}>
     <div className="brPickTop">
       <div className="brMatchup">
         <TeamMini team={g.away}/><em>@</em><TeamMini team={g.home}/>
@@ -438,7 +442,7 @@ function BetPickCard({item,featured=false,league,weekStart,weekLabel,weekOffset,
       </div>
       <div className="brIndex">
         <strong>{item.index}</strong>
-        <span>{item.noBrainer?"No Brainer":item.highConviction?"High Conviction":item.index>=60?"Watch":"Low Confidence"}</span>
+        <span>{betIndexTier(item.index).label}</span>
       </div>
     </div>
     <div className="brMeta">
@@ -492,7 +496,7 @@ function BetGameRow({game,league,weekStart,weekLabel,savedIds,onToggleSave}){
     <div className="brBest">
       <span>Best look</span>
       <strong>{best?.pick||"—"}</strong>
-      <small>{best?best.index+" · "+(best.noBrainer?"No Brainer":best.highConviction?"High Conviction":best.index>=60?"Watch":"Low Confidence"):"No signal"}</small>
+      <small>{best?best.index+" · "+betIndexTier(best.index).label:"No signal"}</small>
     </div>
     {best?<button className={"brSave "+(savedIds.has(id)?"saved":"")} onClick={()=>onToggleSave(saved)}>{savedIds.has(id)?"★":"☆"}</button>:<span/>}
   </article>;
@@ -510,7 +514,7 @@ function BetFilterDrawer({open,onClose,games,filters,setFilters}){
       <label>Team<select value={filters.team} onChange={e=>setFilters(x=>({...x,team:e.target.value}))}><option value="">All teams</option>{teams.map(t=><option value={String(t.id)} key={t.id}>{t.location||t.name}</option>)}</select></label>
       <label>TV network<select value={filters.network} onChange={e=>setFilters(x=>({...x,network:e.target.value}))}><option value="">Any network</option>{networks.map(x=><option key={x}>{x}</option>)}</select></label>
       <label>Bet type<select value={filters.type} onChange={e=>setFilters(x=>({...x,type:e.target.value}))}><option value="">Spread + totals</option><option value="spread">Spreads</option><option value="total">Totals</option></select></label>
-      <label>Minimum BetRadar Index<select value={filters.minIndex} onChange={e=>setFilters(x=>({...x,minIndex:e.target.value}))}><option value="">Any signal</option><option value="60">60+</option><option value="71">High Conviction 71+</option><option value="81">No Brainer 81+</option></select></label>
+      <label>Minimum BetIndex<select value={filters.minIndex} onChange={e=>setFilters(x=>({...x,minIndex:e.target.value}))}><option value="">Any signal</option><option value="60">Lean · 60+</option><option value="70">Strong · 70+</option><option value="80">Best Bet · 80+</option></select></label>
       <div className="grFilterChecks">
         <label><input type="checkbox" checked={filters.ranked} onChange={e=>setFilters(x=>({...x,ranked:e.target.checked}))}/> Ranked games</label>
         <label><input type="checkbox" checked={filters.close} onChange={e=>setFilters(x=>({...x,close:e.target.checked}))}/> Close spreads</label>
@@ -737,7 +741,7 @@ export default function BetsPage(){
         {parlays.length?<div className="brParlayGrid">{parlays.map((p,i)=><ParlayCard key={i} parlay={p}/>)}</div>:<div className="brEmptyInline">No qualifying parlay combinations yet.</div>}
         <details className="brMethod">
           <summary>BetRadar scoring and methodology</summary>
-          <p>BetRadar Index measures signal strength, not win probability. No Brainer means above 80; High Conviction means above 70. Recheck sportsbook lines before wagering.</p>
+          <p>BetIndex measures signal strength, not win probability: green is 80+ Best Bet, yellow is 70–79 Strong, orange is 60–69 Lean and red is below 60 Pass. <a href="/indexes">Read the full index guide →</a></p>
         </details>
       </section>
     </>}

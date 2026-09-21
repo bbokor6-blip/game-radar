@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { fetchScoreboard, fetchSeasonScoreboard } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
-import { buildRadarIndex } from "../../../lib/radarIndex";
 import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
 
 export const dynamic = "force-dynamic";
@@ -37,8 +36,8 @@ export async function GET(request){
 
   const ranked=rankGames(leagueGames).map(game=>({
     ...game,
-    radarIndex:buildRadarIndex(game,game.marketInterest?.score||null)
-  })).sort((a,b)=>(b.radarIndex?.score||0)-(a.radarIndex?.score||0));
+    gameIndex:game.interest
+  })).sort((a,b)=>(b.gameIndex?.score||0)-(a.gameIndex?.score||0));
 
   return NextResponse.json({
     generatedAt:new Date().toISOString(),

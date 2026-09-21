@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { fetchScoreboard, fetchSeasonScoreboard, fetchConsensusOdds } from "../../../lib/espn";
 import { rankGames } from "../../../lib/interest";
 import { buildTrendProfiles, buildVegasHistory, consensusMarket, evaluateOpportunity, marketSummary } from "../../../lib/opportunity";
-import { buildRadarIndex } from "../../../lib/radarIndex";
 import { buildFeedbackProfile, feedbackForPick } from "../../../lib/radarFeedback";
+import { betIndexTier } from "../../../lib/indexTiers";
 import { buildTeamForm } from "../../../lib/teamForm";
 import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seasonContext";
 import { buildPowerModel, calibrateModel, projectGame } from "../../../lib/radarModel";
@@ -65,7 +65,7 @@ function recordWins(record){
   return Number.isFinite(wins)?wins:0;
 }
 
-function fullSlateFallback(game,market,radarIndex){
+function fullSlateFallback(game,market,gameIndex){
   const homeRank=Number(game.home?.rank)||99;
   const awayRank=Number(game.away?.rank)||99;
   const homeWins=recordWins(game.home?.record);
@@ -81,16 +81,16 @@ function fullSlateFallback(game,market,radarIndex){
     return {
       type:"SPREAD",pick,
       americanOdds:side==="home"?market.homeSpreadOdds:market.awaySpreadOdds,
-      index:48,label:"LOW CONFIDENCE",
+      index:48,label:"PASS",
       why:"The full-slate model requires a side in every game. With no stronger trend signal available, this is the lower-confidence lean based on team strength, record and home field at the locked market number.",
-      side,fullSlateFallback:true,radarIndex:radarIndex.score
+      side,fullSlateFallback:true,gameIndex:gameIndex.score
     };
   }
 
   return {
-    type:"MONEYLINE",pick:team.short+" TO WIN",americanOdds:null,index:40,label:"LOW CONFIDENCE",
+    type:"MONEYLINE",pick:team.short+" TO WIN",americanOdds:null,index:40,label:"PASS",
     why:"No posted spread was available at lock. PickRadar is recording a straight-up winner so the entire slate remains measurable; confidence stays deliberately low.",
-    side,fullSlateFallback:true,radarIndex:radarIndex.score
+    side,fullSlateFallback:true,gameIndex:gameIndex.score
   };
 }
 
@@ -156,15 +156,17 @@ export async function GET(request){
       const rawOpportunities=evaluateOpportunity(game,profiles,market,vegasHistory,league,{projection});
       const opportunities=Object.fromEntries(Object.entries(rawOpportunities).map(([key,value])=>{
         if(!value)return [key,value];
-        const index=calibratePickIndex(value.index,{league,type:value.type});
-        return [key,{...value,index,label:pickConfidenceBand(index),highConviction:index>=80,noBrainer:index>=85}];
+        const signalFeedback=feedbackForPick(feedbackProfile,{league,type:value.type,index:value.index});
+        const index=calibratePickIndex(value.index+signalFeedback.modifier,{league,type:value.type});
+        return [key,{...value,index,label:pickConfidenceBand(index),highConviction:index>=80,noBrainer:index>=85,feedback:signalFeedback}];
       }));
       const candidates=[opportunities.spread,opportunities.total].filter(Boolean);
       const best=candidates.sort((a,b)=>b.index-a.index)[0]||null;
-      const feedback=best?feedbackForPick(feedbackProfile,{league,type:best.type,index:best.index}):{modifier:0,sample:0,note:"Building sample"};
-      const adjustedBettingIndex=best?calibratePickIndex(best.index+feedback.modifier,{league,type:best.type}):null;
-      const radarIndex=buildRadarIndex(game,adjustedBettingIndex);
-      const official=best?{...best,index:adjustedBettingIndex}:fullSlateFallback(game,market,radarIndex);
+      const feedback=best?.feedback||{modifier:0,sample:0,note:"Building sample"};
+      const adjustedBettingIndex=best?.index??null;
+      const gameIndex=game.interest;
+      const official=best||fullSlateFallback(game,market,gameIndex);
+      const betIndex={score:official.index,tier:betIndexTier(official.index).label,color:betIndexTier(official.index).key};
       const preferredPick=official?{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
@@ -176,7 +178,8 @@ export async function GET(request){
         feedbackAdjustedBetIndex:best?adjustedBettingIndex:official.index,
         confidenceBand:pickConfidenceBand(official.index),
         feedback,
-        radarIndex:radarIndex.score,
+        gameIndex:gameIndex.score,
+        radarIndex:gameIndex.score,
         label:official.label,
         why:official.why,
         line:marketSummary(game,market),
@@ -206,7 +209,8 @@ export async function GET(request){
         pick:"PASS",
         americanOdds:null,
         betRadarIndex:0,
-        radarIndex:radarIndex.score,
+        gameIndex:gameIndex.score,
+        radarIndex:gameIndex.score,
         label:"NO OFFICIAL EDGE",
         why:"No betting signal is strong enough to lock yet.",
         line:marketSummary(game,market),
@@ -226,9 +230,10 @@ export async function GET(request){
           away:teamForm.get(String(game.away?.id||game.away?.short||""))||null
         },
         opportunityIndex:best?.index||0,
-        radarIndex
+        gameIndex,
+        betIndex
       };
-    }).sort((a,b)=>(b.radarIndex?.score||0)-(a.radarIndex?.score||0)||b.opportunityIndex-a.opportunityIndex);
+    }).sort((a,b)=>(b.betIndex?.score||0)-(a.betIndex?.score||0)||(b.gameIndex?.score||0)-(a.gameIndex?.score||0));
 
     return NextResponse.json({
       generatedAt:new Date().toISOString(),
@@ -251,7 +256,7 @@ export async function GET(request){
           historicalGames:powerModel.completedCount,
           calibration:modelCalibration,
           weights:{fundamentals:0.70,trends:0.30},
-          confidenceRules:{highConfidence:80,modelLean:70,totalsCap:69}
+          confidenceRules:{bestBet:80,strong:70,lean:60,totalsCap:69}
         }
       },
       games

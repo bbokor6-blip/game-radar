@@ -6,7 +6,8 @@ const LINKS=[
   ["/weekly","WeeklyRadar"],
   ["/scores","GameRadar"],
   ["/bets","BetRadar"],
-  ["/pickradar","PickRadar"]
+  ["/pickradar","PickRadar"],
+  ["/indexes","Index Guide"]
 ];
 
 export default function RadarMenu({current="",className=""}){

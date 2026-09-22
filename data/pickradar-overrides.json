@@ -1,0 +1,91 @@
+{
+  "weeks": [
+    {
+      "league": "nfl",
+      "weekStart": "2026-09-22",
+      "weekEnd": "2026-09-28",
+      "label": "NFL · 2026-09-22–2026-09-28",
+      "lockedAt": "2026-09-22T04:00:00Z",
+      "lockType": "TUESDAY_PICKRADAR_LOCK",
+      "picks": [
+        {
+          "gameId": "nfl-2026-09-27-sea-was",
+          "matchup": "Seattle Seahawks @ Washington Commanders",
+          "type": "SPREAD",
+          "pick": "Seattle -6.5",
+          "line": "Seattle -6.5",
+          "americanOdds": -115,
+          "betRadarIndex": 82,
+          "radarIndex": 79,
+          "label": "BEST BET",
+          "why": "Seattle is 2-0 and coming off a 31-7 win, while Washington is 0-2 and is expected to start Marcus Mariota after Jayden Daniels dislocated his elbow. Seattle has also shown it can function without Sam Darnold after Drew Lock threw three touchdowns last week.",
+          "gameDate": "2026-09-27T13:00:00-04:00",
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-22T04:00:00Z",
+          "selectionBasis": "Tuesday PickRadar lock using current market, team form and confirmed/credible injury context",
+          "confidenceBand": "ELITE",
+          "versionHistory": [{"lockedAt":"2026-09-22T04:00:00Z","pick":"Seattle -6.5","line":"Seattle -6.5","americanOdds":-115,"reason":"Initial Tuesday PickRadar lock"}]
+        },
+        {
+          "gameId": "nfl-2026-09-27-lv-no",
+          "matchup": "Las Vegas Raiders @ New Orleans Saints",
+          "type": "SPREAD",
+          "pick": "New Orleans -3",
+          "line": "New Orleans -3",
+          "americanOdds": -110,
+          "betRadarIndex": 78,
+          "radarIndex": 72,
+          "label": "STRONG",
+          "why": "New Orleans returns home after a 24-17 road win at Baltimore, with Tyler Shough completing 27 of 34 passes. The key is getting the field-goal number before the market settles above -3.",
+          "gameDate": "2026-09-27T16:25:00-04:00",
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-22T04:00:00Z",
+          "selectionBasis": "Tuesday PickRadar lock using current market and Week 2 performance",
+          "confidenceBand": "HIGH",
+          "versionHistory": [{"lockedAt":"2026-09-22T04:00:00Z","pick":"New Orleans -3","line":"New Orleans -3","americanOdds":-110,"reason":"Initial Tuesday PickRadar lock at key number"}]
+        },
+        {
+          "gameId": "nfl-2026-09-27-kc-mia",
+          "matchup": "Kansas City Chiefs @ Miami Dolphins",
+          "type": "SPREAD",
+          "pick": "Kansas City -10.5",
+          "line": "Kansas City -10.5",
+          "americanOdds": -110,
+          "betRadarIndex": 76,
+          "radarIndex": 68,
+          "label": "STRONG",
+          "why": "Miami is 0-2 and lost 35-13 at San Francisco in Week 2. Kansas City is the strongest favorite on the early Week 3 board, and -10.5 is preferable to the -11.5 already showing at other books.",
+          "gameDate": "2026-09-27T13:00:00-04:00",
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-22T04:00:00Z",
+          "selectionBasis": "Tuesday PickRadar lock using cross-market line shopping and opponent form",
+          "confidenceBand": "HIGH",
+          "versionHistory": [{"lockedAt":"2026-09-22T04:00:00Z","pick":"Kansas City -10.5","line":"Kansas City -10.5","americanOdds":-110,"reason":"Initial Tuesday PickRadar lock; preserve -10.5 before possible move"}]
+        },
+        {
+          "gameId": "nfl-2026-09-28-phi-chi",
+          "matchup": "Philadelphia Eagles @ Chicago Bears",
+          "type": "SPREAD",
+          "pick": "Philadelphia -3.5",
+          "line": "Philadelphia -3.5",
+          "americanOdds": -110,
+          "betRadarIndex": 74,
+          "radarIndex": 78,
+          "label": "STRONG · INJURY WATCH",
+          "why": "Chicago quarterback Caleb Williams is week-to-week with a hamstring injury and may miss Monday night. The market moved from Chicago -1.5 to Philadelphia favored by 3.5 to 4.5; locking -3.5 keeps the better side of the current range.",
+          "gameDate": "2026-09-28T20:15:00-04:00",
+          "league": "nfl",
+          "result": "PENDING",
+          "lockedAt": "2026-09-22T04:00:00Z",
+          "selectionBasis": "Tuesday PickRadar lock using current injury-adjusted market",
+          "confidenceBand": "HIGH",
+          "reviewThursday": true,
+          "versionHistory": [{"lockedAt":"2026-09-22T04:00:00Z","pick":"Philadelphia -3.5","line":"Philadelphia -3.5","americanOdds":-110,"reason":"Initial Tuesday PickRadar lock; monitor Caleb Williams practice status"}]
+        }
+      ]
+    }
+  ]
+}

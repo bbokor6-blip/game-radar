@@ -1,15 +1,19 @@
 import { NextResponse } from "next/server";
 import ledger from "../../../data/radar-picks.json";
+import overrides from "../../../data/pickradar-overrides.json";
 import { buildFeedbackProfile } from "../../../lib/radarFeedback";
 import { calibratePickIndex, pickConfidenceBand } from "../../../lib/pickCalibration";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(){
-  const weeks=(Array.isArray(ledger.weeks)?ledger.weeks:[]).map(week=>({
+  const overrideWeeks=Array.isArray(overrides.weeks)?overrides.weeks:[];
+  const keys=new Set(overrideWeeks.map(w=>w.league+"|"+w.weekStart));
+  const sourceWeeks=[...(Array.isArray(ledger.weeks)?ledger.weeks:[]).filter(w=>!keys.has(w.league+"|"+w.weekStart)),...overrideWeeks];
+  const weeks=sourceWeeks.map(week=>({
     ...week,
     picks:(week.picks||[]).map(pick=>{
-      const betRadarIndex=pick.modelVersion==="pickradar-v2"
+      const betRadarIndex=pick.modelVersion==="pickradar-v2"||pick.lockedAt
         ?pick.betRadarIndex
         :calibratePickIndex(pick.betRadarIndex,{league:pick.league||week.league,type:pick.type});
       return {...pick,betRadarIndex,confidenceBand:pickConfidenceBand(betRadarIndex)};
@@ -22,12 +26,7 @@ export async function GET(){
   const decisions=wins+losses;
   const feedback=buildFeedbackProfile({...ledger,weeks});
   return NextResponse.json({
-    ...ledger,
-    feedback,
-    record:{
-      wins,losses,pushes,
-      decisions,
-      winPct:decisions?Math.round((wins/decisions)*1000)/10:null
-    }
+    ...ledger,weeks,feedback,
+    record:{wins,losses,pushes,decisions,winPct:decisions?Math.round((wins/decisions)*1000)/10:null}
   },{headers:{"Cache-Control":"no-store"}});
 }

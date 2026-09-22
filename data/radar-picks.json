@@ -1,7 +1,3307 @@
 {
-  "version": 3,
-  "updatedAt": "2026-09-21T06:47:16.587Z",
+  "version": 5,
+  "updatedAt": "2026-09-22T19:30:00Z",
   "weeks": [
+    {
+      "league": "cfb",
+      "weekStart": "2026-09-15",
+      "weekEnd": "2026-09-21",
+      "label": "College · 2026-09-15–2026-09-21 · Retrospective",
+      "lockedAt": null,
+      "backtestedAt": "2026-09-22T19:30:00Z",
+      "lockType": "RETROSPECTIVE_ARCHIVED_LINE_BACKTEST",
+      "methodologyNote": "Walk-forward current PickRadar logic using only games completed before the slate. ESPN archived market numbers are closing-line proxies, not timestamped weekly locks.",
+      "picks": [
+        {
+          "gameId": "cfb-401856688",
+          "matchup": "LSU @ MISS",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "LSU -3",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 98,
+          "radarIndex": 98,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "LSU -3",
+          "result": "L",
+          "finalScore": "LSU 24, MISS 32",
+          "lockedMarket": {
+            "homeMargin": -3,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -16.3,
+            "total": 59.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856811",
+          "matchup": "HOU @ TTU",
+          "gameDate": "2026-09-19T00:00Z",
+          "type": "SPREAD",
+          "pick": "HOU +7.5",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 81,
+          "radarIndex": 81,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "HOU +7.5",
+          "result": "W",
+          "finalScore": "HOU 26, TTU 28",
+          "lockedMarket": {
+            "homeMargin": 7.5,
+            "total": 52.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -2.2,
+            "total": 58.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858230",
+          "matchup": "SMU @ LOU",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "TOTAL",
+          "pick": "OVER 57.5",
+          "americanOdds": null,
+          "betRadarIndex": 52,
+          "gameIndex": 76,
+          "radarIndex": 76,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "OVER 57.5",
+          "result": "W",
+          "finalScore": "SMU 31, LOU 41",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 57.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 0.9,
+            "total": 61.9,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856687",
+          "matchup": "FLA @ AUB",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "FLA -2.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "gameIndex": 75,
+          "radarIndex": 75,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "FLA -2.5",
+          "result": "W",
+          "finalScore": "FLA 44, AUB 39",
+          "lockedMarket": {
+            "homeMargin": -2.5,
+            "total": 53.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -26.5,
+            "total": 57.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856691",
+          "matchup": "MSST @ SC",
+          "gameDate": "2026-09-19T21:35Z",
+          "type": "SPREAD",
+          "pick": "MSST +3",
+          "americanOdds": null,
+          "betRadarIndex": 51,
+          "gameIndex": 72,
+          "radarIndex": 72,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MSST +3",
+          "result": "W",
+          "finalScore": "MSST 41, SC 34",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 59.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 4.3,
+            "total": 59,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858232",
+          "matchup": "VT @ MD",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "MD +2.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "gameIndex": 71,
+          "radarIndex": 71,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MD +2.5",
+          "result": "L",
+          "finalScore": "VT 35, MD 26",
+          "lockedMarket": {
+            "homeMargin": -2.5,
+            "total": 53.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 7,
+            "total": 61.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856796",
+          "matchup": "COLO @ NU",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "COLO +3.5",
+          "americanOdds": null,
+          "betRadarIndex": 49,
+          "gameIndex": 65,
+          "radarIndex": 65,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "COLO +3.5",
+          "result": "L",
+          "finalScore": "COLO 7, NU 41",
+          "lockedMarket": {
+            "homeMargin": 3.5,
+            "total": 47.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 0.7,
+            "total": 53.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401864508",
+          "matchup": "WYO @ CMU",
+          "gameDate": "2026-09-19T17:00Z",
+          "type": "SPREAD",
+          "pick": "CMU +1.5",
+          "americanOdds": null,
+          "betRadarIndex": 45,
+          "gameIndex": 62,
+          "radarIndex": 62,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "CMU +1.5",
+          "result": "W",
+          "finalScore": "WYO 10, CMU 24",
+          "lockedMarket": {
+            "homeMargin": -1.5,
+            "total": 39.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -1.4,
+            "total": 45.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862771",
+          "matchup": "FIU @ FAU",
+          "gameDate": "2026-09-19T22:00Z",
+          "type": "SPREAD",
+          "pick": "FIU +5.5",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 61,
+          "radarIndex": 61,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "FIU +5.5",
+          "result": "L",
+          "finalScore": "FIU 10, FAU 16",
+          "lockedMarket": {
+            "homeMargin": 5.5,
+            "total": 62.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -14.1,
+            "total": 56.3,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860889",
+          "matchup": "UNT @ TXST",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "UNT +3",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 60,
+          "radarIndex": 60,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UNT +3",
+          "result": "L",
+          "finalScore": "UNT 35, TXST 49",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 62.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -24.2,
+            "total": 56.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862710",
+          "matchup": "ECU @ ODU",
+          "gameDate": "2026-09-19T22:00Z",
+          "type": "SPREAD",
+          "pick": "ODU -2.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "gameIndex": 59,
+          "radarIndex": 59,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ODU -2.5",
+          "result": "L",
+          "finalScore": "ECU 20, ODU 17",
+          "lockedMarket": {
+            "homeMargin": 2.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 10.5,
+            "total": 53.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858229",
+          "matchup": "UNC @ CLEM",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "UNC +3",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 58,
+          "radarIndex": 58,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UNC +3",
+          "result": "L",
+          "finalScore": "UNC 20, CLEM 28",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 44.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -11.9,
+            "total": 46.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401871047",
+          "matchup": "MRSH @ MOST",
+          "gameDate": "2026-09-19T22:30Z",
+          "type": "SPREAD",
+          "pick": "MOST +4",
+          "americanOdds": null,
+          "betRadarIndex": 71,
+          "gameIndex": 58,
+          "radarIndex": 58,
+          "label": "STRONG",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MOST +4",
+          "result": "L",
+          "finalScore": "MRSH 30, MOST 24",
+          "lockedMarket": {
+            "homeMargin": -4,
+            "total": 52.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 11.4,
+            "total": 52.9,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "STRONG",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401861963",
+          "matchup": "CONN @ USM",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "USM +3.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 58,
+          "radarIndex": 58,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "USM +3.5",
+          "result": "L",
+          "finalScore": "CONN 48, USM 20",
+          "lockedMarket": {
+            "homeMargin": -3.5,
+            "total": 54.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 0.4,
+            "total": 54.9,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401864443",
+          "matchup": "NEV @ MTSU",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "NEV -3.5",
+          "americanOdds": null,
+          "betRadarIndex": 63,
+          "gameIndex": 58,
+          "radarIndex": 58,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NEV -3.5",
+          "result": "L",
+          "finalScore": "NEV 20, MTSU 27",
+          "lockedMarket": {
+            "homeMargin": -3.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -9.9,
+            "total": 52.3,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401869940",
+          "matchup": "CCU @ DEL",
+          "gameDate": "2026-09-19T15:30Z",
+          "type": "SPREAD",
+          "pick": "CCU +4.5",
+          "americanOdds": null,
+          "betRadarIndex": 59,
+          "gameIndex": 56,
+          "radarIndex": 56,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "CCU +4.5",
+          "result": "L",
+          "finalScore": "CCU 14, DEL 22",
+          "lockedMarket": {
+            "homeMargin": 4.5,
+            "total": 56.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -1.5,
+            "total": 55.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862774",
+          "matchup": "TEM @ TOL",
+          "gameDate": "2026-09-19T19:00Z",
+          "type": "SPREAD",
+          "pick": "TOL -4.5",
+          "americanOdds": null,
+          "betRadarIndex": 61,
+          "gameIndex": 56,
+          "radarIndex": 56,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "TOL -4.5",
+          "result": "L",
+          "finalScore": "TEM 48, TOL 49",
+          "lockedMarket": {
+            "homeMargin": 4.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 13.2,
+            "total": 54.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856812",
+          "matchup": "ASU @ KU",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "ASU -5.5",
+          "americanOdds": null,
+          "betRadarIndex": 45,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ASU -5.5",
+          "result": "W",
+          "finalScore": "ASU 24, KU 17",
+          "lockedMarket": {
+            "homeMargin": -5.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -6.8,
+            "total": 60.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856695",
+          "matchup": "NCSU @ VAN",
+          "gameDate": "2026-09-19T16:45Z",
+          "type": "SPREAD",
+          "pick": "NCSU +3",
+          "americanOdds": null,
+          "betRadarIndex": 57,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NCSU +3",
+          "result": "L",
+          "finalScore": "NCSU 31, VAN 35",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -3.3,
+            "total": 54.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860887",
+          "matchup": "JMU @ SDSU",
+          "gameDate": "2026-09-20T02:00Z",
+          "type": "SPREAD",
+          "pick": "JMU +3",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "JMU +3",
+          "result": "W",
+          "finalScore": "JMU 26, SDSU 13",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 46.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -19.5,
+            "total": 57.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401869948",
+          "matchup": "GASO @ JXST",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "JXST -3.5",
+          "americanOdds": null,
+          "betRadarIndex": 48,
+          "gameIndex": 53,
+          "radarIndex": 53,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "JXST -3.5",
+          "result": "W",
+          "finalScore": "GASO 27, JXST 31",
+          "lockedMarket": {
+            "homeMargin": 3.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 5.9,
+            "total": 47.3,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401866423",
+          "matchup": "OHIO @ USA",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "USA -7",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 52,
+          "radarIndex": 52,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "USA -7",
+          "result": "L",
+          "finalScore": "OHIO 36, USA 41",
+          "lockedMarket": {
+            "homeMargin": 7,
+            "total": 49.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 14.4,
+            "total": 56.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862776",
+          "matchup": "UAB @ UL",
+          "gameDate": "2026-09-20T00:00Z",
+          "type": "SPREAD",
+          "pick": "UL -7",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 52,
+          "radarIndex": 52,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UL -7",
+          "result": "PUSH",
+          "finalScore": "UAB 14, UL 21",
+          "lockedMarket": {
+            "homeMargin": 7,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 17.1,
+            "total": 56.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860888",
+          "matchup": "FRES @ SJSU",
+          "gameDate": "2026-09-20T03:00Z",
+          "type": "SPREAD",
+          "pick": "SJSU +4",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 51,
+          "radarIndex": 51,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SJSU +4",
+          "result": "L",
+          "finalScore": "FRES 26, SJSU 10",
+          "lockedMarket": {
+            "homeMargin": -4,
+            "total": 47.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 3.6,
+            "total": 52.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856802",
+          "matchup": "WVU @ UVA",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "UVA -10.5",
+          "americanOdds": null,
+          "betRadarIndex": 46,
+          "gameIndex": 50,
+          "radarIndex": 50,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UVA -10.5",
+          "result": "L",
+          "finalScore": "WVU 38, UVA 27",
+          "lockedMarket": {
+            "homeMargin": 10.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 12.2,
+            "total": 56.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858231",
+          "matchup": "STAN @ DUKE",
+          "gameDate": "2026-09-19T20:00Z",
+          "type": "SPREAD",
+          "pick": "DUKE -9.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 45,
+          "radarIndex": 45,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "DUKE -9.5",
+          "result": "W",
+          "finalScore": "STAN 7, DUKE 35",
+          "lockedMarket": {
+            "homeMargin": 9.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 23.1,
+            "total": 51.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862773",
+          "matchup": "WMU @ RICE",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "WMU -8.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 45,
+          "radarIndex": 45,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "WMU -8.5",
+          "result": "L",
+          "finalScore": "WMU 28, RICE 21",
+          "lockedMarket": {
+            "homeMargin": -8.5,
+            "total": 43.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -28.2,
+            "total": 49.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856694",
+          "matchup": "UK @ TA&M",
+          "gameDate": "2026-09-19T19:40Z",
+          "type": "SPREAD",
+          "pick": "TA&M -16.5",
+          "americanOdds": null,
+          "betRadarIndex": 59,
+          "gameIndex": 43,
+          "radarIndex": 43,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "TA&M -16.5",
+          "result": "L",
+          "finalScore": "UK 31, TA&M 21",
+          "lockedMarket": {
+            "homeMargin": 16.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 34.1,
+            "total": 58,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401868317",
+          "matchup": "SELA @ ULM",
+          "gameDate": "2026-09-19T20:30Z",
+          "type": "SPREAD",
+          "pick": "SELA +9.5",
+          "americanOdds": null,
+          "betRadarIndex": 49,
+          "gameIndex": 43,
+          "radarIndex": 43,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SELA +9.5",
+          "result": "W",
+          "finalScore": "SELA 38, ULM 35",
+          "lockedMarket": {
+            "homeMargin": 9.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 6.5,
+            "total": 54.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856693",
+          "matchup": "UTSA @ TEX",
+          "gameDate": "2026-09-20T00:00Z",
+          "type": "SPREAD",
+          "pick": "UTSA +29.5",
+          "americanOdds": null,
+          "betRadarIndex": 47,
+          "gameIndex": 40,
+          "radarIndex": 40,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UTSA +29.5",
+          "result": "W",
+          "finalScore": "UTSA 6, TEX 30",
+          "lockedMarket": {
+            "homeMargin": 29.5,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 25,
+            "total": 57.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858226",
+          "matchup": "MIA @ WAKE",
+          "gameDate": "2026-09-18T23:30Z",
+          "type": "SPREAD",
+          "pick": "MIA -20.5",
+          "americanOdds": null,
+          "betRadarIndex": 47,
+          "gameIndex": 39,
+          "radarIndex": 39,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MIA -20.5",
+          "result": "L",
+          "finalScore": "MIA 33, WAKE 20",
+          "lockedMarket": {
+            "homeMargin": -20.5,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -23.9,
+            "total": 61.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858225",
+          "matchup": "SYR @ PITT",
+          "gameDate": "2026-09-17T23:30Z",
+          "type": "SPREAD",
+          "pick": "SYR +10.5",
+          "americanOdds": null,
+          "betRadarIndex": 45,
+          "gameIndex": 37,
+          "radarIndex": 37,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SYR +10.5",
+          "result": "L",
+          "finalScore": "SYR 13, PITT 27",
+          "lockedMarket": {
+            "homeMargin": 10.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 9.1,
+            "total": 53.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858453",
+          "matchup": "MSU @ ND",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "MSU +28.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 35,
+          "radarIndex": 35,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MSU +28.5",
+          "result": "W",
+          "finalScore": "MSU 10, ND 27",
+          "lockedMarket": {
+            "homeMargin": 28.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 18.3,
+            "total": 53.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858458",
+          "matchup": "PUR @ UCLA",
+          "gameDate": "2026-09-20T03:00Z",
+          "type": "SPREAD",
+          "pick": "UCLA -13.5",
+          "americanOdds": null,
+          "betRadarIndex": 43,
+          "gameIndex": 35,
+          "radarIndex": 35,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UCLA -13.5",
+          "result": "W",
+          "finalScore": "PUR 38, UCLA 52",
+          "lockedMarket": {
+            "homeMargin": 13.5,
+            "total": 53.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 14,
+            "total": 58.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858454",
+          "matchup": "KENT @ OSU",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "KENT +52.5",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "gameIndex": 31,
+          "radarIndex": 31,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "KENT +52.5",
+          "result": "L",
+          "finalScore": "KENT 3, OSU 59",
+          "lockedMarket": {
+            "homeMargin": 52.5,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 51.3,
+            "total": 54.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858449",
+          "matchup": "WKU @ IU",
+          "gameDate": "2026-09-19T20:00Z",
+          "type": "SPREAD",
+          "pick": "IU -44.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 29,
+          "radarIndex": 29,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "IU -44.5",
+          "result": "L",
+          "finalScore": "WKU 0, IU 38",
+          "lockedMarket": {
+            "homeMargin": 44.5,
+            "total": 59.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 74.9,
+            "total": 61.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856795",
+          "matchup": "BYU @ CSU",
+          "gameDate": "2026-09-20T00:15Z",
+          "type": "SPREAD",
+          "pick": "CSU +17.5",
+          "americanOdds": null,
+          "betRadarIndex": 58,
+          "gameIndex": 29,
+          "radarIndex": 29,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "CSU +17.5",
+          "result": "L",
+          "finalScore": "BYU 41, CSU 23",
+          "lockedMarket": {
+            "homeMargin": -17.5,
+            "total": 54.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 1.3,
+            "total": 59.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856689",
+          "matchup": "TROY @ MIZ",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "TROY +26.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 29,
+          "radarIndex": 29,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "TROY +26.5",
+          "result": "W",
+          "finalScore": "TROY 17, MIZ 27",
+          "lockedMarket": {
+            "homeMargin": 26.5,
+            "total": 49.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 17.4,
+            "total": 56.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856686",
+          "matchup": "UGA @ ARK",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "UGA -24.5",
+          "americanOdds": null,
+          "betRadarIndex": 55,
+          "gameIndex": 28,
+          "radarIndex": 28,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UGA -24.5",
+          "result": "W",
+          "finalScore": "UGA 45, ARK 17",
+          "lockedMarket": {
+            "homeMargin": -24.5,
+            "total": 54.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -41.4,
+            "total": 60.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858457",
+          "matchup": "USC @ RUTG",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "USC -21",
+          "americanOdds": null,
+          "betRadarIndex": 52,
+          "gameIndex": 27,
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "USC -21",
+          "result": "L",
+          "finalScore": "USC 42, RUTG 35",
+          "lockedMarket": {
+            "homeMargin": -21,
+            "total": 59.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -26.5,
+            "total": 57.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401866422",
+          "matchup": "BALL @ LIB",
+          "gameDate": "2026-09-19T20:00Z",
+          "type": "SPREAD",
+          "pick": "BALL +14.5",
+          "americanOdds": null,
+          "betRadarIndex": 51,
+          "gameIndex": 27,
+          "radarIndex": 27,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "BALL +14.5",
+          "result": "L",
+          "finalScore": "BALL 15, LIB 51",
+          "lockedMarket": {
+            "homeMargin": 14.5,
+            "total": 49.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 10.6,
+            "total": 51.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856692",
+          "matchup": "KENN @ TENN",
+          "gameDate": "2026-09-19T23:45Z",
+          "type": "SPREAD",
+          "pick": "KENN +35.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 25,
+          "radarIndex": 25,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "KENN +35.5",
+          "result": "W",
+          "finalScore": "KENN 9, TENN 42",
+          "lockedMarket": {
+            "homeMargin": 35.5,
+            "total": 60.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 25.7,
+            "total": 57.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856797",
+          "matchup": "M-OH @ CIN",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "CIN -14.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 25,
+          "radarIndex": 25,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "CIN -14.5",
+          "result": "L",
+          "finalScore": "M-OH 31, CIN 35",
+          "lockedMarket": {
+            "homeMargin": 14.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 25.4,
+            "total": 58.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401864574",
+          "matchup": "CLT @ APP",
+          "gameDate": "2026-09-20T01:30Z",
+          "type": "SPREAD",
+          "pick": "APP -16.5",
+          "americanOdds": null,
+          "betRadarIndex": 59,
+          "gameIndex": 25,
+          "radarIndex": 25,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "APP -16.5",
+          "result": "L",
+          "finalScore": "CLT 21, APP 26",
+          "lockedMarket": {
+            "homeMargin": 16.5,
+            "total": 52.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 27.5,
+            "total": 57.9,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856685",
+          "matchup": "FSU @ ALA",
+          "gameDate": "2026-09-19T21:15Z",
+          "type": "SPREAD",
+          "pick": "ALA -18.5",
+          "americanOdds": null,
+          "betRadarIndex": 58,
+          "gameIndex": 24,
+          "radarIndex": 24,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ALA -18.5",
+          "result": "L",
+          "finalScore": "FSU 36, ALA 50",
+          "lockedMarket": {
+            "homeMargin": 18.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 32.3,
+            "total": 56,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858471",
+          "matchup": "UNI @ IOWA",
+          "gameDate": "2026-09-19T20:00Z",
+          "type": "SPREAD",
+          "pick": "UNI +37.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 22,
+          "radarIndex": 22,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UNI +37.5",
+          "result": "L",
+          "finalScore": "UNI 0, IOWA 55",
+          "lockedMarket": {
+            "homeMargin": 37.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 20,
+            "total": 50,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858459",
+          "matchup": "EWU @ WASH",
+          "gameDate": "2026-09-19T23:15Z",
+          "type": "SPREAD",
+          "pick": "EWU +42.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 21,
+          "radarIndex": 21,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "EWU +42.5",
+          "result": "W",
+          "finalScore": "EWU 16, WASH 48",
+          "lockedMarket": {
+            "homeMargin": 42.5,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 14.1,
+            "total": 49.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858455",
+          "matchup": "PRST @ ORE",
+          "gameDate": "2026-09-19T02:30Z",
+          "type": "SPREAD",
+          "pick": "PRST +58.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 20,
+          "radarIndex": 20,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "PRST +58.5",
+          "result": "L",
+          "finalScore": "PRST 0, ORE 84",
+          "lockedMarket": {
+            "homeMargin": 58.5,
+            "total": 71.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 22.2,
+            "total": 59.1,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856690",
+          "matchup": "UNM @ OU",
+          "gameDate": "2026-09-19T23:30Z",
+          "type": "SPREAD",
+          "pick": "UNM +21.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 20,
+          "radarIndex": 20,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UNM +21.5",
+          "result": "W",
+          "finalScore": "UNM 6, OU 14",
+          "lockedMarket": {
+            "homeMargin": 21.5,
+            "total": 45.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -5.9,
+            "total": 54,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858456",
+          "matchup": "BUFF @ PSU",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "BUFF +39.5",
+          "americanOdds": null,
+          "betRadarIndex": 47,
+          "gameIndex": 18,
+          "radarIndex": 18,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "BUFF +39.5",
+          "result": "L",
+          "finalScore": "BUFF 13, PSU 55",
+          "lockedMarket": {
+            "homeMargin": 39.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 35.1,
+            "total": 49.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856801",
+          "matchup": "USU @ UTAH",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "UTAH -26.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 18,
+          "radarIndex": 18,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UTAH -26.5",
+          "result": "W",
+          "finalScore": "USU 0, UTAH 33",
+          "lockedMarket": {
+            "homeMargin": 26.5,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 37.8,
+            "total": 54.3,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858450",
+          "matchup": "UTEP @ MICH",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "UTEP +34.5",
+          "americanOdds": null,
+          "betRadarIndex": 48,
+          "gameIndex": 18,
+          "radarIndex": 18,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UTEP +34.5",
+          "result": "L",
+          "finalScore": "UTEP 17, MICH 52",
+          "lockedMarket": {
+            "homeMargin": 34.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 29.4,
+            "total": 47.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862777",
+          "matchup": "DSU @ USF",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "DSU +37.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 17,
+          "radarIndex": 17,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "DSU +37.5",
+          "result": "L",
+          "finalScore": "DSU 17, USF 59",
+          "lockedMarket": {
+            "homeMargin": 37.5,
+            "total": 59.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 11.8,
+            "total": 51,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858452",
+          "matchup": "UND @ NEB",
+          "gameDate": "2026-09-19T23:15Z",
+          "type": "SPREAD",
+          "pick": "NEB -27.5",
+          "americanOdds": null,
+          "betRadarIndex": 47,
+          "gameIndex": 16,
+          "radarIndex": 16,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NEB -27.5",
+          "result": "L",
+          "finalScore": "UND 7, NEB 34",
+          "lockedMarket": {
+            "homeMargin": 27.5,
+            "total": 56.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 31.9,
+            "total": 58.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856803",
+          "matchup": "MUR @ OKST",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "MUR +56.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 14,
+          "radarIndex": 14,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MUR +56.5",
+          "result": "L",
+          "finalScore": "MUR 0, OKST 59",
+          "lockedMarket": {
+            "homeMargin": 56.5,
+            "total": 70.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 30.1,
+            "total": 53.2,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862772",
+          "matchup": "UTM @ MEM",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "UTM +33.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 14,
+          "radarIndex": 14,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UTM +33.5",
+          "result": "W",
+          "finalScore": "UTM 21, MEM 45",
+          "lockedMarket": {
+            "homeMargin": 33.5,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 25.5,
+            "total": 55.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401870764",
+          "matchup": "NICH @ SHSU",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "SHSU -21",
+          "americanOdds": null,
+          "betRadarIndex": 57,
+          "gameIndex": 14,
+          "radarIndex": 14,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SHSU -21",
+          "result": "W",
+          "finalScore": "NICH 0, SHSU 59",
+          "lockedMarket": {
+            "homeMargin": 21,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 48.4,
+            "total": 53,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856799",
+          "matchup": "ARST @ TCU",
+          "gameDate": "2026-09-20T00:00Z",
+          "type": "SPREAD",
+          "pick": "ARST +18.5",
+          "americanOdds": null,
+          "betRadarIndex": 46,
+          "gameIndex": 14,
+          "radarIndex": 14,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ARST +18.5",
+          "result": "L",
+          "finalScore": "ARST 7, TCU 31",
+          "lockedMarket": {
+            "homeMargin": 18.5,
+            "total": 56.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 16.1,
+            "total": 55.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858228",
+          "matchup": "MER @ GT",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "MER +38.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MER +38.5",
+          "result": "W",
+          "finalScore": "MER 11, GT 44",
+          "lockedMarket": {
+            "homeMargin": 38.5,
+            "total": 58.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -5,
+            "total": 52.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858451",
+          "matchup": "AKR @ MINN",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "AKR +22.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "AKR +22.5",
+          "result": "L",
+          "finalScore": "AKR 7, MINN 41",
+          "lockedMarket": {
+            "homeMargin": 22.5,
+            "total": 48.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 5.6,
+            "total": 56,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858448",
+          "matchup": "SIU @ ILL",
+          "gameDate": "2026-09-19T18:00Z",
+          "type": "SPREAD",
+          "pick": "SIU +34.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SIU +34.5",
+          "result": "L",
+          "finalScore": "SIU 10, ILL 48",
+          "lockedMarket": {
+            "homeMargin": 34.5,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 8.1,
+            "total": 56.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858233",
+          "matchup": "WAG @ CAL",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "TOTAL",
+          "pick": "UNDER 65.5",
+          "americanOdds": null,
+          "betRadarIndex": 44,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "UNDER 65.5",
+          "result": "W",
+          "finalScore": "WAG 7, CAL 49",
+          "lockedMarket": {
+            "homeMargin": 58.5,
+            "total": 65.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 58.5,
+            "total": 57.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860890",
+          "matchup": "DUQ @ WSU",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "DUQ +38.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "DUQ +38.5",
+          "result": "L",
+          "finalScore": "DUQ 7, WSU 48",
+          "lockedMarket": {
+            "homeMargin": 38.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 6.4,
+            "total": 46.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401867804",
+          "matchup": "LT @ BAY",
+          "gameDate": "2026-09-19T20:00Z",
+          "type": "SPREAD",
+          "pick": "LT +20.5",
+          "americanOdds": null,
+          "betRadarIndex": 57,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "LT +20.5",
+          "result": "W",
+          "finalScore": "LT 19, BAY 36",
+          "lockedMarket": {
+            "homeMargin": 20.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 10.9,
+            "total": 56.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856800",
+          "matchup": "GAST @ UCF",
+          "gameDate": "2026-09-19T23:00Z",
+          "type": "SPREAD",
+          "pick": "GAST +17.5",
+          "americanOdds": null,
+          "betRadarIndex": 58,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "GAST +17.5",
+          "result": "W",
+          "finalScore": "GAST 30, UCF 44",
+          "lockedMarket": {
+            "homeMargin": 17.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 9,
+            "total": 55.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401862775",
+          "matchup": "ETAM @ TLSA",
+          "gameDate": "2026-09-20T00:00Z",
+          "type": "SPREAD",
+          "pick": "ETAM +41.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ETAM +41.5",
+          "result": "L",
+          "finalScore": "ETAM 0, TLSA 42",
+          "lockedMarket": {
+            "homeMargin": 41.5,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 17.3,
+            "total": 50.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860885",
+          "matchup": "SDAK @ BOIS",
+          "gameDate": "2026-09-20T02:00Z",
+          "type": "SPREAD",
+          "pick": "SDAK +28.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 12,
+          "radarIndex": 12,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SDAK +28.5",
+          "result": "W",
+          "finalScore": "SDAK 24, BOIS 38",
+          "lockedMarket": {
+            "homeMargin": 28.5,
+            "total": 61.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 12.4,
+            "total": 55.9,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856792",
+          "matchup": "TULN @ KSU",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "KSU -20.5",
+          "americanOdds": null,
+          "betRadarIndex": 57,
+          "gameIndex": 10,
+          "radarIndex": 10,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "KSU -20.5",
+          "result": "L",
+          "finalScore": "TULN 20, KSU 31",
+          "lockedMarket": {
+            "homeMargin": 20.5,
+            "total": 49.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 32.5,
+            "total": 51.7,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401866424",
+          "matchup": "STO @ MASS",
+          "gameDate": "2026-09-19T19:30Z",
+          "type": "SPREAD",
+          "pick": "STO +30.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 10,
+          "radarIndex": 10,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "STO +30.5",
+          "result": "W",
+          "finalScore": "STO 14, MASS 36",
+          "lockedMarket": {
+            "homeMargin": 30.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 17.4,
+            "total": 54.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401864507",
+          "matchup": "NDSU @ SAC",
+          "gameDate": "2026-09-20T02:30Z",
+          "type": "SPREAD",
+          "pick": "SAC +26.5",
+          "americanOdds": null,
+          "betRadarIndex": 40,
+          "gameIndex": 10,
+          "radarIndex": 10,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SAC +26.5",
+          "result": "W",
+          "finalScore": "NDSU 31, SAC 10",
+          "lockedMarket": {
+            "homeMargin": -26.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -26.1,
+            "total": 51.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856798",
+          "matchup": "BGSU @ ISU",
+          "gameDate": "2026-09-19T16:00Z",
+          "type": "SPREAD",
+          "pick": "ISU -22.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 7,
+          "radarIndex": 7,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ISU -22.5",
+          "result": "W",
+          "finalScore": "BGSU 7, ISU 55",
+          "lockedMarket": {
+            "homeMargin": 22.5,
+            "total": 43.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 34.9,
+            "total": 48.5,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858460",
+          "matchup": "EMU @ WIS",
+          "gameDate": "2026-09-19T16:30Z",
+          "type": "SPREAD",
+          "pick": "EMU +23.5",
+          "americanOdds": null,
+          "betRadarIndex": 55,
+          "gameIndex": 7,
+          "radarIndex": 7,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "EMU +23.5",
+          "result": "L",
+          "finalScore": "EMU 10, WIS 54",
+          "lockedMarket": {
+            "homeMargin": 23.5,
+            "total": 43.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 11.4,
+            "total": 49.4,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401858227",
+          "matchup": "ME @ BC",
+          "gameDate": "2026-09-19T18:00Z",
+          "type": "SPREAD",
+          "pick": "BC -37.5",
+          "americanOdds": null,
+          "betRadarIndex": 41,
+          "gameIndex": 7,
+          "radarIndex": 7,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "BC -37.5",
+          "result": "L",
+          "finalScore": "ME 16, BC 22",
+          "lockedMarket": {
+            "homeMargin": 37.5,
+            "total": 54.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 39.4,
+            "total": 52.8,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401856793",
+          "matchup": "NIU @ ARIZ",
+          "gameDate": "2026-09-20T02:30Z",
+          "type": "SPREAD",
+          "pick": "NIU +34.5",
+          "americanOdds": null,
+          "betRadarIndex": 54,
+          "gameIndex": 7,
+          "radarIndex": 7,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NIU +34.5",
+          "result": "W",
+          "finalScore": "NIU 17, ARIZ 42",
+          "lockedMarket": {
+            "homeMargin": 34.5,
+            "total": 50.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 23.7,
+            "total": 49.3,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "cfb-401860886",
+          "matchup": "MONT @ ORST",
+          "gameDate": "2026-09-20T03:00Z",
+          "type": "SPREAD",
+          "pick": "MONT +17.5",
+          "americanOdds": null,
+          "betRadarIndex": 58,
+          "gameIndex": 7,
+          "radarIndex": 7,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "MONT +17.5",
+          "result": "L",
+          "finalScore": "MONT 17, ORST 52",
+          "lockedMarket": {
+            "homeMargin": 17.5,
+            "total": 55.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -4,
+            "total": 54.6,
+            "historicalGames": 185
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        }
+      ]
+    },
+    {
+      "league": "nfl",
+      "weekStart": "2026-09-15",
+      "weekEnd": "2026-09-21",
+      "label": "NFL · 2026-09-15–2026-09-21 · Retrospective",
+      "lockedAt": null,
+      "backtestedAt": "2026-09-22T19:30:00Z",
+      "lockType": "RETROSPECTIVE_ARCHIVED_LINE_BACKTEST",
+      "methodologyNote": "Walk-forward current PickRadar logic using only games completed before the slate. ESPN archived market numbers are closing-line proxies, not timestamped weekly locks.",
+      "picks": [
+        {
+          "gameId": "nfl-401872932",
+          "matchup": "DET @ BUF",
+          "gameDate": "2026-09-18T00:15Z",
+          "type": "SPREAD",
+          "pick": "BUF -5.5",
+          "americanOdds": null,
+          "betRadarIndex": 45,
+          "gameIndex": 72,
+          "radarIndex": 72,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "BUF -5.5",
+          "result": "W",
+          "finalScore": "DET 31, BUF 41",
+          "lockedMarket": {
+            "homeMargin": 5.5,
+            "total": 54.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 6.6,
+            "total": 53.2,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872937",
+          "matchup": "MIN @ CHI",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "TOTAL",
+          "pick": "OVER 46.5",
+          "americanOdds": null,
+          "betRadarIndex": 50,
+          "gameIndex": 71,
+          "radarIndex": 71,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "OVER 46.5",
+          "result": "L",
+          "finalScore": "MIN 9, CHI 3",
+          "lockedMarket": {
+            "homeMargin": 4.5,
+            "total": 46.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 7.4,
+            "total": 57.2,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872943",
+          "matchup": "SEA @ ARI",
+          "gameDate": "2026-09-20T20:25Z",
+          "type": "SPREAD",
+          "pick": "ARI +3.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 71,
+          "radarIndex": 71,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ARI +3.5",
+          "result": "L",
+          "finalScore": "SEA 31, ARI 7",
+          "lockedMarket": {
+            "homeMargin": -3.5,
+            "total": 40.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 10.3,
+            "total": 45.1,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872933",
+          "matchup": "CAR @ ATL",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "ATL +2.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 62,
+          "radarIndex": 62,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "ATL +2.5",
+          "result": "L",
+          "finalScore": "CAR 34, ATL 3",
+          "lockedMarket": {
+            "homeMargin": -2.5,
+            "total": 43.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 14.4,
+            "total": 52.8,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872944",
+          "matchup": "WSH @ DAL",
+          "gameDate": "2026-09-20T20:25Z",
+          "type": "SPREAD",
+          "pick": "WSH +4.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 61,
+          "radarIndex": 61,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "WSH +4.5",
+          "result": "L",
+          "finalScore": "WSH 20, DAL 37",
+          "lockedMarket": {
+            "homeMargin": 4.5,
+            "total": 51.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -2.9,
+            "total": 48.7,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872940",
+          "matchup": "JAX @ DEN",
+          "gameDate": "2026-09-20T20:05Z",
+          "type": "SPREAD",
+          "pick": "JAX +2.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 60,
+          "radarIndex": 60,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "JAX +2.5",
+          "result": "L",
+          "finalScore": "JAX 13, DEN 20",
+          "lockedMarket": {
+            "homeMargin": 2.5,
+            "total": 45.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -29.6,
+            "total": 47.7,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872946",
+          "matchup": "PIT @ NE",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "PIT +4.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "PIT +4.5",
+          "result": "L",
+          "finalScore": "PIT 3, NE 20",
+          "lockedMarket": {
+            "homeMargin": 4.5,
+            "total": 41.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -3.8,
+            "total": 44.1,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872936",
+          "matchup": "GB @ NYJ",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "NYJ +3.5",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NYJ +3.5",
+          "result": "W",
+          "finalScore": "GB 20, NYJ 17",
+          "lockedMarket": {
+            "homeMargin": -3.5,
+            "total": 44.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 23.5,
+            "total": 48.8,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872934",
+          "matchup": "CIN @ HOU",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "CIN +3",
+          "americanOdds": null,
+          "betRadarIndex": 56,
+          "gameIndex": 54,
+          "radarIndex": 54,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "CIN +3",
+          "result": "W",
+          "finalScore": "CIN 20, HOU 6",
+          "lockedMarket": {
+            "homeMargin": 3,
+            "total": 45.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -6.6,
+            "total": 53,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872945",
+          "matchup": "IND @ KC",
+          "gameDate": "2026-09-21T00:20Z",
+          "type": "SPREAD",
+          "pick": "KC -6",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 50,
+          "radarIndex": 50,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "KC -6",
+          "result": "L",
+          "finalScore": "IND 30, KC 33",
+          "lockedMarket": {
+            "homeMargin": 6,
+            "total": 46.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 30.2,
+            "total": 50.2,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872947",
+          "matchup": "NYG @ LAR",
+          "gameDate": "2026-09-22T00:15Z",
+          "type": "SPREAD",
+          "pick": "NYG +7",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 50,
+          "radarIndex": 50,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "NYG +7",
+          "result": "L",
+          "finalScore": "NYG 6, LAR 28",
+          "lockedMarket": {
+            "homeMargin": 7,
+            "total": 47.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -19.2,
+            "total": 47.2,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872939",
+          "matchup": "PHI @ TEN",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "PHI -7",
+          "americanOdds": null,
+          "betRadarIndex": 48,
+          "gameIndex": 48,
+          "radarIndex": 48,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "PHI -7",
+          "result": "L",
+          "finalScore": "PHI 24, TEN 20",
+          "lockedMarket": {
+            "homeMargin": -7,
+            "total": 39.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -9.6,
+            "total": 46.8,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872941",
+          "matchup": "LV @ LAC",
+          "gameDate": "2026-09-20T20:05Z",
+          "type": "SPREAD",
+          "pick": "LV +6.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 48,
+          "radarIndex": 48,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "LV +6.5",
+          "result": "W",
+          "finalScore": "LV 26, LAC 14",
+          "lockedMarket": {
+            "homeMargin": 6.5,
+            "total": 43.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": -17.7,
+            "total": 47.1,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872935",
+          "matchup": "CLE @ TB",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "TB -8.5",
+          "americanOdds": null,
+          "betRadarIndex": 57,
+          "gameIndex": 43,
+          "radarIndex": 43,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "TB -8.5",
+          "result": "L",
+          "finalScore": "CLE 23, TB 19",
+          "lockedMarket": {
+            "homeMargin": 8.5,
+            "total": 41.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 14.8,
+            "total": 49.7,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872938",
+          "matchup": "NO @ BAL",
+          "gameDate": "2026-09-20T17:00Z",
+          "type": "SPREAD",
+          "pick": "BAL -8.5",
+          "americanOdds": null,
+          "betRadarIndex": 59,
+          "gameIndex": 41,
+          "radarIndex": 41,
+          "label": "LOW CONFIDENCE",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "BAL -8.5",
+          "result": "L",
+          "finalScore": "NO 24, BAL 17",
+          "lockedMarket": {
+            "homeMargin": 8.5,
+            "total": 45.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 15.5,
+            "total": 52.9,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LOW CONFIDENCE",
+          "versionHistory": []
+        },
+        {
+          "gameId": "nfl-401872942",
+          "matchup": "MIA @ SF",
+          "gameDate": "2026-09-20T20:25Z",
+          "type": "SPREAD",
+          "pick": "SF -12.5",
+          "americanOdds": null,
+          "betRadarIndex": 60,
+          "gameIndex": 31,
+          "radarIndex": 31,
+          "label": "LEAN",
+          "why": "Retrospective walk-forward PickRadar selection using only results available before this slate.",
+          "line": "SF -12.5",
+          "result": "W",
+          "finalScore": "MIA 13, SF 35",
+          "lockedMarket": {
+            "homeMargin": 12.5,
+            "total": 44.5,
+            "providerCount": 1,
+            "providers": [
+              "ESPN archived market"
+            ]
+          },
+          "modelProjection": {
+            "homeMargin": 26.6,
+            "total": 46.4,
+            "historicalGames": 16
+          },
+          "modelVersion": "pickradar-v4-retrospective",
+          "retrospective": true,
+          "excludeFromCalibration": true,
+          "gradedAt": "2026-09-22T19:30:00Z",
+          "selectionBasis": "Walk-forward model; archived closing-line proxy",
+          "confidenceBand": "LEAN",
+          "versionHistory": []
+        }
+      ]
+    },
     {
       "league": "cfb",
       "weekStart": "2026-09-22",

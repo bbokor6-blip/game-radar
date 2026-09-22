@@ -4619,6 +4619,8 @@ body{
 .rpFilters .tierFilter.indexTier-yellow.active b{background:var(--index-yellow)}
 .rpFilters .tierFilter.indexTier-orange.active b{background:var(--index-orange)}
 .rpFilters .tierFilter.indexTier-red.active b{background:var(--index-red)}
+.indexFilterBar{margin:14px 0 0}
+.rpTypeLearning{margin-top:10px}
 
 .simplePick.indexTier-green,.brPickCard.indexTier-green{border-color:#4d8e5c;box-shadow:inset 4px 0 0 var(--index-green)}
 .simplePick.indexTier-yellow,.brPickCard.indexTier-yellow{border-color:#8a783c;box-shadow:inset 4px 0 0 var(--index-yellow)}

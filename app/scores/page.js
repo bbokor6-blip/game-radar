@@ -4,6 +4,7 @@ import { parseAgentQuery, searchGames, queryExplanation } from "../../lib/agentS
 import { gameMetadata } from "../../lib/gameMetadata";
 import { gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
+import IndexTierFilter, { GAME_INDEX_FILTERS, filterByTier } from "../components/IndexTierFilter";
 
 function footballRange(offset=0){
   const now=new Date();
@@ -201,6 +202,7 @@ export default function Scores(){
   const[query,setQuery]=useState("");
   const[agentSpec,setAgentSpec]=useState(null);
   const[filtersOpen,setFiltersOpen]=useState(false);
+  const[indexTier,setIndexTier]=useState("all");
   const[filters,setFilters]=useState({conference:"",team:"",window:"",network:"",spread:"",ranked:false,close:false});
   const[favorites,setFavorites]=useState(new Set());
   const[favoritesOnly,setFavoritesOnly]=useState(false);
@@ -259,7 +261,7 @@ export default function Scores(){
   }
 
   const games=(data.games||[]).filter(g=>g.sport===league);
-  const filtered=useMemo(()=>games.filter(game=>{
+  const filtered=useMemo(()=>filterByTier(games.filter(game=>{
     const meta=gameMetadata(game);
     if(filters.conference&&!meta.conferences.includes(filters.conference))return false;
     if(filters.team&&String(game.home.id)!==filters.team&&String(game.away.id)!==filters.team)return false;
@@ -276,7 +278,7 @@ export default function Scores(){
     if(view==="today"&&gameDayKey(game)!==todayKey())return false;
     if(view==="live"&&game.state!=="in"&&hasLive)return false;
     return true;
-  }),[games,filters,favoritesOnly,favorites,view,hasLive]);
+  }),game=>gameIndexScore(game),indexTier,GAME_INDEX_FILTERS),[games,filters,favoritesOnly,favorites,view,hasLive,indexTier]);
 
   const live=filtered.filter(g=>g.state==="in").sort((a,b)=>gameIndexScore(b)-gameIndexScore(a));
   const upcoming=filtered.filter(g=>g.state==="pre").sort((a,b)=>gameIndexScore(b)-gameIndexScore(a)||new Date(a.date)-new Date(b.date));
@@ -345,6 +347,8 @@ export default function Scores(){
         <button className="grFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilterChips.length?" · "+activeFilterChips.length:""}</button>
       </div>
     </nav>
+
+    <IndexTierFilter items={games} scoreOf={game=>gameIndexScore(game)} value={indexTier} onChange={setIndexTier} indexName="GAMEINDEX" tiers={GAME_INDEX_FILTERS}/>
 
     {activeFilterChips.length?<div className="grActiveFilters">{activeFilterChips.map(([key,label])=><button key={key} onClick={()=>removeFilter(key)}>{label} ×</button>)}</div>:null}
 

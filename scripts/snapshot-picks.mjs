@@ -19,26 +19,25 @@ async function main() {
   const previous=new Map((existing?.picks||[]).map(p=>[p.matchup,p]));
   const lockedAt=new Date().toISOString();
 
-  // PickRadar is selective: one recommendation per game, maximum five for the week.
-  // Require a real 70+ BetRadar signal and prefer games that are also interesting (70+ Game/Radar index when available).
+  // Lock one recommendation for every game. BetIndex is an analysis dimension,
+  // not a publication gate, so low-confidence picks remain measurable.
   const candidates=(payload.games||[])
     .map(game=>({game,pick:game.preferredPick,index:game.preferredPick?.betRadarIndex??game.bestOpportunity?.index??0,gameIndex:game.gameIndex??game.radarIndex??null}))
-    .filter(x=>x.pick&&x.pick.type!=="PASS"&&x.index>=70&&(x.gameIndex==null||x.gameIndex>=70))
-    .sort((a,b)=>(b.index-a.index)||((b.gameIndex||0)-(a.gameIndex||0)))
-    .slice(0,5);
+    .filter(x=>x.pick&&x.pick.type!=="PASS")
+    .sort((a,b)=>new Date(a.game.date)-new Date(b.game.date));
 
   const picks=candidates.map(({game,pick,index,gameIndex})=>{
     const generated={
-      ...pick,league,betRadarIndex:index,gameIndex,radarIndex:gameIndex,modelVersion:"pickradar-v3-selective",result:"PENDING",lockedAt,
-      selectionBasis:"Selective PickRadar lock: strongest qualifying BetRadar/GameRadar signals",
+      ...pick,league,betRadarIndex:index,gameIndex,radarIndex:gameIndex,modelVersion:"pickradar-v4-full-slate",result:"PENDING",lockedAt,
+      selectionBasis:"Full-slate PickRadar lock; BetIndex records confidence for later calibration",
       confidenceBand:pickConfidenceBand(index),closingMarket:null,closingLineValue:null,
-      versionHistory:[{lockedAt,pick:pick.pick,line:pick.line,americanOdds:pick.americanOdds??null,reason:"Initial selective PickRadar lock"}]
+      versionHistory:[{lockedAt,pick:pick.pick,line:pick.line,americanOdds:pick.americanOdds??null,reason:"Initial full-slate PickRadar lock"}]
     };
     const prior=previous.get(generated.matchup);
     return prior?{...generated,...prior,league,betRadarIndex:prior.betRadarIndex??index,gameIndex:prior.gameIndex??prior.radarIndex??gameIndex,radarIndex:prior.radarIndex??gameIndex}:generated;
   });
 
-  const week={league,weekStart:start,weekEnd:end,label:(league==="cfb"?"College":"NFL")+" · "+start+"–"+end,lockedAt:existing?.lockedAt||lockedAt,lockType:"SELECTIVE_PICKRADAR_LOCK",picks};
+  const week={league,weekStart:start,weekEnd:end,label:(league==="cfb"?"College":"NFL")+" · "+start+"–"+end,lockedAt:existing?.lockedAt||lockedAt,lockType:"FULL_SLATE_MODEL_LOCK",picks};
   ledger.version=4; ledger.updatedAt=lockedAt;
   ledger.weeks=[...(ledger.weeks||[]).filter(w=>!(w.league===league&&w.weekStart===start)),week];
   fs.writeFileSync(ledgerPath,JSON.stringify(ledger,null,2)+"\n");

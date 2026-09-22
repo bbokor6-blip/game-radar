@@ -4,6 +4,7 @@ import { gameMetadata } from "../../lib/gameMetadata";
 import { getWeeklyEditorial, editorialTake } from "../../lib/weeklyEditorial";
 import { gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
+import IndexTierFilter, { GAME_INDEX_FILTERS, filterByTier } from "../components/IndexTierFilter";
 
 function footballRange(offset=0){
   const now=new Date(), day=now.getDay(), daysSinceTuesday=(day+5)%7;
@@ -85,6 +86,7 @@ export default function Weekly(){
   const[data,setData]=useState({games:[]});
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
+  const[indexTier,setIndexTier]=useState("all");
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
 
   useEffect(()=>{
@@ -104,7 +106,8 @@ export default function Weekly(){
   },[league,weekOffset,range.start,range.end]);
 
   const edition=getWeeklyEditorial(league,range.start);
-  const games=(data.games||[]).slice().sort((a,b)=>gameIndexScore(b)-gameIndexScore(a));
+  const allGames=(data.games||[]).slice().sort((a,b)=>gameIndexScore(b)-gameIndexScore(a));
+  const games=filterByTier(allGames,game=>gameIndexScore(game),indexTier,GAME_INDEX_FILTERS);
   const top=games.slice(0,5);
   const ranked=games.filter(g=>gameMetadata(g).rankedMatchup).length;
   const close=games.filter(g=>{const s=gameMetadata(g).spread;return s!=null&&s<=7.5}).length;
@@ -125,6 +128,8 @@ export default function Weekly(){
       <div><span className="wrEyebrow">{edition.kicker}</span><h1>{edition.headline}</h1><p>{edition.dek}</p></div>
       <div className="wrPulse"><div><strong>{games.length}</strong><span>games</span></div><div><strong>{close}</strong><span>close lines</span></div>{league==="cfb"?<div><strong>{ranked}</strong><span>ranked clashes</span></div>:null}</div>
     </section>
+
+    <IndexTierFilter items={allGames} scoreOf={game=>gameIndexScore(game)} value={indexTier} onChange={setIndexTier} indexName="GAMEINDEX" tiers={GAME_INDEX_FILTERS}/>
 
     {edition.quickHits?.length?<section className="wrQuickHits">
       {edition.quickHits.map((x,i)=><article key={i}><span>{x.eyebrow}</span><h3>{x.title}</h3><p>{x.body}</p></article>)}

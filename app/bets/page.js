@@ -4,6 +4,7 @@ import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from ".
 import { metadataChips, gameMetadata } from "../../lib/gameMetadata";
 import { betIndexTier, gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
+import IndexTierFilter, { BET_INDEX_FILTERS, filterByTier } from "../components/IndexTierFilter";
 
 const LEAGUES=[["nfl","NFL"],["cfb","COLLEGE FBS"]];
 
@@ -535,6 +536,7 @@ export default function BetsPage(){
   const[agentSpec,setAgentSpec]=useState(null);
   const[agentMessage,setAgentMessage]=useState("");
   const[filtersOpen,setFiltersOpen]=useState(false);
+  const[indexTier,setIndexTier]=useState("all");
   const[filters,setFilters]=useState({conference:"",team:"",network:"",type:"",minIndex:"",ranked:false,close:false});
   const[loading,setLoading]=useState(true);
   const[error,setError]=useState("");
@@ -622,7 +624,7 @@ export default function BetsPage(){
   }
   function submitSearch(e){e.preventDefault();if(query.trim())runSearch(query.trim())}
 
-  const filteredGames=useMemo(()=>games.filter(game=>{
+  const filteredGames=useMemo(()=>filterByTier(games.filter(game=>{
     const meta=gameMetadata(game);
     if(filters.conference&&!meta.conferences.includes(filters.conference))return false;
     if(filters.team&&String(game.home.id)!==filters.team&&String(game.away.id)!==filters.team)return false;
@@ -632,7 +634,7 @@ export default function BetsPage(){
     if(filters.close&&(meta.spread==null||meta.spread>7.5))return false;
     if(filters.type&&!game.opportunities?.[filters.type])return false;
     return true;
-  }),[games,filters]);
+  }),game=>game.bestOpportunity?.index??game.betIndex?.score??0,indexTier,BET_INDEX_FILTERS),[games,filters,indexTier]);
 
   const opportunities=featuredOpportunities(filteredGames).filter(item=>!filters.type||item.type.toLowerCase()===filters.type);
   const top=opportunities.slice(0,10);
@@ -688,6 +690,8 @@ export default function BetsPage(){
         <button className="brFilterButton" onClick={()=>setFiltersOpen(true)}>Filters{activeFilters.length?" · "+activeFilters.length:""}</button>
       </div>
     </nav>
+
+    <IndexTierFilter items={games} scoreOf={game=>game.bestOpportunity?.index??game.betIndex?.score??0} value={indexTier} onChange={setIndexTier} indexName="BETINDEX" tiers={BET_INDEX_FILTERS}/>
 
     {activeFilters.length?<div className="grActiveFilters">{activeFilters.map(([key,label])=><button key={key} onClick={()=>removeFilter(key)}>{label} ×</button>)}</div>:null}
 

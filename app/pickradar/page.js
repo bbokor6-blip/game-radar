@@ -37,7 +37,7 @@ function confidenceBand(index){
 
 export default function RadarPicks(){
   const[league,setLeague]=useState("nfl");
-  const[weekOffset,setWeekOffset]=useState(1);
+  const[weekOffset,setWeekOffset]=useState(0);
   const[confidence,setConfidence]=useState("all");
   const[ledger,setLedger]=useState({weeks:[],record:{}});
   const[liveSignals,setLiveSignals]=useState({});
@@ -100,11 +100,16 @@ export default function RadarPicks(){
   const passCount=allPicks.filter(p=>(currentIndex(p)||0)<60).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
-  const spread=feedback.byType?.SPREAD;
-  const total=feedback.byType?.TOTAL;
-  const high=feedback.byBand?.["80+"];
-  const leans=feedback.byBand?.["70-79"];
-  const learned=[spread&&spread.decisions>=6?["SPREADS",spread]:null,total&&total.decisions>=6?["TOTALS",total]:null,high&&high.decisions>=6?["BEST BETS · 80+",high]:null,leans&&leans.decisions>=6?["STRONG · 70–79",leans]:null].filter(Boolean);
+  const analysis=ledger.confidenceAnalysis||feedback;
+  const spread=analysis.byType?.SPREAD;
+  const total=analysis.byType?.TOTAL;
+  const learned=[spread&&spread.decisions?["SPREADS",spread]:null,total&&total.decisions?["TOTALS",total]:null].filter(Boolean);
+  const confidenceResults=[
+    ["BEST BET · 80+",analysis.byBand?.["80+"]],
+    ["STRONG · 70–79",analysis.byBand?.["70-79"]],
+    ["LEAN · 60–69",analysis.byBand?.["60-69"]],
+    ["LOW CONFIDENCE · <60",analysis.byBand?.["<60"]]
+  ];
 
   return <main className="rpPage">
     <header className="rpHeader">
@@ -160,11 +165,12 @@ export default function RadarPicks(){
       {!picks.length?<div className="grEmpty">No picks match this confidence filter.</div>:null}
     </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}
 
-    {learned.length?<section className="rpLearnings">
-      <div className="rpHistoryHead"><div><span>MODEL FEEDBACK</span><h2>What PickRadar is learning</h2></div></div>
-      <div className="rpLearningGrid">{learned.map(([label,x])=><div key={label}><span>{label}</span><strong>{Math.round((x.winPct||0)*100)}%</strong><small>{x.wins}-{x.losses} on {x.decisions} graded picks</small></div>)}</div>
-      <p>Results affect future scoring only after at least 20 graded decisions. Small samples are deliberately pulled toward neutral, and closing-line value is stored separately from wins and losses.</p>
-    </section>:null}
+    <section className="rpLearnings">
+      <div className="rpHistoryHead"><div><span>BETINDEX CALIBRATION</span><h2>Does confidence predict wins?</h2></div></div>
+      <div className="rpLearningGrid">{confidenceResults.map(([label,x])=><div key={label}><span>{label}</span><strong>{x?.decisions?Math.round((x.winPct||0)*100)+"%":"—"}</strong><small>{x?.decisions?x.wins+"-"+x.losses+" on "+x.decisions+" graded picks":"No graded picks yet"}</small></div>)}</div>
+      {learned.length?<div className="rpLearningGrid rpTypeLearning">{learned.map(([label,x])=><div key={label}><span>{label}</span><strong>{Math.round((x.winPct||0)*100)}%</strong><small>{x.wins}-{x.losses} on {x.decisions} graded picks</small></div>)}</div>:null}
+      <p>Every game stays in the ledger. Results affect future scoring only after at least 20 graded decisions, so a small hot or cold sample cannot immediately rewrite the model.</p>
+    </section>
 
     <section className="rpHistory">
       <div className="rpHistoryHead"><div><span>TRACK RECORD</span><h2>Week over week</h2></div><strong>{ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses:"No graded picks yet"}</strong></div>

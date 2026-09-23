@@ -84,9 +84,13 @@ export default function RadarPicks(){
 
   const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
   const allPicks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
-  const currentIndex=pick=>liveReady&&Object.hasOwn(liveSignals,pick.gameId)?liveSignals[pick.gameId].index:pick.betRadarIndex??null;
+  // PickRadar must be evaluated by the confidence recorded when the pick was
+  // locked. A later BetRadar refresh is useful context, but must not rewrite
+  // the historical tier, filter, or calibration cohort.
+  const lockedIndex=pick=>pick.betRadarIndex??null;
+  const currentIndex=pick=>liveReady&&Object.hasOwn(liveSignals,pick.gameId)?liveSignals[pick.gameId].index:null;
   const picks=allPicks.filter(p=>{
-    const index=currentIndex(p)||0;
+    const index=lockedIndex(p)||0;
     return confidence==="all"||
       (confidence==="best"&&index>=80)||
       (confidence==="strong"&&index>=70&&index<80)||
@@ -94,10 +98,10 @@ export default function RadarPicks(){
       (confidence==="pass"&&index<60);
   });
   const record=weekRecord(allPicks);
-  const bestCount=allPicks.filter(p=>(currentIndex(p)||0)>=80).length;
-  const strongCount=allPicks.filter(p=>(currentIndex(p)||0)>=70&&(currentIndex(p)||0)<80).length;
-  const leanCount=allPicks.filter(p=>(currentIndex(p)||0)>=60&&(currentIndex(p)||0)<70).length;
-  const passCount=allPicks.filter(p=>(currentIndex(p)||0)<60).length;
+  const bestCount=allPicks.filter(p=>(lockedIndex(p)||0)>=80).length;
+  const strongCount=allPicks.filter(p=>(lockedIndex(p)||0)>=70&&(lockedIndex(p)||0)<80).length;
+  const leanCount=allPicks.filter(p=>(lockedIndex(p)||0)>=60&&(lockedIndex(p)||0)<70).length;
+  const passCount=allPicks.filter(p=>(lockedIndex(p)||0)<60).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const analysis=ledger.confidenceAnalysis||feedback;
@@ -149,11 +153,11 @@ export default function RadarPicks(){
         </div>
       </section>
       <section className="rpBoard">
-        {picks.map((pick,i)=>{const liveIndex=currentIndex(pick);const tier=betIndexTier(liveIndex??pick.betRadarIndex);return <article className="rpGame" key={pick.gameId}>
-          <div className={"rpScore indexTier-"+tier.key}><small>BETINDEX</small><strong>{liveReady?(liveIndex??"—"):"…"}</strong></div>
+        {picks.map((pick,i)=>{const lockIndex=lockedIndex(pick);const liveIndex=currentIndex(pick);const tier=betIndexTier(lockIndex);return <article className="rpGame" key={pick.gameId}>
+          <div className={"rpScore indexTier-"+tier.key}><small>LOCKED BETINDEX</small><strong>{lockIndex??"—"}</strong></div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · LOCKED {confidenceBand(pick.betRadarIndex)}</span><strong>{pick.pick}</strong><small>{liveReady?"Live BetRadar "+(liveIndex??"—")+" · ":""}{pick.betRadarIndex!=null?"Lock index "+pick.betRadarIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · LOCKED {confidenceBand(lockIndex)}</span><strong>{pick.pick}</strong><small>{lockIndex!=null?"Lock index "+lockIndex+" · ":""}{liveReady&&liveIndex!=null?"Current BetRadar "+liveIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
             <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
             {pick.modelProjection?<small className="rpModelInputs">MODEL: {pick.modelProjection.homeMargin>0?"HOME":"AWAY"} BY {Math.abs(pick.modelProjection.homeMargin).toFixed(1)} · PROJECTED TOTAL {pick.modelProjection.total.toFixed(1)} · {pick.modelProjection.historicalGames} PRIOR GAMES</small>:null}
@@ -169,7 +173,7 @@ export default function RadarPicks(){
       <div className="rpHistoryHead"><div><span>BETINDEX CALIBRATION</span><h2>Does confidence predict wins?</h2></div></div>
       <div className="rpLearningGrid">{confidenceResults.map(([label,x])=><div key={label}><span>{label}</span><strong>{x?.decisions?Math.round((x.winPct||0)*100)+"%":"—"}</strong><small>{x?.decisions?x.wins+"-"+x.losses+" on "+x.decisions+" graded picks":"No graded picks yet"}</small></div>)}</div>
       {learned.length?<div className="rpLearningGrid rpTypeLearning">{learned.map(([label,x])=><div key={label}><span>{label}</span><strong>{Math.round((x.winPct||0)*100)}%</strong><small>{x.wins}-{x.losses} on {x.decisions} graded picks</small></div>)}</div>:null}
-      <p>Every game stays in the ledger. Results affect future scoring only after at least 20 graded decisions, so a small hot or cold sample cannot immediately rewrite the model.</p>
+      <p>Every game stays in the ledger and is analyzed in the BetIndex band recorded at lock. Retrospective archived-line tests use an estimated production-quality signal band and count at reduced weight; future weekly locks count fully.</p>
     </section>
 
     <section className="rpHistory">
@@ -177,7 +181,7 @@ export default function RadarPicks(){
       {archive.length?archive.map(w=>{
         const official=(w.picks||[]).filter(p=>p.type!=="PASS");
         const r=weekRecord(official);
-        return <details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {r.decisions?r.wins+"-"+r.losses:"Pending"}</summary><div>{official.map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup}</span><strong>{p.pick}</strong><ResultBadge result={p.result}/></div>)}</div></details>
+        return <details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {r.decisions?r.wins+"-"+r.losses:"Pending"}</summary><div>{official.map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup} · BetIndex {p.betRadarIndex}</span><strong>{p.pick}</strong><ResultBadge result={p.result}/></div>)}</div></details>
       }):<div className="grEmpty">No previous weeks yet. The record begins with the first locked slate.</div>}
     </section>
   </main>;

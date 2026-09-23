@@ -106,12 +106,19 @@ ledger.weeks=ledger.weeks.map(week=>{
     };
     const projection=projectGame(game,model);
     const raw=evaluateOpportunity(game,new Map(),market,null,week.league,{projection});
+    // Archived ESPN rows contain only one closing-line source. Keep that data
+    // quality penalty in the published retrospective BetIndex, but also record
+    // the score the same signal would receive with a normal three-book market.
+    // This makes confidence-band analysis useful without overstating the lock.
+    const analysisRaw=evaluateOpportunity(game,new Map(),{...market,providerCount:3},null,week.league,{projection});
     const opportunities=[raw.spread,raw.total].filter(Boolean).map(opportunity=>{
       const index=calibratePickIndex(opportunity.index,{league:week.league,type:opportunity.type});
       return {...opportunity,index,label:pickConfidenceBand(index)};
     }).sort((a,b)=>b.index-a.index);
     const selected=opportunities[0];
     if(!selected)throw new Error(`No Model v5 opportunity for ${previous.gameId}`);
+    const analysisOpportunity=analysisRaw[selected.type.toLowerCase()];
+    const analysisBetIndex=calibratePickIndex(analysisOpportunity?.index??selected.index,{league:week.league,type:selected.type});
     const result=grade(game,selected,market);
     return {
       ...previous,
@@ -119,6 +126,8 @@ ledger.weeks=ledger.weeks.map(week=>{
       pick:selected.pick,
       americanOdds:selected.americanOdds??null,
       betRadarIndex:selected.index,
+      analysisBetIndex,
+      analysisConfidenceBand:pickConfidenceBand(analysisBetIndex),
       label:selected.label,
       confidenceBand:pickConfidenceBand(selected.index),
       why:selected.why,

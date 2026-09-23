@@ -36,7 +36,7 @@ export async function GET(){
   const weeks=sourceWeeks.map(week=>({
     ...week,
     picks:(week.picks||[]).map(pick=>{
-      const betRadarIndex=pick.modelVersion==="pickradar-v2"||pick.lockedAt
+      const betRadarIndex=pick.modelVersion==="pickradar-v2"||String(pick.modelVersion||"").startsWith("pickradar-v5")||pick.lockedAt
         ?pick.betRadarIndex
         :calibratePickIndex(pick.betRadarIndex,{league:pick.league||week.league,type:pick.type});
       return {...pick,betRadarIndex,confidenceBand:pickConfidenceBand(betRadarIndex)};

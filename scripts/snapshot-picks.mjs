@@ -28,7 +28,7 @@ async function main() {
 
   const picks=candidates.map(({game,pick,index,gameIndex})=>{
     const generated={
-      ...pick,league,betRadarIndex:index,gameIndex,radarIndex:gameIndex,modelVersion:"pickradar-v4-full-slate",result:"PENDING",lockedAt,
+      ...pick,league,betRadarIndex:index,gameIndex,radarIndex:gameIndex,modelVersion:"pickradar-v5-market-anchored",result:"PENDING",lockedAt,
       selectionBasis:"Full-slate PickRadar lock; BetIndex records confidence for later calibration",
       confidenceBand:pickConfidenceBand(index),closingMarket:null,closingLineValue:null,
       versionHistory:[{lockedAt,pick:pick.pick,line:pick.line,americanOdds:pick.americanOdds??null,reason:"Initial full-slate PickRadar lock"}]

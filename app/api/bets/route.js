@@ -206,7 +206,8 @@ export async function GET(request){
           calibrationSamples:modelCalibration.samples
         },
         closingMarket:null,
-        closingLineValue:null
+        closingLineValue:null,
+        modelVersion:"pickradar-v5-market-anchored"
       }:{
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
@@ -245,7 +246,8 @@ export async function GET(request){
       league,year,range:{start,end},
       methodology:{
         name:"Bet Radar",
-        description:"Opponent-adjusted team strength and projected margin lead the model; ATS trends, market history and current consensus lines provide supporting evidence and confidence calibration.",
+        version:"pickradar-v5-market-anchored",
+        description:"The consensus market is the baseline. Regularized opponent-adjusted strength and scoring make a smaller reliability-weighted adjustment; short ATS streaks and broad market buckets are diagnostic only and do not choose the side.",
         historyGames:history.length,
         seasonCoverage:seasonCoverage(seasonGames),
         seasonSource:"ESPN week-by-week schedule archive",
@@ -261,7 +263,8 @@ export async function GET(request){
         powerModel:{
           historicalGames:powerModel.completedCount,
           calibration:modelCalibration,
-          weights:{fundamentals:0.70,trends:0.30},
+          weights:{marketAnchor:"45–65% based on sample reliability",independentModel:"35–55%",atsDirection:0,vegasBucketDirection:0},
+          safeguards:{regularizedEarlySeasonRatings:true,neutralSiteHomeField:false,crossSubdivisionWeight:0.35,singleBookConfidenceCap:69,minimumGamesForStrong:4},
           confidenceRules:{bestBet:80,strong:70,lean:60,totalsCap:69}
         }
       },

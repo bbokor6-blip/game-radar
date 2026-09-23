@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test:model": "node --test test/*.test.mjs",
+    "backtest:v5": "node scripts/backtest-model-v5.mjs",
     "refresh:football": "node scripts/refresh-football-source.mjs"
   },
   "dependencies": {

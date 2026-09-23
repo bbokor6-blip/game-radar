@@ -1,6 +1,6 @@
 {
   "version": 6,
-  "updatedAt": "2026-09-23T00:10:02.787Z",
+  "updatedAt": "2026-09-23T00:44:04.956Z",
   "weeks": [
     {
       "league": "cfb",
@@ -8,7 +8,7 @@
       "weekEnd": "2026-09-21",
       "label": "College · 2026-09-15–2026-09-21 · Model v5 retrospective",
       "lockedAt": null,
-      "backtestedAt": "2026-09-23T00:10:02.787Z",
+      "backtestedAt": "2026-09-23T00:44:04.956Z",
       "lockType": "RETROSPECTIVE_ARCHIVED_LINE_BACKTEST",
       "methodologyNote": "Model v5 walk-forward backtest using only prior completed games and the same archived ESPN market numbers. Archived lines remain closing-line proxies, not timestamped weekly locks.",
       "picks": [
@@ -48,7 +48,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -61,7 +61,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856811",
@@ -99,7 +101,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -112,7 +114,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858230",
@@ -150,7 +154,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -163,7 +167,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856687",
@@ -201,7 +207,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -214,7 +220,9 @@
             }
           ],
           "side": "over",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 54,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401856691",
@@ -252,7 +260,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -265,7 +273,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858232",
@@ -303,7 +313,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -316,7 +326,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856796",
@@ -354,7 +366,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -367,7 +379,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 62,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401864508",
@@ -405,7 +419,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -418,7 +432,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862771",
@@ -456,7 +472,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -469,7 +485,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 61,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401860889",
@@ -507,7 +525,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -520,7 +538,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862710",
@@ -558,7 +578,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -571,7 +591,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858229",
@@ -609,7 +631,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -622,7 +644,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401871047",
@@ -660,7 +684,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -673,7 +697,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401861963",
@@ -711,7 +737,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -724,7 +750,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401864443",
@@ -762,7 +790,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -775,7 +803,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401869940",
@@ -813,7 +843,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -826,7 +856,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862774",
@@ -864,7 +896,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -877,7 +909,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856812",
@@ -915,7 +949,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -928,7 +962,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856695",
@@ -966,7 +1002,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -979,7 +1015,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401860887",
@@ -1017,7 +1055,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1030,7 +1068,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401869948",
@@ -1068,7 +1108,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1081,7 +1121,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401866423",
@@ -1119,7 +1161,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1132,7 +1174,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862776",
@@ -1170,7 +1214,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1183,7 +1227,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401860888",
@@ -1221,7 +1267,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1234,7 +1280,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856802",
@@ -1272,7 +1320,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1285,7 +1333,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858231",
@@ -1323,7 +1373,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1336,7 +1386,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862773",
@@ -1374,7 +1426,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1387,7 +1439,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856694",
@@ -1425,7 +1479,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1438,7 +1492,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401868317",
@@ -1476,7 +1532,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1489,7 +1545,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 62,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856693",
@@ -1527,7 +1585,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1540,7 +1598,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858226",
@@ -1578,7 +1638,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1591,7 +1651,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858225",
@@ -1629,7 +1691,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1642,7 +1704,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858453",
@@ -1680,7 +1744,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1693,7 +1757,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858458",
@@ -1731,7 +1797,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1744,7 +1810,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858454",
@@ -1782,7 +1850,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1795,7 +1863,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 60,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858449",
@@ -1833,7 +1903,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1846,7 +1916,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856795",
@@ -1884,7 +1956,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1897,7 +1969,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856689",
@@ -1935,7 +2009,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1948,7 +2022,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856686",
@@ -1986,7 +2062,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -1999,7 +2075,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858457",
@@ -2037,7 +2115,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2050,7 +2128,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401866422",
@@ -2088,7 +2168,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2101,7 +2181,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856692",
@@ -2139,7 +2221,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2152,7 +2234,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 62,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856797",
@@ -2190,7 +2274,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2203,7 +2287,9 @@
             }
           ],
           "side": "over",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 55,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401864574",
@@ -2241,7 +2327,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2254,7 +2340,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856685",
@@ -2292,7 +2380,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2305,7 +2393,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858471",
@@ -2343,7 +2433,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2356,7 +2446,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858459",
@@ -2394,7 +2486,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2407,7 +2499,9 @@
             }
           ],
           "side": "under",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 54,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858455",
@@ -2445,7 +2539,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2458,7 +2552,9 @@
             }
           ],
           "side": "under",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 56,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401856690",
@@ -2496,7 +2592,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2509,7 +2605,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858456",
@@ -2547,7 +2645,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2560,7 +2658,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 61,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856801",
@@ -2598,7 +2698,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2611,7 +2711,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858450",
@@ -2649,7 +2751,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2662,7 +2764,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862777",
@@ -2700,7 +2804,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2713,7 +2817,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858452",
@@ -2751,7 +2857,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2764,7 +2870,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 61,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856803",
@@ -2802,7 +2910,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2815,7 +2923,9 @@
             }
           ],
           "side": "under",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 56,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401862772",
@@ -2853,7 +2963,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2866,7 +2976,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 55,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401870764",
@@ -2904,7 +3016,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2917,7 +3029,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 62,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856799",
@@ -2955,7 +3069,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -2968,7 +3082,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858228",
@@ -3006,7 +3122,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3019,7 +3135,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858451",
@@ -3057,7 +3175,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3070,7 +3188,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858448",
@@ -3108,7 +3228,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3121,7 +3241,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401858233",
@@ -3159,7 +3281,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3172,7 +3294,9 @@
             }
           ],
           "side": "under",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 55,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401860890",
@@ -3210,7 +3334,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3223,7 +3347,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 53,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401867804",
@@ -3261,7 +3387,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3274,7 +3400,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856800",
@@ -3312,7 +3440,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3325,7 +3453,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401862775",
@@ -3363,7 +3493,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3376,7 +3506,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 51,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401860885",
@@ -3414,7 +3546,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3427,7 +3559,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 55,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401856792",
@@ -3465,7 +3599,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3478,7 +3612,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401866424",
@@ -3516,7 +3652,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3529,7 +3665,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 62,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401864507",
@@ -3567,7 +3705,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3580,7 +3718,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401856798",
@@ -3618,7 +3758,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3631,7 +3771,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858460",
@@ -3669,7 +3811,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3682,7 +3824,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401858227",
@@ -3720,7 +3864,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3733,7 +3877,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 53,
+          "analysisConfidenceBand": "PASS"
         },
         {
           "gameId": "cfb-401856793",
@@ -3771,7 +3917,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3784,7 +3930,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "cfb-401860886",
@@ -3822,7 +3970,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3835,7 +3983,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 60,
+          "analysisConfidenceBand": "LEAN"
         }
       ],
       "previousBacktest": {
@@ -3854,7 +4004,7 @@
       "weekEnd": "2026-09-21",
       "label": "NFL · 2026-09-15–2026-09-21 · Model v5 retrospective",
       "lockedAt": null,
-      "backtestedAt": "2026-09-23T00:10:02.787Z",
+      "backtestedAt": "2026-09-23T00:44:04.956Z",
       "lockType": "RETROSPECTIVE_ARCHIVED_LINE_BACKTEST",
       "methodologyNote": "Model v5 walk-forward backtest using only prior completed games and the same archived ESPN market numbers. Archived lines remain closing-line proxies, not timestamped weekly locks.",
       "picks": [
@@ -3894,7 +4044,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3907,7 +4057,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872937",
@@ -3945,7 +4097,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -3958,7 +4110,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872943",
@@ -3996,7 +4150,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4009,7 +4163,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872933",
@@ -4047,7 +4203,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4060,7 +4216,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 67,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872944",
@@ -4098,7 +4256,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4111,7 +4269,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872940",
@@ -4149,7 +4309,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4162,7 +4322,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 68,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872946",
@@ -4200,7 +4362,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4213,7 +4375,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872936",
@@ -4251,7 +4415,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4264,7 +4428,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872934",
@@ -4302,7 +4468,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4315,7 +4481,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872945",
@@ -4353,7 +4521,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4366,7 +4534,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 63,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872947",
@@ -4404,7 +4574,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4417,7 +4587,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872939",
@@ -4455,7 +4627,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4468,7 +4640,9 @@
             }
           ],
           "side": "home",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 66,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872941",
@@ -4506,7 +4680,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4519,7 +4693,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 69,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872935",
@@ -4557,7 +4733,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4570,7 +4746,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872938",
@@ -4608,7 +4786,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4621,7 +4799,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 64,
+          "analysisConfidenceBand": "LEAN"
         },
         {
           "gameId": "nfl-401872942",
@@ -4659,7 +4839,7 @@
           "modelVersion": "pickradar-v5-market-anchored-retrospective",
           "retrospective": true,
           "excludeFromCalibration": true,
-          "gradedAt": "2026-09-23T00:10:02.787Z",
+          "gradedAt": "2026-09-23T00:44:04.956Z",
           "selectionBasis": "Model v5 walk-forward backtest; archived closing-line proxy",
           "confidenceBand": "PASS",
           "versionHistory": [
@@ -4672,7 +4852,9 @@
             }
           ],
           "side": "away",
-          "backtestedAt": "2026-09-23T00:10:02.787Z"
+          "backtestedAt": "2026-09-23T00:44:04.956Z",
+          "analysisBetIndex": 65,
+          "analysisConfidenceBand": "LEAN"
         }
       ],
       "previousBacktest": {

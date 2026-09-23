@@ -48,7 +48,7 @@ export async function GET(){
   const pushes=graded.filter(p=>p.result==="PUSH").length;
   const decisions=wins+losses;
   const feedback=buildFeedbackProfile({...ledger,weeks});
-  const confidenceAnalysis=buildFeedbackProfile({...ledger,weeks},{includeExcluded:true});
+  const confidenceAnalysis=buildFeedbackProfile({...ledger,weeks},{includeExcluded:true,useAnalysisIndex:true});
   return NextResponse.json({
     ...ledger,weeks,feedback,confidenceAnalysis,
     record:{wins,losses,pushes,decisions,winPct:decisions?Math.round((wins/decisions)*1000)/10:null}

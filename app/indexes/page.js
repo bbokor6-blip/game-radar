@@ -52,7 +52,7 @@ export default function IndexGuide(){
           <li><strong>During the game:</strong> score margin, time remaining, overtime, possession leverage and upset potential.</li>
           <li><strong>After the game:</strong> finish margin, overtime, ranked upsets and matchup quality.</li>
         </ul>
-        <p className="ixNote">GameIndex changes as the game changes. A quiet matchup can become must-watch when an upset or close finish develops.</p>
+        <p className="ixNote">GameIndex ranks each full slate into four balanced tiers. Primetime, ranked stakes, close markets, rivalries and under-the-radar toss-ups determine the order. It changes as the game changes, so a quiet matchup can become must-watch when an upset or close finish develops.</p>
       </div>
       <TierGrid tiers={GAME_TIERS}/>
     </section>
@@ -69,7 +69,7 @@ export default function IndexGuide(){
           <li><strong>Model edge:</strong> the gap between Game Radar's projected margin or total and the market line.</li>
           <li><strong>Evidence quality:</strong> team sample size, recent and season-long ATS form, and opponent-adjusted strength.</li>
           <li><strong>Market quality:</strong> sportsbook consensus, number of available books and disagreement between lines.</li>
-          <li><strong>Calibration:</strong> past PickRadar results can make a proven profile slightly stronger or weaker.</li>
+          <li><strong>Calibration:</strong> past PickRadar results make a proven profile stronger or weaker. True locked picks count fully; retrospective archived-line tests count at a reduced weight.</li>
         </ul>
         <p className="ixNote">BetIndex is a signal-strength score—not a predicted win percentage. It can move when the line or available evidence changes; PickRadar preserves the score and market at lock.</p>
       </div>

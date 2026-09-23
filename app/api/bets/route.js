@@ -152,7 +152,9 @@ export async function GET(request){
     const teamForm=buildTeamForm(hydratedHistory,profiles);
     const powerModel=buildPowerModel(hydratedHistory,league);
     const modelCalibration=calibrateModel(hydratedHistory,league);
-    const feedbackProfile=buildFeedbackProfile(radarLedger);
+    // Retrospective archived-line results are informative but less trustworthy
+    // than true weekly locks, so they teach BetIndex at one-third weight.
+    const feedbackProfile=buildFeedbackProfile(radarLedger,{retrospectiveWeight:.35});
 
     const games=upcoming.map((game)=>{
       const allOdds=currentMarkets.get(game.id)||[];

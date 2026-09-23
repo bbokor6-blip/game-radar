@@ -36,3 +36,14 @@ test("retrospective outcomes feed BetIndex cautiously at partial weight",()=>{
   assert.ok(feedback.modifier>0);
   assert.equal(feedback.effectiveSample,10.5);
 });
+
+test("retrospective analysis groups results by production-quality signal band",()=>{
+  const picks=[
+    {league:"nfl",type:"SPREAD",betRadarIndex:55,analysisBetIndex:82,result:"W",retrospective:true,excludeFromCalibration:true},
+    {league:"nfl",type:"SPREAD",betRadarIndex:54,analysisBetIndex:72,result:"L",retrospective:true,excludeFromCalibration:true}
+  ];
+  const profile=buildFeedbackProfile({weeks:[{league:"nfl",picks}]},{includeExcluded:true,useAnalysisIndex:true});
+  assert.equal(profile.byBand["80+"].wins,1);
+  assert.equal(profile.byBand["70-79"].losses,1);
+  assert.equal(profile.byBand["<60"].decisions,0);
+});

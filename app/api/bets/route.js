@@ -9,6 +9,7 @@ import { enrichGamesWithSeasonContext, seasonCoverage } from "../../../lib/seaso
 import { buildPowerModel, calibrateModel, projectGame } from "../../../lib/radarModel";
 import { calibratePickIndex, pickConfidenceBand } from "../../../lib/pickCalibration";
 import { footballSourceMetadata, mergeWithSeasonSnapshot } from "../../../lib/footballSource";
+import { calibrateSlateBetIndexes } from "../../../lib/slateBetIndex";
 import radarLedger from "../../../data/radar-picks.json";
 
 export const dynamic = "force-dynamic";
@@ -156,7 +157,7 @@ export async function GET(request){
     // than true weekly locks, so they teach BetIndex at one-third weight.
     const feedbackProfile=buildFeedbackProfile(radarLedger,{retrospectiveWeight:.35,useAnalysisIndex:true});
 
-    const games=upcoming.map((game)=>{
+    const rawGames=upcoming.map((game)=>{
       const allOdds=currentMarkets.get(game.id)||[];
       const market=consensusMarket(game,allOdds);
       const projection=projectGame(game,powerModel);
@@ -241,7 +242,9 @@ export async function GET(request){
         gameIndex,
         betIndex
       };
-    }).sort((a,b)=>(b.betIndex?.score||0)-(a.betIndex?.score||0)||(b.gameIndex?.score||0)-(a.gameIndex?.score||0));
+    });
+    const games=calibrateSlateBetIndexes(rawGames)
+      .sort((a,b)=>(b.betIndex?.score||0)-(a.betIndex?.score||0)||(b.gameIndex?.score||0)-(a.gameIndex?.score||0));
 
     return NextResponse.json({
       generatedAt:new Date().toISOString(),
@@ -249,7 +252,9 @@ export async function GET(request){
       methodology:{
         name:"Bet Radar",
         version:"pickradar-v5-market-anchored",
-        description:"The consensus market is the baseline. Regularized opponent-adjusted strength and scoring make a smaller reliability-weighted adjustment; short ATS streaks and broad market buckets are diagnostic only and do not choose the side.",
+        description:"The consensus market anchors the raw signal. BetIndex ranks supported spread signals within this week's slate; the top 30% can reach Strong or Best Bet when a line, two prior games per team, model agreement and a meaningful edge are present. It is not an estimated win percentage.",
+        slateRelativeTarget:0.30,
+        slateRelativeEligible:games.filter(game=>game.opportunities?.spread?.relativeSlate).length,
         historyGames:history.length,
         seasonCoverage:seasonCoverage(seasonGames),
         seasonSource:"ESPN week-by-week schedule archive",
@@ -266,8 +271,8 @@ export async function GET(request){
           historicalGames:powerModel.completedCount,
           calibration:modelCalibration,
           weights:{marketAnchor:"45–65% based on sample reliability",independentModel:"35–55%",atsDirection:0,vegasBucketDirection:0},
-          safeguards:{regularizedEarlySeasonRatings:true,neutralSiteHomeField:false,crossSubdivisionWeight:0.35,singleBookConfidenceCap:69,minimumGamesForStrong:4},
-          confidenceRules:{bestBet:80,strong:70,lean:60,totalsCap:69}
+          safeguards:{regularizedEarlySeasonRatings:true,neutralSiteHomeField:false,crossSubdivisionWeight:0.35,rawSingleBookCap:69,minimumPriorGamesForSlateRanking:2},
+          confidenceRules:{bestBet:80,strong:70,lean:55,totalsCap:69,slateRelative:true}
         }
       },
       games

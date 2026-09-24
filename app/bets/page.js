@@ -238,6 +238,7 @@ function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekO
       <div className="pickReason">
         <span>WHY IT'S HERE</span>
         <p>{item.why}</p>
+        {item.relativeSlate?<small>SLATE RANK #{item.relativeSlate.rank} OF {item.relativeSlate.slateSize} · RAW SIGNAL {item.relativeSlate.rawIndex} · {g.marketConsensus?.providerCount||0} BOOK{g.marketConsensus?.providerCount===1?"":"S"}</small>:null}
       </div>
       <details className="pickDetails">
         <summary>MARKET + EVIDENCE</summary>
@@ -745,7 +746,7 @@ export default function BetsPage(){
         {parlays.length?<div className="brParlayGrid">{parlays.map((p,i)=><ParlayCard key={i} parlay={p}/>)}</div>:<div className="brEmptyInline">No qualifying parlay combinations yet.</div>}
         <details className="brMethod">
           <summary>BetRadar scoring and methodology</summary>
-          <p>BetIndex measures signal strength, not win probability: green is 80+ Best Bet, yellow is 70–79 Strong, orange is 55–69 Lean and red is below 55 Pass. <a href="/indexes">Read the full index guide →</a></p>
+          <p>BetIndex ranks this week's supported signals, not win probability. The top eligible spread picks can reach 80+ Best Bet or 70–79 Strong; 55–69 is Lean and below 55 is Pass. Check the raw signal and book count before choosing a bet. <a href="/indexes">Read the full index guide →</a></p>
         </details>
       </section>
     </>}

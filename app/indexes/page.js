@@ -8,8 +8,8 @@ const GAME_TIERS=[
 ];
 
 const BET_TIERS=[
-  ["green","80–100","Best Bet","The model's strongest supported signals."],
-  ["yellow","70–79","Strong","A meaningful edge with solid evidence."],
+  ["green","80–100","Best Bet","The highest ranked supported spread signals on this slate."],
+  ["yellow","70–79","Strong","A leading spread signal relative to this week's games."],
   ["orange","55–69","Lean","A real signal with more uncertainty."],
   ["red","0–54","Pass","Tracked for the full slate, not recommended."]
 ];
@@ -61,17 +61,17 @@ export default function IndexGuide(){
       <div className="ixMetricIntro">
         <span>02 · SIGNAL STRENGTH</span>
         <h2>BetIndex</h2>
-        <p>Answers a different question: <strong>How much confidence does the model have in this betting signal?</strong></p>
+        <p>Answers a different question: <strong>Which betting signals rank highest on this slate?</strong></p>
       </div>
       <div className="ixMetricBody">
         <h3>What moves it</h3>
         <ul>
           <li><strong>Model edge:</strong> the gap between Game Radar's projected margin or total and the market line.</li>
-          <li><strong>Evidence quality:</strong> team sample size, recent and season-long ATS form, and opponent-adjusted strength.</li>
+          <li><strong>Evidence quality:</strong> team sample size, model agreement and opponent-adjusted strength. ATS form is context, not a side-selection input.</li>
           <li><strong>Market quality:</strong> sportsbook consensus, number of available books and disagreement between lines.</li>
           <li><strong>Calibration:</strong> past PickRadar results make a proven profile stronger or weaker. True locked picks count fully; retrospective archived-line tests count at a reduced weight.</li>
         </ul>
-        <p className="ixNote">BetIndex is a signal-strength score—not a predicted win percentage. It can move when the line or available evidence changes; PickRadar preserves the score and market at lock.</p>
+        <p className="ixNote">BetIndex is a relative ranking, not a predicted win percentage. Up to the top 30% of games with a posted spread, two prior games per team, model agreement and a measurable edge can reach Strong or Best Bet. A single sportsbook line can still qualify, so check the book count and raw score shown with each featured pick. PickRadar preserves its score and market at lock.</p>
       </div>
       <TierGrid tiers={BET_TIERS}/>
     </section>

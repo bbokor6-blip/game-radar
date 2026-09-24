@@ -20,9 +20,10 @@ function weekName(offset){
   if(offset===1)return "NEXT WEEK";
   return "LOOK AHEAD · +"+offset;
 }
-function ResultBadge({result}){
+function ResultBadge({result,gameDate}){
   const value=result||"PENDING";
-  return <span className={"rpResult "+value.toLowerCase()}>{value}</span>;
+  const label=value==="PENDING"?(gameDate&&new Date(gameDate)>new Date()?"PICKED":"AWAITING RESULT"):value;
+  return <span className={"rpResult "+value.toLowerCase()}>{label}</span>;
 }
 function weekRecord(picks=[]){
   const graded=picks.filter(p=>["W","L","PUSH"].includes(p.result));
@@ -167,7 +168,7 @@ export default function RadarPicks(){
             {pick.modelProjection?<small className="rpModelInputs">MODEL: {pick.modelProjection.homeMargin>0?"HOME":"AWAY"} BY {Math.abs(pick.modelProjection.homeMargin).toFixed(1)} · PROJECTED TOTAL {pick.modelProjection.total.toFixed(1)} · {pick.modelProjection.historicalGames} PRIOR GAMES</small>:null}
             {pick.closingLineValue!=null?<small className={"rpClv "+(pick.closingLineValue>=0?"positive":"negative")}>CLOSING-LINE VALUE: {pick.closingLineValue>0?"+":""}{pick.closingLineValue}</small>:null}
           </div>
-          <ResultBadge result={pick.result}/>
+          <ResultBadge result={pick.result} gameDate={pick.gameDate}/>
         </article>})}
       </section>
       {!picks.length?<div className="grEmpty">No picks match this confidence filter.</div>:null}
@@ -185,7 +186,7 @@ export default function RadarPicks(){
       {archive.length?archive.map(w=>{
         const official=(w.picks||[]).filter(p=>p.type!=="PASS");
         const r=weekRecord(official);
-        return <details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {r.decisions?r.wins+"-"+r.losses:"Pending"}</summary><div>{official.map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup} · BetIndex {p.betRadarIndex}</span><strong>{p.pick}</strong><ResultBadge result={p.result}/></div>)}</div></details>
+        return <details key={w.league+"-"+w.weekStart}><summary>{w.label||w.weekStart} · {r.decisions?r.wins+"-"+r.losses:"Awaiting results"}</summary><div>{official.map(p=><div className="rpArchiveRow" key={p.gameId}><span>{p.matchup} · BetIndex {p.betRadarIndex}</span><strong>{p.pick}</strong><ResultBadge result={p.result} gameDate={p.gameDate}/></div>)}</div></details>
       }):<div className="grEmpty">No previous weeks yet. The record begins with the first locked slate.</div>}
     </section>
   </main>;

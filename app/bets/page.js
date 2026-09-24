@@ -69,12 +69,7 @@ function opportunityTag(item){
   return item.index>=70?"SLEEPER SIGNAL":"UNDER THE RADAR";
 }
 function featuredOpportunities(games){
-  return allOpportunities(games).filter(item=>{
-    if(item.game.sport!=="cfb")return true;
-    const ranked=rankedCount(item.game);
-    if(ranked>0)return item.index>=55;
-    return item.index>=70&&gameIndexScore(item.game)>=50;
-  }).sort((a,b)=>b.index-a.index||rankedCount(b.game)-rankedCount(a.game)||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
+  return allOpportunities(games);
 }
 function TeamMini({team}){
   return <span className="teamMini">{team?.logo?<img src={team.logo} alt=""/>:<i/>}<b>{teamDisplay(team)}</b></span>;
@@ -158,11 +153,8 @@ function savedPickId(league,weekStart,gameId,key){
   return [league,weekStart,gameId,key].join("|");
 }
 function allOpportunities(games){
-  const out=[];
-  for(const game of games){
-    if(game.opportunities?.spread)out.push({...game.opportunities.spread,game});
-    if(game.opportunities?.total)out.push({...game.opportunities.total,game});
-  }
+  const out=games.filter(game=>game.officialPick&&game.bestOpportunity)
+    .map(game=>({...game.bestOpportunity,game}));
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
 
@@ -439,8 +431,8 @@ function BetPickCard({item,featured=false,league,weekStart,weekLabel,weekOffset,
     </div>
     <div className="brPickMain">
       <div>
-        <span className="brPickLabel">{item.type}</span>
-        <h3>{item.pick} <small>{oddsText(item.americanOdds)}</small></h3>
+        <span className="brPickLabel">{item.officialStatus==="LOCKED"?"OFFICIAL PICK · LOCKED":"UPCOMING PICK"} · {item.type}</span>
+        <h3>{item.pick} <small>{oddsText(item.americanOdds)}{item.officialStatus==="LOCKED"?" AT LOCK":""}</small></h3>
       </div>
       <div className="brIndex">
         <strong>{item.index}</strong>
@@ -461,7 +453,8 @@ function BetPickCard({item,featured=false,league,weekStart,weekLabel,weekOffset,
         <summary>Why this score</summary>
         <div className="brEvidence">
           {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
-          <span>Signal strength: {item.index}</span>
+          <span>BetIndex slate rank: {item.index}</span>
+          {item.lockedIndex!=null?<span>Score recorded at lock: {item.lockedIndex}</span>:null}
           <span>{g.marketConsensus?.providerCount||0} market source{g.marketConsensus?.providerCount===1?"":"s"}</span>
         </div>
       </details>
@@ -496,9 +489,9 @@ function BetGameRow({game,league,weekStart,weekLabel,savedIds,onToggleSave}){
       {market.total!=null?<small>O/U {market.total}</small>:null}
     </div>
     <div className="brBest">
-      <span>Best look</span>
-      <strong>{best?.pick||"—"}</strong>
-      <small>{best?best.index+" · "+betIndexTier(best.index).label:"No signal"}</small>
+      <span>{game.officialPick?.locked?"Official pick":"Upcoming pick"}</span>
+      <strong>{best?.pick||"Pending · more than 7 days away"}</strong>
+      <small>{best?best.index+" · "+betIndexTier(best.index).label:"No pick yet"}</small>
     </div>
     {best?<button className={"brSave "+(savedIds.has(id)?"saved":"")} onClick={()=>onToggleSave(saved)}>{savedIds.has(id)?"★":"☆"}</button>:<span/>}
   </article>;
@@ -530,6 +523,7 @@ export default function BetsPage(){
   const[league,setLeague]=useState("nfl");
   const[prefsReady,setPrefsReady]=useState(false);
   const[data,setData]=useState({games:[],methodology:null,generatedAt:null});
+  const[ledger,setLedger]=useState({weeks:[],record:{}});
   const[weekOffset,setWeekOffset]=useState(0);
   const[betSheet,setBetSheet]=useState([]);
   const[sheetReady,setSheetReady]=useState(false);
@@ -577,10 +571,13 @@ export default function BetsPage(){
     async function load(){
       try{
         setLoading(true);
-        const r=await fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"});
-        if(!r.ok)throw new Error();
-        const json=await r.json();
-        if(!ignore){setData(json);setError("")}
+        const [r,historyResponse]=await Promise.all([
+          fetch("/api/bets?league="+league+"&start="+range.start+"&end="+range.end,{cache:"no-store"}),
+          fetch("/api/radar-picks",{cache:"no-store"})
+        ]);
+        if(!r.ok||!historyResponse.ok)throw new Error();
+        const [json,history]=await Promise.all([r.json(),historyResponse.json()]);
+        if(!ignore){setData(json);setLedger(history);setError("")}
       }catch{if(!ignore)setError("BetRadar temporarily unavailable.")}
       finally{if(!ignore)setLoading(false)}
     }
@@ -590,6 +587,8 @@ export default function BetsPage(){
   },[league,weekOffset,prefsReady]);
 
   const games=(data.games||[]).filter(g=>g.sport===league);
+  const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start);
+  const archives=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const savedIds=useMemo(()=>new Set(betSheet.map(x=>x.id)),[betSheet]);
   const weekSheet=useMemo(()=>betSheet.filter(x=>x.league===league&&x.weekStart===range.start).sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate)),[betSheet,league,range.start]);
 
@@ -633,7 +632,7 @@ export default function BetsPage(){
     if(filters.minIndex&&Number(game.bestOpportunity?.index||0)<Number(filters.minIndex))return false;
     if(filters.ranked&&!meta.rankedInvolved)return false;
     if(filters.close&&(meta.spread==null||meta.spread>7.5))return false;
-    if(filters.type&&!game.opportunities?.[filters.type])return false;
+    if(filters.type&&game.bestOpportunity?.type?.toLowerCase()!==filters.type)return false;
     return true;
   }),game=>game.bestOpportunity?.index??game.betIndex?.score??0,indexTier,BET_INDEX_FILTERS),[games,filters,indexTier]);
 
@@ -682,8 +681,9 @@ export default function BetsPage(){
 
     <nav className="brPrimaryNav">
       <div className="brPrimaryLinks">
-        <a href="#top">Top Signals</a>
+        <a href="#top">Our Picks</a>
         <a href="#all">All Games</a>
+        <a href="#track-record">Track Record</a>
         <a href="#parlays">Parlays</a>
       </div>
       <div className="brPrimaryTools">
@@ -712,10 +712,10 @@ export default function BetsPage(){
     {loading?<div className="grEmpty">Loading BetRadar…</div>:<>
       <section className="brSection" id="top">
         <div className="grSectionHead">
-          <div><h2>Top Signals</h2><p>{weekName(weekOffset)} · {weekLabel} · live model signals, not locked Radar Picks</p></div>
+          <div><h2>Our Picks</h2><p>{weekName(weekOffset)} · {weekLabel} · one official pick per game. Locked selections remain fixed when the model or line moves.</p></div>
           <button onClick={()=>setFiltersOpen(true)}>Narrow board</button>
         </div>
-        {featured?<BetPickCard item={featured} featured league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,featured.game.id,pickKeyForOpportunity(featured)))} onToggleSave={toggleSavedPick}/>:<div className="grEmpty">No qualifying betting signals yet.</div>}
+        {featured?<BetPickCard item={featured} featured league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,featured.game.id,pickKeyForOpportunity(featured)))} onToggleSave={toggleSavedPick}/>:<div className="grEmpty">Picks appear when games enter the seven-day window.</div>}
         {nextBest.length?<div className="brTopGrid">{nextBest.map(item=><BetPickCard key={item.game.id+"-"+item.type} item={item} league={league} weekStart={range.start} weekLabel={weekLabel} weekOffset={weekOffset} isSaved={savedIds.has(savedPickId(league,range.start,item.game.id,pickKeyForOpportunity(item)))} onToggleSave={toggleSavedPick}/>)}</div>:null}
       </section>
 
@@ -734,19 +734,41 @@ export default function BetsPage(){
 
       <section className="brSection" id="all">
         <div className="grSectionHead">
-          <div><h2>All Games</h2><p>Strongest current BetRadar signal from every game with a market.</p></div>
+          <div><h2>All Games</h2><p>The same official picks shown above, including lower-ranked picks on the full slate.</p></div>
         </div>
         <div className="brGameList">
           {allGames.length?allGames.map(game=><BetGameRow key={game.id} game={game} league={league} weekStart={range.start} weekLabel={weekLabel} savedIds={savedIds} onToggleSave={toggleSavedPick}/>):<div className="grEmpty">No games match these filters.</div>}
         </div>
       </section>
 
+      <section className="brSection" id="track-record">
+        <div className="grSectionHead"><div><h2>Track Record</h2><p>Official picks and results in one place. A pick marked Picked is awaiting kickoff; results are graded after the game.</p></div>
+          <strong>{ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses:"No graded picks yet"}</strong>
+        </div>
+        <div className="brGameList">
+          {games.filter(g=>g.officialPick).slice().sort((a,b)=>new Date(a.date)-new Date(b.date)).map(game=>{
+            const pick=game.officialPick;
+            const status=pick.result&&pick.result!=="PENDING"?pick.result:new Date(game.date)>new Date()?"PICKED":"AWAITING RESULT";
+            return <div className="brSavedRow" key={game.id}>
+              <div><strong>{pick.pick}</strong><span>{matchup(game)} · {pick.locked?"LOCKED":"MODEL PICK"}</span></div>
+              <span>{gameTime(game)}</span><strong>{status}</strong>
+            </div>;
+          })}
+        </div>
+        {selectedWeek?<p className="brRecordNote">{games.filter(g=>g.officialPick?.locked).length} locked picks on this week's live schedule · {games.filter(g=>g.officialPick&&!g.officialPick.locked).length} upcoming model picks. Unmatched archived fixtures are excluded from the board.</p>:null}
+        {archives.length?<details className="brMethod"><summary>Previous weeks</summary>
+          {archives.map(week=><details key={week.league+week.weekStart}><summary>{week.label||week.weekStart} · {(week.picks||[]).filter(p=>p.result==="W").length}–{(week.picks||[]).filter(p=>p.result==="L").length}</summary>
+            <div className="brGameList">{(week.picks||[]).map(p=><div className="brSavedRow" key={p.gameId}><div><strong>{p.pick}</strong><span>{p.matchup}</span></div><strong>{p.result==="PENDING"?"AWAITING RESULT":p.result}</strong></div>)}</div>
+          </details>)}
+        </details>:null}
+      </section>
+
       <section className="brSection brSecondary" id="parlays">
-        <div className="grSectionHead"><div><h2>Parlays</h2><p>Curated combinations from the same underlying BetRadar signals.</p></div></div>
+        <div className="grSectionHead"><div><h2>Parlays</h2><p>Combinations use only official picks. Payouts use recorded prices; verify current lines and odds before betting.</p></div></div>
         {parlays.length?<div className="brParlayGrid">{parlays.map((p,i)=><ParlayCard key={i} parlay={p}/>)}</div>:<div className="brEmptyInline">No qualifying parlay combinations yet.</div>}
         <details className="brMethod">
           <summary>BetRadar scoring and methodology</summary>
-          <p>BetIndex ranks this week's supported signals, not win probability. The top eligible spread picks can reach 80+ Best Bet or 70–79 Strong; 55–69 is Lean and below 55 is Pass. Check the raw signal and book count before choosing a bet. <a href="/indexes">Read the full index guide →</a></p>
+          <p>Locked picks keep their original selection, line and score. The visible BetIndex ranks those official picks against this week's slate; the lock score appears under “Why this score.” New games receive a model pick within seven days. BetIndex is not a win probability. Check the locked line against the current market before betting. <a href="/indexes">Read the full index guide →</a></p>
         </details>
       </section>
     </>}

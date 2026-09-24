@@ -7,7 +7,6 @@ const LINKS=[
   ["/weekly","WeeklyRadar"],
   ["/scores","GameRadar"],
   ["/bets","BetRadar"],
-  ["/pickradar","PickRadar"],
   ["/indexes","Index Guide"]
 ];
 

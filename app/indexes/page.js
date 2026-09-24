@@ -71,7 +71,7 @@ export default function IndexGuide(){
           <li><strong>Market quality:</strong> sportsbook consensus, number of available books and disagreement between lines.</li>
           <li><strong>Calibration:</strong> past PickRadar results make a proven profile stronger or weaker. True locked picks count fully; retrospective archived-line tests count at a reduced weight.</li>
         </ul>
-        <p className="ixNote">BetIndex is a relative ranking, not a predicted win percentage. Up to the top 30% of games with a posted spread, two prior games per team, model agreement and a measurable edge can reach Strong or Best Bet. A single sportsbook line can still qualify, so check the book count and raw score shown with each featured pick. PickRadar preserves its score and market at lock.</p>
+        <p className="ixNote">BetIndex is a relative ranking, not a predicted win percentage. BetRadar ranks the official picks on the current slate, with about 30% of supported spread picks in Strong or Best Bet. Best Bet requires a posted sportsbook price. A locked pick keeps its original selection, line and score for the track record; its current slate rank can change without changing that pick.</p>
       </div>
       <TierGrid tiers={BET_TIERS}/>
     </section>

@@ -15,16 +15,10 @@ export default function Home(){
       chips:["LIVE","GAMEINDEX","WHY IT MATTERS"]
     },
     {
-      n:"03",name:"BETRADAR",eyebrow:"THE SIGNALS",href:"/bets",
-      title:"See where the model sees something.",
-      copy:"Search and filter the betting board, compare signals and understand what is driving the model.",
-      chips:["SPREADS + TOTALS","SIGNAL STRENGTH","SEARCH"]
-    },
-    {
-      n:"04",name:"PICKRADAR",eyebrow:"THE RECEIPTS",href:"/pickradar",
-      title:"The picks we actually stand behind.",
-      copy:"A locked pick on every NFL and college game, with confidence filters and a record that carries forward.",
-      chips:["FULL SLATE","BEST BETS","TRACK RECORD"]
+      n:"03",name:"BETRADAR",eyebrow:"THE PICKS + THE RECEIPTS",href:"/bets",
+      title:"Know exactly what we're picking.",
+      copy:"One official pick for each game, its BetIndex and market line, plus the track record in the same place.",
+      chips:["OFFICIAL PICKS","FULL SLATE","TRACK RECORD"]
     }
   ];
   return <main className="homeRadar">
@@ -37,9 +31,9 @@ export default function Home(){
     <section className="homeHero">
       <div className="homeEyebrow">FOOTBALL, FILTERED</div>
       <h1>Know what matters.<br/><span>Then know what to do with it.</span></h1>
-      <p>One place for the week ahead, the games worth watching, the betting signals worth exploring, and the picks we're willing to put on the record.</p>
+      <p>One place for the week ahead, the games worth watching, and the picks we're willing to put on the record.</p>
       <div className="homeFlow">
-        <span>READ</span><b>→</b><span>WATCH</span><b>→</b><span>EXPLORE</span><b>→</b><span>COMMIT</span>
+        <span>READ</span><b>→</b><span>WATCH</span><b>→</b><span>PICK</span>
       </div>
     </section>
 
@@ -62,13 +56,13 @@ export default function Home(){
       <div>
         <span>GAMEINDEX + BETINDEX</span>
         <h2>Two numbers. Two different questions.</h2>
-        <p>GameIndex measures how interesting a game is. BetIndex measures confidence in a betting signal. See exactly how both work →</p>
+        <p>GameIndex measures how interesting a game is. BetIndex ranks the official pick's signal. See exactly how both work →</p>
       </div>
     </a>
 
     <footer className="homeFooter">
       <span>GAME RADAR</span>
-      <span>WEEKLYRADAR · GAMERADAR · BETRADAR · PICKRADAR</span>
+      <span>WEEKLYRADAR · GAMERADAR · BETRADAR</span>
     </footer>
   </main>;
 }

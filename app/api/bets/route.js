@@ -10,7 +10,9 @@ import { buildPowerModel, calibrateModel, projectGame } from "../../../lib/radar
 import { calibratePickIndex, pickConfidenceBand } from "../../../lib/pickCalibration";
 import { footballSourceMetadata, mergeWithSeasonSnapshot } from "../../../lib/footballSource";
 import { calibrateSlateBetIndexes } from "../../../lib/slateBetIndex";
+import { attachOfficialPicks, mergeOfficialWeeks } from "../../../lib/officialPicks";
 import radarLedger from "../../../data/radar-picks.json";
+import radarOverrides from "../../../data/pickradar-overrides.json";
 
 export const dynamic = "force-dynamic";
 
@@ -243,7 +245,7 @@ export async function GET(request){
         betIndex
       };
     });
-    const games=calibrateSlateBetIndexes(rawGames)
+    const games=attachOfficialPicks(calibrateSlateBetIndexes(rawGames),mergeOfficialWeeks(radarLedger,radarOverrides),{league,start})
       .sort((a,b)=>(b.betIndex?.score||0)-(a.betIndex?.score||0)||(b.gameIndex?.score||0)-(a.gameIndex?.score||0));
 
     return NextResponse.json({
@@ -252,9 +254,11 @@ export async function GET(request){
       methodology:{
         name:"Bet Radar",
         version:"pickradar-v5-market-anchored",
-        description:"The consensus market anchors the raw signal. BetIndex ranks supported spread signals within this week's slate; the top 30% can reach Strong or Best Bet when a line, two prior games per team, model agreement and a meaningful edge are present. It is not an estimated win percentage.",
+        description:"PickRadar's locked pick is authoritative. BetIndex ranks the official spread picks within this week's slate; it keeps the score at lock separately and is not an estimated win percentage. Games without a locked pick receive a current model pick only within seven days.",
         slateRelativeTarget:0.30,
         slateRelativeEligible:games.filter(game=>game.opportunities?.spread?.relativeSlate).length,
+        officialPickSource:"Locked PickRadar ledger when available; current model picks for games within seven days; later games pending",
+        lockedPicksOnSlate:games.filter(game=>game.officialPick?.locked).length,
         historyGames:history.length,
         seasonCoverage:seasonCoverage(seasonGames),
         seasonSource:"ESPN week-by-week schedule archive",

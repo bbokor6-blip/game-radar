@@ -10,8 +10,8 @@ const GAME_TIERS=[
 const BET_TIERS=[
   ["green","80–100","Best Bet","The model's strongest supported signals."],
   ["yellow","70–79","Strong","A meaningful edge with solid evidence."],
-  ["orange","60–69","Lean","A real signal with more uncertainty."],
-  ["red","0–59","Pass","Tracked for the full slate, not recommended."]
+  ["orange","55–69","Lean","A real signal with more uncertainty."],
+  ["red","0–54","Pass","Tracked for the full slate, not recommended."]
 ];
 
 function TierGrid({tiers}){

@@ -41,6 +41,7 @@ export default function RadarPicks(){
   const[confidence,setConfidence]=useState("all");
   const[ledger,setLedger]=useState({weeks:[],record:{}});
   const[liveSignals,setLiveSignals]=useState({});
+  const[livePicks,setLivePicks]=useState([]);
   const[liveReady,setLiveReady]=useState(false);
   const[loading,setLoading]=useState(true);
   const range=useMemo(()=>footballRange(weekOffset),[weekOffset]);
@@ -68,12 +69,15 @@ export default function RadarPicks(){
         if(!res.ok)throw new Error();
         const payload=await res.json();
         const next={};
+        const sevenDays=new Date(Date.now()+7*86400000);
+        const provisional=[];
         for(const game of payload.games||[]){
           next[game.id]={index:game.bestOpportunity?.index??null,pick:game.bestOpportunity?.pick??null};
+          if(game.preferredPick?.type!=="PASS"&&game.preferredPick?.pick&&new Date(game.date)<=sevenDays&&new Date(game.date)>=new Date())provisional.push({...game.preferredPick,result:"PENDING",provisional:true});
         }
-        if(!ignore)setLiveSignals(next);
+        if(!ignore){setLiveSignals(next);setLivePicks(provisional)}
       }catch{
-        if(!ignore)setLiveSignals({});
+        if(!ignore){setLiveSignals({});setLivePicks([])}
       }finally{
         if(!ignore)setLiveReady(true);
       }
@@ -83,7 +87,7 @@ export default function RadarPicks(){
   },[league,range.start,range.end]);
 
   const selectedWeek=(ledger.weeks||[]).find(w=>w.league===league&&w.weekStart===range.start)||null;
-  const allPicks=(selectedWeek?.picks||[]).filter(p=>p.type!=="PASS");
+  const allPicks=(selectedWeek?.picks||livePicks).filter(p=>p.type!=="PASS");
   // PickRadar must be evaluated by the confidence recorded when the pick was
   // locked. A later BetRadar refresh is useful context, but must not rewrite
   // the historical tier, filter, or calibration cohort.
@@ -94,14 +98,14 @@ export default function RadarPicks(){
     return confidence==="all"||
       (confidence==="best"&&index>=80)||
       (confidence==="strong"&&index>=70&&index<80)||
-      (confidence==="lean"&&index>=60&&index<70)||
-      (confidence==="pass"&&index<60);
+      (confidence==="lean"&&index>=55&&index<70)||
+      (confidence==="pass"&&index<55);
   });
   const record=weekRecord(allPicks);
   const bestCount=allPicks.filter(p=>(lockedIndex(p)||0)>=80).length;
   const strongCount=allPicks.filter(p=>(lockedIndex(p)||0)>=70&&(lockedIndex(p)||0)<80).length;
-  const leanCount=allPicks.filter(p=>(lockedIndex(p)||0)>=60&&(lockedIndex(p)||0)<70).length;
-  const passCount=allPicks.filter(p=>(lockedIndex(p)||0)<60).length;
+  const leanCount=allPicks.filter(p=>(lockedIndex(p)||0)>=55&&(lockedIndex(p)||0)<70).length;
+  const passCount=allPicks.filter(p=>(lockedIndex(p)||0)<55).length;
   const archive=(ledger.weeks||[]).filter(w=>w.league===league&&w.weekStart!==range.start).slice().reverse();
   const feedback=ledger.feedback||{};
   const analysis=ledger.confidenceAnalysis||feedback;
@@ -111,8 +115,8 @@ export default function RadarPicks(){
   const confidenceResults=[
     ["BEST BET · 80+",analysis.byBand?.["80+"]],
     ["STRONG · 70–79",analysis.byBand?.["70-79"]],
-    ["LEAN · 60–69",analysis.byBand?.["60-69"]],
-    ["LOW CONFIDENCE · <60",analysis.byBand?.["<60"]]
+    ["LEAN · 55–69",analysis.byBand?.["55-69"]],
+    ["LOW CONFIDENCE · <55",analysis.byBand?.["<55"]]
   ];
 
   return <main className="rpPage">
@@ -130,25 +134,25 @@ export default function RadarPicks(){
     <section className="rpHero">
       <div>
         <span>FULL-SLATE MODEL LEDGER</span>
-        <h1>One locked pick for every game.</h1>
-        <p>PickRadar takes a side on the entire NFL and college slate. BetIndex grades signal strength: 80+ Best Bet, 70–79 Strong, 60–69 Lean and below 60 Pass.</p>
+        <h1>{selectedWeek?"One locked pick for every game.":"Upcoming picks within seven days."}</h1>
+        <p>PickRadar takes a side on the entire NFL and college slate. BetIndex grades signal strength: 80+ Best Bet, 70–79 Strong, 55–69 Lean and below 55 Pass. Picks beyond seven days remain pending.</p>
       </div>
       <div className="rpStats">
         <div><strong>{allPicks.length||"—"}</strong><span>games picked</span></div>
-        <div><strong>{liveReady?bestCount:"—"}</strong><span>Best Bets · 80+</span></div>
+        <div><strong>{bestCount}</strong><span>Best Bets · 80+</span></div>
         <div><strong>{selectedWeek?.lockedAt?new Date(selectedWeek.lockedAt).toLocaleDateString([],{month:"short",day:"numeric"}):"—"}</strong><span>locked</span></div>
         <div><strong>{record.decisions?record.wins+"–"+record.losses:"—"}</strong><span>week record</span></div>
       </div>
     </section>
 
-    {loading?<div className="grEmpty">Loading locked picks…</div>:selectedWeek?<>
+    {loading||!liveReady?<div className="grEmpty">Loading picks…</div>:allPicks.length?<>
       <section className="rpFilters" aria-label="Filter picks by confidence">
         <div><strong>SHOW PICKS</strong><span>{picks.length} of {allPicks.length} games</span></div>
         <div>
           <button className={confidence==="all"?"active":""} onClick={()=>setConfidence("all")}>ALL GAMES <b>{allPicks.length}</b></button>
           <button className={"tierFilter indexTier-green "+(confidence==="best"?"active":"")} onClick={()=>setConfidence("best")}>BEST BET · 80+ <b>{bestCount}</b></button>
           <button className={"tierFilter indexTier-yellow "+(confidence==="strong"?"active":"")} onClick={()=>setConfidence("strong")}>STRONG · 70–79 <b>{strongCount}</b></button>
-          <button className={"tierFilter indexTier-orange "+(confidence==="lean"?"active":"")} onClick={()=>setConfidence("lean")}>LEAN · 60–69 <b>{leanCount}</b></button>
+          <button className={"tierFilter indexTier-orange "+(confidence==="lean"?"active":"")} onClick={()=>setConfidence("lean")}>LEAN · 55–69 <b>{leanCount}</b></button>
           <button className={"tierFilter indexTier-red "+(confidence==="pass"?"active":"")} onClick={()=>setConfidence("pass")}>PASS · &lt;60 <b>{passCount}</b></button>
         </div>
       </section>
@@ -157,9 +161,9 @@ export default function RadarPicks(){
           <div className={"rpScore indexTier-"+tier.key}><small>LOCKED BETINDEX</small><strong>{lockIndex??"—"}</strong></div>
           <div className="rpMain">
             <div className="rpMatchup"><strong>{pick.matchup}</strong><span>{pick.gameDate?new Date(pick.gameDate).toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"}):""}</span></div>
-            <div className="rpPreferred"><span>OFFICIAL PICK {i+1} · LOCKED {confidenceBand(lockIndex)}</span><strong>{pick.pick}</strong><small>{lockIndex!=null?"Lock index "+lockIndex+" · ":""}{liveReady&&liveIndex!=null?"Current BetRadar "+liveIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
+            <div className="rpPreferred"><span>{pick.provisional?"UPCOMING PICK":"OFFICIAL PICK"} {i+1} · {pick.provisional?"CURRENT":"LOCKED"} {confidenceBand(lockIndex)}</span><strong>{pick.pick}</strong><small>{lockIndex!=null?(pick.provisional?"Current index ":"Lock index ")+lockIndex+" · ":""}{!pick.provisional&&liveReady&&liveIndex!=null?"Current BetRadar "+liveIndex+" · ":""}{pick.type}{pick.americanOdds?" · "+(pick.americanOdds>0?"+":"")+pick.americanOdds:""}</small></div>
             <p>{pick.why}</p>
-            <small className="rpLockedLine">Locked line: {pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
+            <small className="rpLockedLine">{pick.provisional?"Current line: ":"Locked line: "}{pick.line||pick.pick}{pick.reviewThursday?" · Thursday review scheduled":""}</small>
             {pick.modelProjection?<small className="rpModelInputs">MODEL: {pick.modelProjection.homeMargin>0?"HOME":"AWAY"} BY {Math.abs(pick.modelProjection.homeMargin).toFixed(1)} · PROJECTED TOTAL {pick.modelProjection.total.toFixed(1)} · {pick.modelProjection.historicalGames} PRIOR GAMES</small>:null}
             {pick.closingLineValue!=null?<small className={"rpClv "+(pick.closingLineValue>=0?"positive":"negative")}>CLOSING-LINE VALUE: {pick.closingLineValue>0?"+":""}{pick.closingLineValue}</small>:null}
           </div>
@@ -167,7 +171,7 @@ export default function RadarPicks(){
         </article>})}
       </section>
       {!picks.length?<div className="grEmpty">No picks match this confidence filter.</div>:null}
-    </>:<div className="grEmpty">This week's official picks have not been locked yet. We only publish picks after the scheduled weekly lock.</div>}
+    </>:<div className="grEmpty">Games more than seven days away are pending. Upcoming picks appear here as their kickoff enters the seven-day window.</div>}
 
     <section className="rpLearnings">
       <div className="rpHistoryHead"><div><span>BETINDEX CALIBRATION</span><h2>Does confidence predict wins?</h2></div></div>

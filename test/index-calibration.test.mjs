@@ -45,5 +45,5 @@ test("retrospective analysis groups results by production-quality signal band",(
   const profile=buildFeedbackProfile({weeks:[{league:"nfl",picks}]},{includeExcluded:true,useAnalysisIndex:true});
   assert.equal(profile.byBand["80+"].wins,1);
   assert.equal(profile.byBand["70-79"].losses,1);
-  assert.equal(profile.byBand["<60"].decisions,0);
+  assert.equal(profile.byBand["<55"].decisions,0);
 });

@@ -34,6 +34,6 @@ export const GAME_INDEX_FILTERS=[
 export const BET_INDEX_FILTERS=[
   {key:"green",label:"BEST BET · 80+",className:"indexTier-green",min:80},
   {key:"yellow",label:"STRONG · 70–79",className:"indexTier-yellow",min:70,max:79},
-  {key:"orange",label:"LEAN · 60–69",className:"indexTier-orange",min:60,max:69},
-  {key:"red",label:"LOW CONFIDENCE · <60",className:"indexTier-red",min:0,max:59}
+  {key:"orange",label:"LEAN · 55–69",className:"indexTier-orange",min:55,max:69},
+  {key:"red",label:"LOW CONFIDENCE · <55",className:"indexTier-red",min:0,max:54}
 ];

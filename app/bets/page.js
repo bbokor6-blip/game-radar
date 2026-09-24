@@ -72,7 +72,7 @@ function featuredOpportunities(games){
   return allOpportunities(games).filter(item=>{
     if(item.game.sport!=="cfb")return true;
     const ranked=rankedCount(item.game);
-    if(ranked>0)return item.index>=60;
+    if(ranked>0)return item.index>=55;
     return item.index>=70&&gameIndexScore(item.game)>=50;
   }).sort((a,b)=>b.index-a.index||rankedCount(b.game)-rankedCount(a.game)||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
 }
@@ -515,7 +515,7 @@ function BetFilterDrawer({open,onClose,games,filters,setFilters}){
       <label>Team<select value={filters.team} onChange={e=>setFilters(x=>({...x,team:e.target.value}))}><option value="">All teams</option>{teams.map(t=><option value={String(t.id)} key={t.id}>{t.location||t.name}</option>)}</select></label>
       <label>TV network<select value={filters.network} onChange={e=>setFilters(x=>({...x,network:e.target.value}))}><option value="">Any network</option>{networks.map(x=><option key={x}>{x}</option>)}</select></label>
       <label>Bet type<select value={filters.type} onChange={e=>setFilters(x=>({...x,type:e.target.value}))}><option value="">Spread + totals</option><option value="spread">Spreads</option><option value="total">Totals</option></select></label>
-      <label>Minimum BetIndex<select value={filters.minIndex} onChange={e=>setFilters(x=>({...x,minIndex:e.target.value}))}><option value="">Any signal</option><option value="60">Lean · 60+</option><option value="70">Strong · 70+</option><option value="80">Best Bet · 80+</option></select></label>
+      <label>Minimum BetIndex<select value={filters.minIndex} onChange={e=>setFilters(x=>({...x,minIndex:e.target.value}))}><option value="">Any signal</option><option value="55">Lean · 55+</option><option value="70">Strong · 70+</option><option value="80">Best Bet · 80+</option></select></label>
       <div className="grFilterChecks">
         <label><input type="checkbox" checked={filters.ranked} onChange={e=>setFilters(x=>({...x,ranked:e.target.checked}))}/> Ranked games</label>
         <label><input type="checkbox" checked={filters.close} onChange={e=>setFilters(x=>({...x,close:e.target.checked}))}/> Close spreads</label>
@@ -745,7 +745,7 @@ export default function BetsPage(){
         {parlays.length?<div className="brParlayGrid">{parlays.map((p,i)=><ParlayCard key={i} parlay={p}/>)}</div>:<div className="brEmptyInline">No qualifying parlay combinations yet.</div>}
         <details className="brMethod">
           <summary>BetRadar scoring and methodology</summary>
-          <p>BetIndex measures signal strength, not win probability: green is 80+ Best Bet, yellow is 70–79 Strong, orange is 60–69 Lean and red is below 60 Pass. <a href="/indexes">Read the full index guide →</a></p>
+          <p>BetIndex measures signal strength, not win probability: green is 80+ Best Bet, yellow is 70–79 Strong, orange is 55–69 Lean and red is below 55 Pass. <a href="/indexes">Read the full index guide →</a></p>
         </details>
       </section>
     </>}

@@ -34,13 +34,21 @@ function selectRelevantHistory(history,upcoming,league){
   const selected=new Map();
   const maxGames=league==="cfb"?60:32;
   const sorted=history.slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const byTeam=new Map();
+  for(const game of sorted){
+    for(const id of [game.home?.id,game.away?.id]){
+      if(id==null)continue;
+      const key=String(id);
+      if(!byTeam.has(key))byTeam.set(key,[]);
+      if(byTeam.get(key).length<6)byTeam.get(key).push(game);
+    }
+  }
   // Preserve fuller history for the highest-ranked current matchups first.
   // Lower-ranked games can still use complete score records, but their ATS
   // sample remains explicitly ineligible if archived market lines are sparse.
   for(const current of upcoming){
-    for(const teamId of [current.home?.id,current.away?.id].map(String)){
-      const teamGames=sorted.filter(game=>String(game.home?.id)===teamId||String(game.away?.id)===teamId).slice(0,6);
-      for(const game of teamGames){
+    for(const teamId of [current.home?.id,current.away?.id]){
+      for(const game of byTeam.get(String(teamId))||[]){
         selected.set(game.id,game);
         if(selected.size>=maxGames)return [...selected.values()];
       }
@@ -176,8 +184,9 @@ export async function GET(request){
       const adjustedBettingIndex=best?.index??null;
       const gameIndex=game.interest;
       const official=best||fullSlateFallback(game,market,gameIndex);
-      const betIndex={score:official.index,tier:betIndexTier(official.index).label,color:betIndexTier(official.index).key};
-      const preferredPick=official?{
+      const tier=betIndexTier(official.index);
+      const betIndex={score:official.index,tier:tier.label,color:tier.key};
+      const preferredPick={
         gameId:game.id,
         matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
         type:official.type,
@@ -213,20 +222,6 @@ export async function GET(request){
         closingMarket:null,
         closingLineValue:null,
         modelVersion:"pickradar-v5-market-anchored"
-      }:{
-        gameId:game.id,
-        matchup:(game.away?.location||game.away?.short)+" @ "+(game.home?.location||game.home?.short),
-        type:"PASS",
-        pick:"PASS",
-        americanOdds:null,
-        betRadarIndex:0,
-        gameIndex:gameIndex.score,
-        radarIndex:gameIndex.score,
-        label:"NO OFFICIAL EDGE",
-        why:"No betting signal is strong enough to lock yet.",
-        line:marketSummary(game,market),
-        gameDate:game.date,
-        status:"PASS"
       };
       return {
         ...game,

@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { parseAgentQuery, searchGames, queryExplanation, spreadForGame } from "../../lib/agentSearch";
-import { metadataChips, gameMetadata } from "../../lib/gameMetadata";
-import { betIndexTier, gameIndexScore, gameIndexTier } from "../../lib/indexTiers";
+import { parseAgentQuery, searchGames, queryExplanation } from "../../lib/agentSearch";
+import { gameMetadata } from "../../lib/gameMetadata";
+import { betIndexTier } from "../../lib/indexTiers";
 import RadarMenu from "../components/RadarMenu";
 import IndexTierFilter, { BET_INDEX_FILTERS, filterByTier } from "../components/IndexTierFilter";
 
@@ -61,48 +61,14 @@ function gameDateLabel(game){
 function rankedCount(game){
   return [game.home?.rank,game.away?.rank].filter(Boolean).length;
 }
-function opportunityTag(item){
-  if(item.game.sport!=="cfb")return item.index>=78?"PREMIER SPOT":"NFL";
-  const ranked=rankedCount(item.game);
-  if(ranked===2)return "TOP 25 MATCHUP";
-  if(ranked===1)return "RANKED MATCHUP";
-  return item.index>=70?"SLEEPER SIGNAL":"UNDER THE RADAR";
-}
-function featuredOpportunities(games){
-  return allOpportunities(games);
-}
 function TeamMini({team}){
   return <span className="teamMini">{team?.logo?<img src={team.logo} alt=""/>:<i/>}<b>{teamDisplay(team)}</b></span>;
-}
-function GameMetaStrip({game,limit=3}){
-  const chips=metadataChips(game,limit);
-  return chips.length?<div className="gameMetaStrip">{chips.map(chip=><span key={chip}>{chip}</span>)}</div>:null;
-}
-
-function indexClass(n){
-  const tier=betIndexTier(n);
-  const legacy=tier.key==="green"?"best":tier.key==="yellow"?"strong":tier.key==="orange"?"lean":"pass";
-  return legacy+" indexTier-"+tier.key;
 }
 
 function formatAmerican(odds){
   const n=Number(odds);
   if(!Number.isFinite(n)||n===0)return "—";
   return (n>0?"+":"")+Math.round(n);
-}
-
-function tenDollarReturn(odds){
-  const n=Number(odds);
-  if(!Number.isFinite(n)||n===0)return null;
-  const profit=n>0?10*(n/100):10*(100/Math.abs(n));
-  return Math.round((10+profit)*100)/100;
-}
-
-function formatSpread(n){
-  const v=Number(n);
-  if(!Number.isFinite(v))return "—";
-  if(Math.abs(v)<.05)return "PK";
-  return (v>0?"+":"")+v.toFixed(1);
 }
 
 function oddsText(odds){
@@ -116,35 +82,6 @@ function moneyText(n){
   if(!Number.isFinite(v))return "—";
   return "$"+v.toFixed(2);
 }
-function marketNumber(value){
-  if(value===null||value===undefined||value==="")return null;
-  const n=Number(value);
-  return Number.isFinite(n)?n:null;
-}
-function marketFreshness(ts,now=Date.now()){
-  if(!ts)return "CHECK PENDING";
-  const minutes=Math.max(0,Math.floor((now-new Date(ts).getTime())/60000));
-  if(minutes<2)return "CHECKED NOW";
-  if(minutes<=60)return "CHECKED "+minutes+"M AGO";
-  return "STALE · "+minutes+"M AGO";
-}
-function ShareButton({path,params,title="Game Radar"}){
-  const[copied,setCopied]=useState(false);
-  async function share(){
-    if(typeof window==="undefined")return;
-    const url=new URL(path,window.location.origin);
-    Object.entries(params||{}).forEach(([key,value])=>{if(value!=null&&value!=="")url.searchParams.set(key,String(value));});
-    try{
-      if(navigator.share)await navigator.share({title,url:url.toString()});
-      else if(navigator.clipboard)await navigator.clipboard.writeText(url.toString());
-      else return;
-      setCopied(true);
-      setTimeout(()=>setCopied(false),1400);
-    }catch{}
-  }
-  return <button className="shareMini" onClick={share} type="button">{copied?"COPIED":"SHARE"}</button>;
-}
-
 function pickKeyForOpportunity(item){
   if(item.type==="SPREAD")return item.side+"-spread";
   return item.side;
@@ -152,7 +89,7 @@ function pickKeyForOpportunity(item){
 function savedPickId(league,weekStart,gameId,key){
   return [league,weekStart,gameId,key].join("|");
 }
-function allOpportunities(games){
+function featuredOpportunities(games){
   const out=games.filter(game=>game.officialPick&&game.bestOpportunity)
     .map(game=>({...game.bestOpportunity,game}));
   return out.sort((a,b)=>b.index-a.index||((b.game.interest?.score||0)-(a.game.interest?.score||0)));
@@ -175,7 +112,7 @@ function featuredParlays(pool,league){
   const source=pool.filter(x=>x.americanOdds!=null).slice(0,14);
   const configs=[{size:2,label:"SPOTLIGHT 2-LEG"},{size:3,label:"FEATURED 3-LEG"},{size:4,label:"SATURDAY 4-LEG"}];
   return configs.map(config=>{
-    const combos=[];
+    let best=null;
     function walk(start,chosen){
       if(chosen.length===config.size){
         if(new Set(chosen.map(x=>x.game.id)).size!==chosen.length)return;
@@ -188,70 +125,15 @@ function featuredParlays(pool,league){
           if(sleepers>1)return;
         }
         const score=chosen.reduce((s,x)=>s+x.index,0)/chosen.length+(ranked*1.5)+(sleepers===1?1.5:0);
-        combos.push({legs:chosen.slice(),score,ranked,sleepers});
+        if(!best||score>best.score)best={legs:chosen.slice(),score,ranked,sleepers};
         return;
       }
       for(let i=start;i<source.length;i++)walk(i+1,[...chosen,source[i]]);
     }
     walk(0,[]);
-    const best=combos.sort((a,b)=>b.score-a.score)[0];
     return best?{...best,...config,payout:parlayPayout(best.legs,10)}:null;
   }).filter(Boolean);
 }
-function OpportunityCard({item,rank,league,generatedAt,weekStart,weekLabel,weekOffset,isSaved,onToggleSave}){
-  const g=item.game;
-  const cls=indexClass(item.index);
-  const tier=betIndexTier(item.index);
-  return <article id={"bet-"+g.id+"-"+item.type.toLowerCase()} className={"simplePick "+cls+(rank<=3?" featuredPick":"")}>
-    <div className="simplePickRank">#{rank}</div>
-    <div className="simplePickMain">
-      <div className="simpleMatch">
-        <div className="pickTagRow"><span className="matchupTag">{opportunityTag(item)}</span>{rank<=3?<span className="topPickTag">TOP {rank}</span>:null}</div>
-        <div className="matchupVisual"><TeamMini team={g.away}/><em>@</em><TeamMini team={g.home}/></div>
-        <small className="gameDate">{gameDateLabel(g)} · {item.type}</small>
-        <ShareButton path="/bets" params={{league,game:g.id,bet:item.type.toLowerCase(),weekOffset}} title={matchup(g)+" · "+item.pick}/>
-        <button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onToggleSave({
-          id:savedPickId(league,weekStart,g.id,pickKeyForOpportunity(item)),
-          league,weekStart,weekLabel,gameId:g.id,key:pickKeyForOpportunity(item),
-          matchup:matchup(g),gameDate:g.date,pick:item.pick,odds:item.americanOdds,index:item.index,
-          source:"BetRadar Top Picks"
-        })}>{isSaved?"★ SAVED":"☆ SAVE PICK"}</button>
-      </div>
-      <div className="pickHeadline">
-        <h3>{item.pick} <span className="betOdds">{oddsText(item.americanOdds)}</span></h3>
-        {item.noBrainer?<span className="convictionBadge noBrainer">ELITE SIGNAL</span>:item.highConviction?<span className="convictionBadge">BEST BET</span>:null}
-      </div>
-      {item.payout?<div className="payoutStrip">
-        <span>$10 BET</span>
-        <strong>WIN {moneyText(item.payout.profit)}</strong>
-        <small>TOTAL RETURN {moneyText(item.payout.totalReturn)}</small>
-      </div>:<div className="payoutStrip unavailable"><span>ODDS NOT AVAILABLE</span><small>Payout will appear when the market price loads.</small></div>}
-      <GameMetaStrip game={g} limit={3}/>
-      <div className="pickReason">
-        <span>WHY IT'S HERE</span>
-        <p>{item.why}</p>
-        {item.relativeSlate?<small>SLATE RANK #{item.relativeSlate.rank} OF {item.relativeSlate.slateSize} · RAW SIGNAL {item.relativeSlate.rawIndex} · {g.marketConsensus?.providerCount||0} BOOK{g.marketConsensus?.providerCount===1?"":"S"}</small>:null}
-      </div>
-      <details className="pickDetails">
-        <summary>MARKET + EVIDENCE</summary>
-        <div className="evidenceChips">
-          {(item.evidence||[]).map((x,i)=><span key={i}>{x}</span>)}
-        </div>
-        <div className="simpleWhy">
-          <span>MARKET: {g.marketConsensus?.line||g.market?.details||"LINE PENDING"}</span>
-          {g.marketConsensus?.total!=null?<small>O/U {g.marketConsensus.total}</small>:null}
-          <small>{g.marketConsensus?.providerCount?g.marketConsensus.providerCount+" BOOK"+(g.marketConsensus.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small>
-        </div>
-      </details>
-    </div>
-    <div className="confidenceIndex">
-      <span>BETINDEX</span>
-      <strong>{item.index}</strong>
-      <small>{tier.label.toUpperCase()}</small>
-    </div>
-  </article>;
-}
-
 function ParlayCard({parlay}){
   return <article className="parlayCard">
     <div className="parlayTop">
@@ -268,149 +150,6 @@ function ParlayCard({parlay}){
     {parlay.payout?<div className="parlayPayout"><span>$10 PARLAY</span><strong>{formatAmerican(parlay.payout.american)}</strong><small>TOTAL RETURN {moneyText(parlay.payout.total)}</small></div>:null}
   </article>;
 }
-
-function teaserCandidate(game){
-  const market=game.marketConsensus;
-  if(marketNumber(market?.homeMargin)==null)return null;
-
-  const abs=Math.abs(Number(market.homeMargin));
-  const homeFav=Number(market.homeMargin)>0;
-  const favorite=homeFav?game.home:game.away;
-  const dog=homeFav?game.away:game.home;
-  const spreadOpp=game.opportunities?.spread;
-
-  let side=spreadOpp?.side||null;
-  let quality=0;
-  if(abs>=4&&abs<=8.5){
-    side=side||(homeFav?"home":"away");
-    quality+=16;
-  }else if(abs>=1.5&&abs<=3.5){
-    side=side||(homeFav?"away":"home");
-    quality+=14;
-  }else{
-    side=side||(homeFav?"away":"home");
-    quality-=Math.min(12,Math.max(0,abs-10));
-  }
-
-  const team=side==="home"?game.home:game.away;
-  const original=side==="home"?-Number(market.homeMargin):Number(market.homeMargin);
-  const teased=original+6;
-  const crossed=[];
-  if(original<3&&teased>=3)crossed.push("3");
-  if(original<7&&teased>=7)crossed.push("7");
-  if(original<=-7&&teased>-7)crossed.push("-7");
-  if(original<=-3&&teased>-3)crossed.push("-3");
-
-  const supported=Boolean(spreadOpp&&spreadOpp.side===side);
-  const ranked=rankedCount(game);
-  if(game.sport==="cfb"&&ranked===0&&(!spreadOpp||spreadOpp.index<76))return null;
-  const matchupBonus=game.sport==="cfb"?(ranked===2?8:ranked===1?4:2):3;
-  const score=Math.round(52+quality+(supported?Math.max(6,(spreadOpp.index||0)-55):0)+(crossed.length*4)+matchupBonus);
-  return {
-    game,
-    label:team.short+" "+formatSpread(teased),
-    score,
-    why:"Moves "+team.short+" from "+formatSpread(original)+" to "+formatSpread(teased)+(crossed.length?" through key numbers "+crossed.join(" and "):"")+(supported?". BetRadar already leans to this side.":".")
-  };
-}
-
-function bestTeasers(pool,size,count){
-  const source=pool.slice(0,12);
-  const combos=[];
-  function walk(start,chosen){
-    if(chosen.length===size){
-      const score=chosen.reduce((sum,x)=>sum+x.score,0)/size;
-      combos.push({legs:chosen.slice(),score});
-      return;
-    }
-    for(let i=start;i<source.length;i++)walk(i+1,[...chosen,source[i]]);
-  }
-  walk(0,[]);
-  return combos.sort((a,b)=>b.score-a.score).slice(0,count);
-}
-function TeaserCard({size,legs,number}){
-  return <article className="teaserCard compactTeaser">
-    <div className="teaserBadge">{size}-LEG TEASER #{number}</div>
-    <div className="teaserLegs">
-      {legs.map((leg,i)=><div key={leg.game.id+"-"+i}>
-        <span>{i+1}</span>
-        <div><strong>{leg.label}</strong><small>{matchup(leg.game)}</small></div>
-      </div>)}
-    </div>
-  </article>;
-}
-
-function AgentGameCard({game,league,weekStart,weekLabel,weekOffset,isSaved,onSave}){
-  const best=game.bestOpportunity;
-  const gameTier=gameIndexTier(gameIndexScore(game));
-  const betTier=betIndexTier(best?.index||0);
-  const spread=spreadForGame(game);
-  const conference=[game.away?.conference,game.home?.conference].filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i);
-  return <article className="agentGameCard">
-    <div className="agentGameTeams">
-      <div className="matchupVisual"><TeamMini team={game.away}/><em>@</em><TeamMini team={game.home}/></div>
-      <small>{gameDateLabel(game)}</small>
-    </div>
-    <div className="agentGameSignals">
-      <span>{conference.length?conference.join(" · "):league==="cfb"?"COLLEGE":"NFL"}</span>
-      <strong>{spread!=null?"SPREAD "+spread:"LINE PENDING"}</strong>
-      <GameMetaStrip game={game} limit={3}/>
-    </div>
-    <div className={"agentScore indexTier-"+gameTier.key}><span>GAMEINDEX</span><strong>{gameIndexScore(game)||"—"}</strong></div>
-    <div className={"agentScore bet indexTier-"+betTier.key}><span>BETINDEX</span><strong>{best?.index||"—"}</strong></div>
-    {best?<button className={"savePick "+(isSaved?"saved":"")} type="button" onClick={()=>onSave(game)}>
-      {isSaved?"★ SAVED":"☆ SAVE "+best.pick}
-    </button>:<span className="agentNoBet">NO BET SIGNAL</span>}
-  </article>;
-}
-
-function BoardRow({game,league,generatedAt,weekStart,weekLabel,weekOffset,savedIds,onToggleSave}){
-  const best=game.bestOpportunity;
-  const market=game.marketConsensus||{};
-  const available=Boolean(market.available);
-  const homeMargin=marketNumber(market.homeMargin);
-  const total=marketNumber(market.total);
-  const homeSpread=homeMargin==null?null:-homeMargin;
-  const awaySpread=homeMargin==null?null:homeMargin;
-  const spreadSide=game.opportunities?.spread?.side;
-  const totalSide=game.opportunities?.total?.side;
-
-  const options=available?[
-    {key:"away-spread",label:teamDisplay(game.away),base:awaySpread==null?"—":teamDisplay(game.away)+" "+formatSpread(awaySpread),odds:market.awaySpreadOdds,tease:awaySpread==null?"—":teamDisplay(game.away)+" "+formatSpread(awaySpread+6),suggested:spreadSide==="away"},
-    {key:"home-spread",label:teamDisplay(game.home),base:homeSpread==null?"—":teamDisplay(game.home)+" "+formatSpread(homeSpread),odds:market.homeSpreadOdds,tease:homeSpread==null?"—":teamDisplay(game.home)+" "+formatSpread(homeSpread+6),suggested:spreadSide==="home"},
-    {key:"over",label:"OVER",base:total==null?"—":"OVER "+total.toFixed(1),odds:market.overOdds,tease:total==null?"—":"OVER "+(total-6).toFixed(1),suggested:totalSide==="over"},
-    {key:"under",label:"UNDER",base:total==null?"—":"UNDER "+total.toFixed(1),odds:market.underOdds,tease:total==null?"—":"UNDER "+(total+6).toFixed(1),suggested:totalSide==="under"}
-  ]:[];
-
-  return <article id={"game-"+game.id} className="gameTableRow openRow">
-    <div className="gameTableSummary">
-      <div className="tableMatch"><strong>{matchup(game)}</strong><small>{gameTime(game)}</small><ShareButton path="/bets" params={{league,game:game.id,weekOffset}} title={matchup(game)}/></div>
-      <div className="tableMarket"><span>MARKET</span><strong>{market.line||"PENDING"}</strong>{total!=null?<small>O/U {total.toFixed(1)}</small>:null}<small>{market.providerCount?market.providerCount+" BOOK"+(market.providerCount===1?"":"S")+" · ":""}{marketFreshness(generatedAt)}</small></div>
-      <div className="tableBest"><span>BEST LOOK</span><strong>{best?.pick||"—"}</strong>{best?<small className="tableConviction">{betIndexTier(best.index).label.toUpperCase()}</small>:null}</div>
-      <div className={"tableIndex "+indexClass(best?.index??0)}><span>BETINDEX</span><strong>{best?.index??"—"}</strong></div>
-    </div>
-
-    {!available?<div className="gameTableUnavailable">MARKET LINE NOT AVAILABLE YET</div>:<div className="gameTableExpand alwaysVisible">
-      {options.map(option=>{
-        const totalReturn=tenDollarReturn(option.odds);
-        return <div className={"tableBetOption "+(option.suggested?"suggested":"")} key={option.key}>
-          <div className="tableBetTop"><span>{option.label}</span>{option.suggested?<b>BETRADAR LIKES</b>:null}</div>
-          <div className="tableTease"><span>SUGGESTED TEASE</span><strong>{option.tease}</strong></div>
-          <div className="tableStraight"><span>GAME LINE</span><strong>{option.base}</strong><em>{formatAmerican(option.odds)}</em></div>
-          <button className={"savePick compact "+(savedIds.has(savedPickId(league,weekStart,game.id,option.key))?"saved":"")} type="button" onClick={()=>onToggleSave({
-            id:savedPickId(league,weekStart,game.id,option.key),
-            league,weekStart,weekLabel,gameId:game.id,key:option.key,
-            matchup:matchup(game),gameDate:game.date,pick:option.base,odds:option.odds,
-            index:option.suggested?game.bestOpportunity?.index||null:null,
-            source:option.suggested?"BetRadar Likes":"Every Game"
-          })}>{savedIds.has(savedPickId(league,weekStart,game.id,option.key))?"★ SAVED":"☆ SAVE"}</button>
-          {totalReturn!=null?<small>{"$10 → $"+totalReturn.toFixed(2)}</small>:null}
-        </div>;
-      })}
-    </div>}
-  </article>;
-}
-
 
 function BetPickCard({item,featured=false,league,weekStart,weekLabel,weekOffset,isSaved,onToggleSave}){
   const g=item.game;

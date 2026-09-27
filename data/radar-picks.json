@@ -1,6 +1,6 @@
 {
   "version": 6,
-  "updatedAt": "2026-09-23T00:44:04.956Z",
+  "updatedAt": "2026-09-27T14:05:26.252Z",
   "weeks": [
     {
       "league": "cfb",
@@ -4896,7 +4896,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap",
           "confidenceBand": "STANDARD",
@@ -4908,7 +4908,12 @@
               "americanOdds": null,
               "reason": "Initial PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "Oregon -2.5",
+          "finalScore": "41–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.248Z"
         },
         {
           "gameId": "cfb-401856703",
@@ -4931,7 +4936,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "HIGH",
@@ -4943,7 +4948,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "OVER 59.5",
+          "finalScore": "24–31",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856815",
@@ -4966,7 +4976,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -4978,7 +4988,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UCF +3",
+          "finalScore": "13–21",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401866429",
@@ -5001,7 +5016,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -5013,7 +5028,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MASS -5.5",
+          "finalScore": "35–6",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-2026-09-26-ole-miss-florida",
@@ -5036,7 +5056,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap; injury review required",
           "confidenceBand": "STANDARD",
@@ -5049,7 +5069,12 @@
               "reason": "Initial PickRadar lock; monitor Kewan Lacy"
             }
           ],
-          "reviewThursday": true
+          "reviewThursday": true,
+          "gradingLine": "Ole Miss +3.5",
+          "finalScore": "28–52",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-2026-09-26-texas-tennessee",
@@ -5072,7 +5097,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap",
           "confidenceBand": "STANDARD",
@@ -5084,7 +5109,12 @@
               "americanOdds": -111,
               "reason": "Initial PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "Texas -3.5",
+          "finalScore": "20–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401864512",
@@ -5107,7 +5137,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -5119,7 +5149,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "AKR +12.5",
+          "finalScore": "38–10",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856816",
@@ -5142,7 +5177,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5154,7 +5189,12 @@
               "americanOdds": -115,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UTAH -7.5",
+          "finalScore": "31–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856814",
@@ -5177,7 +5217,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5189,7 +5229,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "KSU -6.5",
+          "finalScore": "26–31",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401869931",
@@ -5212,7 +5257,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5224,7 +5269,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "KENN +4.5",
+          "finalScore": "14–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401858240",
@@ -5247,7 +5297,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5259,7 +5309,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "STAN +3.5",
+          "finalScore": "27–34",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401858463",
@@ -5282,7 +5337,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5294,7 +5349,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MICH -4.5",
+          "finalScore": "20–19",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856696",
@@ -5317,7 +5377,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5329,7 +5389,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "SC +13.5",
+          "finalScore": "18–49",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401864510",
@@ -5352,7 +5417,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5364,7 +5429,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "WYO +3",
+          "finalScore": "10–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856881",
@@ -5387,7 +5457,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5399,7 +5469,12 @@
               "americanOdds": -118,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "WVU -1.5",
+          "finalScore": "41–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401858234",
@@ -5422,7 +5497,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5434,7 +5509,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "CAL -1.5",
+          "finalScore": "24–10",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401862778",
@@ -5457,7 +5537,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5469,7 +5549,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NAVY -7",
+          "finalScore": "20–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-2026-09-26-oklahoma-georgia",
@@ -5492,7 +5577,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:38:00Z",
           "selectionBasis": "Current market line plus projection gap",
           "confidenceBand": "STANDARD",
@@ -5504,7 +5589,12 @@
               "americanOdds": -110,
               "reason": "Initial PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "Oklahoma +13.5",
+          "finalScore": "13–41",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401858462",
@@ -5527,7 +5617,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5539,7 +5629,12 @@
               "americanOdds": -102,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UCLA -2.5",
+          "finalScore": "54–3",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401856702",
@@ -5562,7 +5657,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5574,7 +5669,12 @@
               "americanOdds": -108,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 52.5",
+          "finalScore": "6–35",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401871048",
@@ -5597,7 +5697,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5609,7 +5709,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MTSU +8.5",
+          "finalScore": "13–23",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.249Z"
         },
         {
           "gameId": "cfb-401858243",
@@ -5632,7 +5737,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5644,7 +5749,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "OVER 58.5",
+          "finalScore": "30–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401866425",
@@ -5667,7 +5777,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5679,7 +5789,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "KENT -3.5",
+          "finalScore": "13–26",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401869941",
@@ -5702,7 +5817,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5714,7 +5829,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "LIB -2.5",
+          "finalScore": "34–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860893",
@@ -5737,7 +5857,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5749,7 +5869,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "TOL -2.5",
+          "finalScore": "16–41",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860894",
@@ -5772,7 +5897,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5784,7 +5909,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "USU -2.5",
+          "finalScore": "10–21",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862779",
@@ -5807,7 +5937,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5819,7 +5949,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "ARMY -3",
+          "finalScore": "21–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401864572",
@@ -5842,7 +5977,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5854,7 +5989,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "APP +13.5",
+          "finalScore": "31–41",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858239",
@@ -5877,7 +6017,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "HIGH",
@@ -5889,7 +6029,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 52.5",
+          "finalScore": "3–42",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401864579",
@@ -5912,7 +6057,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5924,7 +6069,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NMSU +12.5",
+          "finalScore": "42–18",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858238",
@@ -5947,7 +6097,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5959,7 +6109,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MIA -41.5",
+          "finalScore": "3–52",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856804",
@@ -5982,7 +6137,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -5994,7 +6149,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "WSU +10.5",
+          "finalScore": "34–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401864509",
@@ -6017,7 +6177,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6029,7 +6189,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "AFA -4",
+          "finalScore": "36–33",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858464",
@@ -6052,7 +6217,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6064,7 +6229,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NEB -5.5",
+          "finalScore": "31–13",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860897",
@@ -6087,7 +6257,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6099,7 +6269,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "BOIS -7",
+          "finalScore": "32–7",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860891",
@@ -6122,7 +6297,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6134,7 +6309,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "FRES -14.5",
+          "finalScore": "24–38",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858241",
@@ -6157,7 +6337,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6169,7 +6349,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "SMU -34.5",
+          "finalScore": "24–34",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401869961",
@@ -6192,7 +6377,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6204,7 +6389,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "JMU -5.5",
+          "finalScore": "46–20",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856697",
@@ -6227,7 +6417,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6239,7 +6429,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "ARK -6.5",
+          "finalScore": "6–34",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401861970",
@@ -6262,7 +6457,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6274,7 +6469,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 51.5",
+          "finalScore": "21–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856805",
@@ -6297,7 +6497,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6309,7 +6509,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "SHSU +35.5",
+          "finalScore": "14–49",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858461",
@@ -6332,7 +6537,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6344,7 +6549,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "IU -21",
+          "finalScore": "23–29",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856698",
@@ -6367,7 +6577,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6379,7 +6589,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 54.5",
+          "finalScore": "15–21",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858466",
@@ -6402,7 +6617,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6414,7 +6629,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "PSU -10",
+          "finalScore": "24–20",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858470",
@@ -6437,7 +6657,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6449,7 +6669,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "WASH -8.5",
+          "finalScore": "27–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856813",
@@ -6472,7 +6697,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6484,7 +6709,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 54.5",
+          "finalScore": "13–23",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401864511",
@@ -6507,7 +6737,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6519,7 +6749,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 55.5",
+          "finalScore": "14–35",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860896",
@@ -6542,7 +6777,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6554,7 +6789,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 57.5",
+          "finalScore": "45–59",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860895",
@@ -6577,7 +6817,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6589,7 +6829,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 54.5",
+          "finalScore": "33–7",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858465",
@@ -6612,7 +6857,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6624,7 +6869,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 53.5",
+          "finalScore": "19–42",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858242",
@@ -6647,7 +6897,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6659,7 +6909,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 52.5",
+          "finalScore": "21–14",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401866427",
@@ -6682,7 +6937,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6694,7 +6949,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "EMU TO WIN",
+          "finalScore": "3–29",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401866428",
@@ -6717,7 +6977,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6729,7 +6989,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "OHIO TO WIN",
+          "finalScore": "7–35",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862780",
@@ -6752,7 +7017,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6764,7 +7029,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 49.5",
+          "finalScore": "34–7",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862782",
@@ -6787,7 +7057,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6799,7 +7069,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 57.5",
+          "finalScore": "45–17",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858467",
@@ -6822,7 +7097,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -6834,7 +7109,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 57.5",
+          "finalScore": "49–10",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858237",
@@ -6857,7 +7137,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6869,7 +7149,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "CARK TO WIN",
+          "finalScore": "7–34",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862781",
@@ -6892,7 +7177,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6904,7 +7189,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NCCU TO WIN",
+          "finalScore": "9–42",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401870745",
@@ -6927,7 +7217,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6939,7 +7229,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MERC TO WIN",
+          "finalScore": "7–52",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862783",
@@ -6962,7 +7257,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -6974,7 +7269,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "HCU TO WIN",
+          "finalScore": "14–63",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401864576",
@@ -6997,7 +7297,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7009,7 +7309,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 54.5",
+          "finalScore": "21–45",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401856806",
@@ -7032,7 +7337,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7044,7 +7349,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 54.5",
+          "finalScore": "42–28",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862784",
@@ -7067,7 +7377,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7079,7 +7389,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 52.5",
+          "finalScore": "21–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401862785",
@@ -7102,7 +7417,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7114,7 +7429,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 49.5",
+          "finalScore": "14–6",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858236",
@@ -7137,7 +7457,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7149,7 +7469,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "PITT TO WIN",
+          "finalScore": "0–59",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858244",
@@ -7172,7 +7497,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7184,7 +7509,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "DUKE TO WIN",
+          "finalScore": "7–62",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401858468",
@@ -7207,7 +7537,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7219,7 +7549,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "HOW TO WIN",
+          "finalScore": "7–58",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401866426",
@@ -7242,7 +7577,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7254,7 +7589,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "RMU TO WIN",
+          "finalScore": "28–31",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401868188",
@@ -7277,7 +7617,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7289,7 +7629,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MRSH TO WIN",
+          "finalScore": "35–36",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401860892",
@@ -7312,7 +7657,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7324,7 +7669,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UIW TO WIN",
+          "finalScore": "10–63",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "cfb-401867909",
@@ -7347,7 +7697,7 @@
           "status": "OPEN",
           "fullSlateFallback": true,
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:46:55.355Z",
           "selectionBasis": "Full-slate fallback model",
           "confidenceBand": "STANDARD",
@@ -7359,7 +7709,12 @@
               "americanOdds": null,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "FIU TO WIN",
+          "finalScore": "3–20",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         }
       ]
     },
@@ -7742,7 +8097,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7754,7 +8109,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 44.5",
+          "finalScore": "35–14",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-09-27T14:05:26.252Z"
         },
         {
           "gameId": "nfl-401872956",

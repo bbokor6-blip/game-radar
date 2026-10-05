@@ -1,6 +1,6 @@
 {
   "version": 6,
-  "updatedAt": "2026-09-27T14:05:26.252Z",
+  "updatedAt": "2026-10-05T23:01:34.804Z",
   "weeks": [
     {
       "league": "cfb",
@@ -7747,7 +7747,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7759,7 +7759,12 @@
               "americanOdds": -115,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "CIN -3.5",
+          "finalScore": "27–30",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872959",
@@ -7782,7 +7787,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7794,7 +7799,12 @@
               "americanOdds": -112,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "MIN -2.5",
+          "finalScore": "23–16",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872954",
@@ -7817,7 +7827,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7829,7 +7839,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NYJ +6.5",
+          "finalScore": "24–31",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872951",
@@ -7852,7 +7867,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7864,7 +7879,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "IND +2.5",
+          "finalScore": "17–19",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872957",
@@ -7887,7 +7907,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7899,7 +7919,12 @@
               "americanOdds": -102,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NE +2.5",
+          "finalScore": "6–35",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872953",
@@ -7922,7 +7947,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "ELITE",
@@ -7934,7 +7959,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "BUF -7",
+          "finalScore": "16–24",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872961",
@@ -7957,7 +7987,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -7969,7 +7999,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 44.5",
+          "finalScore": "35–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872960",
@@ -7992,7 +8027,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "PUSH",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8004,7 +8039,12 @@
               "americanOdds": -115,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "DAL +3",
+          "finalScore": "34–31",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872958",
@@ -8027,7 +8067,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8039,7 +8079,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "SF -8.5",
+          "finalScore": "30–36",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872962",
@@ -8062,7 +8107,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8074,7 +8119,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 45.5",
+          "finalScore": "26–30",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872948",
@@ -8137,7 +8187,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8149,7 +8199,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "NYG -6",
+          "finalScore": "7–12",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872955",
@@ -8172,7 +8227,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8184,7 +8239,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "SEA -6.5",
+          "finalScore": "31–33",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872963",
@@ -8207,7 +8267,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8219,7 +8279,12 @@
               "americanOdds": -115,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "CHI +4.5",
+          "finalScore": "7–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872952",
@@ -8242,7 +8307,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8254,7 +8319,12 @@
               "americanOdds": -110,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "KC -10.5",
+          "finalScore": "24–10",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         },
         {
           "gameId": "nfl-401872949",
@@ -8277,7 +8347,7 @@
           "status": "OPEN",
           "fullSlateFallback": false,
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-21T06:47:16.587Z",
           "selectionBasis": "BetRadar trend model plus current market consensus",
           "confidenceBand": "STANDARD",
@@ -8289,7 +8359,12 @@
               "americanOdds": -105,
               "reason": "Initial full-slate PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "CAR -3",
+          "finalScore": "18–21",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.804Z"
         }
       ]
     }

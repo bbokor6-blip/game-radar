@@ -21,7 +21,7 @@
           "why": "Seattle is 2-0 and coming off a 31-7 win, while Washington is 0-2 and is expected to start Marcus Mariota after Jayden Daniels dislocated his elbow. Seattle has also shown it can function without Sam Darnold after Drew Lock threw three touchdowns last week.",
           "gameDate": "2026-09-27T13:00:00-04:00",
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-22T04:00:00Z",
           "selectionBasis": "Tuesday PickRadar lock using current market, team form and confirmed/credible injury context",
           "confidenceBand": "ELITE",
@@ -33,7 +33,12 @@
               "americanOdds": -115,
               "reason": "Initial Tuesday PickRadar lock"
             }
-          ]
+          ],
+          "gradingLine": "Seattle -6.5",
+          "finalScore": "31–33",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.810Z"
         },
         {
           "gameId": "nfl-2026-09-27-lv-no",
@@ -48,7 +53,7 @@
           "why": "New Orleans returns home after a 24-17 road win at Baltimore, with Tyler Shough completing 27 of 34 passes. The key is getting the field-goal number before the market settles above -3.",
           "gameDate": "2026-09-27T16:25:00-04:00",
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-22T04:00:00Z",
           "selectionBasis": "Tuesday PickRadar lock using current market and Week 2 performance",
           "confidenceBand": "HIGH",
@@ -60,7 +65,12 @@
               "americanOdds": -110,
               "reason": "Initial Tuesday PickRadar lock at key number"
             }
-          ]
+          ],
+          "gradingLine": "New Orleans -3",
+          "finalScore": "35–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.810Z"
         },
         {
           "gameId": "nfl-2026-09-27-kc-mia",
@@ -75,7 +85,7 @@
           "why": "Miami is 0-2 and lost 35-13 at San Francisco in Week 2. Kansas City is the strongest favorite on the early Week 3 board, and -10.5 is preferable to the -11.5 already showing at other books.",
           "gameDate": "2026-09-27T13:00:00-04:00",
           "league": "nfl",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-22T04:00:00Z",
           "selectionBasis": "Tuesday PickRadar lock using cross-market line shopping and opponent form",
           "confidenceBand": "HIGH",
@@ -87,7 +97,12 @@
               "americanOdds": -110,
               "reason": "Initial Tuesday PickRadar lock; preserve -10.5 before possible move"
             }
-          ]
+          ],
+          "gradingLine": "Kansas City -10.5",
+          "finalScore": "24–10",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.810Z"
         },
         {
           "gameId": "nfl-2026-09-28-phi-chi",
@@ -102,7 +117,7 @@
           "why": "Chicago quarterback Caleb Williams is week-to-week with a hamstring injury and may miss Monday night. The market moved from Chicago -1.5 to Philadelphia favored by 3.5 to 4.5; locking -3.5 keeps the better side of the current range.",
           "gameDate": "2026-09-28T20:15:00-04:00",
           "league": "nfl",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-22T04:00:00Z",
           "selectionBasis": "Tuesday PickRadar lock using current injury-adjusted market",
           "confidenceBand": "HIGH",
@@ -115,7 +130,12 @@
               "americanOdds": -110,
               "reason": "Initial Tuesday PickRadar lock; monitor Caleb Williams practice status"
             }
-          ]
+          ],
+          "gradingLine": "Philadelphia -3.5",
+          "finalScore": "7–27",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.810Z"
         }
       ]
     },
@@ -144,7 +164,7 @@
           "why": "Mississippi State enters 4-0 straight up and ATS, including a late comeback against Missouri. Alabama is 4-0 and 3-1 ATS. The +6 consensus is preferable to the earlier +4.5 quote; monitor the market and injuries without silently changing the lock.",
           "gameDate": "2026-10-03T12:00:00-04:00",
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-28T12:28:16.100Z",
           "selectionBasis": "Monday Week 5 official shortlist; market checked September 28; prior 3-2 sample heavily shrunk toward baseline",
           "versionHistory": [
@@ -155,7 +175,12 @@
               "americanOdds": -108,
               "reason": "Initial Monday official lock; subsequent changes must append a revision"
             }
-          ]
+          ],
+          "gradingLine": "Mississippi State +6",
+          "finalScore": "56–23",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.829Z"
         },
         {
           "gameId": "cfb-2026-10-03-florida-missouri",
@@ -169,7 +194,7 @@
           "why": "Florida is 4-0 and 3-1 ATS after beating Ole Miss 52-28; Missouri is 3-1 and 1-3 ATS. Lock the current -4.5 rather than the earlier, less attractive -5.5.",
           "gameDate": "2026-10-03T15:30:00-04:00",
           "league": "cfb",
-          "result": "PENDING",
+          "result": "L",
           "lockedAt": "2026-09-28T12:28:16.100Z",
           "selectionBasis": "Monday Week 5 official shortlist; market checked September 28; prior 3-2 sample heavily shrunk toward baseline",
           "versionHistory": [
@@ -180,7 +205,12 @@
               "americanOdds": -112,
               "reason": "Initial Monday official lock; subsequent changes must append a revision"
             }
-          ]
+          ],
+          "gradingLine": "Florida -4.5",
+          "finalScore": "17–45",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.830Z"
         },
         {
           "gameId": "cfb-2026-10-03-ohio-state-iowa",
@@ -194,7 +224,7 @@
           "why": "Iowa is 4-0 after its 20-19 win at Michigan; Ohio State is 3-1. The matchup is priced in the mid-40s; 45.5 offers more room than the initial 44.5 total. Treat as a modest edge, not a guaranteed defensive script.",
           "gameDate": "2026-10-03T15:30:00-04:00",
           "league": "cfb",
-          "result": "PENDING",
+          "result": "W",
           "lockedAt": "2026-09-28T12:28:16.100Z",
           "selectionBasis": "Monday Week 5 official shortlist; market checked September 28; prior 3-2 sample heavily shrunk toward baseline",
           "versionHistory": [
@@ -205,9 +235,15 @@
               "americanOdds": -105,
               "reason": "Initial Monday official lock; subsequent changes must append a revision"
             }
-          ]
+          ],
+          "gradingLine": "UNDER 45.5",
+          "finalScore": "31–14",
+          "closingMarket": null,
+          "closingLineValue": null,
+          "gradedAt": "2026-10-05T23:01:34.830Z"
         }
       ]
     }
-  ]
+  ],
+  "updatedAt": "2026-10-05T23:01:34.830Z"
 }

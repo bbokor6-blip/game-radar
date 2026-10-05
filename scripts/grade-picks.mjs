@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 function normalized(value){return String(value||"").toLowerCase().replace(/[^a-z0-9]/g,"");}
 function matchupKey(game){return normalized((game.away?.name||game.away?.short)+"@"+(game.home?.name||game.home?.short));}
 function resultFromDelta(delta){return Math.abs(delta)<.001?"PUSH":delta>0?"W":"L";}
+export function easternDate(value){return new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(value));}
 
 function inferredSide(pick,game){
   if(pick.side)return pick.side;
@@ -40,12 +41,14 @@ export function grade(pick,game,locked){
 
 async function main(){
   const ledgerPath=path.resolve(process.cwd(),"data/radar-picks.json");
+  const overridesPath=path.resolve(process.cwd(),"data/pickradar-overrides.json");
   const snapshot=JSON.parse(fs.readFileSync(path.resolve(process.cwd(),"data/football-source-of-truth.json"),"utf8"));
   if(Date.now()-Date.parse(snapshot.generatedAt)>24*3600000)throw new Error("Refresh the season snapshot before grading picks");
-  const ledger=JSON.parse(fs.readFileSync(ledgerPath,"utf8"));
+  const sources=[ledgerPath,overridesPath].map(file=>({file,data:JSON.parse(fs.readFileSync(file,"utf8"))}));
   let graded=0;
-  for(const week of ledger.weeks||[]){
-    const completed=snapshot.games.filter(g=>g.league===week.league&&g.completed&&g.kickoff.slice(0,10)>=week.weekStart&&g.kickoff.slice(0,10)<=week.weekEnd);
+  for(const {file,data} of sources){
+   for(const week of data.weeks||[]){
+    const completed=snapshot.games.filter(g=>g.league===week.league&&g.completed&&easternDate(g.kickoff)>=week.weekStart&&easternDate(g.kickoff)<=week.weekEnd);
     const byId=new Map(completed.map(g=>[`${g.league}-${g.eventId}`,g]));
     const byMatchup=new Map(completed.map(g=>[matchupKey(g),g]));
     for(const pick of week.picks||[]){
@@ -65,9 +68,10 @@ async function main(){
       pick.gradedAt=new Date().toISOString();
       graded++;
     }
+   }
+   data.updatedAt=new Date().toISOString();
+   fs.writeFileSync(file,JSON.stringify(data,null,2)+"\n");
   }
-  ledger.updatedAt=new Date().toISOString();
-  fs.writeFileSync(ledgerPath,JSON.stringify(ledger,null,2)+"\n");
   process.stdout.write(JSON.stringify({graded}));
 }
 

@@ -486,7 +486,7 @@ export default function BetsPage(){
 
       <section className="brSection" id="track-record">
         <div className="grSectionHead"><div><h2>Track Record</h2><p>Official picks and results in one place. A pick marked Picked is awaiting kickoff; results are graded after the game.</p></div>
-          <strong>{weekPicks.length?weekWins+"–"+weekLosses+(weekPushes?" · "+weekPushes+" push":"")+" this week":ledger.record?.decisions?ledger.record.wins+"–"+ledger.record.losses+" overall":"No graded picks yet"}</strong>
+          <strong>{weekPicks.length?weekWins+"–"+weekLosses+(weekPushes?" · "+weekPushes+" push":"")+" this week":ledger.liveRecord?.decisions?ledger.liveRecord.wins+"–"+ledger.liveRecord.losses+" recorded":"No graded picks yet"}</strong>
         </div>
         <div className="brGameList">
           {weekPicks.map(pick=><div className="brSavedRow" key={pick.gameId}>
@@ -503,7 +503,7 @@ export default function BetsPage(){
             </div>;
           })}
         </div>
-        {selectedWeek?<p className="brRecordNote">{weekPicks.length} locked picks this week · {games.filter(g=>g.officialPick&&!g.officialPick.locked).length} upcoming model picks · {ledger.record?.wins||0}–{ledger.record?.losses||0} overall. Unmatched archived fixtures are excluded from the board.</p>:null}
+        <p className="brRecordNote">{weekPicks.length} locked picks this week · {ledger.liveRecord?.wins||0}–{ledger.liveRecord?.losses||0}{ledger.liveRecord?.pushes?"–"+ledger.liveRecord.pushes:""} across recorded weeks. Historical model backtest: {ledger.retrospectiveRecord?.wins||0}–{ledger.retrospectiveRecord?.losses||0}{ledger.retrospectiveRecord?.pushes?"–"+ledger.retrospectiveRecord.pushes:""}. Unmatched archived fixtures are excluded from the board.</p>
         {archives.length?<details className="brMethod"><summary>Previous weeks</summary>
           {archives.map(week=><details key={week.league+week.weekStart}><summary>{week.label||week.weekStart} · {(week.picks||[]).filter(p=>p.result==="W").length}–{(week.picks||[]).filter(p=>p.result==="L").length}</summary>
             <div className="brGameList">{(week.picks||[]).map(p=><div className="brSavedRow" key={p.gameId}><div><strong>{p.pick}</strong><span>{p.matchup}</span></div><strong>{p.result==="PENDING"?"AWAITING RESULT":p.result}</strong></div>)}</div>

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { grade, lockedLine } from "../scripts/grade-picks.mjs";
+import { grade, lockedLine, easternDate } from "../scripts/grade-picks.mjs";
 
 const game={
   home:{name:"Tennessee Volunteers",short:"TENN",score:17},
@@ -20,4 +20,8 @@ test("a total push uses the posted pick number",()=>{
 
 test("unrecognized selections are not graded",()=>{
   assert.equal(lockedLine({type:"SPREAD",pick:"Unknown +3"},game),null);
+});
+
+test("Monday night games stay in the football week by Eastern kickoff date",()=>{
+  assert.equal(easternDate("2026-09-29T00:15:00Z"),"2026-09-28");
 });
